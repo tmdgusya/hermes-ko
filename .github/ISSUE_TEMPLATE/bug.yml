@@ -1,0 +1,29 @@
+name: 버그 제보
+description: 사이트, 문서 렌더링, 링크 오류를 제보합니다.
+title: "[버그] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: bug
+    attributes:
+      label: 버그 설명
+      description: 어떤 문제가 발생했나요?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      description: 가능하면 단계별로 적어주세요.
+      placeholder: |
+        1. /docs/quickstart 접속
+        2. 코드블록 확인
+        3. ...
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 동작
+    validations:
+      required: false

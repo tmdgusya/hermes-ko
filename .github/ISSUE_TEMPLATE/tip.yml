@@ -1,0 +1,21 @@
+name: 팁 공유
+description: Hermes 사용 팁, workflow, 스킬 활용법을 공유합니다.
+title: "[팁] "
+labels: ["tip"]
+body:
+  - type: textarea
+    id: tip
+    attributes:
+      label: 공유할 팁
+      description: 어떤 상황에서 유용한지와 실제 사용 방법을 알려주세요.
+      placeholder: 예) GitHub PR 리뷰할 때 이런 스킬 조합이 좋았습니다.
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: 관련 명령/설정
+      description: 공유 가능한 명령이나 설정이 있다면 적어주세요. Secret은 제거해주세요.
+      render: bash
+    validations:
+      required: false

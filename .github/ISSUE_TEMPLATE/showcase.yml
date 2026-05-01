@@ -1,0 +1,19 @@
+name: 쇼케이스
+description: Hermes로 만든 workflow, 자동화, 결과물을 공유합니다.
+title: "[쇼케이스] "
+labels: ["showcase"]
+body:
+  - type: textarea
+    id: showcase
+    attributes:
+      label: 무엇을 만들었나요?
+      description: Hermes를 어떻게 활용했는지 소개해주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: 링크/스크린샷
+      description: 공유 가능한 링크나 이미지를 첨부해주세요.
+    validations:
+      required: false

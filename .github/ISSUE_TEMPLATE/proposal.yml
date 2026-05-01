@@ -1,0 +1,19 @@
+name: 제안
+description: 커뮤니티 운영, 문서 범위, 기능 아이디어를 제안합니다.
+title: "[제안] "
+labels: ["proposal"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 제안 내용
+      description: 무엇을 바꾸거나 추가하면 좋을까요?
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 이유
+      description: 왜 필요한지 적어주세요.
+    validations:
+      required: false

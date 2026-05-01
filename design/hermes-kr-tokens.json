@@ -1,0 +1,543 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Hermes Agent 한국어 공식 문서를 위한 디자인 시스템. Nous Research의 헤르메스 에이전트 브랜드 아이덴티티를 IBM Carbon Design System의 구조적 엄밀함으로 풀어낸 토큰 세트. 다크 틸 배경 위의 따뜻한 크림 톤 텍스트 — 기술적 정밀함과 접근성의 균형.\n",
+  "color": {
+    "$type": "color",
+    "primary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.059,
+          0.384,
+          0.996
+        ],
+        "hex": "#0f62fe"
+      }
+    },
+    "primary-hover": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.012,
+          0.325,
+          0.914
+        ],
+        "hex": "#0353e9"
+      }
+    },
+    "primary-active": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0.176,
+          0.612
+        ],
+        "hex": "#002d9c"
+      }
+    },
+    "surface-dark": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.016,
+          0.11,
+          0.11
+        ],
+        "hex": "#041c1c"
+      }
+    },
+    "surface-dark-alt": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.039,
+          0.18,
+          0.18
+        ],
+        "hex": "#0a2e2e"
+      }
+    },
+    "surface-dark-hover": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.059,
+          0.227,
+          0.227
+        ],
+        "hex": "#0f3a3a"
+      }
+    },
+    "cream": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.902,
+          0.796
+        ],
+        "hex": "#ffe6cb"
+      }
+    },
+    "cream-muted": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.961,
+          0.863,
+          0.776
+        ],
+        "hex": "#f5dcc6"
+      }
+    },
+    "cream-pale": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.98,
+          0.941,
+          0.902
+        ],
+        "hex": "#faf0e6"
+      }
+    },
+    "text-primary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.941,
+          0.902,
+          0.851
+        ],
+        "hex": "#f0e6d9"
+      }
+    },
+    "text-secondary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.769,
+          0.722,
+          0.659
+        ],
+        "hex": "#c4b8a8"
+      }
+    },
+    "text-disabled": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.541,
+          0.498,
+          0.447
+        ],
+        "hex": "#8a7f72"
+      }
+    },
+    "text-inverse": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.016,
+          0.11,
+          0.11
+        ],
+        "hex": "#041c1c"
+      }
+    },
+    "gray-100": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.086,
+          0.086,
+          0.086
+        ],
+        "hex": "#161616"
+      }
+    },
+    "gray-90": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.149,
+          0.149,
+          0.149
+        ],
+        "hex": "#262626"
+      }
+    },
+    "gray-80": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.224,
+          0.224,
+          0.224
+        ],
+        "hex": "#393939"
+      }
+    },
+    "gray-70": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.322,
+          0.322,
+          0.322
+        ],
+        "hex": "#525252"
+      }
+    },
+    "gray-60": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.435,
+          0.435,
+          0.435
+        ],
+        "hex": "#6f6f6f"
+      }
+    },
+    "gray-50": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.553,
+          0.553,
+          0.553
+        ],
+        "hex": "#8d8d8d"
+      }
+    },
+    "gray-30": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.776,
+          0.776,
+          0.776
+        ],
+        "hex": "#c6c6c6"
+      }
+    },
+    "gray-20": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.878,
+          0.878,
+          0.878
+        ],
+        "hex": "#e0e0e0"
+      }
+    },
+    "gray-10": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.957,
+          0.957,
+          0.957
+        ],
+        "hex": "#f4f4f4"
+      }
+    },
+    "error": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.855,
+          0.118,
+          0.157
+        ],
+        "hex": "#da1e28"
+      }
+    },
+    "error-surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.988,
+          0.929,
+          0.929
+        ],
+        "hex": "#fceded"
+      }
+    },
+    "success": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.141,
+          0.631,
+          0.282
+        ],
+        "hex": "#24a148"
+      }
+    },
+    "success-surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.871,
+          0.984,
+          0.902
+        ],
+        "hex": "#defbe6"
+      }
+    },
+    "warning": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.945,
+          0.761,
+          0.106
+        ],
+        "hex": "#f1c21b"
+      }
+    },
+    "warning-surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.992,
+          0.965,
+          0.867
+        ],
+        "hex": "#fdf6dd"
+      }
+    },
+    "info": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.059,
+          0.384,
+          0.996
+        ],
+        "hex": "#0f62fe"
+      }
+    },
+    "info-surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.929,
+          0.961,
+          1
+        ],
+        "hex": "#edf5ff"
+      }
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "xs": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "2xl": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "3xl": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    }
+  },
+  "rounded": {
+    "$type": "dimension",
+    "sm": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "pill": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    }
+  },
+  "typography": {
+    "font-family-sans": {
+      "$type": "typography",
+      "$value": {}
+    },
+    "font-family-mono": {
+      "$type": "typography",
+      "$value": {}
+    },
+    "font-family-ko": {
+      "$type": "typography",
+      "$value": {}
+    },
+    "h1": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-sans}",
+        "fontSize": {
+          "value": 2.63,
+          "unit": "rem"
+        },
+        "fontWeight": 300,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-sans}",
+        "fontSize": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-sans}",
+        "fontSize": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "h4": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-sans}",
+        "fontSize": {
+          "value": 1.25,
+          "unit": "rem"
+        },
+        "fontWeight": 600,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-ko}",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "body-bold": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-ko}",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": 600,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-ko}",
+        "fontSize": {
+          "value": 0.88,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.01,
+          "unit": "em"
+        }
+      }
+    },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.font-family-mono}",
+        "fontSize": {
+          "value": 0.88,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.01,
+          "unit": "em"
+        }
+      }
+    }
+  }
+}

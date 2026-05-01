@@ -1,0 +1,28 @@
+name: 문서 개선
+description: 번역 오류, 빠진 공식 정보, 링크 오류를 제안합니다.
+title: "[문서] "
+labels: ["docs"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: 문서 페이지
+      description: 문제가 있는 페이지 URL 또는 문서 제목을 적어주세요.
+      placeholder: /docs/environment-variables
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: 개선 내용
+      description: 무엇이 잘못되었거나 부족한지 적어주세요.
+      placeholder: 예) Hermes는 프로젝트 .env가 아니라 ~/.hermes/.env를 쓰는데 문서에 빠져 있습니다.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 공식 문서/근거 링크
+      description: 가능하면 공식 문서나 코드 링크를 붙여주세요.
+    validations:
+      required: false

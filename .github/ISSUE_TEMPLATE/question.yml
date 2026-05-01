@@ -1,0 +1,28 @@
+name: 질문
+description: Hermes Agent 설치, 설정, 사용법에 대해 질문합니다.
+title: "[질문] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        질문을 남겨주셔서 감사합니다. API key, token, 개인 경로 등 민감정보는 제거해주세요.
+  - type: textarea
+    id: question
+    attributes:
+      label: 질문 내용
+      description: 무엇이 궁금한지 구체적으로 적어주세요.
+      placeholder: 예) ~/.hermes/.env와 config.yaml의 차이가 헷갈립니다.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 시도해본 것 / 환경
+      description: 사용 OS, Hermes 버전, 실행한 명령 등을 적어주세요.
+      placeholder: |
+        - OS: macOS / Linux / WSL2 / Termux
+        - Hermes version:
+        - 실행한 명령:
+    validations:
+      required: false
