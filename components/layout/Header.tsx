@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import GithubIcon from "@/components/ui/GithubIcon";
 import Button from "@/components/ui/Button";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import SearchDialog from "@/components/search/SearchDialog";
 import { siteConfig, withBasePath } from "@/lib/site";
 import { useState } from "react";
 
@@ -37,6 +38,8 @@ export default function Header() {
           <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Issues ↗
           </a>
+
+          <SearchDialog />
 
           <ThemeToggle />
 
