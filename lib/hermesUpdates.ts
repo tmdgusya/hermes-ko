@@ -46,11 +46,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Agent guardrails 강화, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 보정 및 압축 토큰 추정",
+    title: "Curator 지연 실행·dry-run, Agent guardrails 강화, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 보정 및 압축 토큰 추정",
     category: "Agent 안정성",
     summary:
-      "도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고, display 레벨의 도구 실패 감지 의미를 보존하도록 수정됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다. curator cron job의 skill 참조도 통합 후 재작성됐습니다.",
+      "Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고, display 레벨의 도구 실패 감지 의미를 보존하도록 수정됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다. curator cron job의 skill 참조도 통합 후 재작성됐습니다.",
     commits: [
+      {
+        sha: "77c0bc6",
+        message: "fix(curator): defer first run and add --dry-run preview",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
+      },
       {
         sha: "58b8996",
         message: "fix(agent): add tool-call loop guardrails",
@@ -71,20 +76,20 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat: /goal — persistent cross-turn goals (Ralph loop)",
         href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
       },
-      {
-        sha: "bfb7046",
-        message: "fix(deepseek): use non-empty reasoning_content placeholder for V4 Pro thinking mode",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bfb704684ec64675650bc39fa0f731604b12aba2",
-      },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Gateway snapshot·슬래시 알림 TTL·세션 분기 메타데이터 보존, boolean 보정 및 Matrix 온보딩",
+    title: "Gateway 자동 재시작, snapshot·슬래시 알림 TTL·세션 분기 메타데이터 보존, boolean 보정 및 Matrix 온보딩",
     category: "Gateway / State",
     summary:
-      "Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, slash command 시스템 알림이 TTL 기반으로 자동 삭제됩니다. 세션 분기 시 assistant 메타데이터를 보존하고, queued event 병합 시 document type을 유지하도록 수정됐습니다. conversation replay에 finish_reason이 포함되며, tool_progress_command와 StreamingConfig의 boolean 값이 안전하게 보정됩니다. Matrix 온보딩에서 MATRIX_HOME_ROOM 환경변수를 준수하도록 수정됐습니다.",
+      "소스 파일 변경을 감지하면 gateway가 자동 재시작되도록 수정됐습니다. Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, slash command 시스템 알림이 TTL 기반으로 자동 삭제됩니다. 세션 분기 시 assistant 메타데이터를 보존하고, queued event 병합 시 document type을 유지하도록 수정됐습니다. conversation replay에 finish_reason이 포함되며, tool_progress_command와 StreamingConfig의 boolean 값이 안전하게 보정됩니다. Matrix 온보딩에서 MATRIX_HOME_ROOM 환경변수를 준수하도록 수정됐습니다.",
     commits: [
+      {
+        sha: "f99676e",
+        message: "fix(gateway): auto-restart when source files change out from under us",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f99676e315408db3742e00ca9808a31592704399",
+      },
       {
         sha: "8d7500d",
         message: "fix(gateway): snapshot callback generation after agent binds it, not before",
@@ -104,11 +109,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "bb706c3",
         message: "fix(gateway): coerce tool_progress_command as a real boolean",
         href: "https://github.com/NousResearch/hermes-agent/commit/bb706c3f38600cefdd651583220b8da1f980e3e3",
-      },
-      {
-        sha: "ccfe6a4",
-        message: "fix(gateway): coerce StreamingConfig booleans and malformed numerics safely",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ccfe6a47c3fd68064a286b648d118bf73d9730d7",
       },
     ],
   },
