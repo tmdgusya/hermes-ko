@@ -35,6 +35,9 @@ export default function Header() {
           <Link href="/tips" className="text-sm font-semibold text-warning hover:text-foreground transition-colors">
             TIP
           </Link>
+          <Link href="/lounge" className="text-sm font-semibold text-green-400 hover:text-foreground transition-colors">
+            라운지
+          </Link>
           <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Issues ↗
           </a>
@@ -73,6 +76,9 @@ export default function Header() {
           </Link>
           <Link href="/tips" className="text-warning font-semibold hover:text-foreground" onClick={() => setMobileOpen(false)}>
             TIP
+          </Link>
+          <Link href="/lounge" className="text-green-400 font-semibold hover:text-foreground" onClick={() => setMobileOpen(false)}>
+            🏠 라운지
           </Link>
           <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
             GitHub Issues ↗

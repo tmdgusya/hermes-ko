@@ -127,3 +127,112 @@ export function computeTopContributors(
 
   return contributors;
 }
+
+/* ─── GitHub Discussions ─── */
+
+const GQL_API = "https://api.github.com/graphql";
+
+export type DiscussionCategory = {
+  id: string;
+  name: string;
+  emoji: string;
+};
+
+export type Discussion = {
+  id: string;
+  number: number;
+  title: string;
+  url: string;
+  body?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  answerChosenAt?: string | null;
+  category: DiscussionCategory;
+  author: {
+    login: string;
+    avatarUrl: string;
+    url: string;
+  };
+  commentsCount: number;
+  upvoteCount: number;
+};
+
+/**
+ * 카테고리별 최근 Discussions 가져오기 (GraphQL)
+ */
+export async function fetchDiscussions(repoId = "R_kgDOSRWlUQ", first = 20): Promise<Discussion[]> {
+  const query = `
+    query($repoId: ID!, $first: Int!) {
+      node(id: $repoId) {
+        ... on Repository {
+          discussions(first: $first, orderBy: { field: CREATED_AT, direction: DESC }) {
+            nodes {
+              id
+              number
+              title
+              url
+              body
+              createdAt
+              updatedAt
+              answerChosenAt
+              category { id name emoji }
+              author { login avatarUrl url }
+              comments { totalCount }
+              upvoteCount
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const resp = await fetch(GQL_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github+json",
+    },
+    body: JSON.stringify({ query, variables: { repoId, first } }),
+  });
+
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status}`);
+  const json = await resp.json();
+
+  if (json.errors) {
+    throw new Error(json.errors[0]?.message || "GraphQL error");
+  }
+
+  const nodes: Array<Record<string, unknown>> = json.data?.node?.discussions?.nodes || [];
+
+  return nodes.map((n: Record<string, unknown>) => ({
+    id: n.id as string,
+    number: n.number as number,
+    title: n.title as string,
+    url: n.url as string,
+    body: (n.body as string) || null,
+    createdAt: n.createdAt as string,
+    updatedAt: n.updatedAt as string,
+    answerChosenAt: (n.answerChosenAt as string) || null,
+    category: n.category as DiscussionCategory,
+    author: {
+      login: (n.author as Record<string, string>).login,
+      avatarUrl: (n.author as Record<string, string>).avatarUrl,
+      url: (n.author as Record<string, string>).url,
+    },
+    commentsCount: (n.comments as { totalCount: number })?.totalCount || 0,
+    upvoteCount: (n.upvoteCount as number) || 0,
+  }));
+}
+
+/** 영문 카테고리명 → 한글 + 이모지 매핑 */
+export function categoryDisplay(category: DiscussionCategory): { label: string; emoji: string } {
+  const map: Record<string, { label: string; emoji: string }> = {
+    Announcements: { label: "공지", emoji: "📢" },
+    General: { label: "잡담", emoji: "🗣️" },
+    Ideas: { label: "아이디어", emoji: "💡" },
+    Polls: { label: "투표", emoji: "📊" },
+    "Q&A": { label: "가벼운 질문", emoji: "🆘" },
+    "Show and tell": { label: "자랑하기", emoji: "🎨" },
+  };
+  return map[category.name] || { label: category.name, emoji: category.emoji || "💬" };
+}
