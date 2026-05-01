@@ -10,6 +10,8 @@ import {
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   categoryDisplay,
   type Discussion,
@@ -218,9 +220,11 @@ export default function LoungeDiscussions() {
 
                         {/* Body preview */}
                         {d.body && (
-                          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                            {d.body.slice(0, 200)}
-                          </p>
+                          <div className="text-sm text-muted-foreground line-clamp-2 mb-3 prose prose-sm max-w-none prose-headings:text-foreground prose-a:text-primary prose-strong:text-foreground">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                              {d.body.slice(0, 300)}
+                            </ReactMarkdown>
+                          </div>
                         )}
 
                         {/* Meta */}
