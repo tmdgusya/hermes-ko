@@ -100,6 +100,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/27ec74c68a16d411f1184dfae45d139dda33d6d5",
       },
       {
+        sha: "bb706c3",
+        message: "fix(gateway): coerce tool_progress_command as a real boolean",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bb706c3f38600cefdd651583220b8da1f980e3e3",
+      },
+      {
         sha: "5536651",
         message: "fix(auth): make provider config writes atomic",
         href: "https://github.com/NousResearch/hermes-agent/commit/55366510e55a9a15cbba3d7e59667d215d4b9a26",
