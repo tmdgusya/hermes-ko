@@ -1,12 +1,28 @@
-name: 질문
+name: 질문 / Q&A
 description: Hermes Agent 설치, 설정, 사용법에 대해 질문합니다.
 title: "[질문] "
-labels: ["question"]
+labels: ["question", "needs-answer"]
 body:
   - type: markdown
     attributes:
       value: |
         질문을 남겨주셔서 감사합니다. API key, token, 개인 경로 등 민감정보는 제거해주세요.
+
+        답변을 받으면 운영자가 `answered` 라벨을 붙여 Q&A 게시판에서 답변 완료로 표시합니다.
+  - type: dropdown
+    id: topic
+    attributes:
+      label: 질문 주제
+      description: Q&A 게시판에서는 `topic:*` 라벨로 주제를 구분합니다. 아래 선택과 함께, 가능하면 작성 버튼에서 맞는 주제를 골라주세요.
+      options:
+        - 설치 / 업데이트
+        - 설정 / 환경변수 / 모델
+        - 도구 / Toolsets
+        - 스킬 / 메모리
+        - 문서 / 번역
+        - 기타
+    validations:
+      required: true
   - type: textarea
     id: question
     attributes:

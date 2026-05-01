@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Bug, HelpCircle, Lightbulb, BookOpen, Sparkles, MessageSquare } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -109,7 +110,7 @@ export default function CommunityPage() {
                           {category.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          <a href={newIssueUrl(category.template, [category.label])} target="_blank" rel="noopener noreferrer">
+                          <a href={newIssueUrl(category.template, category.label === "question" ? ["question", "needs-answer"] : [category.label])} target="_blank" rel="noopener noreferrer">
                             <Button size="sm">작성하기 ↗</Button>
                           </a>
                           <a href={issuesUrl([category.label])} target="_blank" rel="noopener noreferrer">
@@ -145,6 +146,9 @@ export default function CommunityPage() {
                 <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full" variant="secondary">전체 이슈 보기</Button>
                 </a>
+                <Link href="/qa">
+                  <Button className="w-full" variant="secondary">Q&A 게시판 보기</Button>
+                </Link>
                 <a href={`${siteConfig.repoUrl}/issues/new/choose`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full">새 이슈 작성</Button>
                 </a>
