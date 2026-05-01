@@ -5,6 +5,7 @@ import GithubIcon from "@/components/ui/GithubIcon";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import ThreadsHighlights from "@/components/operator/ThreadsHighlights";
+import HermesUpdates from "@/components/operator/HermesUpdates";
 import { newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
 const issueActions = [
@@ -81,6 +82,8 @@ export default function HomePage() {
       </section>
 
       <ThreadsHighlights />
+
+      <HermesUpdates />
 
       <section className="py-20 px-4 bg-surface-dark-alt/50">
         <div className="max-w-6xl mx-auto">
