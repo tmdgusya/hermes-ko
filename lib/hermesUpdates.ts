@@ -92,7 +92,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Config/Auth boolean 처리와 provider config write 안정화",
     category: "Config / Auth",
     summary:
-      "설정값이 문자열처럼 들어오는 경우를 실제 boolean으로 보정하고, provider config 저장을 atomic write로 처리해 설정 파일 손상 가능성을 줄였습니다.",
+      "설정값이 문자열처럼 들어오는 경우를 실제 boolean으로 보정하고, provider config 저장을 atomic write로 처리해 설정 파일 손상 가능성을 줄였습니다. YOLO 모드 env 파싱도 강화됐습니다.",
     commits: [
       {
         sha: "27ec74c",
@@ -100,14 +100,82 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/27ec74c68a16d411f1184dfae45d139dda33d6d5",
       },
       {
-        sha: "bb706c3",
-        message: "fix(gateway): coerce tool_progress_command as a real boolean",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bb706c3f38600cefdd651583220b8da1f980e3e3",
-      },
-      {
         sha: "5536651",
         message: "fix(auth): make provider config writes atomic",
         href: "https://github.com/NousResearch/hermes-agent/commit/55366510e55a9a15cbba3d7e59667d215d4b9a26",
+      },
+      {
+        sha: "24130b7",
+        message: "fix(approval): harden YOLO mode env parsing against quoted-bool strings",
+        href: "https://github.com/NousResearch/hermes-agent/commit/24130b7e53abcd434c7d0ce06de93b27b57047f8",
+      },
+    ],
+  },
+  {
+    date: "2026-05-01",
+    title: "Gateway busy_ack·스레드 라우팅·세션 이미지 격리",
+    category: "Gateway 운영",
+    summary:
+      "acknowledgement 메시지를 억제하는 busy_ack_enabled 설정이 추가되고, /update 진행 표시의 스레드 라우팅이 유지되며, /new·/reset 후 topic-bound skill이 다시 주입됩니다. 세션별 native 이미지 경로 격리와 session key 기반 이미지 버퍼 쓰기도 적용됐습니다.",
+    commits: [
+      {
+        sha: "2b512cb",
+        message: "feat(gateway): add busy_ack_enabled config option to suppress ack messages",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2b512cbca417f84c68f6bc5cfea3ac2905120c47",
+      },
+      {
+        sha: "25cbe3e",
+        message: "fix(gateway): preserve thread routing for /update progress and prompts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/25cbe3e1d6cb8526e1d865a8b5d96d4d7e632933",
+      },
+      {
+        sha: "fa9fd26",
+        message: "fix(gateway): re-inject topic-bound skill after /new or /reset",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fa9fd26acba4d6f3907ec798974b1431b115557c",
+      },
+      {
+        sha: "bdb7edd",
+        message: "fix(gateway): isolate pending native image paths by session",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bdb7edd89e09f5789fbb759dc1207a00eef7162b",
+      },
+      {
+        sha: "a178081",
+        message: "fix(gateway): use _session_key_for_source for native image buffer write",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a17808146848023b411771257208e66b8b7d7a0b",
+      },
+    ],
+  },
+  {
+    date: "2026-05-01",
+    title: "Gateway config/env·매뉴얼 프로필 재시작 안정화",
+    category: "Gateway 안정화",
+    summary:
+      "StreamingConfig boolean 변환, home_channel env override 적용, disabled_toolsets 게이트웨이 메시지 루프 적용 등 config/env 처리가 정비됐습니다. 매뉴얼 프로필 게이트웨이는 업데이트 후 자동 재시작되며, 재시작 전 SIGUSR1으로 안전하게 drain됩니다.",
+    commits: [
+      {
+        sha: "ccfe6a4",
+        message: "fix(gateway): coerce StreamingConfig booleans and malformed numerics safely",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ccfe6a47c3fd68064a286b648d118bf73d9730d7",
+      },
+      {
+        sha: "38875d0",
+        message: "fix(gateway): ensure platform configs honor home_channel env overrides",
+        href: "https://github.com/NousResearch/hermes-agent/commit/38875d00a736359af948bf5052379ffc37008a36",
+      },
+      {
+        sha: "9a75743",
+        message: "fix(gateway): apply agent.disabled_toolsets in gateway message loop",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9a757434967f3834d3925fec057ec6d4e7d7411c",
+      },
+      {
+        sha: "77fe7ab",
+        message: "feat(gateway): restart manual profile gateways after update",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77fe7ab6b20d0d8ec0aeadff6d0d69074db2fdbe",
+      },
+      {
+        sha: "9669126",
+        message: "fix(gateway): drain manual profile gateways via SIGUSR1 before respawn",
+        href: "https://github.com/NousResearch/hermes-agent/commit/96691268dffa40df7110bcab6bdf63ada260a06d",
       },
     ],
   },
