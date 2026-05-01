@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import GithubIcon from "@/components/ui/GithubIcon";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import ThreadsHighlights from "@/components/operator/ThreadsHighlights";
 import { newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
 const issueActions = [
@@ -78,6 +79,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ThreadsHighlights />
 
       <section className="py-20 px-4 bg-surface-dark-alt/50">
         <div className="max-w-6xl mx-auto">
