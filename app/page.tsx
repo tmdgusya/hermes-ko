@@ -8,23 +8,49 @@ import ThreadsHighlights from "@/components/operator/ThreadsHighlights";
 import HermesUpdates from "@/components/operator/HermesUpdates";
 import { newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
+const communityBoards = [
+  {
+    title: "Q&A 게시판",
+    description: "설치, 설정, 도구 사용 중 막힌 점을 질문하고 답변 상태를 확인합니다.",
+    href: "/qa",
+    cta: "질문 목록 보기",
+    writeHref: newIssueUrl("question.yml", ["question", "needs-answer"]),
+    writeLabel: "질문 작성",
+    icon: MessageSquare,
+    accent: "text-hermes-primary bg-hermes-primary/10 border-hermes-primary/30",
+  },
+  {
+    title: "TIP 게시판",
+    description: "Hermes workflow, toolset 조합, 스킬 활용 노하우를 모아 봅니다.",
+    href: "/tips",
+    cta: "팁 모음 보기",
+    writeHref: newIssueUrl("tip.yml", ["tip"]),
+    writeLabel: "팁 공유",
+    icon: Lightbulb,
+    accent: "text-amber-200 bg-amber-400/10 border-amber-400/30",
+  },
+];
+
 const issueActions = [
   {
     title: "질문하기",
     description: "설치, 설정, 도구 사용 중 막힌 점을 질문하세요.",
-    href: newIssueUrl("question.yml", ["question"]),
+    href: newIssueUrl("question.yml", ["question", "needs-answer"]),
+    viewHref: "/qa",
     icon: MessageSquare,
   },
   {
     title: "팁 공유",
     description: "Hermes를 쓰면서 알게 된 workflow나 노하우를 공유하세요.",
     href: newIssueUrl("tip.yml", ["tip"]),
+    viewHref: "/tips",
     icon: Lightbulb,
   },
   {
     title: "문서 개선",
     description: "번역 오류, 빠진 공식 정보, 보강할 내용을 알려주세요.",
     href: newIssueUrl("docs.yml", ["docs"]),
+    viewHref: "/community",
     icon: BookOpen,
   },
 ];
@@ -72,12 +98,53 @@ export default function HomePage() {
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <Link href="/community">
+            <Link href="/qa">
               <Button size="lg" variant="secondary">
-                커뮤니티 참여하기
+                Q&A 보기
+              </Button>
+            </Link>
+            <Link href="/tips">
+              <Button size="lg" variant="secondary">
+                TIP 보기
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-16 md:-mt-10 relative z-10">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+          {communityBoards.map((board) => {
+            const Icon = board.icon;
+            return (
+              <Card key={board.title} variant="elevated" className="p-6 md:p-7 border-hermes-primary/20 bg-surface-card/95">
+                <div className="flex items-start gap-4">
+                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${board.accent}`}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-xl font-bold font-heading text-text-primary mb-2">
+                      {board.title}
+                    </h2>
+                    <p className="text-sm text-text-secondary leading-relaxed mb-5">
+                      {board.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Link href={board.href}>
+                        <Button size="sm">
+                          {board.cta}
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <a href={board.writeHref} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" variant="secondary">{board.writeLabel} ↗</Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </section>
 
@@ -144,18 +211,23 @@ export default function HomePage() {
             {issueActions.map((action) => {
               const Icon = action.icon;
               return (
-                <a key={action.title} href={action.href} target="_blank" rel="noopener noreferrer">
-                  <Card variant="elevated" className="h-full hover:border-hermes-primary/60 transition-colors">
-                    <Icon className="w-9 h-9 text-hermes-primary mb-4" />
-                    <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
-                      {action.title}
-                    </h3>
-                    <p className="text-sm text-text-secondary leading-relaxed mb-4">
-                      {action.description}
-                    </p>
-                    <span className="text-sm text-hermes-primary">Issue 작성하기 ↗</span>
-                  </Card>
-                </a>
+                <Card key={action.title} variant="elevated" className="h-full hover:border-hermes-primary/60 transition-colors">
+                  <Icon className="w-9 h-9 text-hermes-primary mb-4" />
+                  <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
+                    {action.title}
+                  </h3>
+                  <p className="text-sm text-text-secondary leading-relaxed mb-4">
+                    {action.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Link href={action.viewHref}>
+                      <Button size="sm" variant="secondary">목록 보기</Button>
+                    </Link>
+                    <a href={action.href} target="_blank" rel="noopener noreferrer">
+                      <Button size="sm">Issue 작성하기 ↗</Button>
+                    </a>
+                  </div>
+                </Card>
               );
             })}
           </div>

@@ -5,12 +5,22 @@ import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { issuesUrl, newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
-const categories = [
+type CommunityCategory = {
+  title: string;
+  label: string;
+  template: string;
+  description: string;
+  icon: typeof HelpCircle;
+  boardHref?: string;
+};
+
+const categories: CommunityCategory[] = [
   {
     title: "질문",
     label: "question",
     template: "question.yml",
     description: "설치, 설정, 모델, 도구 사용 중 막힌 점을 질문합니다.",
+    boardHref: "/qa",
     icon: HelpCircle,
   },
   {
@@ -18,6 +28,7 @@ const categories = [
     label: "tip",
     template: "tip.yml",
     description: "Hermes workflow, 스킬, 자동화 팁을 공유합니다.",
+    boardHref: "/tips",
     icon: Lightbulb,
   },
   {
@@ -113,9 +124,15 @@ export default function CommunityPage() {
                           <a href={newIssueUrl(category.template, category.label === "question" ? ["question", "needs-answer"] : [category.label])} target="_blank" rel="noopener noreferrer">
                             <Button size="sm">작성하기 ↗</Button>
                           </a>
-                          <a href={issuesUrl([category.label])} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" variant="ghost">목록 보기</Button>
-                          </a>
+                          {category.boardHref ? (
+                            <Link href={category.boardHref}>
+                              <Button size="sm" variant="secondary">내부 목록 보기</Button>
+                            </Link>
+                          ) : (
+                            <a href={issuesUrl([category.label])} target="_blank" rel="noopener noreferrer">
+                              <Button size="sm" variant="ghost">목록 보기</Button>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -148,6 +165,9 @@ export default function CommunityPage() {
                 </a>
                 <Link href="/qa">
                   <Button className="w-full" variant="secondary">Q&A 게시판 보기</Button>
+                </Link>
+                <Link href="/tips">
+                  <Button className="w-full" variant="secondary">TIP 게시판 보기</Button>
                 </Link>
                 <a href={`${siteConfig.repoUrl}/issues/new/choose`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full">새 이슈 작성</Button>

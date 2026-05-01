@@ -50,6 +50,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/tips" className="text-sm text-text-secondary hover:text-text-primary">
+                  TIP
+                </Link>
+              </li>
+              <li>
                 <a href={siteConfig.repoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-text-secondary hover:text-text-primary">
                   Hermes KR GitHub ↗
                 </a>

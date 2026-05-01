@@ -28,8 +28,11 @@ export default function Header() {
           <Link href="/community" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
             커뮤니티
           </Link>
-          <Link href="/qa" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/qa" className="text-sm font-semibold text-hermes-primary hover:text-text-primary transition-colors">
             Q&A
+          </Link>
+          <Link href="/tips" className="text-sm font-semibold text-amber-200 hover:text-text-primary transition-colors">
+            TIP
           </Link>
           <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
             Issues ↗
@@ -62,8 +65,11 @@ export default function Header() {
           <Link href="/community" className="text-text-secondary hover:text-text-primary" onClick={() => setMobileOpen(false)}>
             커뮤니티
           </Link>
-          <Link href="/qa" className="text-text-secondary hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+          <Link href="/qa" className="text-hermes-primary font-semibold hover:text-text-primary" onClick={() => setMobileOpen(false)}>
             Q&A
+          </Link>
+          <Link href="/tips" className="text-amber-200 font-semibold hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+            TIP
           </Link>
           <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary">
             GitHub Issues ↗
