@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import { useRef } from "react";
+import { withBasePath } from "@/lib/site";
 
 interface MarkdownRendererProps {
   content: string;
@@ -44,16 +45,20 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             </p>
           ),
 
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              className="text-primary hover:text-primary/80 underline underline-offset-2 decoration-primary/40 hover:decoration-primary transition-colors"
-              target={href?.startsWith("http") ? "_blank" : undefined}
-              rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            const resolvedHref = href?.startsWith("/") ? withBasePath(href) : href;
+
+            return (
+              <a
+                href={resolvedHref}
+                className="text-primary hover:text-primary/80 underline underline-offset-2 decoration-primary/40 hover:decoration-primary transition-colors"
+                target={href?.startsWith("http") ? "_blank" : undefined}
+                rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {children}
+              </a>
+            );
+          },
 
           ul: ({ children }) => (
             <ul className="list-disc pl-5 space-y-1.5 mb-4 text-[15px] text-muted-foreground">
