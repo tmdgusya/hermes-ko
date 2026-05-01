@@ -49,7 +49,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Curator 지연 실행·dry-run, Agent guardrails 강화, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 보정 및 압축 토큰 추정",
     category: "Agent 안정성",
     summary:
-      "Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고, display 레벨의 도구 실패 감지 의미를 보존하도록 수정됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다. curator cron job의 skill 참조도 통합 후 재작성됐습니다.",
+      "Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐으며, cron job skill 참조도 통합 후 재작성됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고 display 레벨의 도구 실패 감지 의미도 보존됩니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다.",
     commits: [
       {
         sha: "77c0bc6",
@@ -57,14 +57,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
       },
       {
-        sha: "58b8996",
-        message: "fix(agent): add tool-call loop guardrails",
-        href: "https://github.com/NousResearch/hermes-agent/commit/58b89965c8c4489db817be737eb4e458df0a8e06",
+        sha: "e2eb561",
+        message: "fix(curator): rewrite cron job skill refs after consolidation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2eb561e8e1a069392b494811ea45be6779493cd",
       },
       {
-        sha: "0704589",
-        message: "fix(agent): make tool loop guardrails warning-first",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0704589ceb1365c1b7aefff382923ed28380714e",
+        sha: "58b8996",
+        message: "fix(agent): add tool-call loop guardrails (warning-first + display semantics)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/58b89965c8c4489db817be737eb4e458df0a8e06",
       },
       {
         sha: "c5b4c48",
@@ -80,10 +80,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Gateway 자동 재시작, snapshot·슬래시 알림 TTL·세션 분기 메타데이터 보존, boolean 보정 및 Matrix 온보딩",
+    title: "Gateway 자동 재시작, snapshot·슬래시 알림 TTL·세션 분기 메타데이터 보존, replay finish_reason, boolean 보정 및 Matrix 온보딩",
     category: "Gateway / State",
     summary:
-      "소스 파일 변경을 감지하면 gateway가 자동 재시작되도록 수정됐습니다. Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, slash command 시스템 알림이 TTL 기반으로 자동 삭제됩니다. 세션 분기 시 assistant 메타데이터를 보존하고, queued event 병합 시 document type을 유지하도록 수정됐습니다. conversation replay에 finish_reason이 포함되며, tool_progress_command와 StreamingConfig의 boolean 값이 안전하게 보정됩니다. Matrix 온보딩에서 MATRIX_HOME_ROOM 환경변수를 준수하도록 수정됐습니다.",
+      "소스 파일 변경을 감지하면 gateway가 자동 재시작되도록 수정됐습니다. Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, slash command 시스템 알림이 TTL 기반으로 자동 삭제됩니다. 세션 분기 시 assistant 메타데이터를 보존하고, queued event 병합 시 document type을 유지하도록 수정됐습니다. conversation replay에 finish_reason이 포함되며, StreamingConfig와 tool_progress_command의 boolean 값이 안전하게 보정됩니다. Matrix 온보딩에서 MATRIX_HOME_ROOM 환경변수를 준수하도록 수정됐습니다.",
     commits: [
       {
         sha: "f99676e",
@@ -106,9 +106,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/7ba1a2b3df0cc6ebb5de37ded726ca3281a04a14",
       },
       {
-        sha: "bb706c3",
-        message: "fix(gateway): coerce tool_progress_command as a real boolean",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bb706c3f38600cefdd651583220b8da1f980e3e3",
+        sha: "a94841e",
+        message: "fix(state): include finish_reason in conversation replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a94841eaa0a89bde990fe76743f1aa7ddb6866bb",
       },
     ],
   },
@@ -140,9 +140,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/fc78e708ed0c684c20987b23657208c76d45fc5a",
       },
       {
-        sha: "24130b7",
-        message: "fix(approval): harden YOLO mode env parsing against quoted-bool strings",
-        href: "https://github.com/NousResearch/hermes-agent/commit/24130b7e53abcd434c7d0ce06de93b27b57047f8",
+        sha: "dfe512c",
+        message: "fix(paths): route achievements plugin + profile-tui through HERMES_HOME",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dfe512c58db60910676d6b9c6725f72bb8f39590",
       },
     ],
   },
@@ -170,13 +170,13 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "9ca72a6",
-        message: "fix(moonshot): fill missing type before enum cleanup to handle anyOf branches without explicit type",
+        message: "fix(moonshot): fill missing type before enum cleanup + strip nullable/enum after anyOf collapse",
         href: "https://github.com/NousResearch/hermes-agent/commit/9ca72a69a730e442ad6f14e5f2f51c8f2011dcb7",
       },
       {
-        sha: "2af8b8f",
-        message: "fix(moonshot): also strip nullable/enum after anyOf collapse",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2af8b8ff3712c71620f32b1fa57e92289e6ca202",
+        sha: "ab6c629",
+        message: "fix(terminal): skip sudo prompt when local NOPASSWD sudo works",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ab6c629ccc31ed2dea0b6a2955750b75416d0058",
       },
     ],
   },
@@ -185,7 +185,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "문서 사이트: 사용자 스토리, llms.txt, /goal 페이지, 사이드바 정리, Kanban 버튼 및 TUI 개선",
     category: "Docs / UI",
     summary:
-      "웹사이트에 User Stories 및 Use Cases 콜라주 페이지가 추가되고, 에이전트 친화적 수집을 위한 llms.txt와 llms-full.txt가 발행됐습니다. /goal 기능 문서 페이지가 추가되고, 사이드바의 Skills 트리가 단일 노드로 축소됐습니다. Kanban 버튼 수정이 적용됐으며, TUI가 불필요하게 자산을 재빌드하지 않도록 수정되고 리뷰 피드백(정렬 및 숫자 단축키)이 반영됐습니다.",
+      "웹사이트에 User Stories 및 Use Cases 콜라주 페이지가 추가되고, 에이전트 친화적 수집을 위한 llms.txt와 llms-full.txt가 발행됐습니다. /goal 기능 문서 페이지가 추가되고 nav와 llms.txt에서도 접근 가능하도록 연결됐으며, 사이드바의 Skills 트리가 단일 노드로 축소됐습니다. Kanban 버튼 수정이 적용됐으며, TUI가 불필요하게 자산을 재빌드하지 않도록 수정되고 리뷰 피드백(정렬 및 숫자 단축키)이 반영됐습니다.",
     commits: [
       {
         sha: "a2a3268",
@@ -208,9 +208,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/7c6c5619a7b85ef7ed873632e25a4a4745563866",
       },
       {
-        sha: "a01c1f7",
-        message: "fix: kanban button",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a01c1f7305bda8ebc5cbcde22f2a80a0300a2ca1",
+        sha: "0b76d23",
+        message: "docs: make Persistent Goals docs accessible in nav and llms.txt",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0b76d23d1acffd14bbc5061cd4f913cf7a0e1a8a",
       },
     ],
   },
