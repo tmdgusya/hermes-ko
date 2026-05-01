@@ -46,20 +46,20 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Curator 지연 실행·dry-run, Agent guardrails 강화, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 보정",
+    title: "Agent guardrails 강화, Curator dry-run·지연 실행, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 및 압축 토큰 보정",
     category: "Agent 안정성",
     summary:
-      "Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐으며, cron job skill 참조도 통합 후 재작성됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고 display 레벨의 도구 실패 감지 의미도 보존됩니다 (후속 커밋으로 경고 우선 정책 및 display 의미 보존이 세밀하게 조정됨). 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다.",
+      "도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고 display 레벨의 도구 실패 감지 의미도 보존됩니다. Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐으며, cron job skill 참조도 통합 후 재작성됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다.",
     commits: [
-      {
-        sha: "77c0bc6",
-        message: "fix(curator): defer first run and add --dry-run preview",
-        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
-      },
       {
         sha: "58b8996",
         message: "fix(agent): add tool-call loop guardrails (warning-first + display semantics)",
         href: "https://github.com/NousResearch/hermes-agent/commit/58b89965c8c4489db817be737eb4e458df0a8e06",
+      },
+      {
+        sha: "77c0bc6",
+        message: "fix(curator): defer first run, add --dry-run preview, and rewrite cron job skill refs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
       },
       {
         sha: "c5b4c48",
@@ -73,51 +73,51 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "bfb7046",
-        message: "fix(deepseek): use non-empty reasoning_content placeholder for V4 Pro thinking mode",
+        message: "fix(deepseek): non-empty reasoning_content placeholder for V4 Pro; fix(compression): include system prompt + tool schemas in token estimates",
         href: "https://github.com/NousResearch/hermes-agent/commit/bfb704684ec64675650bc39fa0f731604b12aba2",
       },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Gateway 자동 재시작, snapshot 콜백, 슬래시 알림 TTL, 이벤트 병합 보존 및 StreamingConfig boolean 보정",
+    title: "Gateway / Slack: 비공개 알림, 슬래시 커맨드 ephemeral 처리, 사용자별 세션 격리, 자동 재시작 및 알림 TTL",
     category: "Gateway / State",
     summary:
-      "소스 파일 변경을 감지하면 gateway가 자동 재시작되도록 수정됐습니다. Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, slash command 시스템 알림이 TTL 기반으로 자동 삭제됩니다. 세션 분기 시 assistant 메타데이터를 보존하고, queued event 병합 시 document type을 유지하도록 수정됐습니다. conversation replay에 finish_reason이 포함되며, StreamingConfig와 tool_progress_command의 boolean 값이 안전하게 보정됩니다. Matrix 온보딩에서 MATRIX_HOME_ROOM 환경변수를 준수하도록 수정됐습니다.",
+      "Gateway에 비공개 알림(private notice) 전송과 Slack format_message 수정이 적용됐습니다. Slash command에 대한 ephemeral acknowledgment 및 라우팅이 추가되고, 사용자별 세션 격리가 보존되며, 예약된 Slack 커맨드는 네이티브 슬래시 매니페스트에서 제외됩니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작되며, 슬래시 커맨드 시스템 알림은 TTL 기반으로 자동 삭제됩니다. 그 외에도 Slack assistant 스레드 상태 정리, ephemeral 범위 조정, 대소문자 구분 chat ID 보존, scalar free_response_channels 문자열 변환 등이 포함됩니다.",
     commits: [
+      {
+        sha: "0ab2d75",
+        message: "feat(gateway): private notice delivery and Slack format_message fixes",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0ab2d752ffdae211b0f4fd06c8f62cf7eec191a7",
+      },
+      {
+        sha: "7cda0e5",
+        message: "fix(gateway/slack): ephemeral ack and routing for slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7cda0e522443c6e7790793b93b085508fc530fc8",
+      },
+      {
+        sha: "a147164",
+        message: "fix(slack): preserve per-user slash-command session isolation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
+      },
       {
         sha: "f99676e",
         message: "fix(gateway): auto-restart when source files change out from under us",
         href: "https://github.com/NousResearch/hermes-agent/commit/f99676e315408db3742e00ca9808a31592704399",
       },
       {
-        sha: "8d7500d",
-        message: "fix(gateway): snapshot callback generation after agent binds it, not before",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8d7500d80d1e20f963d531bb459c36c6922b2ad3",
-      },
-      {
         sha: "4caad28",
         message: "feat(gateway): auto-delete slash-command system notices after TTL",
         href: "https://github.com/NousResearch/hermes-agent/commit/4caad285a602b75c1da1c7d553864278d7aa723d",
-      },
-      {
-        sha: "158eb32",
-        message: "fix(gateway): preserve document type when merging queued events",
-        href: "https://github.com/NousResearch/hermes-agent/commit/158eb32686cdaebae6737d6874060b14b2d6eda4",
-      },
-      {
-        sha: "ccfe6a4",
-        message: "fix(gateway): coerce StreamingConfig booleans and malformed numerics safely",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ccfe6a47c3fd68064a286b648d118bf73d9730d7",
       },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Config boolean 보정, atomic 저장, update --yes 플래그, YOLO 모드 파싱 및 HERMES_HOME 경로 정규화",
+    title: "Config boolean 보정, update --yes 플래그, atomic 저장, HERMES_HOME 경로 및 YOLO 모드 파싱",
     category: "Config / Auth",
     summary:
-      "문자열로 들어오는 설정값을 실제 boolean으로 보정하고, provider config 저장을 atomic write로 전환해 설정 파일 손상을 방지합니다. hermes update에 --yes/-y 플래그가 추가돼 대화형 프롬프트를 건너뛸 수 있으며, skill config scan 실패 시 update가 중단되지 않도록 수정됐습니다. YOLO 모드 환경변수 파싱이 quoted-bool 문자열에 대해 강화됐고, achievements 플러그인과 profile-tui 경로가 HERMES_HOME을 통해 라우팅되도록 수정됐습니다.",
+      "문자열로 들어오는 설정값을 실제 boolean으로 보정하고, provider config 저장을 atomic write로 전환해 설정 파일 손상을 방지합니다. hermes update에 --yes/-y 플래그가 추가돼 대화형 프롬프트를 건너뛸 수 있으며, skill config scan 실패 시 update가 중단되지 않도록 수정됐습니다. achievements 플러그인과 profile-tui 경로가 HERMES_HOME을 통해 라우팅되고, YOLO 모드 환경변수 파싱이 quoted-bool 문자열에 대해 강화됐습니다. gateway의 tool_progress_command도 실제 boolean으로 안전하게 보정됩니다.",
     commits: [
       {
         sha: "27ec74c",
@@ -125,14 +125,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/27ec74c68a16d411f1184dfae45d139dda33d6d5",
       },
       {
-        sha: "5536651",
-        message: "fix(auth): make provider config writes atomic",
-        href: "https://github.com/NousResearch/hermes-agent/commit/55366510e55a9a15cbba3d7e59667d215d4b9a26",
-      },
-      {
         sha: "50c0463",
         message: "feat(update): add --yes/-y flag to skip interactive prompts",
         href: "https://github.com/NousResearch/hermes-agent/commit/50c046331dc722fa875fd290ce29b9cc5130fc08",
+      },
+      {
+        sha: "fc78e70",
+        message: "fix(update): don't crash hermes update if skill config scan fails",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc78e708ed0c684c20987b23657208c76d45fc5a",
       },
       {
         sha: "dfe512c",
@@ -140,9 +140,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/dfe512c58db60910676d6b9c6725f72bb8f39590",
       },
       {
-        sha: "24130b7",
-        message: "fix(approval): harden YOLO mode env parsing against quoted-bool strings",
-        href: "https://github.com/NousResearch/hermes-agent/commit/24130b7e53abcd434c7d0ce06de93b27b57047f8",
+        sha: "bb706c3",
+        message: "fix(gateway): coerce tool_progress_command as a real boolean",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bb706c3f38600cefdd651583220b8da1f980e3e3",
       },
     ],
   },
@@ -199,7 +199,7 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "cf2b2d3",
-        message: "docs: add Persistent Goals (/goal) feature page",
+        message: "docs: add Persistent Goals (/goal) feature page and make accessible in nav + llms.txt",
         href: "https://github.com/NousResearch/hermes-agent/commit/cf2b2d31ce77ba87c114c53966d7f7cc629cad9e",
       },
       {
