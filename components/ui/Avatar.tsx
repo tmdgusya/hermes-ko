@@ -21,7 +21,7 @@ export default function Avatar({ src, name, size = "md", className = "" }: Avata
 
   return (
     <div
-      className={`relative rounded-full overflow-hidden flex items-center justify-center bg-hermes-primary/20 text-hermes-primary font-medium ${sizes[size]} ${className}`}
+      className={`relative rounded-full overflow-hidden flex items-center justify-center bg-primary/20 text-primary font-medium ${sizes[size]} ${className}`}
     >
       {src ? (
         <img src={src} alt={name || "Avatar"} className="w-full h-full object-cover" />

@@ -10,13 +10,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={`flex flex-col gap-1.5 ${className.includes('flex-1') ? 'flex-1' : ''}`}>
         {label && (
-          <label className="text-sm font-medium text-text-secondary">
+          <label className="text-sm font-medium text-muted-foreground">
             {label}
           </label>
         )}
         <input
           ref={ref}
-          className={`w-full h-10 px-3 bg-surface-dark-alt border border-gray-70 rounded-[var(--radius-md)] text-text-primary placeholder:text-text-disabled focus:outline-none focus:border-hermes-primary focus:ring-1 focus:ring-hermes-primary/30 transition-colors`}
+          className={`w-full h-10 px-3 bg-background-alt border border-border rounded-[var(--radius-md)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-colors`}
           {...props}
         />
         {error && <p className="text-xs text-danger">{error}</p>}

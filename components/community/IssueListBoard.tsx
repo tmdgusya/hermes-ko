@@ -103,8 +103,8 @@ function issueStatus(issue: GitHubIssue, mode: "qa" | "simple" = "qa") {
       label: issue.state === "closed" ? "보관됨" : "공개됨",
       className:
         issue.state === "closed"
-          ? "border-gray-60 bg-surface-dark-alt text-text-secondary"
-          : "border-hermes-primary/30 bg-hermes-primary/10 text-hermes-primary",
+          ? "border-gray-60 bg-background-alt text-muted-foreground"
+          : "border-primary/30 bg-primary/10 text-primary",
       icon: issue.state === "closed" ? CheckCircle2 : Clock3,
     };
   }
@@ -127,11 +127,11 @@ function issueStatus(issue: GitHubIssue, mode: "qa" | "simple" = "qa") {
 function labelClass(label: string) {
   if (label === "answered") return "border-green-500/30 bg-green-500/10 text-green-300";
   if (label === "needs-answer") return "border-yellow-500/30 bg-yellow-500/10 text-yellow-300";
-  if (label === "tip") return "border-amber-400/30 bg-amber-400/10 text-amber-200";
-  if (label === "question") return "border-hermes-primary/30 bg-hermes-primary/10 text-hermes-primary";
+  if (label === "tip") return "border-amber-400/30 bg-amber-400/10 text-warning";
+  if (label === "question") return "border-primary/30 bg-primary/10 text-primary";
   if (label === "curated") return "border-purple-400/30 bg-purple-400/10 text-purple-200";
   if (label.startsWith("topic:")) return "border-blue-500/30 bg-blue-500/10 text-blue-300";
-  return "border-gray-70 bg-surface-dark-alt text-text-secondary";
+  return "border-border bg-background-alt text-muted-foreground";
 }
 
 function labelText(label: string) {
@@ -227,18 +227,18 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card variant="outlined" className="p-5">
-          <p className="text-sm text-text-secondary mb-1">{config.statsLabels.total}</p>
-          <p className="text-3xl font-bold text-text-primary font-heading">{stats.total}</p>
+          <p className="text-sm text-muted-foreground mb-1">{config.statsLabels.total}</p>
+          <p className="text-3xl font-bold text-foreground font-heading">{stats.total}</p>
         </Card>
         {config.statsLabels.waiting && (
           <Card variant="outlined" className="p-5">
-            <p className="text-sm text-text-secondary mb-1">{config.statsLabels.waiting}</p>
+            <p className="text-sm text-muted-foreground mb-1">{config.statsLabels.waiting}</p>
             <p className="text-3xl font-bold text-yellow-300 font-heading">{stats.waiting}</p>
           </Card>
         )}
         {config.statsLabels.completed && (
           <Card variant="outlined" className="p-5">
-            <p className="text-sm text-text-secondary mb-1">{config.statsLabels.completed}</p>
+            <p className="text-sm text-muted-foreground mb-1">{config.statsLabels.completed}</p>
             <p className="text-3xl font-bold text-green-300 font-heading">{stats.completed}</p>
           </Card>
         )}
@@ -247,10 +247,10 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
       <Card variant="elevated" className="p-5">
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-text-primary font-heading mb-1">
+            <h2 className="text-lg font-semibold text-foreground  mb-1">
               {config.title}
             </h2>
-            <p className="text-sm text-text-secondary">{config.description}</p>
+            <p className="text-sm text-muted-foreground">{config.description}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {config.quickLinks.map((link) => (
@@ -267,7 +267,7 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
       <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6 items-start">
         <aside className="lg:sticky lg:top-24 space-y-4">
           <Card variant="outlined" className="p-4">
-            <h2 className="text-sm font-semibold text-text-primary mb-3 font-heading">필터</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-3 font-heading">필터</h2>
             <div className="space-y-1">
               {config.filters.map((filter) => (
                 <button
@@ -275,12 +275,12 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
                   onClick={() => setActiveFilter(filter.id)}
                   className={`w-full rounded-xl px-3 py-2 text-left transition-colors ${
                     activeFilter === filter.id
-                      ? "bg-hermes-primary text-white"
-                      : "text-text-secondary hover:bg-surface-dark-alt hover:text-text-primary"
+                      ? "bg-primary text-white"
+                      : "text-muted-foreground hover:bg-background-alt hover:text-foreground"
                   }`}
                 >
                   <span className="block text-sm font-medium">{filter.label}</span>
-                  <span className={`block text-xs ${activeFilter === filter.id ? "text-white/70" : "text-text-disabled"}`}>
+                  <span className={`block text-xs ${activeFilter === filter.id ? "text-white/70" : "text-muted-foreground"}`}>
                     {filter.description}
                   </span>
                 </button>
@@ -289,8 +289,8 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
           </Card>
 
           <Card variant="outlined" className="p-4">
-            <h2 className="text-sm font-semibold text-text-primary mb-3 font-heading">라벨 규칙</h2>
-            <ul className="space-y-2 text-xs text-text-secondary leading-relaxed">
+            <h2 className="text-sm font-semibold text-foreground mb-3 font-heading">라벨 규칙</h2>
+            <ul className="space-y-2 text-xs text-muted-foreground leading-relaxed">
               {config.labelRules.map((rule) => (
                 <li key={rule.label}>
                   <span className={labelClass(rule.label).split(" ").slice(-1)[0]}>{rule.label}</span> — {rule.text}
@@ -303,12 +303,12 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
             <label className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-disabled" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={config.searchPlaceholder}
-                className="h-11 w-full rounded-xl border border-gray-80 bg-surface-card pl-10 pr-4 text-sm text-text-primary placeholder:text-text-disabled focus:border-hermes-primary focus:outline-none focus:ring-2 focus:ring-hermes-primary/20"
+                className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </label>
             <Button size="sm" variant="secondary" onClick={loadIssues} disabled={loading}>
@@ -318,15 +318,15 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
           </div>
 
           {loading && (
-            <Card variant="outlined" className="p-8 text-center text-text-secondary">
+            <Card variant="outlined" className="p-8 text-center text-muted-foreground">
               GitHub Issues를 불러오는 중입니다…
             </Card>
           )}
 
           {error && !loading && (
             <Card variant="outlined" className="p-8 text-center">
-              <p className="text-text-primary font-semibold mb-2">이슈를 불러오지 못했습니다.</p>
-              <p className="text-sm text-text-secondary mb-4">{error}</p>
+              <p className="text-foreground font-semibold mb-2">이슈를 불러오지 못했습니다.</p>
+              <p className="text-sm text-muted-foreground mb-4">{error}</p>
               <a href={issuesUrl([config.sourceLabel])} target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary">GitHub에서 직접 보기 ↗</Button>
               </a>
@@ -335,8 +335,8 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
 
           {!loading && !error && visibleIssues.length === 0 && (
             <Card variant="outlined" className="p-8 text-center">
-              <p className="text-text-primary font-semibold mb-2">{config.emptyTitle}</p>
-              <p className="text-sm text-text-secondary mb-4">{config.emptyDescription}</p>
+              <p className="text-foreground font-semibold mb-2">{config.emptyTitle}</p>
+              <p className="text-sm text-muted-foreground mb-4">{config.emptyDescription}</p>
               <a href={newIssueUrl(config.template, [config.sourceLabel])} target="_blank" rel="noopener noreferrer">
                 <Button>{config.firstActionLabel} ↗</Button>
               </a>
@@ -352,7 +352,7 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
 
             return (
               <a key={issue.id} href={issue.html_url} target="_blank" rel="noopener noreferrer" className="block">
-                <Card variant="elevated" className="p-5 hover:border-hermes-primary/60 transition-colors">
+                <Card variant="elevated" className="p-5 hover:border-primary/60 transition-colors">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
@@ -361,13 +361,13 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
                             <StatusIcon className="h-3.5 w-3.5" />
                             {status.label}
                           </span>
-                          <span className="text-xs text-text-disabled">#{issue.number}</span>
+                          <span className="text-xs text-muted-foreground">#{issue.number}</span>
                         </div>
-                        <h3 className="text-lg font-semibold text-text-primary font-heading leading-snug hover:text-hermes-primary">
+                        <h3 className="text-lg font-semibold text-foreground  leading-snug hover:text-primary">
                           {issue.title}
                         </h3>
                       </div>
-                      <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-text-disabled" />
+                      <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
                     </div>
 
                     <div className="flex flex-wrap gap-2">
@@ -379,7 +379,7 @@ export default function IssueListBoard({ config }: { config: BoardConfig }) {
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-text-disabled">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                       <span className="inline-flex items-center gap-2">
                         <img src={issue.user.avatar_url} alt={`${issue.user.login} avatar`} className="h-5 w-5 rounded-full" />
                         {issue.user.login}

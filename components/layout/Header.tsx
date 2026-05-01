@@ -12,29 +12,29 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-80 bg-surface-dark/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <img src={withBasePath("/hermes_logo.png")} alt="Hermes KR" className="w-8 h-8" />
-          <span className="text-lg font-semibold text-text-primary font-heading">
+          <span className="text-lg font-semibold text-foreground">
             Hermes KR
           </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/docs" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             문서
           </Link>
-          <Link href="/community" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/community" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             커뮤니티
           </Link>
-          <Link href="/qa" className="text-sm font-semibold text-hermes-primary hover:text-text-primary transition-colors">
+          <Link href="/qa" className="text-sm font-semibold text-primary hover:text-foreground transition-colors">
             Q&A
           </Link>
-          <Link href="/tips" className="text-sm font-semibold text-amber-200 hover:text-text-primary transition-colors">
+          <Link href="/tips" className="text-sm font-semibold text-warning hover:text-foreground transition-colors">
             TIP
           </Link>
-          <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Issues ↗
           </a>
 
@@ -49,7 +49,7 @@ export default function Header() {
         </nav>
 
         <button
-          className="md:hidden text-text-secondary"
+          className="md:hidden text-muted-foreground"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="메뉴 열기"
         >
@@ -58,25 +58,25 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-80 bg-surface-dark px-4 py-4 flex flex-col gap-4">
-          <Link href="/docs" className="text-text-secondary hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+        <div className="md:hidden border-t border-border bg-background px-4 py-4 flex flex-col gap-4">
+          <Link href="/docs" className="text-muted-foreground hover:text-foreground" onClick={() => setMobileOpen(false)}>
             문서
           </Link>
-          <Link href="/community" className="text-text-secondary hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+          <Link href="/community" className="text-muted-foreground hover:text-foreground" onClick={() => setMobileOpen(false)}>
             커뮤니티
           </Link>
-          <Link href="/qa" className="text-hermes-primary font-semibold hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+          <Link href="/qa" className="text-primary font-semibold hover:text-foreground" onClick={() => setMobileOpen(false)}>
             Q&A
           </Link>
-          <Link href="/tips" className="text-amber-200 font-semibold hover:text-text-primary" onClick={() => setMobileOpen(false)}>
+          <Link href="/tips" className="text-warning font-semibold hover:text-foreground" onClick={() => setMobileOpen(false)}>
             TIP
           </Link>
-          <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary">
+          <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
             GitHub Issues ↗
           </a>
           
-          <div className="flex items-center justify-between pt-2 border-t border-default">
-            <span className="text-sm text-text-secondary">테마</span>
+          <div className="flex items-center justify-between pt-2 border-t border-border">
+            <span className="text-sm text-muted-foreground">테마</span>
             <ThemeToggle />
           </div>
 

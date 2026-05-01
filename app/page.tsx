@@ -17,7 +17,7 @@ const communityBoards = [
     writeHref: newIssueUrl("question.yml", ["question", "needs-answer"]),
     writeLabel: "질문 작성",
     icon: MessageSquare,
-    accent: "text-hermes-primary bg-hermes-primary/10 border-hermes-primary/30",
+    accent: "text-primary bg-primary/10 border-primary/30",
   },
   {
     title: "TIP 게시판",
@@ -27,7 +27,7 @@ const communityBoards = [
     writeHref: newIssueUrl("tip.yml", ["tip"]),
     writeLabel: "팁 공유",
     icon: Lightbulb,
-    accent: "text-amber-200 bg-amber-400/10 border-amber-400/30",
+    accent: "text-warning bg-warning/10 border-warning/30",
   },
 ];
 
@@ -63,12 +63,12 @@ export default function HomePage() {
           <Badge variant="info" className="mb-6">
             GitHub Issues 기반 공개 커뮤니티
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold font-heading text-text-primary leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
             Hermes Agent
             <br />
-            <span className="text-hermes-primary">한국어 문서 허브</span>
+            <span className="text-primary">한국어 문서 허브</span>
           </h1>
-          <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
             무거운 가입/DB 없이 가볍게 시작합니다.
             <br />
             문서는 정적으로, 질문과 토론은 GitHub Issues에서 이어갑니다.
@@ -77,16 +77,16 @@ export default function HomePage() {
             href={siteConfig.operatorThreadsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mb-10 inline-flex items-center gap-3 rounded-full border border-gray-80 bg-surface-card/80 px-4 py-3 shadow-soft transition-colors hover:border-hermes-primary/60"
+            className="group mb-10 inline-flex items-center gap-3 rounded-full border border-border bg-card/80 px-4 py-3 shadow-sm transition-colors hover:border-primary/60"
           >
             <img
               src={withBasePath(siteConfig.operatorAvatar)}
               alt="roach_log 프로필 이미지"
-              className="h-11 w-11 rounded-full object-cover ring-2 ring-hermes-primary/30"
+              className="h-11 w-11 rounded-full object-cover ring-2 ring-primary/30"
             />
             <span className="text-left">
-              <span className="block text-xs text-text-disabled">운영</span>
-              <span className="block text-sm font-semibold text-text-primary group-hover:text-hermes-primary">
+              <span className="block text-xs text-muted-foreground">운영</span>
+              <span className="block text-sm font-semibold text-foreground group-hover:text-primary">
                 roach_log가 운영하고 있어요 ↗
               </span>
             </span>
@@ -117,16 +117,16 @@ export default function HomePage() {
           {communityBoards.map((board) => {
             const Icon = board.icon;
             return (
-              <Card key={board.title} variant="elevated" className="p-6 md:p-7 border-hermes-primary/20 bg-surface-card/95">
+              <Card key={board.title} variant="elevated" className="p-6 md:p-7 border-primary/20 bg-card/95">
                 <div className="flex items-start gap-4">
                   <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${board.accent}`}>
                     <Icon className="h-6 w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h2 className="text-xl font-bold font-heading text-text-primary mb-2">
+                    <h2 className="text-xl font-bold text-foreground mb-2">
                       {board.title}
                     </h2>
-                    <p className="text-sm text-text-secondary leading-relaxed mb-5">
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                       {board.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -152,42 +152,42 @@ export default function HomePage() {
 
       <HermesUpdates />
 
-      <section className="py-20 px-4 bg-surface-dark-alt/50">
+      <section className="py-20 px-4 bg-secondary/50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold font-heading text-text-primary text-center mb-4">
+          <h2 className="text-3xl font-bold text-foreground text-center mb-4">
             왜 GitHub Issues인가요?
           </h2>
-          <p className="text-text-secondary text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
             커뮤니티가 커질지 검증하기 전에는 서버, DB, 인증보다 공개 이슈 기반 운영이 더 단순하고 오래갑니다.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card variant="elevated">
-              <GithubIcon className="w-10 h-10 text-hermes-primary mb-4" />
-              <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
+              <GithubIcon className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 별도 가입 없음
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 GitHub 계정으로 바로 질문하고 댓글을 남깁니다. OAuth, 세션, DB를 직접 운영하지 않습니다.
               </p>
             </Card>
 
             <Card variant="elevated">
-              <Globe className="w-10 h-10 text-hermes-primary mb-4" />
-              <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
+              <Globe className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 정적 문서
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 한국어 문서는 GitHub Pages로 배포합니다. 서버가 없어도 오래 보존되고 기여 흐름도 단순합니다.
               </p>
             </Card>
 
             <Card variant="elevated">
-              <Sparkles className="w-10 h-10 text-hermes-primary mb-4" />
-              <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
+              <Sparkles className="w-10 h-10 text-primary mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 작게 시작
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 커뮤니티가 살아나면 그때 게시판/뉴스레터/회원 시스템을 다시 붙이면 됩니다.
               </p>
             </Card>
@@ -199,10 +199,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <Badge variant="success" className="mb-4">GitHub Issues</Badge>
-            <h2 className="text-3xl font-bold font-heading text-text-primary mb-4">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
               지금 바로 참여하기
             </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               질문, 팁, 문서 수정 제안은 모두 GitHub Issue로 남깁니다. 공개적으로 쌓이는 지식 베이스가 됩니다.
             </p>
           </div>
@@ -211,12 +211,12 @@ export default function HomePage() {
             {issueActions.map((action) => {
               const Icon = action.icon;
               return (
-                <Card key={action.title} variant="elevated" className="h-full hover:border-hermes-primary/60 transition-colors">
-                  <Icon className="w-9 h-9 text-hermes-primary mb-4" />
-                  <h3 className="text-lg font-semibold text-text-primary mb-2 font-heading">
+                <Card key={action.title} variant="elevated" className="h-full hover:border-primary/60 transition-colors">
+                  <Icon className="w-9 h-9 text-primary mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     {action.title}
                   </h3>
-                  <p className="text-sm text-text-secondary leading-relaxed mb-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                     {action.description}
                   </p>
                   <div className="flex flex-wrap gap-2">

@@ -13,17 +13,17 @@ export default function DocsLayout({
         <aside className="hidden lg:block w-56 shrink-0">
           <nav className="sticky top-20 space-y-6 overflow-y-auto max-h-[calc(100vh-6rem)] pr-2">
             <div>
-              <h2 className="text-sm font-bold text-[var(--text-primary)] mb-1">
+              <h2 className="text-sm font-bold text-foreground mb-1">
                 한국어 문서
               </h2>
-              <p className="text-xs text-[var(--text-muted)] mb-4">
+              <p className="text-xs text-muted-foreground mb-4">
                 Hermes Agent 공식 문서 한국어 번역
               </p>
             </div>
 
             {docsSections.map((section) => (
               <div key={section.slug}>
-                <h3 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2 px-3">
+                <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-3">
                   {section.title}
                 </h3>
                 <ul className="space-y-0.5">
@@ -31,7 +31,7 @@ export default function DocsLayout({
                     <li key={item.slug}>
                       <Link
                         href={`/docs/${item.slug}`}
-                        className="block px-3 py-1.5 text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-dark-alt)] rounded-[var(--radius-sm)] transition-colors"
+                        className="block px-3 py-1.5 text-[13px] text-muted-foreground hover:text-foreground hover:bg-secondary rounded-[var(--radius-sm)] transition-colors"
                       >
                         {item.title}
                       </Link>

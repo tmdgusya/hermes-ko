@@ -1,214 +1,145 @@
 @import "tailwindcss";
+@import "@nous-research/ui/styles/globals.css";
+
+/* Scan the published design-system bundle so its utility classes survive
+   Tailwind's JIT purge. */
+@source "../node_modules/@nous-research/ui/dist";
 
 /* ========================================
-   Hermes KR Design Tokens (Theme-aware)
+   Hermes Agent — Nous DS with LENS_0 (Hermes Teal)
    ======================================== */
 
-/* Dark Theme (default) */
-:root,
-[data-theme="dark"] {
-  --hermes-primary: #0ea5e9;
-  --hermes-primary-hover: #38bdf8;
-  --hermes-primary-muted: #0ea5e933;
-  --hermes-accent: #f59e0b;
-  --hermes-accent-hover: #fbbf24;
-
-  --bg-primary: #0a0f1a;
-  --bg-secondary: #111827;
-  --bg-tertiary: #1f2937;
-  --bg-elevated: #1f2937;
-
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --text-inverse: #0a0f1a;
-  --text-disabled: #6b7280;
-
-  --border-default: #374151;
-  --border-muted: #1f2937;
-
-  --surface-dark: #0a0f1a;
-  --surface-dark-alt: #111827;
-  --surface-dark-hover: #1a2332;
-  --surface-card: #111827;
-
-  --info: #3b82f6;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
-
-  --code-bg: #1a1f2e;
-  --code-text: #e2e8f0;
-  --code-border: #2d3748;
-  --code-keyword: #c084fc;
-  --code-string: #86efac;
-  --code-comment: #6b7280;
-  --code-function: #60a5fa;
-  --code-number: #fbbf24;
-}
-
-/* Light Theme */
-[data-theme="light"] {
-  --hermes-primary: #0284c7;
-  --hermes-primary-hover: #0369a1;
-  --hermes-primary-muted: #0284c722;
-  --hermes-accent: #d97706;
-  --hermes-accent-hover: #b45309;
-
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-elevated: #ffffff;
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --text-inverse: #ffffff;
-  --text-disabled: #94a3b8;
-
-  --border-default: #e2e8f0;
-  --border-muted: #f1f5f9;
-
-  --surface-dark: #f8fafc;
-  --surface-dark-alt: #f1f5f9;
-  --surface-dark-hover: #e2e8f0;
-  --surface-card: #ffffff;
-
-  --info: #2563eb;
-  --success: #16a34a;
-  --warning: #d97706;
-  --danger: #dc2626;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-
-  --code-bg: #f8fafc;
-  --code-text: #1e293b;
-  --code-border: #e2e8f0;
-  --code-keyword: #7c3aed;
-  --code-string: #16a34a;
-  --code-comment: #94a3b8;
-  --code-function: #2563eb;
-  --code-number: #d97706;
-}
-
-/* ========================================
-   Tailwind CSS 4 Theme (maps to CSS vars)
-   ======================================== */
-@theme {
-  --color-hermes-primary: var(--hermes-primary);
-  --color-hermes-primary-hover: var(--hermes-primary-hover);
-  --color-hermes-primary-muted: var(--hermes-primary-muted);
-  --color-hermes-accent: var(--hermes-accent);
-  --color-hermes-accent-hover: var(--hermes-accent-hover);
-
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-tertiary: var(--bg-tertiary);
-  --color-bg-elevated: var(--bg-elevated);
-
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-text-inverse: var(--text-inverse);
-  --color-text-disabled: var(--text-disabled);
-
-  --color-border-default: var(--border-default);
-  --color-border-muted: var(--border-muted);
-  --color-gray-60: #4b5563;
-  --color-gray-70: var(--border-default);
-  --color-gray-80: var(--border-muted);
-
-  --color-surface-dark: var(--surface-dark);
-  --color-surface-dark-alt: var(--surface-dark-alt);
-  --color-surface-dark-hover: var(--surface-dark-hover);
-  --color-surface-card: var(--surface-card);
-
-  --color-info: var(--info);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-}
-
-/* ========================================
-   Spacing & Typography Tokens
-   ======================================== */
 :root {
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
+  /* LENS_0 — Hermes Teal palette */
+  --background: color-mix(in srgb, #041c1c 100%, transparent);
+  --background-base: #041c1c;
+  --background-alpha: 1;
+  --midground: color-mix(in srgb, #ffe6cb 100%, transparent);
+  --midground-base: #ffe6cb;
+  --midground-alpha: 1;
+  --foreground: color-mix(in srgb, #ffffff 0%, transparent);
+  --foreground-base: #ffffff;
+  --foreground-alpha: 0;
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-full: 9999px;
+  /* Consumed by <Backdrop /> */
+  --warm-glow: rgba(255, 189, 56, 0.35);
+  --noise-opacity-mul: 1;
 
-  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-heading: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Typography — Pretendard for Korean, system fallbacks */
+  --theme-font-sans: 'Pretendard', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --theme-font-mono: 'JetBrains Mono', ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --theme-font-display: var(--theme-font-sans);
+  --theme-base-size: 15px;
+  --theme-line-height: 1.55;
+  --theme-letter-spacing: 0;
 
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
-
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
+  /* Layout tokens */
+  --radius: 0.5rem;
+  --theme-radius: 0.5rem;
+  --theme-spacing-mul: 1;
+  --theme-density: comfortable;
 }
 
-/* ========================================
-   Base Styles (minimal — Tailwind preflight handles reset)
-   ======================================== */
+/* Light Theme — warm cream/white variant */
+[data-theme="light"] {
+  --background: color-mix(in srgb, #faf7f2 100%, transparent);
+  --background-base: #faf7f2;
+  --background-alpha: 1;
+  --midground: color-mix(in srgb, #1a1a1a 100%, transparent);
+  --midground-base: #1a1a1a;
+  --midground-alpha: 1;
+  --foreground: color-mix(in srgb, #000000 0%, transparent);
+  --foreground-base: #000000;
+  --foreground-alpha: 0;
+
+  --warm-glow: rgba(255, 189, 56, 0.15);
+}
+
+/* Theme tokens cascade into document root */
 html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--theme-font-sans);
+  font-size: var(--theme-base-size);
+  line-height: var(--theme-line-height);
+  letter-spacing: var(--theme-letter-spacing);
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.5;
-  transition: background-color var(--transition-base), color var(--transition-base);
+  font-family: var(--theme-font-sans);
+  min-height: 0;
+  margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 1.25;
+code, kbd, pre, samp, .font-mono {
+  font-family: var(--theme-font-mono);
 }
 
-a {
-  color: var(--hermes-primary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+/* Density: scale shadcn spacing utilities via multiplier */
+@theme inline {
+  --spacing: calc(0.25rem * var(--theme-spacing-mul, 1));
 }
 
-a:hover {
-  color: var(--hermes-primary-hover);
+/* Shadcn-compat tokens mapped to Nous palette */
+@theme inline {
+  /* Remap foreground to midground so text-foreground stays visible */
+  --color-foreground: var(--midground);
+
+  --color-card: color-mix(in srgb, var(--midground-base) 4%, var(--background-base));
+  --color-card-foreground: var(--midground);
+  --color-primary: var(--midground);
+  --color-primary-foreground: var(--background-base);
+  --color-secondary: color-mix(in srgb, var(--midground-base) 6%, var(--background-base));
+  --color-secondary-foreground: var(--midground);
+  --color-muted: color-mix(in srgb, var(--midground-base) 8%, var(--background-base));
+  --color-muted-foreground: color-mix(in srgb, var(--midground-base) 55%, transparent);
+  --color-accent: color-mix(in srgb, var(--midground-base) 10%, var(--background-base));
+  --color-accent-foreground: var(--midground);
+  --color-destructive: #fb2c36;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #4ade80;
+  --color-warning: #ffbd38;
+  --color-border: color-mix(in srgb, var(--midground-base) 15%, transparent);
+  --color-input: color-mix(in srgb, var(--midground-base) 15%, transparent);
+  --color-ring: var(--midground);
+  --color-popover: color-mix(in srgb, var(--midground-base) 4%, var(--background-base));
+  --color-popover-foreground: var(--midground);
+
+  --radius-sm: calc(var(--theme-radius) - 4px);
+  --radius-md: calc(var(--theme-radius) - 2px);
+  --radius-lg: var(--theme-radius);
+  --radius-xl: calc(var(--theme-radius) + 4px);
 }
 
-::selection {
-  background: var(--hermes-primary);
-  color: var(--text-inverse);
+/* Hermes-specific aliases for existing class usage */
+@theme inline {
+  --color-hermes-primary: #ffe6cb;
+  --color-hermes-primary-hover: #fff3e0;
+  --color-hermes-primary-muted: color-mix(in srgb, #ffe6cb 20%, transparent);
+  --color-hermes-accent: #ffbd38;
+  --color-hermes-accent-hover: #ffc94d;
+
+  --color-bg-primary: var(--background-base);
+  --color-bg-secondary: color-mix(in srgb, var(--midground-base) 3%, var(--background-base));
+  --color-bg-tertiary: color-mix(in srgb, var(--midground-base) 6%, var(--background-base));
+  --color-bg-elevated: color-mix(in srgb, var(--midground-base) 4%, var(--background-base));
+
+  --color-text-primary: var(--midground);
+  --color-text-secondary: color-mix(in srgb, var(--midground-base) 70%, transparent);
+  --color-text-muted: color-mix(in srgb, var(--midground-base) 45%, transparent);
+  --color-text-inverse: var(--background-base);
+  --color-text-disabled: color-mix(in srgb, var(--midground-base) 30%, transparent);
+
+  --color-border-default: color-mix(in srgb, var(--midground-base) 15%, transparent);
+  --color-border-muted: color-mix(in srgb, var(--midground-base) 8%, transparent);
+
+  --color-surface-dark: var(--background-base);
+  --color-surface-dark-alt: color-mix(in srgb, var(--midground-base) 3%, var(--background-base));
+  --color-surface-dark-hover: color-mix(in srgb, var(--midground-base) 8%, var(--background-base));
+  --color-surface-card: color-mix(in srgb, var(--midground-base) 4%, var(--background-base));
+
+  --color-info: #3b82f6;
+  --color-success: #4ade80;
+  --color-warning: #ffbd38;
+  --color-danger: #fb2c36;
 }
 
 /* ========================================
@@ -216,32 +147,31 @@ a:hover {
    ======================================== */
 .hljs {
   background: transparent !important;
-  color: var(--code-text) !important;
+  color: var(--midground) !important;
   padding: 0 !important;
 }
 
 .hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-name {
-  color: var(--code-keyword);
+  color: #c084fc;
 }
 
 .hljs-string, .hljs-attr {
-  color: var(--code-string);
+  color: #86efac;
 }
 
 .hljs-comment {
-  color: var(--code-comment);
+  color: color-mix(in srgb, var(--midground-base) 45%, transparent);
   font-style: italic;
 }
 
 .hljs-function, .hljs-title {
-  color: var(--code-function);
+  color: #60a5fa;
 }
 
 .hljs-number, .hljs-literal {
-  color: var(--code-number);
+  color: #fbbf24;
 }
 
-/* Ensure code blocks don't have conflicting backgrounds */
 pre code,
 pre code span {
   background: transparent !important;
@@ -253,69 +183,80 @@ pre code {
 }
 
 /* ========================================
-   Scrollbar (subtle)
+   Animations (Nous DS style)
    ======================================== */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(16px); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+@utility animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-default);
-  border-radius: 3px;
+@utility animate-slide-up {
+  animation: slide-up 0.6s ease-out both;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ========================================
-   Custom Utilities
+   Utilities
    ======================================== */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.blend-lighter {
+  mix-blend-mode: plus-lighter;
+}
+
+.font-mono-ui {
+  font-family: var(--theme-font-mono);
+}
+
+/* Subtle grain overlay for badges */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  pointer-events: none;
+  background: repeating-conic-gradient(currentColor 0% 25%, #0000 0% 50%) 0 0 / 2px 2px;
+}
+
+/* Glass effect */
 @utility glass {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Text gradient */
 @utility text-gradient {
-  background: linear-gradient(135deg, var(--hermes-primary), var(--hermes-accent));
+  background: linear-gradient(135deg, var(--midground), var(--warm-glow, #ffbd38));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-@utility animate-fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-
-@utility animate-slide-up {
-  animation: slideUp 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========================================
-   Theme Toggle Transition (targeted, not *)
-   ======================================== */
-[data-theme] body,
-[data-theme] header,
-[data-theme] footer,
-[data-theme] main,
-[data-theme] section,
-[data-theme] nav,
-[data-theme] article,
-[data-theme] aside {
-  transition: background-color var(--transition-base), color var(--transition-base);
 }

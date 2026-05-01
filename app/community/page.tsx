@@ -72,10 +72,10 @@ export default function CommunityPage() {
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mb-12">
           <Badge variant="info" className="mb-4">가입 없는 커뮤니티</Badge>
-          <h1 className="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-5">
+          <h1 className="text-4xl md:text-5xl font-bold  text-foreground mb-5">
             GitHub Issues로 운영합니다
           </h1>
-          <p className="text-lg text-text-secondary leading-relaxed mb-6">
+          <p className="text-lg text-muted-foreground leading-relaxed mb-6">
             Hermes KR은 초기 단계에서 별도 회원가입, DB, 댓글 시스템을 운영하지 않습니다.
             질문과 토론은 GitHub Issues에 공개적으로 남겨서 검색 가능한 지식 베이스로 쌓습니다.
           </p>
@@ -83,16 +83,16 @@ export default function CommunityPage() {
             href={siteConfig.operatorThreadsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-2xl border border-gray-80 bg-surface-card px-4 py-3 transition-colors hover:border-hermes-primary/60"
+            className="inline-flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/60"
           >
             <img
               src={withBasePath(siteConfig.operatorAvatar)}
               alt="roach_log 프로필 이미지"
-              className="h-12 w-12 rounded-full object-cover ring-2 ring-hermes-primary/30"
+              className="h-12 w-12 rounded-full object-cover ring-2 ring-primary/30"
             />
             <span>
-              <span className="block text-xs text-text-disabled">운영자</span>
-              <span className="block text-sm font-semibold text-text-primary">
+              <span className="block text-xs text-muted-foreground">운영자</span>
+              <span className="block text-sm font-semibold text-foreground">
                 roach_log · Threads에서 보기 ↗
               </span>
             </span>
@@ -101,7 +101,7 @@ export default function CommunityPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
           <section>
-            <h2 className="text-2xl font-bold font-heading text-text-primary mb-6">
+            <h2 className="text-2xl font-bold  text-foreground mb-6">
               어떤 이슈를 남길까요?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -110,14 +110,14 @@ export default function CommunityPage() {
                 return (
                   <Card key={category.label} variant="elevated" className="h-full">
                     <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 rounded-xl bg-hermes-primary/10 flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5 text-hermes-primary" />
+                      <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-5 h-5 text-primary" />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-lg font-semibold text-text-primary font-heading mb-2">
+                        <h3 className="text-lg font-semibold text-foreground  mb-2">
                           {category.title}
                         </h3>
-                        <p className="text-sm text-text-secondary leading-relaxed mb-4">
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                           {category.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -144,10 +144,10 @@ export default function CommunityPage() {
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:pt-[56px]">
             <Card variant="elevated">
-              <h2 className="text-lg font-semibold text-text-primary font-heading mb-3">
+              <h2 className="text-lg font-semibold text-foreground  mb-3">
                 운영 원칙
               </h2>
-              <ul className="space-y-3 text-sm text-text-secondary leading-relaxed">
+              <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                 <li>• GitHub 계정만 있으면 참여할 수 있습니다.</li>
                 <li>• 질문/답변은 공개 이슈로 남겨 검색 가능하게 둡니다.</li>
                 <li>• 비밀키, 토큰, 개인정보는 절대 올리지 마세요.</li>
@@ -156,7 +156,7 @@ export default function CommunityPage() {
             </Card>
 
             <Card variant="outlined">
-              <h2 className="text-lg font-semibold text-text-primary font-heading mb-3">
+              <h2 className="text-lg font-semibold text-foreground  mb-3">
                 바로가기
               </h2>
               <div className="flex flex-col gap-3">
@@ -172,7 +172,7 @@ export default function CommunityPage() {
                 <a href={`${siteConfig.repoUrl}/issues/new/choose`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full">새 이슈 작성</Button>
                 </a>
-                <a href={`${siteConfig.repoUrl}/pulls`} target="_blank" rel="noopener noreferrer" className="text-sm text-hermes-primary hover:underline text-center">
+                <a href={`${siteConfig.repoUrl}/pulls`} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline text-center">
                   Pull Requests 보기 ↗
                 </a>
               </div>
