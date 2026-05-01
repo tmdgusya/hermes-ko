@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 import GithubIcon from "@/components/ui/GithubIcon";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import { newIssueUrl, siteConfig } from "@/lib/site";
+import { newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
 const issueActions = [
   {
@@ -45,6 +45,24 @@ export default function HomePage() {
             <br />
             문서는 정적으로, 질문과 토론은 GitHub Issues에서 이어갑니다.
           </p>
+          <a
+            href={siteConfig.operatorThreadsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mb-10 inline-flex items-center gap-3 rounded-full border border-gray-80 bg-surface-card/80 px-4 py-3 shadow-soft transition-colors hover:border-hermes-primary/60"
+          >
+            <img
+              src={withBasePath(siteConfig.operatorAvatar)}
+              alt="roach_log 프로필 이미지"
+              className="h-11 w-11 rounded-full object-cover ring-2 ring-hermes-primary/30"
+            />
+            <span className="text-left">
+              <span className="block text-xs text-text-disabled">운영</span>
+              <span className="block text-sm font-semibold text-text-primary group-hover:text-hermes-primary">
+                roach_log가 운영하고 있어요 ↗
+              </span>
+            </span>
+          </a>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/docs">
               <Button size="lg">

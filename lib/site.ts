@@ -4,6 +4,9 @@ export const siteConfig = {
   repoName: "hermes-ko",
   repoUrl: "https://github.com/tmdgusya/hermes-ko",
   upstreamUrl: "https://github.com/NousResearch/hermes-agent",
+  operatorName: "roach_log",
+  operatorThreadsUrl: "https://www.threads.com/@roach_log",
+  operatorAvatar: "/roach_log.jpg",
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
 };
 

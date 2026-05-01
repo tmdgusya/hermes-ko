@@ -11,11 +11,24 @@ export default function Footer() {
               <img src={withBasePath("/hermes_logo.png")} alt="Hermes KR" className="w-6 h-6" />
               <span className="font-semibold text-text-primary font-heading">Hermes KR</span>
             </div>
-            <p className="text-sm text-text-secondary leading-relaxed">
+            <p className="text-sm text-text-secondary leading-relaxed mb-4">
               Hermes Agent 한국어 문서와 GitHub Issues 기반 커뮤니티.
               <br />
               가볍게 시작하고, 필요할 때 키웁니다.
             </p>
+            <a
+              href={siteConfig.operatorThreadsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-hermes-primary"
+            >
+              <img
+                src={withBasePath(siteConfig.operatorAvatar)}
+                alt="roach_log 프로필 이미지"
+                className="h-7 w-7 rounded-full object-cover"
+              />
+              roach_log가 운영합니다 ↗
+            </a>
           </div>
 
           <div>

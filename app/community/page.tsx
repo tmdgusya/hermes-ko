@@ -2,7 +2,7 @@ import { Bug, HelpCircle, Lightbulb, BookOpen, Sparkles, MessageSquare } from "l
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
-import { issuesUrl, newIssueUrl, siteConfig } from "@/lib/site";
+import { issuesUrl, newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
 const categories = [
   {
@@ -63,10 +63,28 @@ export default function CommunityPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-5">
             GitHub Issues로 운영합니다
           </h1>
-          <p className="text-lg text-text-secondary leading-relaxed">
+          <p className="text-lg text-text-secondary leading-relaxed mb-6">
             Hermes KR은 초기 단계에서 별도 회원가입, DB, 댓글 시스템을 운영하지 않습니다.
             질문과 토론은 GitHub Issues에 공개적으로 남겨서 검색 가능한 지식 베이스로 쌓습니다.
           </p>
+          <a
+            href={siteConfig.operatorThreadsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 rounded-2xl border border-gray-80 bg-surface-card px-4 py-3 transition-colors hover:border-hermes-primary/60"
+          >
+            <img
+              src={withBasePath(siteConfig.operatorAvatar)}
+              alt="roach_log 프로필 이미지"
+              className="h-12 w-12 rounded-full object-cover ring-2 ring-hermes-primary/30"
+            />
+            <span>
+              <span className="block text-xs text-text-disabled">운영자</span>
+              <span className="block text-sm font-semibold text-text-primary">
+                roach_log · Threads에서 보기 ↗
+              </span>
+            </span>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
