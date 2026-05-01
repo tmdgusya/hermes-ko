@@ -5,6 +5,7 @@ import GithubIcon from "@/components/ui/GithubIcon";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import ThreadsHighlights from "@/components/operator/ThreadsHighlights";
+import CommunityDashboard from "@/components/community/CommunityDashboard";
 import HermesUpdates from "@/components/operator/HermesUpdates";
 import { newIssueUrl, siteConfig, withBasePath } from "@/lib/site";
 
@@ -149,6 +150,8 @@ export default function HomePage() {
       </section>
 
       <ThreadsHighlights />
+
+      <CommunityDashboard />
 
       <HermesUpdates />
 
