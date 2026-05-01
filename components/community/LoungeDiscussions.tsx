@@ -5,19 +5,24 @@ import {
   MessageCircle,
   ThumbsUp,
   ExternalLink,
-  Loader2,
   MessageSquarePlus,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import {
-  fetchDiscussions,
   categoryDisplay,
   type Discussion,
   type DiscussionCategory,
 } from "@/lib/github";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, withBasePath } from "@/lib/site";
+
+type DiscussionsData = {
+  fetchedAt: string;
+  count: number;
+  discussions: Discussion[];
+  error?: string;
+};
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("ko-KR", {
@@ -39,24 +44,58 @@ function timeAgo(value: string) {
 }
 
 export default function LoungeDiscussions() {
-  const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const [data, setData] = useState<DiscussionsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetchDiscussions();
-        setDiscussions(data);
+        const resp = await fetch(withBasePath("/discussions.json"));
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const json: DiscussionsData = await resp.json();
+        setData(json);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "알 수 없는 오류");
+        setData({
+          fetchedAt: "",
+          count: 0,
+          discussions: [],
+          error: err instanceof Error ? err.message : "알 수 없는 오류",
+        });
       } finally {
         setLoading(false);
       }
     }
     load();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="py-16 px-4 text-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
+        <p className="mt-3 text-sm text-muted-foreground">라운지 소식을 불러오는 중…</p>
+      </div>
+    );
+  }
+
+  const discussions = data?.discussions || [];
+  const error = data?.error;
+
+  if (error && discussions.length === 0) {
+    return (
+      <div className="py-16 px-4 text-center">
+        <p className="text-foreground font-semibold mb-2">라운지를 불러오지 못했습니다</p>
+        <p className="text-sm text-muted-foreground mb-4">{error}</p>
+        <a
+          href={`${siteConfig.repoUrl}/discussions`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="secondary">GitHub에서 직접 보기 ↗</Button>
+        </a>
+      </div>
+    );
+  }
 
   // 카테고리별 그룹화
   const categories = new Map<string, { cat: DiscussionCategory; items: Discussion[] }>();
@@ -73,31 +112,6 @@ export default function LoungeDiscussions() {
     : discussions;
 
   const categoryList = Array.from(categories.values());
-
-  if (loading) {
-    return (
-      <div className="py-16 px-4 text-center">
-        <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
-        <p className="mt-3 text-sm text-muted-foreground">라운지 소식을 불러오는 중…</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="py-16 px-4 text-center">
-        <p className="text-foreground font-semibold mb-2">라운지를 불러오지 못했습니다</p>
-        <p className="text-sm text-muted-foreground mb-4">{error}</p>
-        <a
-          href={`${siteConfig.repoUrl}/discussions`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button variant="secondary">GitHub에서 직접 보기 ↗</Button>
-        </a>
-      </div>
-    );
-  }
 
   return (
     <div className="py-16 px-4">
@@ -160,7 +174,9 @@ export default function LoungeDiscussions() {
         {filteredDiscussions.length === 0 ? (
           <div className="text-center py-12">
             <Badge variant="info">아직 글이 없어요</Badge>
-            <p className="mt-4 text-sm text-muted-foreground">첫 번째 글을 남겨보세요!</p>
+            <p className="mt-4 text-sm text-muted-foreground">
+              첫 번째 글을 남겨보세요!
+            </p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -172,7 +188,7 @@ export default function LoungeDiscussions() {
                   href={d.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block"
+                  className="block group"
                 >
                   <Card
                     variant="elevated"
@@ -245,6 +261,11 @@ export default function LoungeDiscussions() {
               GitHub Discussions 전체 보기 ↗
             </Button>
           </a>
+          {data?.fetchedAt && (
+            <p className="text-xs text-muted-foreground mt-3">
+              마지막 업데이트: {formatDate(data.fetchedAt)}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/fetch-discussions.cjs",
     "build": "next build",
     "postbuild": "pagefind --site out --output-subdir _pagefind",
     "start": "next start"
