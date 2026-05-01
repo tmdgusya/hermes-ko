@@ -125,7 +125,7 @@ export default function CommunityPage() {
             </div>
           </section>
 
-          <aside className="lg:sticky lg:top-24 space-y-5">
+          <aside className="space-y-5 lg:sticky lg:top-24 lg:pt-[56px]">
             <Card variant="elevated">
               <h2 className="text-lg font-semibold text-text-primary font-heading mb-3">
                 운영 원칙
