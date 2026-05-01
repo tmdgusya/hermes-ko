@@ -286,7 +286,161 @@ ACP 쪽에 steer/queue slash command가 추가되고, 중단된 prompt를 steer 
 
 ---
 
-## 6. 로컬 빌드 검증
+## 6. Threads 운영자 노트 링크를 agent-browser로 가져와 반영하는 방법
+
+홈페이지의 `Threads에서 온 운영자 노트` 섹션은 운영자의 Threads 글 중 Hermes 사용자에게 바로 도움이 되는 글을 큐레이션하는 영역이다. 업데이트 Git log 카드와 별개로, Threads 원문 링크를 가져와 `lib/operatorThreads.ts`에 수동 큐레이션한다.
+
+### 6.1 데이터/컴포넌트 위치
+
+운영자 노트 데이터는 다음 파일에 있다.
+
+```txt
+lib/operatorThreads.ts
+```
+
+UI 컴포넌트는 다음 파일이다.
+
+```txt
+components/operator/ThreadsHighlights.tsx
+```
+
+홈페이지에 컴포넌트가 연결된 파일은 다음이다.
+
+```txt
+app/page.tsx
+```
+
+운영자 Threads 프로필 URL은 다음 파일에서 관리한다.
+
+```txt
+lib/site.ts
+```
+
+현재 기본 계정은 `roach_log`이며, 프로필 URL은 아래와 같다.
+
+```txt
+https://www.threads.com/@roach_log
+```
+
+### 6.2 agent-browser로 Threads 링크 확인하기
+
+Threads는 동적 페이지라 HTML fetch만으로는 글 목록/링크가 잘 안 보일 수 있다. 이때는 agent-browser/browser tool로 실제 페이지를 열어 확인한다.
+
+기본 절차:
+
+1. 브라우저로 운영자 Threads 프로필을 연다.
+
+   ```txt
+   https://www.threads.com/@roach_log
+   ```
+
+2. `browser_snapshot` 또는 화면 확인으로 최근 글 목록을 본다.
+3. 필요한 글의 링크를 클릭해 개별 post URL로 들어간다.
+4. 주소창의 canonical post URL을 기록한다.
+5. 가능하면 글 제목/본문 첫 문장/댓글 흐름을 확인해 사이트 카드로 요약한다.
+
+개별 글 URL 형태는 보통 다음과 같다.
+
+```txt
+https://www.threads.com/@roach_log/post/<POST_ID>
+```
+
+이미 사이트에 들어간 예시:
+
+```txt
+https://www.threads.com/@roach_log/post/DXyB2OkgAy3
+https://www.threads.com/@roach_log/post/DXxmMefAZYU
+https://www.threads.com/@roach_log/post/DXxkPd3gZ6B
+https://www.threads.com/@roach_log/post/DXwom05ga0Q
+```
+
+### 6.3 Threads 카드 작성 규칙
+
+`lib/operatorThreads.ts`의 구조는 다음 형태를 유지한다.
+
+```ts
+export type OperatorThread = {
+  title: string;
+  excerpt: string;
+  href: string;
+  publishedLabel: string;
+  labels: string[];
+  stats?: string;
+};
+
+export const operatorThreads: OperatorThread[] = [
+  {
+    title: "사용자에게 보이는 제목",
+    excerpt: "Threads 원문을 1~2문장으로 요약한 설명",
+    href: "https://www.threads.com/@roach_log/post/<POST_ID>",
+    publishedLabel: "최근 Threads",
+    labels: ["tag-1", "tag-2"],
+    stats: "좋아요 N · 댓글 M",
+  },
+];
+```
+
+작성 원칙:
+
+- `href`는 반드시 개별 Threads post URL을 넣는다. 프로필 URL이나 공유 리다이렉트 URL만 넣지 않는다.
+- `title`은 원문 제목을 기계적으로 복붙하기보다, 사이트 방문자가 클릭 이유를 알 수 있게 쓴다.
+- `excerpt`는 Threads 원문/댓글에서 확인되는 내용만 1~2문장으로 요약한다.
+- `labels`는 2~4개 정도로 유지한다. 예: `agent-browser`, `kanban`, `gateway`, `model`, `setup`, `release`.
+- `publishedLabel`은 최신 글이면 `최근 Threads`, 일반 큐레이션이면 `Threads에서`를 쓴다.
+- `stats`는 agent-browser에서 확인한 값만 적는다. 확인이 안 되면 생략한다.
+- 너무 오래된 글까지 늘리지 말고, 홈페이지에는 최근/핵심 4~6개 정도만 유지한다.
+
+### 6.4 좋은 운영자 노트 요약 예시
+
+```ts
+{
+  title: "agent-browser로 Threads 원문 링크 수집하기",
+  excerpt:
+    "동적 페이지라 API 없이 보기 어려운 Threads 글도 agent-browser로 직접 열어 canonical post URL을 확인하고, 운영자 노트 카드에 원문 링크를 붙이는 흐름입니다.",
+  href: "https://www.threads.com/@roach_log/post/<POST_ID>",
+  publishedLabel: "최근 Threads",
+  labels: ["agent-browser", "threads", "operator-note"],
+}
+```
+
+나쁜 예시:
+
+```ts
+{
+  title: "Threads 글",
+  excerpt: "좋은 글입니다.",
+  href: "https://www.threads.com/@roach_log",
+  publishedLabel: "Threads에서",
+  labels: ["etc"],
+}
+```
+
+이유:
+
+- 개별 post URL이 아니라 프로필 URL이라 원문으로 바로 이동할 수 없다.
+- 제목/요약이 너무 추상적이라 방문자가 클릭 이유를 알 수 없다.
+- 원문에서 확인하지 않은 평가는 피해야 한다.
+
+### 6.5 Threads 운영자 노트 검증
+
+수정 후 확인할 항목:
+
+- `Threads에서 온 운영자 노트` 섹션에 새 카드가 보이는가
+- 카드 클릭 시 개별 Threads post URL로 새 탭이 열리는가
+- `Threads 전체 보기` 버튼은 여전히 `https://www.threads.com/@roach_log`로 연결되는가
+- `title`, `excerpt`, `labels`, `stats`가 좁은 화면에서 넘치지 않는가
+- 업데이트 섹션과 같이 배치했을 때 섹션 간 톤이 어울리는가
+
+브라우저 콘솔에서 링크 확인 예시:
+
+```js
+Array.from(document.querySelectorAll('a[href*="threads.com/@roach_log"]'))
+  .map(a => ({ text: a.textContent?.trim().replace(/\s+/g, ' '), href: a.href }))
+```
+
+---
+
+## 7. 로컬 빌드 검증
 
 사이트 데이터를 수정했다면 반드시 빌드한다.
 
@@ -302,7 +456,7 @@ GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/hermes-ko npm run build
 
 ---
 
-## 7. 로컬 visual QA
+## 8. 로컬 visual QA
 
 UI를 바꿨다면 로컬 서버에서 확인한다.
 
@@ -338,7 +492,7 @@ http://localhost:3000/
 
 ---
 
-## 8. 배포 절차
+## 9. 배포 절차
 
 배포는 `/tmp/hermes-ko-deploy` clone에서 commit/push한다.
 
@@ -378,7 +532,7 @@ https://tmdgusya.github.io/hermes-ko/
 
 ---
 
-## 9. 배포 후 검증
+## 10. 배포 후 검증
 
 브라우저에서 실제 배포 URL을 열고 확인한다.
 
@@ -399,7 +553,7 @@ Array.from(document.querySelectorAll('a[href*="github.com/NousResearch/hermes-ag
 
 ---
 
-## 10. 최종 보고 형식
+## 11. 최종 보고 형식
 
 작업 완료 후 사용자에게 아래 형식으로 보고한다.
 
@@ -419,7 +573,7 @@ Array.from(document.querySelectorAll('a[href*="github.com/NousResearch/hermes-ag
 
 ---
 
-## 11. 현재 사이트에 이미 들어간 업데이트 예시
+## 12. 현재 사이트에 이미 들어간 업데이트 예시
 
 현재 `2026-05-01` 기준으로 사이트에는 아래 묶음이 들어가 있다.
 
@@ -436,13 +590,14 @@ Array.from(document.querySelectorAll('a[href*="github.com/NousResearch/hermes-ag
 
 ---
 
-## 12. 체크리스트
+## 13. 체크리스트
 
 작업 전:
 
 - [ ] 공식 Git log 확인
 - [ ] commit 날짜 확인
 - [ ] 릴리즈/tag 여부 확인이 필요한지 판단
+- [ ] 운영자 노트를 갱신한다면 agent-browser로 Threads 원문/개별 post URL 확인
 
 작성 중:
 
@@ -450,6 +605,8 @@ Array.from(document.querySelectorAll('a[href*="github.com/NousResearch/hermes-ag
 - [ ] `hermesUpdatesLastChecked` 갱신
 - [ ] commit URL full SHA 사용
 - [ ] 한국어 요약은 추측 없이 작성
+- [ ] 운영자 노트를 갱신한다면 `lib/operatorThreads.ts`에 개별 Threads post URL 반영
+- [ ] Threads `stats`는 확인 가능한 경우에만 작성
 
 검증:
 
@@ -458,6 +615,7 @@ Array.from(document.querySelectorAll('a[href*="github.com/NousResearch/hermes-ag
 - [ ] local visual QA
 - [ ] deployed visual QA
 - [ ] commit 링크 href 확인
+- [ ] Threads 카드 링크가 `threads.com/@roach_log/post/...`로 연결되는지 확인
 
 배포:
 
