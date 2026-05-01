@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-01",
-    title: "ACP steer/queue 명령과 중단 프롬프트 복구 개선",
+    title: "ACP steer/queue 명령과 중단 프롬프트 복구, WSL cwd 정규화",
     category: "ACP",
     summary:
-      "ACP에 steer/queue slash command가 추가되고, 중단된 prompt를 steer 흐름에서 다시 이어받는 수정이 들어왔습니다. idle 세션에서 /steer를 일반 prompt로 실행하는 처리와 Windows/WSL 환경의 cwd 정규화도 포함됐습니다.",
+      "ACP에 steer/queue slash command가 추가되고, 중단된 prompt를 steer 흐름에서 다시 이어받는 수정이 적용됐습니다. idle 세션에서 /steer를 일반 prompt로 실행하는 처리와 Windows/WSL 환경의 cwd 정규화도 포함됩니다.",
     commits: [
       {
         sha: "e27b0b7",
@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Agent guardrails 강화와 /goal 크로스턴 목표, DeepSeek V4 Pro 대응",
+    title: "Agent guardrails, /goal 크로스턴 목표, DeepSeek V4 Pro 및 압축 토큰 추정",
     category: "Agent 안정성",
     summary:
-      "도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가되고, _detect_tool_failure display 의미 체계가 보존됩니다. 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)이 도입됐으며, DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 수정됐습니다.",
+      "도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)이 도입됐으며, DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 수정됐습니다. 압축 시 system prompt와 tool schema를 토큰 추정에 포함하도록 개선됐습니다.",
     commits: [
       {
         sha: "58b8996",
@@ -62,11 +62,6 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/0704589ceb1365c1b7aefff382923ed28380714e",
       },
       {
-        sha: "8fa44b1",
-        message: "fix(guardrails): preserve display _detect_tool_failure semantics",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8fa44b17247efa8cae6b0f155e036e1bdf4d7da8",
-      },
-      {
         sha: "265bd59",
         message: "feat: /goal — persistent cross-turn goals (Ralph loop)",
         href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
@@ -76,14 +71,19 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(deepseek): use non-empty reasoning_content placeholder for V4 Pro thinking mode",
         href: "https://github.com/NousResearch/hermes-agent/commit/bfb704684ec64675650bc39fa0f731604b12aba2",
       },
+      {
+        sha: "f0dc919",
+        message: "fix(compression): include system prompt + tool schemas in token estimates",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f0dc919f92c5327cf8033e06c039126f1288e89c",
+      },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Gateway 세션·이벤트 보존, /status 토큰 조회 및 topic skill 재주입",
+    title: "Gateway 세션·이벤트 보존, State replay 보강 및 topic skill 재주입",
     category: "Gateway / State",
     summary:
-      "Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, session 분기 시 assistant metadata가 보존됩니다. /new 또는 /reset 이후 topic-bound skill이 재주입되며, /status 명령의 토큰 총계를 SessionDB에서 읽도록 개선됐습니다. 슬래시 커맨드 시스템 알림이 TTL 후 자동 삭제됩니다.",
+      "Gateway 콜백 snapshot 시점이 agent bind 이후로 조정되고, session 분기 시 assistant metadata가 보존됩니다. /new 또는 /reset 이후 topic-bound skill이 재주입되며, conversation replay에 finish_reason이 포함되고 queued event 병합 시 document type이 보존됩니다. slash command 알림 TTL 자동 삭제와 Matrix 홈룸 온보딩도 포함됩니다.",
     commits: [
       {
         sha: "8d7500d",
@@ -101,23 +101,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/fa9fd26acba4d6f3907ec798974b1431b115557c",
       },
       {
-        sha: "7abc9ce",
-        message: "fix(gateway): read /status token totals from SessionDB",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7abc9ce4dfc389fb2363f80a38c8a12f3017a269",
+        sha: "a94841e",
+        message: "fix(state): include finish_reason in conversation replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a94841eaa0a89bde990fe76743f1aa7ddb6866bb",
       },
       {
-        sha: "4caad28",
-        message: "feat(gateway): auto-delete slash-command system notices after TTL",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4caad285a602b75c1da1c7d553864278d7aa723d",
+        sha: "158eb32",
+        message: "fix(gateway): preserve document type when merging queued events",
+        href: "https://github.com/NousResearch/hermes-agent/commit/158eb32686cdaebae6737d6874060b14b2d6eda4",
       },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Config/Auth boolean 처리와 provider 설정 안정화",
+    title: "Config/Auth boolean 처리, atomic provider 저장 및 경로 정규화",
     category: "Config / Auth",
     summary:
-      "문자열로 들어오는 설정값을 실제 boolean으로 보정하고, provider config 저장을 atomic write로 전환해 설정 파일 손상을 방지합니다. StreamingConfig의 boolean과 잘못된 숫자값도 안전하게 보정하며, YOLO 모드 env 파싱이 quoted-bool 문자열에 강화됐습니다.",
+      "문자열로 들어오는 설정값을 실제 boolean으로 보정하고, provider config 저장을 atomic write로 전환해 설정 파일 손상을 방지합니다. StreamingConfig의 boolean과 잘못된 숫자값도 안전하게 보정하며, achievements plugin과 profile-tui 경로가 HERMES_HOME 기준으로 라우팅됩니다.",
     commits: [
       {
         sha: "27ec74c",
@@ -140,18 +140,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/55366510e55a9a15cbba3d7e59667d215d4b9a26",
       },
       {
-        sha: "24130b7",
-        message: "fix(approval): harden YOLO mode env parsing against quoted-bool strings",
-        href: "https://github.com/NousResearch/hermes-agent/commit/24130b7e53abcd434c7d0ce06de93b27b57047f8",
+        sha: "dfe512c",
+        message: "fix(paths): route achievements plugin + profile-tui through HERMES_HOME",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dfe512c58db60910676d6b9c6725f72bb8f39590",
       },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Discord·Feishu 플랫폼 도구와 Moonshot·Honcho 내부 도구 개선",
+    title: "Discord·Feishu·Yuanbao 플랫폼 도구와 Browser·Terminal 개선",
     category: "Tools / MCP / Plugins",
     summary:
-      "Discord 툴의 capability 캐시가 토큰별로 분리되고, Feishu에 운영자 설정 기반 봇 승인·멘션 정책이 추가됐습니다. Moonshot에서 anyOf collapse 후 nullable/enum 제거와 누락된 타입 채우기 수정이 적용됐으며, Honcho의 캐시 읽기가 _cache_lock으로 보호됩니다.",
+      "Discord 툴의 capability 캐시가 토큰별로 분리되고, Feishu에 운영자 설정 기반 봇 승인·멘션 정책이 추가됐으며, Yuanbao 그룹 슬래시 커맨드에 소유자 신원 확인이 적용됐습니다. Browser supervisor는 캐시 히트 시 thread/loop 상태를 검증하고, terminal은 로컬 NOPASSWD sudo 시 불필요한 프롬프트를 건너뜁니다. Moonshot anyOf collapse 후 nullable/enum 제거, Honcho 캐시 락 보호도 함께 포함됩니다.",
     commits: [
       {
         sha: "fa7b0b0",
@@ -164,19 +164,19 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/b94cb8e2c4ebf2a8c7688cf676c3cf9899584adb",
       },
       {
-        sha: "2af8b8f",
-        message: "fix(moonshot): also strip nullable/enum after anyOf collapse",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2af8b8ff3712c71620f32b1fa57e92289e6ca202",
+        sha: "b7ad3f4",
+        message: "fix(yuanbao): enforce owner identity check on group slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b7ad3f478f9bc24768f88e4339fc3e6e23d0292b",
       },
       {
-        sha: "9ca72a6",
-        message: "fix(moonshot): fill missing type before enum cleanup to handle anyOf branches without explicit type",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9ca72a69a730e442ad6f14e5f2f51c8f2011dcb7",
+        sha: "73a6b80",
+        message: "fix(browser_supervisor): verify thread and loop health before returning cached supervisor",
+        href: "https://github.com/NousResearch/hermes-agent/commit/73a6b80317652a63faad3d8f0917e38e82cf8175",
       },
       {
-        sha: "ec4cb16",
-        message: "fix(honcho): guard _peers_cache and _sessions_cache reads under _cache_lock",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ec4cb16a29ec882df0ff931cda287ae97d61601c",
+        sha: "ab6c629",
+        message: "fix(terminal): skip sudo prompt when local NOPASSWD sudo works",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ab6c629ccc31ed2dea0b6a2955750b75416d0058",
       },
     ],
   },
