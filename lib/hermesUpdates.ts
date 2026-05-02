@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-02",
-    title: "Gateway systemd 무한 재시도·backoff, --insecure 모드 비루프백 WebSocket 허용",
+    title: "Gateway systemd 무한 재시도·backoff, --insecure 모드 비루프백 WebSocket 허용, external_dirs 스킬 슬래시 커맨드 포함",
     category: "Gateway / State",
     summary:
-      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백(non-loopback) IP의 WebSocket 연결을 허용하여 원격 환경에서도 Gateway에 접근할 수 있습니다.",
+      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백(non-loopback) IP의 WebSocket 연결을 허용하여 원격 환경에서도 Gateway에 접근할 수 있습니다. Telegram/Discord 슬래시 커맨드에 external_dirs의 스킬도 포함되도록 수정됐습니다.",
     commits: [
       {
         sha: "f98b5d0",
@@ -31,6 +31,35 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "585d677",
         message: "fix: allow WebSocket connections from non-loopback IPs in --insecure mode (#18633)",
         href: "https://github.com/NousResearch/hermes-agent/commit/585d6778da28f4a63205d95a296358e2cce23ed6",
+      },
+      {
+        sha: "e2cea6e",
+        message: "fix(gateway): include external_dirs skills in Telegram/Discord slash commands (#18741)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2cea6eeba36e8d6b96c0ed08bc4514b5c07c464",
+      },
+    ],
+  },
+  {
+    date: "2026-05-02",
+    title: "Skills 명령어 캐시 플랫폼 범위 재스캔, Curator 롤백 cron 링크 복구, CLI .env UTF-8 디코딩",
+    category: "Tools / MCP / Plugins",
+    summary:
+      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. CLI에서 .env 파일을 UTF-8로 디코딩하여 Windows GBK 환경에서의 크래시를 방지합니다.",
+    commits: [
+      {
+        sha: "c73594f",
+        message: "fix(skills): rescan skill_commands cache when platform scope changes (#18739)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c73594fe4196b5ee331d25f86774e66ad0f67a69",
+      },
+      {
+        sha: "97acd66",
+        message: "fix(curator): authoritative absorbed_into on delete + restore cron skill links on rollback (#18671) (#18731)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/97acd66b4c58c7945f573a6efd6059e781eb4f8f",
+      },
+      {
+        sha: "c5e3a6f",
+        message: "fix(cli): decode .env as UTF-8 to avoid GBK crash on Windows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c5e3a6fb5bb33477d639219de14922caedda98ef",
       },
     ],
   },
