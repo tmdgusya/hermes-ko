@@ -76,6 +76,26 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat: /goal — persistent cross-turn goals (Ralph loop)",
         href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
       },
+      {
+        sha: "e2eb561",
+        message: "fix(curator): rewrite cron job skill refs after consolidation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2eb561e8e1a069392b494811ea45be6779493cd",
+      },
+      {
+        sha: "c5b4c48",
+        message: "fix: lazy session creation — defer DB row until first message",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c5b4c481656634ff919b214a037b830077d3bbd1",
+      },
+      {
+        sha: "bfb7046",
+        message: "fix(deepseek): use non-empty reasoning_content placeholder for V4 Pro thinking mode",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bfb704684ec64675650bc39fa0f731604b12aba2",
+      },
+      {
+        sha: "f0dc919",
+        message: "fix(compression): include system prompt + tool schemas in token estimates",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f0dc919f92c5327cf8033e06c039126f1288e89c",
+      },
     ],
   },
   {
@@ -109,6 +129,41 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "4caad28",
         message: "feat(gateway): auto-delete slash-command system notices after TTL",
         href: "https://github.com/NousResearch/hermes-agent/commit/4caad285a602b75c1da1c7d553864278d7aa723d",
+      },
+      {
+        sha: "d05a87e",
+        message: "fix(gateway): clear slack assistant thread status",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d05a87e68662043ac7d66dad942e428a81cd648f",
+      },
+      {
+        sha: "a147164",
+        message: "fix(slack): preserve per-user slash-command session isolation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
+      },
+      {
+        sha: "a717199",
+        message: "fix(slack): exclude reserved Slack commands from native slash manifest",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a717199bbf31a0900a99b06153d3ba5803cd9012",
+      },
+      {
+        sha: "5cdc39e",
+        message: "fix(gateway): preserve case-sensitive chat IDs in DeliveryTarget.parse",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5cdc39e29a032091c4989045b0843715737680c3",
+      },
+      {
+        sha: "2b3923f",
+        message: "fix(gateway): coerce scalar free_response_channels to str before split",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2b3923ff138f5bd68e576b722ee298a8ce07dfe7",
+      },
+      {
+        sha: "1be3b74",
+        message: "fix(gateway): honor MATRIX_HOME_ROOM in onboarding",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1be3b74cfb456a2271f16068b08f72b83b37308d",
+      },
+      {
+        sha: "8d7500d",
+        message: "fix(gateway): snapshot callback generation after agent binds it, not before",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8d7500d80d1e20f963d531bb459c36c6922b2ad3",
       },
     ],
   },
@@ -211,6 +266,21 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "a01c1f7",
         message: "fix: kanban button",
         href: "https://github.com/NousResearch/hermes-agent/commit/a01c1f7305bda8ebc5cbcde22f2a80a0300a2ca1",
+      },
+      {
+        sha: "0b76d23",
+        message: "docs: make Persistent Goals docs accessible in nav and llms.txt",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0b76d23d1acffd14bbc5061cd4f913cf7a0e1a8a",
+      },
+      {
+        sha: "a49f4c6",
+        message: "fix: prevent tui rebuilding assets",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a49f4c617da3ddcb37a2f438b083b960090ad42a",
+      },
+      {
+        sha: "c23c7c9",
+        message: "fix(tui): address remaining review feedback — ordering and digit shortcuts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c23c7c994bf8b77c513b7c3fb4a68774970e47ac",
       },
     ],
   },
