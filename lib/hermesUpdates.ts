@@ -125,6 +125,11 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(tools): deduplicate tool names at API boundary for Vertex/Azure/Bedrock",
         href: "https://github.com/NousResearch/hermes-agent/commit/9bf260472bca9f8097bf442f5c5e6dd1984dd4c3",
       },
+      {
+        sha: "5d3be89",
+        message: "docs(tts): mention xAI custom voice support (#18776)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5d3be898a8671eb9fb99cf18f43165502f54e7f4",
+      },
     ],
   },
   {
@@ -166,7 +171,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Gateway Slack·Yuanbao·Telegram: 비공개 알림, ephemeral 슬래시 커맨드, 자동 재시작, 사용자 세션 격리, DM 토픽",
     category: "Gateway / State",
     summary:
-      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 커맨드별로 ephemeral 범위를 제한하고 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다.",
+      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 커맨드별로 ephemeral 범위를 제한하고 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. DeliveryTarget.parse에서 대소문자 구분 채팅 ID를 보존하고 free_response_channels 스칼라 값을 문자열로 변환합니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다.",
     commits: [
       {
         sha: "0ab2d75",
@@ -193,6 +198,36 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(slack): preserve per-user slash-command session isolation",
         href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
       },
+      {
+        sha: "d05a87e",
+        message: "fix(gateway): clear slack assistant thread status",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d05a87e68662043ac7d66dad942e428a81cd648f",
+      },
+      {
+        sha: "5cdc39e",
+        message: "fix(gateway): preserve case-sensitive chat IDs in DeliveryTarget.parse",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5cdc39e29a032091c4989045b0843715737680c3",
+      },
+      {
+        sha: "2b3923f",
+        message: "fix(gateway): coerce scalar free_response_channels to str before split",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2b3923ff138f5bd68e576b722ee298a8ce07dfe7",
+      },
+      {
+        sha: "a717199",
+        message: "fix(slack): exclude reserved Slack commands from native slash manifest",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a717199bbf31a0900a99b06153d3ba5803cd9012",
+      },
+      {
+        sha: "75e1339",
+        message: "fix(telegram): send seed message after creating DM topics (#18334)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/75e1339d4cdb32652e560eccc3930cc9264ac67b",
+      },
+      {
+        sha: "b7ad3f4",
+        message: "fix(yuanbao): enforce owner identity check on group slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b7ad3f478f9bc24768f88e4339fc3e6e23d0292b",
+      },
     ],
   },
   {
@@ -200,7 +235,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "ACP steer·queue, Agent loop guardrails·lazy session, /goal 크로스턴 목표, Curator 지연 실행·dry-run",
     category: "Agent 안정성",
     summary:
-      "ACP에 steer/queue 슬래시 커맨드가 추가되고 중단된 프롬프트 복구, WSL cwd 정규화, idle 세션 /steer 처리가 적용됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다.",
+      "ACP에 steer/queue 슬래시 커맨드가 추가되고 중단된 프롬프트 복구, WSL cwd 정규화, idle 세션 /steer 처리가 적용됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다. Persistent Goals 문서가 docs nav와 llms.txt에서 접근 가능하게 됐습니다. Kanban 버튼이 수정됐습니다.",
     commits: [
       {
         sha: "e27b0b7",
@@ -226,6 +261,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "77c0bc6",
         message: "fix(curator): defer first run and add --dry-run preview (#18373) (#18389)",
         href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
+      },
+      {
+        sha: "0b76d23",
+        message: "makes the Persistent Goals docs accessible in the docs nav (and llms.txt) (#18481)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0b76d23d1acffd14bbc5061cd4f913cf7a0e1a8a",
+      },
+      {
+        sha: "a01c1f7",
+        message: "fix: kanban button",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a01c1f7305bda8ebc5cbcde22f2a80a0300a2ca1",
       },
     ],
   },
