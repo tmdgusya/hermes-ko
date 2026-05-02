@@ -54,7 +54,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Discord·Telegram·Feishu: zombie WebSocket 방지, /skill 자동완성 실시간 갱신, polling liveness, 원격 문서 다운로드",
     category: "Gateway / State",
     summary:
-      "Discord에서 재연결 전 이전 클라이언트를 닫아 zombie websocket을 방지합니다. /reload-skills가 /skill 자동완성을 실시간으로 갱신하며, external_dirs 스킬도 /skill 자동완성에 포함되고 legacy 25x25 캡 제한이 제거됐습니다. 32자 clamp 충돌 시 경고를 출력합니다. Telegram은 재연결 후 polling liveness를 탐지하여 wedged Updater를 감지합니다. Feishu는 원격 문서 다운로드를 httpx.AsyncClient 컨텍스트 내에서 완료합니다.",
+      "Discord에서 재연결 전 이전 클라이언트를 닫아 zombie websocket을 방지합니다. /reload-skills가 /skill 자동완성을 실시간으로 갱신하며, external_dirs 스킬도 /skill 자동완성에 포함되고 legacy 25x25 캡 제한이 제거됐습니다. Gateway에서 external_dirs 스킬을 Telegram/Discord 슬래시 커맨드 목록에도 포함합니다. 32자 clamp 충돌 시 경고를 출력합니다. Telegram은 재연결 후 polling liveness를 탐지하여 wedged Updater를 감지합니다. Feishu는 원격 문서 다운로드를 httpx.AsyncClient 컨텍스트 내에서 완료합니다.",
     commits: [
       {
         sha: "292d2fb",
@@ -86,6 +86,11 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(feishu): finalize remote document downloads inside httpx.AsyncClient context (#18502)",
         href: "https://github.com/NousResearch/hermes-agent/commit/38dd057e91dcc47e82478ebc31c66d67b2d96ace",
       },
+      {
+        sha: "e2cea6e",
+        message: "fix(gateway): include external_dirs skills in Telegram/Discord slash commands (#18741)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2cea6eeba36e8d6b96c0ed08bc4514b5c07c464",
+      },
     ],
   },
   {
@@ -93,7 +98,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Skills·Curator·CLI·Tools: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거",
     category: "Tools / MCP / Plugins",
     summary:
-      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다.",
+      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다. TTS 문서에 xAI 커스텀 음성 지원이 추가됐습니다.",
     commits: [
       {
         sha: "c73594f",
