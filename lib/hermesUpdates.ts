@@ -16,6 +16,25 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-02",
+    title: "Gateway systemd 무한 재시도·backoff, --insecure 모드 비루프백 WebSocket 허용",
+    category: "Gateway / State",
+    summary:
+      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백(non-loopback) IP의 WebSocket 연결을 허용하여 원격 환경에서도 Gateway에 접근할 수 있습니다.",
+    commits: [
+      {
+        sha: "f98b5d0",
+        message: "fix: gateway systemd unit now retries indefinitely with backoff (#18639)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f98b5d00a49b01fb833deecace78656035bc6f6d",
+      },
+      {
+        sha: "585d677",
+        message: "fix: allow WebSocket connections from non-loopback IPs in --insecure mode (#18633)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/585d6778da28f4a63205d95a296358e2cce23ed6",
+      },
+    ],
+  },
+  {
     date: "2026-05-01",
     title: "ACP steer/queue 명령, 중단 프롬프트 복구, WSL cwd 정규화 및 idle 세션 /steer 처리",
     category: "ACP",
@@ -100,10 +119,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Gateway / Slack: 비공개 알림, 슬래시 커맨드 ephemeral 처리·격리, 자동 재시작, 알림 TTL, 채팅 ID 보존 및 Matrix 온보딩",
+    title: "Gateway / Slack: 비공개 알림, 슬래시 커맨드 ephemeral 처리·격리, 자동 재시작, 알림 TTL, 채팅 ID 보존, Matrix 온보딩 및 Config boolean 보정, update --yes, HERMES_HOME 경로",
     category: "Gateway / State",
     summary:
-      "Gateway에 비공개 알림(private notice) 전송과 Slack format_message 수정이 적용됐습니다. Slash command에 대한 ephemeral acknowledgment 및 라우팅이 추가되고, 리뷰 피드백을 반영해 ephemeral 범위가 커맨드로 조정되고 사용자별 세션 격리가 보존되며, 예약된 Slack 커맨드는 네이티브 슬래시 매니페스트에서 제외됩니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작되며, 슬래시 커맨드 시스템 알림은 TTL 기반으로 자동 삭제됩니다. 그 외에 Slack assistant 스레드 상태 정리, case-sensitive chat ID 보존(DeliveryTarget.parse), scalar free_response_channels 문자열 변환, MATRIX_HOME_ROOM 온보딩 처리, snapshot 콜백 생성 타이밍 수정 등이 추가로 포함됩니다.",
+      "Gateway에 비공개 알림(private notice) 전송과 Slack format_message 수정이 적용됐습니다. Slash command에 대한 ephemeral acknowledgment 및 라우팅이 추가되고, 리뷰 피드백을 반영해 ephemeral 범위가 커맨드로 조정되고 사용자별 세션 격리가 보존되며, 예약된 Slack 커맨드는 네이티브 슬래시 매니페스트에서 제외됩니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작되며, 슬래시 커맨드 시스템 알림은 TTL 기반으로 자동 삭제됩니다. 그 외에 Slack assistant 스레드 상태 정리, case-sensitive chat ID 보존(DeliveryTarget.parse), scalar free_response_channels 문자열 변환, MATRIX_HOME_ROOM 온보딩 처리, snapshot 콜백 생성 타이밍 수정 등이 포함됩니다. 또한 문자열로 들어오는 설정값을 실제 boolean으로 보정하고, hermes update에 --yes/-y 플래그가 추가돼 대화형 프롬프트를 건너뛸 수 있으며 skill config scan 실패 시 update가 중단되지 않도록 수정됐습니다. achievements 플러그인과 profile-tui 경로가 HERMES_HOME을 통해 라우팅되고, gateway의 tool_progress_command도 실제 boolean으로 안전하게 보정됩니다.",
     commits: [
       {
         sha: "0ab2d75",
@@ -165,15 +184,6 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(gateway): snapshot callback generation after agent binds it, not before",
         href: "https://github.com/NousResearch/hermes-agent/commit/8d7500d80d1e20f963d531bb459c36c6922b2ad3",
       },
-    ],
-  },
-  {
-    date: "2026-05-01",
-    title: "Config boolean 보정, update --yes 플래그, atomic 저장, HERMES_HOME 경로 및 YOLO 모드 파싱",
-    category: "Config / Auth",
-    summary:
-      "문자열로 들어오는 설정값을 실제 boolean으로 보정하고, provider config 저장을 atomic write로 전환해 설정 파일 손상을 방지합니다. hermes update에 --yes/-y 플래그가 추가돼 대화형 프롬프트를 건너뛸 수 있으며, skill config scan 실패 시 update가 중단되지 않도록 수정됐습니다. achievements 플러그인과 profile-tui 경로가 HERMES_HOME을 통해 라우팅되고, YOLO 모드 환경변수 파싱이 quoted-bool 문자열에 대해 강화됐습니다. gateway의 tool_progress_command도 실제 boolean으로 안전하게 보정됩니다.",
-    commits: [
       {
         sha: "27ec74c",
         message: "fix: coerce show_reasoning and guard_agent_created config bools",
