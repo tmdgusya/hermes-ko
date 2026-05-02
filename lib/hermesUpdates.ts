@@ -95,7 +95,7 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-02",
-    title: "Skills·Curator·CLI·Tools: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거",
+    title: "Skills·Curator·CLI·Tools: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거, TTS xAI 음성",
     category: "Tools / MCP / Plugins",
     summary:
       "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다. TTS 문서에 xAI 커스텀 음성 지원이 추가됐습니다.",
@@ -163,10 +163,44 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "ACP steer·queue·WSL, Agent loop guardrails, Gateway Slack·알림·재시작, /goal, 문서 사이트, 커넥터 도구 수정",
+    title: "Gateway Slack·Yuanbao·Telegram: 비공개 알림, ephemeral 슬래시 커맨드, 자동 재시작, 사용자 세션 격리, DM 토픽",
+    category: "Gateway / State",
+    summary:
+      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 커맨드별로 ephemeral 범위를 제한하고 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다.",
+    commits: [
+      {
+        sha: "0ab2d75",
+        message: "feat(gateway): private notice delivery and Slack format_message fixes",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0ab2d752ffdae211b0f4fd06c8f62cf7eec191a7",
+      },
+      {
+        sha: "7cda0e5",
+        message: "fix(gateway/slack): ephemeral ack and routing for slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7cda0e522443c6e7790793b93b085508fc530fc8",
+      },
+      {
+        sha: "8fcc160",
+        message: "fix(gateway/slack): review fixes — scope ephemeral to commands, user isolation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8fcc160f6b979f9567e76f189e226c18cabc6308",
+      },
+      {
+        sha: "f99676e",
+        message: "fix(gateway): auto-restart when source files change out from under us (#17648) (#18409)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f99676e315408db3742e00ca9808a31592704399",
+      },
+      {
+        sha: "a147164",
+        message: "fix(slack): preserve per-user slash-command session isolation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
+      },
+    ],
+  },
+  {
+    date: "2026-05-01",
+    title: "ACP steer·queue, Agent loop guardrails·lazy session, /goal 크로스턴 목표, Curator 지연 실행·dry-run",
     category: "Agent 안정성",
     summary:
-      "ACP에 steer/queue 슬래시 커맨드가 추가되고 중단된 프롬프트 복구, WSL cwd 정규화, idle 세션 /steer 처리가 적용됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. Curator 첫 실행 지연과 --dry-run 옵션, /goal 크로스턴 목표 기능, 지연 세션 생성, DeepSeek V4 Pro thinking mode 보정, 압축 토큰 추정 수정이 포함됩니다. Gateway에 비공개 알림, Slack 슬래시 커맨드 ephemeral 처리, 자동 재시작, 알림 TTL, Matrix 온보딩, config boolean 보정, update --yes 플래그 등이 적용됐습니다. Discord·Yuanbao·Telegram·Moonshot 도구 수정과 문서 사이트(User Stories, llms.txt, /goal 페이지, 사이드바 정리, Kanban/TUI) 작업도 포함됩니다.",
+      "ACP에 steer/queue 슬래시 커맨드가 추가되고 중단된 프롬프트 복구, WSL cwd 정규화, idle 세션 /steer 처리가 적용됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다.",
     commits: [
       {
         sha: "e27b0b7",
@@ -184,14 +218,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
       },
       {
-        sha: "0ab2d75",
-        message: "feat(gateway): private notice delivery and Slack format_message fixes",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0ab2d752ffdae211b0f4fd06c8f62cf7eec191a7",
+        sha: "c5b4c48",
+        message: "fix: lazy session creation — defer DB row until first message (#18370)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c5b4c481656634ff919b214a037b830077d3bbd1",
       },
       {
-        sha: "a2a3268",
-        message: "docs(website): add User Stories and Use Cases collage page (#18282)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a2a32688ca8ad13727e38df85f3f2820f5a31902",
+        sha: "77c0bc6",
+        message: "fix(curator): defer first run and add --dry-run preview (#18373) (#18389)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
       },
     ],
   },
