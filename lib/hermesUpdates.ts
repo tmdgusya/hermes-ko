@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-01",
-    title: "Agent guardrails 강화, Curator dry-run·지연 실행, 지연 세션 생성, /goal 크로스턴 목표, DeepSeek V4 Pro 및 압축 토큰 보정",
+    title: "Agent guardrails 강화 (loop 감지·display 의미 보존), Curator dry-run·지연 실행, /goal 크로스턴 목표, DeepSeek V4 Pro 보정, 압축 토큰 추정",
     category: "Agent 안정성",
     summary:
-      "도구 호출 반복 루프를 감지하는 guardrail이 추가되고, warning-first 방식과 display 레벨의 도구 실패 감지 의미도 보존됩니다. Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐으며, cron job skill 참조도 통합 후 재작성됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다.",
+      "도구 호출 반복 루프를 감지하는 guardrail이 추가되고, warning-first 방식으로 조정됐으며 display 레벨의 도구 실패 감지 의미도 보존됩니다. Curator의 첫 실행을 지연시키고 --dry-run 미리보기 옵션이 추가됐으며, cron job skill 참조 재작성도 후속 커밋으로 적용됐습니다. 세션 생성을 첫 메시지까지 지연시켜 불필요한 DB row를 방지하며, 크로스턴 목표를 유지하는 /goal 기능(Ralph loop)도 도입됐습니다. DeepSeek V4 Pro thinking mode에서 reasoning_content placeholder가 비어있지 않도록 보정되고, 압축 시 시스템 프롬프트와 도구 스키마를 토큰 추정에 포함하도록 수정됐습니다.",
     commits: [
       {
         sha: "58b8996",
@@ -62,33 +62,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/0704589ceb1365c1b7aefff382923ed28380714e",
       },
       {
-        sha: "77c0bc6",
-        message: "fix(curator): defer first run, add --dry-run preview, and rewrite cron job skill refs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
+        sha: "8fa44b1",
+        message: "fix(guardrails): preserve display _detect_tool_failure semantics",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8fa44b17247efa8cae6b0f155e036e1bdf4d7da8",
       },
       {
-        sha: "c5b4c48",
-        message: "fix: lazy session creation — defer DB row until first message",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c5b4c481656634ff919b214a037b830077d3bbd1",
+        sha: "77c0bc6",
+        message: "fix(curator): defer first run and add --dry-run preview",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
       },
       {
         sha: "265bd59",
         message: "feat: /goal — persistent cross-turn goals (Ralph loop)",
         href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
       },
-      {
-        sha: "bfb7046",
-        message: "fix(deepseek): non-empty reasoning_content placeholder for V4 Pro; fix(compression): include system prompt + tool schemas in token estimates",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bfb704684ec64675650bc39fa0f731604b12aba2",
-      },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Gateway / Slack: 비공개 알림, 슬래시 커맨드 ephemeral 처리, 사용자별 세션 격리, 자동 재시작, 알림 TTL 및 어시스턴트 스레드 정리",
+    title: "Gateway / Slack: 비공개 알림, 슬래시 커맨드 ephemeral 처리·격리, 자동 재시작, 알림 TTL, 채팅 ID 보존 및 Matrix 온보딩",
     category: "Gateway / State",
     summary:
-      "Gateway에 비공개 알림(private notice) 전송과 Slack format_message 수정이 적용됐습니다. Slash command에 대한 ephemeral acknowledgment 및 라우팅이 추가되고, 리뷰 피드백을 반영해 ephemeral 범위가 커맨드로 조정되고 사용자별 세션 격리가 보존되며, 예약된 Slack 커맨드는 네이티브 슬래시 매니페스트에서 제외됩니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작되며, 슬래시 커맨드 시스템 알림은 TTL 기반으로 자동 삭제됩니다. Slack assistant 스레드 상태 정리, case-sensitive chat ID 보존, scalar free_response_channels 문자열 변환, MATRIX_HOME_ROOM 온보딩 처리, snapshot 콜백 생성 타이밍 수정 등이 추가로 포함됩니다.",
+      "Gateway에 비공개 알림(private notice) 전송과 Slack format_message 수정이 적용됐습니다. Slash command에 대한 ephemeral acknowledgment 및 라우팅이 추가되고, 리뷰 피드백을 반영해 ephemeral 범위가 커맨드로 조정되고 사용자별 세션 격리가 보존되며, 예약된 Slack 커맨드는 네이티브 슬래시 매니페스트에서 제외됩니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작되며, 슬래시 커맨드 시스템 알림은 TTL 기반으로 자동 삭제됩니다. 그 외에 Slack assistant 스레드 상태 정리, case-sensitive chat ID 보존(DeliveryTarget.parse), scalar free_response_channels 문자열 변환, MATRIX_HOME_ROOM 온보딩 처리, snapshot 콜백 생성 타이밍 수정 등이 추가로 포함됩니다.",
     commits: [
       {
         sha: "0ab2d75",
@@ -101,9 +96,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/7cda0e522443c6e7790793b93b085508fc530fc8",
       },
       {
-        sha: "a147164",
-        message: "fix(slack): preserve per-user slash-command session isolation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
+        sha: "8fcc160",
+        message: "fix(gateway/slack): review fixes — scope ephemeral to commands, user isolation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8fcc160f6b979f9567e76f189e226c18cabc6308",
       },
       {
         sha: "f99676e",
@@ -114,11 +109,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "4caad28",
         message: "feat(gateway): auto-delete slash-command system notices after TTL",
         href: "https://github.com/NousResearch/hermes-agent/commit/4caad285a602b75c1da1c7d553864278d7aa723d",
-      },
-      {
-        sha: "d05a87e",
-        message: "fix(gateway): clear slack assistant thread status",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d05a87e68662043ac7d66dad942e428a81cd648f",
       },
     ],
   },
@@ -209,7 +199,7 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "cf2b2d3",
-        message: "docs: add Persistent Goals (/goal) feature page and make accessible in nav + llms.txt",
+        message: "docs: add Persistent Goals (/goal) feature page",
         href: "https://github.com/NousResearch/hermes-agent/commit/cf2b2d31ce77ba87c114c53966d7f7cc629cad9e",
       },
       {
@@ -218,14 +208,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/7c6c5619a7b85ef7ed873632e25a4a4745563866",
       },
       {
-        sha: "a49f4c6",
-        message: "fix: prevent tui rebuilding assets",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a49f4c617da3ddcb37a2f438b083b960090ad42a",
-      },
-      {
-        sha: "c23c7c9",
-        message: "fix(tui): address remaining review feedback — ordering and digit shortcuts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c23c7c994bf8b77c513b7c3fb4a68774970e47ac",
+        sha: "a01c1f7",
+        message: "fix: kanban button",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a01c1f7305bda8ebc5cbcde22f2a80a0300a2ca1",
       },
     ],
   },
