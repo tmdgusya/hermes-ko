@@ -16,6 +16,25 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-03",
+    title: "Tools·Model: 활성화된 미설정 toolsets 재구성, Bedrock 자격증명 프로브 회피",
+    category: "Tools / MCP / Plugins",
+    summary:
+      "활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다.",
+    commits: [
+      {
+        sha: "4f37669",
+        message: "fix(tools): reconfigure enabled unconfigured toolsets",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4f37669170bb7886b94acbbf3630bf70650f7295",
+      },
+      {
+        sha: "d409a44",
+        message: "fix(model): avoid bedrock credential probe in provider picker",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d409a4409c8f11ccf029eff33a2eb9860f92e761",
+      },
+    ],
+  },
+  {
     date: "2026-05-02",
     title: "Gateway 코어: systemd 무한 재시도·backoff, --insecure 비루프백 WebSocket, keepalive·재시작 위생, config.yaml 우선순위",
     category: "Gateway / State",
@@ -95,10 +114,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-02",
-    title: "Skills·Curator·CLI·Tools: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거, TTS xAI 음성",
+    title: "Skills·Curator·CLI: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거",
     category: "Tools / MCP / Plugins",
     summary:
-      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다. TTS 문서에 xAI 커스텀 음성 지원이 추가됐습니다.",
+      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다.",
     commits: [
       {
         sha: "c73594f",
@@ -124,11 +143,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "9bf2604",
         message: "fix(tools): deduplicate tool names at API boundary for Vertex/Azure/Bedrock",
         href: "https://github.com/NousResearch/hermes-agent/commit/9bf260472bca9f8097bf442f5c5e6dd1984dd4c3",
-      },
-      {
-        sha: "5d3be89",
-        message: "docs(tts): mention xAI custom voice support (#18776)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5d3be898a8671eb9fb99cf18f43165502f54e7f4",
       },
     ],
   },
