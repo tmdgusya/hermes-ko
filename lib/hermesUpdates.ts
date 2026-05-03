@@ -128,7 +128,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Skills·TUI·Tools: video_analyze 도구 추가, video-orchestrator 스킬, CLI/TUI 로컬 백엔드 디렉터리 수정, debug 로그 redact, TUI 리사이즈 artifacts 해결, write_file 유효성 검사, toolsets 재구성, OpenRouter 응답 캐싱, cron 크래시 방지, approval 범위 확장",
     category: "Tools / MCP / Plugins",
     summary:
-      "네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다(kanban 워크플로우에서 활용). CLI/TUI 로컬 백엔드에서 terminal.cwd 대신 launch 디렉터리를 사용하도록 수정됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다. TUI에서 Apple Terminal 리사이즈 시 발생하는 화면 artifacts를 clear 처리합니다. write_file 핸들러가 content/path 인자 누락 시 조용히 0바이트 파일을 생성하던 문제를 수정하여 명시적으로 거부합니다. 활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다. cron tick이 non-dict origin을 만나면 크래시하지 않고 missing으로 처리합니다. approval의 sensitive write 대상이 shell RC 파일과 credential 파일까지 확장됐습니다.",
+      "네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다(kanban 워크플로우에서 활용). CLI/TUI 로컬 백엔드에서 terminal.cwd 대신 launch 디렉터리를 사용하도록 변경되었으나 #19329에서 revert되어 원래 동작으로 복원됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다. TUI에서 Apple Terminal 리사이즈 시 발생하는 화면 artifacts를 clear 처리합니다. write_file 핸들러가 content/path 인자 누락 시 조용히 0바이트 파일을 생성하던 문제를 수정하여 명시적으로 거부합니다. 활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다. cron tick이 non-dict origin을 만나면 크래시하지 않고 missing으로 처리합니다. approval의 sensitive write 대상이 shell RC 파일과 credential 파일까지 확장됐습니다.",
     commits: [
       {
         sha: "c9a3f36",
@@ -139,6 +139,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "9eaddfa",
         message: "fix(cli): CLI/TUI on local backend always uses launch directory, ignores terminal.cwd (#19242)",
         href: "https://github.com/NousResearch/hermes-agent/commit/9eaddfafa30018b1d4eb3e5e72bbe2d242f8e50e",
+      },
+      {
+        sha: "167b564",
+        message: 'Revert "fix(cli): CLI/TUI on local backend always uses launch directory, ignores terminal.cwd (#19242)" (#19329)',
+        href: "https://github.com/NousResearch/hermes-agent/commit/167b5648ea609aafa85f56c5714f7abda5091ed6",
       },
       {
         sha: "b8ae8cc",
