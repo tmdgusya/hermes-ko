@@ -61,11 +61,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Gateway·Slack·Discord: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 이름 clamp 수정",
+    title: "Gateway·Slack·Discord·Goals: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 clamp 수정, /goal TUI 지원, WhatsApp 보안",
     category: "Gateway / State",
     summary:
-      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다.",
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다. /goal 명령어가 TUI에서 정상 동작하고 gateway verdict delivery가 수정됐습니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다.",
     commits: [
+      {
+        sha: "d87fd9f",
+        message: "fix(goals): make /goal work in TUI and fix gateway verdict delivery (#19209)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d87fd9f03958995ce8234ec359a13fceabbf9ebf",
+      },
+      {
+        sha: "55647a5",
+        message: "fix(whatsapp): pin protobufjs >=7.5.5 via npm overrides to clear 3 critical vulns (#19204)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/55647a581349d245b903621ab1ccbd55c4a7ede2",
+      },
       {
         sha: "f1e0292",
         message: "fix(gateway): resume sessions after crash/restart instead of blanket suspend",
