@@ -17,11 +17,65 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-03",
-    title: "Tools·Model: 활성화된 미설정 toolsets 재구성, Bedrock 자격증명 프로브 회피",
+    title: "ACP: Zed 도구 렌더링 간소화, history replay 스케줄, reasoning 콜백 라우팅",
+    category: "ACP",
+    summary:
+      "ACP에서 Zed 도구 replay 렌더링을 간소화하고, web extract 및 read-file 렌더링도 compact하게 유지합니다. 공통 도구 렌더링과 Zed 컨텍스트 렌더링이 다듬어졌습니다. ACP history replay 및 fence file 출력이 스케줄링 기능으로 추가됐습니다. Zed의 thinking(reasoning)이 reasoning 콜백으로 라우팅됩니다.",
+    commits: [
+      {
+        sha: "9987f3d",
+        message: "fix(acp): compact Zed tool replay rendering",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9987f3d82486b04151dee2d27d640b3ae01b7b16",
+      },
+      {
+        sha: "19854c7",
+        message: "Schedule ACP history replay and fence file output",
+        href: "https://github.com/NousResearch/hermes-agent/commit/19854c7cd2f00e3d591e72ccbe2e456ad10c4886",
+      },
+      {
+        sha: "eb612f5",
+        message: "fix(acp): keep web extract rendering compact",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eb612f55748d8f0888f09f055abd86afef925150",
+      },
+      {
+        sha: "b294d1d",
+        message: "fix(acp): keep read-file starts compact",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b294d1d0229ff6026838a04c4cb59c3b13e4827f",
+      },
+      {
+        sha: "72c8037",
+        message: "fix(acp): polish common tool rendering",
+        href: "https://github.com/NousResearch/hermes-agent/commit/72c8037a24b58b7b1a38a99903cc0bf8a3d7595c",
+      },
+      {
+        sha: "ef9a08a",
+        message: "fix(acp): polish Zed context and tool rendering",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef9a08a872d1ed87eb4c91cf8ad8e8f4ef5a6e2b",
+      },
+      {
+        sha: "e26f9b2",
+        message: "fix(acp): route Zed thoughts to reasoning callbacks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e26f9b207041c03d1aa9a982d29dbfda66df3a82",
+      },
+    ],
+  },
+  {
+    date: "2026-05-03",
+    title: "Tools·Model·OpenRouter·Weixin: toolsets 재구성, Bedrock 프로브 회피, 응답 캐싱, 크로스루프 세션 체크",
     category: "Tools / MCP / Plugins",
     summary:
-      "활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다.",
+      "활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다.",
     commits: [
+      {
+        sha: "457c7b7",
+        message: "feat(openrouter): add response caching support (#19132)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/457c7b76cd69089142f7ee02bf26ed5fef9d8741",
+      },
+      {
+        sha: "a22465e",
+        message: "fix(weixin): send_weixin_direct cross-loop session check",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a22465e07ab4b71019f711e7a6463f6590c50742",
+      },
       {
         sha: "4f37669",
         message: "fix(tools): reconfigure enabled unconfigured toolsets",
@@ -114,10 +168,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-02",
-    title: "Skills·Curator·CLI: 캐시 재스캔, frontmatter slug 매칭, paste 확장, 도구 중복 제거",
-    category: "Tools / MCP / Plugins",
+    title: "Skills·Curator·CLI·Config·Auth: 캐시 재스캔, frontmatter slug, paste 확장, 도구 중복 제거, 자격증명 풀 우선순위, fallback 제공자, UTF-8 디코딩, xAI TTS 문서",
+    category: "Config / Auth",
     summary:
-      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔되도록 수정됐습니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다.",
+      "Skills의 skill_commands 캐시가 플랫폼 범위 변경 시 재스캔됩니다. Curator에서 skill 삭제 시 authoritative absorbed_into를 설정하고 롤백 시 cron skill 링크를 복구합니다. Gateway에서 비활성화/옵셔널 스킬을 디렉터리명 대신 frontmatter slug로 매칭합니다. CLI에서 붙여넣기 파일 확장과 process_loop 오류 처리가 강화됐습니다. Vertex/Azure/Bedrock API 경계에서 도구 이름이 중복 제거됩니다. 자격증명 풀 시딩 시 os.environ보다 ~/.hermes/.env를 우선하여 의도치 않은 환경 변수 주입을 방지합니다. Agent 초기화 시 기본 자격증명 풀이 소진되면 fallback 제공자로 시도합니다. Auxiliary에서 explicit_api_key를 _try_openrouter()로 전파합니다. 활성 프로필에서 HERMES_HOME이 폴백될 때 경고를 한 번만 출력합니다. CLI에서 .env 파일을 UTF-8로 디코딩하여 Windows GBK 환경에서의 크래시를 방지합니다. TTS 문서에 xAI 커스텀 음성 지원이 언급됐습니다.",
     commits: [
       {
         sha: "c73594f",
@@ -144,15 +198,6 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(tools): deduplicate tool names at API boundary for Vertex/Azure/Bedrock",
         href: "https://github.com/NousResearch/hermes-agent/commit/9bf260472bca9f8097bf442f5c5e6dd1984dd4c3",
       },
-    ],
-  },
-  {
-    date: "2026-05-02",
-    title: "Config·Auth·Agent: 자격증명 풀 우선순위, fallback 제공자, explicit_api_key, HERMES_HOME 경고, UTF-8 디코딩",
-    category: "Config / Auth",
-    summary:
-      "자격증명 풀 시딩 시 os.environ보다 ~/.hermes/.env를 우선하여 의도치 않은 환경 변수 주입을 방지합니다. Agent 초기화 시 기본 자격증명 풀이 소진되면 fallback 제공자로 시도합니다. Auxiliary에서 explicit_api_key를 _try_openrouter()로 전파합니다. 활성 프로필에서 HERMES_HOME이 폴백될 때 경고를 한 번만 출력합니다. CLI에서 .env 파일을 UTF-8로 디코딩하여 Windows GBK 환경에서의 크래시를 방지합니다.",
-    commits: [
       {
         sha: "2ef1ad2",
         message: "fix: prefer ~/.hermes/.env over os.environ when seeding credential pool",
@@ -178,14 +223,19 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(cli): decode .env as UTF-8 to avoid GBK crash on Windows",
         href: "https://github.com/NousResearch/hermes-agent/commit/c5e3a6fb5bb33477d639219de14922caedda98ef",
       },
+      {
+        sha: "5d3be89",
+        message: "docs(tts): mention xAI custom voice support (#18776)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5d3be898a8671eb9fb99cf18f43165502f54e7f4",
+      },
     ],
   },
   {
     date: "2026-05-01",
-    title: "Gateway Slack·Yuanbao·Telegram: 비공개 알림, ephemeral 슬래시 커맨드, 자동 재시작, 사용자 세션 격리, DM 토픽",
+    title: "Gateway·Slack·Yuanbao·Telegram + ACP·Agent·Curator: 비공개 알림, ephemeral 슬래시 커맨드, 자동 재시작, /goal, loop guardrails, lazy session",
     category: "Gateway / State",
     summary:
-      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 커맨드별로 ephemeral 범위를 제한하고 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. DeliveryTarget.parse에서 대소문자 구분 채팅 ID를 보존하고 free_response_channels 스칼라 값을 문자열로 변환합니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다.",
+      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. DeliveryTarget.parse에서 대소문자 구분 채팅 ID를 보존하고 free_response_channels 스칼라 값을 문자열로 변환합니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다. ACP에 steer/queue 슬래시 커맨드가 추가되고, 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다. Persistent Goals 문서가 docs nav와 llms.txt에서 접근 가능하게 됐습니다.",
     commits: [
       {
         sha: "0ab2d75",
@@ -242,15 +292,6 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(yuanbao): enforce owner identity check on group slash commands",
         href: "https://github.com/NousResearch/hermes-agent/commit/b7ad3f478f9bc24768f88e4339fc3e6e23d0292b",
       },
-    ],
-  },
-  {
-    date: "2026-05-01",
-    title: "ACP steer·queue, Agent loop guardrails·lazy session, /goal 크로스턴 목표, Curator 지연 실행·dry-run",
-    category: "Agent 안정성",
-    summary:
-      "ACP에 steer/queue 슬래시 커맨드가 추가되고 중단된 프롬프트 복구, WSL cwd 정규화, idle 세션 /steer 처리가 적용됐습니다. 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다. Persistent Goals 문서가 docs nav와 llms.txt에서 접근 가능하게 됐습니다. Kanban 버튼이 수정됐습니다.",
-    commits: [
       {
         sha: "e27b0b7",
         message: "feat(acp): add steer and queue slash commands",
