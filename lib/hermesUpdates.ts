@@ -82,6 +82,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/f1e0292517c15be09f9f1fb6a61046993b562586",
       },
       {
+        sha: "6f2dab2",
+        message: "fix: update tests for resume_pending semantics + add AUTHOR_MAP entries",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f2dab248a6cc8591af46e5deb2dc939c2b43146",
+      },
+      {
         sha: "1148c46",
         message: "fix(gateway): correct ws scheme conversion for https urls",
         href: "https://github.com/NousResearch/hermes-agent/commit/1148c462417369640fc0a821d1879d0c9426ed30",
@@ -105,6 +110,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c4c0e5a",
         message: "fix: _clamp_command_names truncation breaks /skill autocomplete description lookup (#18983)",
         href: "https://github.com/NousResearch/hermes-agent/commit/c4c0e5abc2b579ce1a4cca4d5ff808550f754662",
+      },
+      {
+        sha: "5d5b891",
+        message: "test: add tests for cmd_key preservation through name clamping",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5d5b8912bece744b08b5d6428f2ad12ff6969f87",
       },
     ],
   },
@@ -175,6 +185,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/292d2fb42fe304e4d6e6184f39e1f60e5aa771f8",
       },
       {
+        sha: "e363ced",
+        message: "test(discord): regression coverage for zombie-websocket guard in connect()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e363ced3c3959392268fd1ea8b85334b889aa298",
+      },
+      {
         sha: "10297fa",
         message: "fix(discord): `/reload-skills` now refreshes the `/skill` autocomplete live (#18754)",
         href: "https://github.com/NousResearch/hermes-agent/commit/10297fa23c982a563844a1014f16bec77e1b6598",
@@ -242,6 +257,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "2ef1ad2",
         message: "fix: prefer ~/.hermes/.env over os.environ when seeding credential pool",
         href: "https://github.com/NousResearch/hermes-agent/commit/2ef1ad280beee581e0f023901d0d040efec380ac",
+      },
+      {
+        sha: "0a6865b",
+        message: "test(credential_pool): regression coverage for .env vs os.environ precedence",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0a6865b328ee6057eb59ee4a150c4886aa72d48c",
       },
       {
         sha: "13f344c",
