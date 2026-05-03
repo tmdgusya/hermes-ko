@@ -61,6 +61,45 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
+    title: "Gateway·Slack·Discord: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 이름 clamp 수정",
+    category: "Gateway / State",
+    summary:
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다.",
+    commits: [
+      {
+        sha: "f1e0292",
+        message: "fix(gateway): resume sessions after crash/restart instead of blanket suspend",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f1e0292517c15be09f9f1fb6a61046993b562586",
+      },
+      {
+        sha: "1148c46",
+        message: "fix(gateway): correct ws scheme conversion for https urls",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1148c462417369640fc0a821d1879d0c9426ed30",
+      },
+      {
+        sha: "9341034",
+        message: "fix(gateway): send /new response before cancel_session_processing to avoid race (#18912)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/934103476f3199f6c7ed081641bb4e48478b821a",
+      },
+      {
+        sha: "19ba9e4",
+        message: "fix(gateway/discord): require allowlist auth on slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/19ba9e43b621cbcc1488cd9f9c38050154386e37",
+      },
+      {
+        sha: "6c1322b",
+        message: "fix(slack): close previous handler in connect() to prevent zombie Socket Mode connections",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6c1322b9972ce61419df7df6ad7ae5a261fef9d2",
+      },
+      {
+        sha: "c4c0e5a",
+        message: "fix: _clamp_command_names truncation breaks /skill autocomplete description lookup (#18983)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c4c0e5abc2b579ce1a4cca4d5ff808550f754662",
+      },
+    ],
+  },
+  {
+    date: "2026-05-03",
     title: "Tools·Model·OpenRouter·Weixin: toolsets 재구성, Bedrock 프로브 회피, 응답 캐싱, 크로스루프 세션 체크",
     category: "Tools / MCP / Plugins",
     summary:
@@ -90,10 +129,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-02",
-    title: "Gateway 코어: systemd 무한 재시도·backoff, --insecure 비루프백 WebSocket, keepalive·재시작 위생, config.yaml 우선순위",
+    title: "Gateway·Discord·Telegram·Feishu: systemd 무한 재시도, --insecure 비루프백 WebSocket, keepalive·재시작 위생, zombie 방지, /skill 자동완성, polling liveness, config 우선순위",
     category: "Gateway / State",
     summary:
-      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백(non-loopback) IP의 WebSocket 연결을 허용하여 원격 환경에서도 Gateway에 접근할 수 있습니다. httpx keepalive가 강화되고 WhatsApp typing-response 누수가 수정됐습니다. Gateway 종료/재시작 시 drain timeout, false-fatal 오판 방지, 성공 로그 출력 등 위생 처리가 개선됐습니다. agent/display/timezone 설정에서 config.yaml이 .env보다 우선하도록 수정됐습니다.",
+      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백 IP의 WebSocket 연결을 허용합니다. httpx keepalive가 강화되고 WhatsApp typing-response 누수가 수정됐습니다. Gateway 종료/재시작 시 drain timeout, false-fatal 오판 방지, 성공 로그 출력 등 위생 처리가 개선됐습니다. agent/display/timezone 설정에서 config.yaml이 .env보다 우선합니다. Discord에서 재연결 전 이전 클라이언트를 닫아 zombie websocket을 방지하고, /reload-skills가 /skill 자동완성을 실시간 갱신하며 external_dirs 스킬도 포함하고 legacy 25x25 캡이 제거됐습니다. 32자 clamp 충돌 시 경고를 출력합니다. Telegram은 재연결 후 polling liveness를 탐지하여 wedged Updater를 감지합니다. Feishu는 원격 문서 다운로드를 httpx.AsyncClient 컨텍스트 내에서 완료합니다.",
     commits: [
       {
         sha: "f98b5d0",
@@ -120,15 +159,6 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(gateway): config.yaml wins over .env for agent/display/timezone settings (#18764)",
         href: "https://github.com/NousResearch/hermes-agent/commit/e444d8f29cead99781cbd4306160b81887b3f4e5",
       },
-    ],
-  },
-  {
-    date: "2026-05-02",
-    title: "Discord·Telegram·Feishu: zombie WebSocket 방지, /skill 자동완성 실시간 갱신, polling liveness, 원격 문서 다운로드",
-    category: "Gateway / State",
-    summary:
-      "Discord에서 재연결 전 이전 클라이언트를 닫아 zombie websocket을 방지합니다. /reload-skills가 /skill 자동완성을 실시간으로 갱신하며, external_dirs 스킬도 /skill 자동완성에 포함되고 legacy 25x25 캡 제한이 제거됐습니다. Gateway에서 external_dirs 스킬을 Telegram/Discord 슬래시 커맨드 목록에도 포함합니다. 32자 clamp 충돌 시 경고를 출력합니다. Telegram은 재연결 후 polling liveness를 탐지하여 wedged Updater를 감지합니다. Feishu는 원격 문서 다운로드를 httpx.AsyncClient 컨텍스트 내에서 완료합니다.",
-    commits: [
       {
         sha: "292d2fb",
         message: "fix(discord): close old client before reconnect to prevent zombie websockets (#18187)",
