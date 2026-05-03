@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-03";
+export const hermesUpdatesLastChecked = "2026-05-04";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -61,10 +61,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Gateway·Slack·Discord·Goals: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 clamp 수정, /goal TUI 지원, WhatsApp 보안",
+    title: "Gateway·Slack·Discord·Goals: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 clamp 수정, /goal TUI 지원, WhatsApp 보안, 홈채널 스레드 보존",
     category: "Gateway / State",
     summary:
-      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다. /goal 명령어가 TUI에서 정상 동작하고 gateway verdict delivery가 수정됐습니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다.",
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다. /goal 명령어가 TUI에서 정상 동작하고 gateway verdict delivery가 수정됐습니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다.",
     commits: [
       {
         sha: "d87fd9f",
@@ -116,15 +116,25 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "test: add tests for cmd_key preservation through name clamping",
         href: "https://github.com/NousResearch/hermes-agent/commit/5d5b8912bece744b08b5d6428f2ad12ff6969f87",
       },
+      {
+        sha: "b59bb4e",
+        message: "fix(gateway): preserve home-channel thread targets across restart notifications",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b59bb4e351c4cdca97e906accb4bbe9193c381b6",
+      },
     ],
   },
   {
     date: "2026-05-03",
-    title: "Tools·Model·OpenRouter·Weixin: toolsets 재구성, Bedrock 프로브 회피, 응답 캐싱, 크로스루프 세션 체크",
+    title: "Tools·Model·Agent 안정성: write_file 유효성 검사, toolsets 재구성, Bedrock 프로브 회피, OpenRouter 응답 캐싱, cron 크래시 방지, approval 범위 확장",
     category: "Tools / MCP / Plugins",
     summary:
-      "활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다.",
+      "write_file 핸들러가 content/path 인자 누락 시 조용히 0바이트 파일을 생성하던 문제를 수정하여 명시적으로 거부합니다. 활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다. cron tick이 non-dict origin을 만나면 크래시하지 않고 missing으로 처리합니다. approval의 sensitive write 대상이 shell RC 파일과 credential 파일까지 확장됐습니다.",
     commits: [
+      {
+        sha: "e527240",
+        message: "fix(tools): write_file handler now rejects missing 'content'/'path' args instead of silently writing zero-byte files (#19096)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e527240b2700cc44f467a00e538f55c99d98eb23",
+      },
       {
         sha: "457c7b7",
         message: "feat(openrouter): add response caching support (#19132)",
@@ -144,6 +154,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d409a44",
         message: "fix(model): avoid bedrock credential probe in provider picker",
         href: "https://github.com/NousResearch/hermes-agent/commit/d409a4409c8f11ccf029eff33a2eb9860f92e761",
+      },
+      {
+        sha: "6b4fb9f",
+        message: "fix(cron): treat non-dict origin as missing instead of crashing tick",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6b4fb9f8789717e5dad8d920cbd6cd02e53c5175",
+      },
+      {
+        sha: "69dd0f7",
+        message: "fix(approval): extend sensitive write target to cover shell RC and credential files",
+        href: "https://github.com/NousResearch/hermes-agent/commit/69dd0f7cf1f4df03e8b8e80aecc906dbd2b22d12",
       },
     ],
   },
