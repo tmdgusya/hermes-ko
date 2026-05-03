@@ -61,11 +61,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Gateway·Slack·Discord·Goals: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 clamp 수정, /goal TUI 지원, WhatsApp 보안, 홈채널 스레드 보존",
+    title: "Gateway·Slack·Discord·Goals: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션 방지, 스킬 clamp 수정, /goal TUI 지원, WhatsApp 보안, 홈채널 스레드 보존, Telegram 메뉴 필수인자 커맨드 숨김",
     category: "Gateway / State",
     summary:
-      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다. /goal 명령어가 TUI에서 정상 동작하고 gateway verdict delivery가 수정됐습니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다.",
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. _clamp_command_names가 스킬 이름을 32자로 자른 후 /skill 자동완성 설명이 truncated name으로 조회되어 누락되던 문제가 수정됐습니다. /goal 명령어가 TUI에서 정상 동작하고 gateway verdict delivery가 수정됐습니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다. Telegram 봇 메뉴에서 필수 인자가 있는 커맨드를 숨겨 사용자 경험을 개선합니다.",
     commits: [
+      {
+        sha: "86e64c1",
+        message: "fix(gateway): hide required-arg commands from Telegram menu",
+        href: "https://github.com/NousResearch/hermes-agent/commit/86e64c1d3bc0324452202cf8e26703dbef7839b3",
+      },
       {
         sha: "d87fd9f",
         message: "fix(goals): make /goal work in TUI and fix gateway verdict delivery (#19209)",
@@ -108,7 +113,7 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "c4c0e5a",
-        message: "fix: _clamp_command_names truncation breaks /skill autocomplete description lookup (#18983)",
+        message: "fix: After _clamp_command_names truncates skill names to fit the 32-character limit, /skill autocomplete description lookup fails because it queries by truncated name",
         href: "https://github.com/NousResearch/hermes-agent/commit/c4c0e5abc2b579ce1a4cca4d5ff808550f754662",
       },
       {
@@ -125,30 +130,69 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Skills·TUI·Tools: video_analyze 도구 추가, video-orchestrator 스킬, CLI/TUI 로컬 백엔드 디렉터리 수정, debug 로그 redact, TUI 리사이즈 artifacts 해결, write_file 유효성 검사, toolsets 재구성, OpenRouter 응답 캐싱, cron 크래시 방지, approval 범위 확장",
-    category: "Tools / MCP / Plugins",
+    title: "Agent 안정성: compressor 중복 제거 패스, vision guard, api_server 포트 폴백, MiniMax OAuth 리디렉션, codex-transport 헤더 보존",
+    category: "Agent 안정성",
     summary:
-      "네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다(kanban 워크플로우에서 활용). CLI/TUI 로컬 백엔드에서 terminal.cwd 대신 launch 디렉터리를 사용하도록 변경되었으나 #19329에서 revert되어 원래 동작으로 복원됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다. TUI에서 Apple Terminal 리사이즈 시 발생하는 화면 artifacts를 clear 처리합니다. write_file 핸들러가 content/path 인자 누락 시 조용히 0바이트 파일을 생성하던 문제를 수정하여 명시적으로 거부합니다. 활성화되었으나 설정되지 않은 toolsets이 감지되면 자동으로 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다. cron tick이 non-dict origin을 만나면 크래시하지 않고 missing으로 처리합니다. approval의 sensitive write 대상이 shell RC 파일과 credential 파일까지 확장됐습니다.",
+      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다. codex-transport에서 xai 응답에 대해 요청 오버라이드 헤더를 보존합니다.",
     commits: [
+      {
+        sha: "408dd8a",
+        message: "fix(compressor): skip non-string tool content in dedup pass to prevent AttributeError",
+        href: "https://github.com/NousResearch/hermes-agent/commit/408dd8aa28cb959f1a1e869929651c181de63e1e",
+      },
+      {
+        sha: "5bd9375",
+        message: "fix(vision): guard user_prompt type in video_analyze_tool before debug_call_data construction",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5bd937533c9cef3646d1e464f9a9a3aabec7b774",
+      },
+      {
+        sha: "6c4aca7",
+        message: "fix(vision): guard user_prompt type before debug_call_data construction",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6c4aca7adca44e67e45f85b143a46ed3d88a7328",
+      },
+      {
+        sha: "a5cae16",
+        message: "fix(api_server): fall back to default port on malformed API_SERVER_PORT",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a5cae1649675947d04034010f1fa22d15b2c6c4c",
+      },
+      {
+        sha: "65bebb9",
+        message: "fix(cli): follow 307 redirects in MiniMax OAuth httpx clients",
+        href: "https://github.com/NousResearch/hermes-agent/commit/65bebb9b802616122c30fd8fea6c4c47514b45e4",
+      },
+      {
+        sha: "dfdd7b6",
+        message: "fix(codex-transport): preserve request override headers for xai responses",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dfdd7b6e6fc3ec3b637d200d95e36adc7c6a49bb",
+      },
+    ],
+  },
+  {
+    date: "2026-05-03",
+    title: "Kanban·MCP·Skills: kanban 경로별 env·로그 앵커, MCP 세션 재연결, video_analyze 도구, video-orchestrator 스킬, debug 로그 redact",
+    category: "Kanban / Multi-agent",
+    summary:
+      "Kanban에서 경로별 환경 변수 오버라이드와 dispatcher env 주입이 추가되고, board·workspaces·worker 로그가 공유 Hermes 루트에 앵커됩니다. MCP가 종료된 세션에 대해 자동 재연결을 수행합니다. 네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다.",
+    commits: [
+      {
+        sha: "2658494",
+        message: "fix(kanban): add per-path env overrides + dispatcher env injection",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2658494e815b4644cb2ed47dc6cb6623b6ecf112",
+      },
+      {
+        sha: "f5bd77b",
+        message: "fix(kanban): anchor board, workspaces, and worker logs at the shared Hermes root",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f5bd77b3e16d86e3cbd75a9d6bd719f28dd8dbb9",
+      },
+      {
+        sha: "4a2f822",
+        message: "fix(mcp): reconnect on terminated sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4a2f822137bf69728bd594613002671c93d2a64d",
+      },
       {
         sha: "c9a3f36",
         message: "feat: add video_analyze tool for native video understanding (#19301)",
         href: "https://github.com/NousResearch/hermes-agent/commit/c9a3f36f5656f1a3d543e5b6be1fd05b98783c53",
-      },
-      {
-        sha: "9eaddfa",
-        message: "fix(cli): CLI/TUI on local backend always uses launch directory, ignores terminal.cwd (#19242)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9eaddfafa30018b1d4eb3e5e72bbe2d242f8e50e",
-      },
-      {
-        sha: "167b564",
-        message: 'Revert "fix(cli): CLI/TUI on local backend always uses launch directory, ignores terminal.cwd (#19242)" (#19329)',
-        href: "https://github.com/NousResearch/hermes-agent/commit/167b5648ea609aafa85f56c5714f7abda5091ed6",
-      },
-      {
-        sha: "b8ae8cc",
-        message: "fix(debug): redact log content at upload time in hermes debug share",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b8ae8cc801df3bb440d86b826795fcbceffa9372",
       },
       {
         sha: "511add7",
@@ -161,10 +205,19 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/0dd8e3f8d876ce3d8d0c2e507b11be65eda180c1",
       },
       {
-        sha: "279b656",
-        message: "fix(tui): clear Apple Terminal resize artifacts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/279b656adc3c64db7529fa85bbd744f1aa28cfbe",
+        sha: "b8ae8cc",
+        message: "fix(debug): redact log content at upload time in hermes debug share",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b8ae8cc801df3bb440d86b826795fcbceffa9372",
       },
+    ],
+  },
+  {
+    date: "2026-05-03",
+    title: "Tools·CLI·TUI: write_file 유효성 검사, OpenRouter 응답 캐싱, toolsets 재구성, Bedrock probe 회피, cron·approval 안정성, TUI 리사이즈 artifacts, Weixin 크로스루프 세션",
+    category: "Tools / MCP / Plugins",
+    summary:
+      "write_file 핸들러가 content/path 인자 누락 시 조용히 0바이트 파일을 생성하던 문제를 수정하여 명시적으로 거부합니다. OpenRouter에 응답 캐싱(response caching) 지원이 추가됐습니다. 활성화되었으나 설정되지 않은 toolsets을 자동 재구성하여 도구 누락을 방지합니다. 모델 제공자 선택기에서 Bedrock 자격증명 프로브를 회피하여 불필요한 credential 검사를 건너뜁니다. cron tick이 non-dict origin을 만나면 크래시하지 않고 missing으로 처리합니다. approval의 sensitive write 대상이 shell RC 파일과 credential 파일까지 확장됐습니다. TUI에서 Apple Terminal 리사이즈 시 발생하는 화면 artifacts를 clear 처리합니다. Weixin에서 send_weixin_direct 호출 시 크로스루프 세션을 체크하여 안전성을 높입니다.",
+    commits: [
       {
         sha: "e527240",
         message: "fix(tools): write_file handler now rejects missing 'content'/'path' args instead of silently writing zero-byte files (#19096)",
@@ -174,11 +227,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "457c7b7",
         message: "feat(openrouter): add response caching support (#19132)",
         href: "https://github.com/NousResearch/hermes-agent/commit/457c7b76cd69089142f7ee02bf26ed5fef9d8741",
-      },
-      {
-        sha: "a22465e",
-        message: "fix(weixin): send_weixin_direct cross-loop session check",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a22465e07ab4b71019f711e7a6463f6590c50742",
       },
       {
         sha: "4f37669",
@@ -200,79 +248,15 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(approval): extend sensitive write target to cover shell RC and credential files",
         href: "https://github.com/NousResearch/hermes-agent/commit/69dd0f7cf1f4df03e8b8e80aecc906dbd2b22d12",
       },
-    ],
-  },
-  {
-    date: "2026-05-02",
-    title: "Gateway·Discord·Telegram·Feishu: systemd 무한 재시도, --insecure 비루프백 WebSocket, keepalive·재시작 위생, zombie 방지, /skill 자동완성, polling liveness, config 우선순위",
-    category: "Gateway / State",
-    summary:
-      "Gateway systemd 유닛이 실패 시 backoff와 함께 무한 재시도하도록 수정됐습니다. --insecure 모드에서 비루프백 IP의 WebSocket 연결을 허용합니다. httpx keepalive가 강화되고 WhatsApp typing-response 누수가 수정됐습니다. Gateway 종료/재시작 시 drain timeout, false-fatal 오판 방지, 성공 로그 출력 등 위생 처리가 개선됐습니다. agent/display/timezone 설정에서 config.yaml이 .env보다 우선합니다. Discord에서 재연결 전 이전 클라이언트를 닫아 zombie websocket을 방지하고, /reload-skills가 /skill 자동완성을 실시간 갱신하며 external_dirs 스킬도 포함하고 legacy 25x25 캡이 제거됐습니다. 32자 clamp 충돌 시 경고를 출력합니다. Telegram은 재연결 후 polling liveness를 탐지하여 wedged Updater를 감지합니다. Feishu는 원격 문서 다운로드를 httpx.AsyncClient 컨텍스트 내에서 완료합니다.",
-    commits: [
       {
-        sha: "f98b5d0",
-        message: "fix: gateway systemd unit now retries indefinitely with backoff (#18639)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f98b5d00a49b01fb833deecace78656035bc6f6d",
+        sha: "279b656",
+        message: "fix(tui): clear Apple Terminal resize artifacts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/279b656adc3c64db7529fa85bbd744f1aa28cfbe",
       },
       {
-        sha: "585d677",
-        message: "fix: allow WebSocket connections from non-loopback IPs in --insecure mode (#18633)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/585d6778da28f4a63205d95a296358e2cce23ed6",
-      },
-      {
-        sha: "762eb79",
-        message: "fix(gateway): tighten httpx keepalive and close whatsapp typing-response leak (#18451)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/762eb79f1e1985a54758d40f3d3caa2f119bd4da",
-      },
-      {
-        sha: "1dce908",
-        message: "fix(gateway): shutdown + restart hygiene (drain timeout, false-fatal, success log) (#18761)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1dce90893016a822480599d02505664c294f255c",
-      },
-      {
-        sha: "e444d8f",
-        message: "fix(gateway): config.yaml wins over .env for agent/display/timezone settings (#18764)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e444d8f29cead99781cbd4306160b81887b3f4e5",
-      },
-      {
-        sha: "292d2fb",
-        message: "fix(discord): close old client before reconnect to prevent zombie websockets (#18187)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/292d2fb42fe304e4d6e6184f39e1f60e5aa771f8",
-      },
-      {
-        sha: "e363ced",
-        message: "test(discord): regression coverage for zombie-websocket guard in connect()",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e363ced3c3959392268fd1ea8b85334b889aa298",
-      },
-      {
-        sha: "10297fa",
-        message: "fix(discord): `/reload-skills` now refreshes the `/skill` autocomplete live (#18754)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/10297fa23c982a563844a1014f16bec77e1b6598",
-      },
-      {
-        sha: "8825e90",
-        message: "fix(discord): complete #18741 for /skill autocomplete and drop legacy 25x25 caps (#18745)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8825e9044c2657b726f589f4287cf827f77ff44e",
-      },
-      {
-        sha: "5eac608",
-        message: "fix(discord): warn on 32-char clamp collisions in the /skill collector (#18759)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5eac6084bc781377cc1432165ebb489ccf5d6fbf",
-      },
-      {
-        sha: "2470434",
-        message: "fix(telegram): probe polling liveness after reconnect to detect wedged Updater",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2470434d60991a46e0fd4733e4a69722acb97ebe",
-      },
-      {
-        sha: "38dd057",
-        message: "fix(feishu): finalize remote document downloads inside httpx.AsyncClient context (#18502)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/38dd057e91dcc47e82478ebc31c66d67b2d96ace",
-      },
-      {
-        sha: "e2cea6e",
-        message: "fix(gateway): include external_dirs skills in Telegram/Discord slash commands (#18741)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e2cea6eeba36e8d6b96c0ed08bc4514b5c07c464",
+        sha: "a22465e",
+        message: "fix(weixin): send_weixin_direct cross-loop session check",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a22465e07ab4b71019f711e7a6463f6590c50742",
       },
     ],
   },
@@ -342,105 +326,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "5d3be89",
         message: "docs(tts): mention xAI custom voice support (#18776)",
         href: "https://github.com/NousResearch/hermes-agent/commit/5d3be898a8671eb9fb99cf18f43165502f54e7f4",
-      },
-    ],
-  },
-  {
-    date: "2026-05-01",
-    title: "Gateway·Slack·Yuanbao·Telegram + ACP·Agent·Curator: 비공개 알림, ephemeral 슬래시 커맨드, 자동 재시작, /goal, loop guardrails, lazy session",
-    category: "Gateway / State",
-    summary:
-      "Gateway에 비공개 알림(private notice) 전달 기능이 추가되고 Slack format_message가 수정됐습니다. Slack 슬래시 커맨드가 ephemeral ack와 라우팅을 지원하며, 사용자 세션 격리를 보존합니다. Gateway가 소스 파일 변경을 감지하면 자동 재시작합니다. Slack 예약 명령어가 네이티브 슬래시 매니페스트에서 제외되고 assistant thread 상태가 정리됩니다. DeliveryTarget.parse에서 대소문자 구분 채팅 ID를 보존하고 free_response_channels 스칼라 값을 문자열로 변환합니다. Yuanbao는 그룹 슬래시 커맨드에서 소유자 신원 확인을 강제합니다. Telegram은 DM 토픽 생성 후 seed 메시지를 전송합니다. ACP에 steer/queue 슬래시 커맨드가 추가되고, 도구 호출 반복 루프를 감지하는 guardrail이 warning-first 방식으로 추가됐습니다. /goal 기능으로 크로스턴 영속 목표(Ralph loop)를 설정할 수 있습니다. 지연 세션 생성(lazy session)으로 첫 메시지까지 DB row를 유예하여 리소스를 절약합니다. Curator 첫 실행이 지연되고 --dry-run 미리보기 옵션이 추가됐습니다. Persistent Goals 문서가 docs nav와 llms.txt에서 접근 가능하게 됐습니다.",
-    commits: [
-      {
-        sha: "0ab2d75",
-        message: "feat(gateway): private notice delivery and Slack format_message fixes",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0ab2d752ffdae211b0f4fd06c8f62cf7eec191a7",
-      },
-      {
-        sha: "7cda0e5",
-        message: "fix(gateway/slack): ephemeral ack and routing for slash commands",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7cda0e522443c6e7790793b93b085508fc530fc8",
-      },
-      {
-        sha: "8fcc160",
-        message: "fix(gateway/slack): review fixes — scope ephemeral to commands, user isolation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8fcc160f6b979f9567e76f189e226c18cabc6308",
-      },
-      {
-        sha: "f99676e",
-        message: "fix(gateway): auto-restart when source files change out from under us (#17648) (#18409)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f99676e315408db3742e00ca9808a31592704399",
-      },
-      {
-        sha: "a147164",
-        message: "fix(slack): preserve per-user slash-command session isolation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a147164d3c4ceb7e2900e240e90d0f1db7910bf8",
-      },
-      {
-        sha: "d05a87e",
-        message: "fix(gateway): clear slack assistant thread status",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d05a87e68662043ac7d66dad942e428a81cd648f",
-      },
-      {
-        sha: "5cdc39e",
-        message: "fix(gateway): preserve case-sensitive chat IDs in DeliveryTarget.parse",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5cdc39e29a032091c4989045b0843715737680c3",
-      },
-      {
-        sha: "2b3923f",
-        message: "fix(gateway): coerce scalar free_response_channels to str before split",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2b3923ff138f5bd68e576b722ee298a8ce07dfe7",
-      },
-      {
-        sha: "a717199",
-        message: "fix(slack): exclude reserved Slack commands from native slash manifest",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a717199bbf31a0900a99b06153d3ba5803cd9012",
-      },
-      {
-        sha: "75e1339",
-        message: "fix(telegram): send seed message after creating DM topics (#18334)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/75e1339d4cdb32652e560eccc3930cc9264ac67b",
-      },
-      {
-        sha: "b7ad3f4",
-        message: "fix(yuanbao): enforce owner identity check on group slash commands",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b7ad3f478f9bc24768f88e4339fc3e6e23d0292b",
-      },
-      {
-        sha: "e27b0b7",
-        message: "feat(acp): add steer and queue slash commands",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e27b0b76517c903541af20d0bd606fa7b3c83005",
-      },
-      {
-        sha: "58b8996",
-        message: "fix(agent): add tool-call loop guardrails",
-        href: "https://github.com/NousResearch/hermes-agent/commit/58b89965c8c4489db817be737eb4e458df0a8e06",
-      },
-      {
-        sha: "265bd59",
-        message: "feat: /goal — persistent cross-turn goals (Ralph loop)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/265bd59c1d9f8dea658f243b257d4fae3685af53",
-      },
-      {
-        sha: "c5b4c48",
-        message: "fix: lazy session creation — defer DB row until first message (#18370)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c5b4c481656634ff919b214a037b830077d3bbd1",
-      },
-      {
-        sha: "77c0bc6",
-        message: "fix(curator): defer first run and add --dry-run preview (#18373) (#18389)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/77c0bc6b13c8c3f849111c41f2e9233a13b3dcb2",
-      },
-      {
-        sha: "0b76d23",
-        message: "makes the Persistent Goals docs accessible in the docs nav (and llms.txt) (#18481)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0b76d23d1acffd14bbc5061cd4f913cf7a0e1a8a",
-      },
-      {
-        sha: "a01c1f7",
-        message: "fix: kanban button",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a01c1f7305bda8ebc5cbcde22f2a80a0300a2ca1",
       },
     ],
   },
