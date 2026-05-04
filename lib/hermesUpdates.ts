@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-05";
+export const hermesUpdatesLastChecked = "2026-05-04";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -51,25 +51,15 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent: Delegation heartbeat, error classifier, Gemini tool name, model-switch",
+    title: "Agent: Delegation provider, Gemini tool name, model-switch, Anthropic fast mode, CLI fork updates",
     category: "Agent 안정성",
     summary:
-      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. Error classifier가 large-context 상황에서 false overflow 휴리스틱을 회피합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다.",
+      "Delegation에서 provider override를 subagent에 적용합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다. Anthropic fast mode가 API 계약에 따라 Opus 4.6으로 제한됩니다. CLI가 fork 사용자를 위해 upstream/main 기준으로 업데이트를 확인합니다.",
     commits: [
       {
         sha: "8308077",
         message: "fix(delegation): honor provider override for subagents",
         href: "https://github.com/NousResearch/hermes-agent/commit/83080772f28793ac388d9218c394019ff8554ad0",
-      },
-      {
-        sha: "0cc6304",
-        message: "fix(delegation): increase heartbeat stale thresholds",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0cc63043e085dc6c12bc80007b6e6e3fafb7b3cf",
-      },
-      {
-        sha: "d29f90e",
-        message: "fix(error_classifier): avoid large-context false overflow heuristics",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d29f90e89d0263d390a71b359e1afa4f5a91e1e9",
       },
       {
         sha: "52882da",
@@ -81,14 +71,24 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(model-switch): soft-accept unlisted openai-codex models",
         href: "https://github.com/NousResearch/hermes-agent/commit/ef8c213e880858dc18af1141d14e9f409b19b1d4",
       },
+      {
+        sha: "d89e7a3",
+        message: "fix(anthropic): restrict fast mode to Opus 4.6 (Anthropic API contract)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d89e7a3cd42eb7cb30ee06e73cf2b4abbaee3248",
+      },
+      {
+        sha: "75b4a34",
+        message: "fix(cli): check updates against upstream/main for fork users",
+        href: "https://github.com/NousResearch/hermes-agent/commit/75b4a3467032f3382cc860a73a06a706ed580b12",
+      },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Agent: Compressor, browser sandbox, Anthropic fast mode, backup safety, env hyphen workdirs",
+    title: "Agent: Compressor, browser sandbox, vision auth, backup safety",
     category: "Agent 안정성",
     summary:
-      "Compressor의 _prune_old_tool_results 경계 방향을 수정하고, 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. Anthropic fast mode가 API 계약에 따라 Opus 4.6으로 제한됩니다. pre-update backup_keep을 최소 1로 유지하여 새 백업이 업데이트 직후 삭제되지 않도록 보호합니다. 하이픈으로 시작하는 workdir에서 cd가 올바르게 동작하도록 --를 전달합니다.",
+      "Compressor의 _prune_old_tool_results 경계 방향을 수정하고, 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. Vision이 custom base_url 사용 시 명시적 provider 인증을 보존합니다. pre-update backup_keep을 최소 1로 유지하여 새 백업이 업데이트 직후 삭제되지 않도록 보호합니다.",
     commits: [
       {
         sha: "b7bbc62",
@@ -106,23 +106,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/74c1b946e00c89b3b7ff315033d579ccb653de2d",
       },
       {
-        sha: "d89e7a3",
-        message: "fix(anthropic): restrict fast mode to Opus 4.6 (Anthropic API contract)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d89e7a3cd42eb7cb30ee06e73cf2b4abbaee3248",
+        sha: "6cf7a9e",
+        message: "fix(vision): preserve explicit provider auth with custom base_url",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6cf7a9e330cadabd2a0b7ae21f25dc400fc3aa63",
       },
       {
-        sha: "edf9c75",
-        message: "fix(env): pass -- to cd for hyphen-prefixed workdirs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/edf9c75621e6b50c912b77b86b13543008f47f80",
+        sha: "b46b0c9",
+        message: "fix(backup): floor pre-update backup_keep to 1 so the new backup survives",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b46b0c98885c78c171d8bd52aee5dd28e082acec",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Gateway: Weixin/Feishu/Telegram/QQ/Teams, context_length",
+    title: "Gateway: Weixin/Feishu/Telegram, friendly error, context_length",
     category: "Gateway / State",
     summary:
-      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. Telegram의 send_photo 실패 시 image_dimensions 오류 외 다른 실패에도 document로 대체 전송합니다. QQ bot이 websocket 연결에 프록시 환경 변수를 적용합니다. Teams interactive_setup이 config 대신 cli_output에서 prompt/print 헬퍼를 import합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영합니다.",
+      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. Telegram의 send_photo 실패 시 image_dimensions 오류 외 다른 실패에도 document로 대체 전송합니다. 서비스가 설치되지 않았을 때 친절한 오류 메시지를 표시합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영합니다.",
     commits: [
       {
         sha: "7a8ee8b",
@@ -135,28 +135,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a79b0ec46157efc91537e634a3dcc44a76f6dc7e",
       },
       {
+        sha: "8c8f95b",
+        message: "fix(gateway): show friendly error when service is not installed",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8c8f95bc8e4e5d8fb7f06be8154afc3488fab787",
+      },
+      {
         sha: "69fc6d9",
         message: "fix(telegram): fall back to document on any send_photo failure, not just dim errors",
         href: "https://github.com/NousResearch/hermes-agent/commit/69fc6d9c1e82ec87ec08765f10e92e8d08029851",
       },
       {
-        sha: "0443484",
-        message: "fix(qqbot): honor proxy env vars for websocket",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0443484115fb6f3a664defd3969ec6206786d625",
-      },
-      {
-        sha: "38adfeb",
-        message: "fix(teams): import prompt/print helpers from cli_output, not config",
-        href: "https://github.com/NousResearch/hermes-agent/commit/38adfebe78fb210921ece43c62c46cd966279c5b",
+        sha: "3ccf723",
+        message: "fix(gateway): read context_length from custom_providers in session info header",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3ccf723bf999d02698e44a30e1d6a9a90d7713f7",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Dashboard/API: Achievements 공유 카드, 테마 팔레트, api_server run.failed, self-improvement, image-gen xAI",
+    title: "Dashboard/API: Achievements 공유 카드, 테마 팔레트, api_server run.failed, self-improvement, session-search",
     category: "Dashboard / API",
     summary:
-      "Achievements가 잠금 해제된 배지에 공유 카드를 렌더링합니다. 대시보드가 커스텀 테마 팔레트 견본을 표시합니다. api_server가 run_conversation 실패 시 run.failed를 emit합니다. self-improvement-loop의 background-review 버짓이 16으로 증가하고 상태 유출이 억제됩니다. Image-gen이 xAI API 오류 발생 시 원래 상태 코드를 보존합니다.",
+      "Achievements가 잠금 해제된 배지에 공유 카드를 렌더링합니다. 대시보드가 커스텀 테마 팔레트 견본을 표시합니다. api_server가 run_conversation 실패 시 run.failed를 emit합니다. self-improvement-loop의 background-review 버짓이 16으로 증가하고 상태 유출이 억제됩니다. session-search가 FTS5 자식 세션 대신 해석된 부모 세션에서 source를 보고합니다.",
     commits: [
       {
         sha: "c5789f4",
@@ -179,18 +179,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/1bd5ac7f2f839cd047366749ebbbf901220c7afe",
       },
       {
-        sha: "239ea1b",
-        message: "fix(image-gen): preserve xAI API error status",
-        href: "https://github.com/NousResearch/hermes-agent/commit/239ea1bdeabb4bc5b56571b3f5b0aa63956b982e",
+        sha: "6b4ccb9",
+        message: "fix(session-search): report source from resolved parent, not FTS5 child session (#15909)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6b4ccb9b148573f0c9a675b9ed24528824b0d87f",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Tools/Config/Auth: Nous OAuth, 0600 권한, redact code_file, status display, scalar wrapping",
+    title: "Tools/Config/Auth: Nous OAuth, 0600 권한, redact code_file, Windows 경로, scalar wrapping",
     category: "Tools / Config / Auth",
     summary:
-      "Nous OAuth가 공유 토큰 저장소를 통해 여러 프로필에서 지속됩니다. .env, auth.json, state.db 파일이 0600 권한으로 복원됩니다. redact가 code_file 파라미터로 JSON/ENV 패턴의 오탐지를 건너뜁니다. hermes status가 주요 provider API 키 누락 여부를 함께 표시합니다. tools가 배열 타입 인자에 bare scalar를 단일 요소 리스트로 감쌉니다.",
+      "Nous OAuth가 공유 토큰 저장소를 통해 여러 프로필에서 지속됩니다. .env, auth.json, state.db 파일이 0600 권한으로 복원됩니다. redact가 code_file 파라미터로 JSON/ENV 패턴의 오탐지를 건너뜁니다. CLI가 Windows 숨김 디렉터리 경로를 마크다운에서 보존합니다. tools가 배열 타입 인자에 bare scalar를 단일 요소 리스트로 감쌉니다.",
     commits: [
       {
         sha: "a175f39",
@@ -208,9 +208,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/6f864f8f942b3532bea8e10584024a509bd248b4",
       },
       {
-        sha: "42d72b5",
-        message: "fix(status): add missing popular provider API keys to hermes status display",
-        href: "https://github.com/NousResearch/hermes-agent/commit/42d72b59223dca923f8bbc4c723c54837b282fc8",
+        sha: "026a5e4",
+        message: "fix(cli): preserve Windows hidden-dir paths in markdown",
+        href: "https://github.com/NousResearch/hermes-agent/commit/026a5e47df53ed84c2b6d3573d605fe7a93b8611",
       },
       {
         sha: "fdf9343",
