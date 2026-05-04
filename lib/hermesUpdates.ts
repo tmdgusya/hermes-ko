@@ -119,10 +119,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Gateway: WSL interop, stale-code 체크, email loop 방지, Weixin 중복 제거, tui_gateway sys.path 보호",
+    title: "Gateway: WSL interop, stale-code 체크, planned service stops, email loop 방지, tui_gateway sys.path 보호",
     category: "Gateway / State",
     summary:
-      "Gateway systemd 유닛이 WSL interop PATH를 보존합니다. stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. tui_gateway가 sys.path를 로컬 패키지 shadowing으로부터 보호합니다 (main branch).",
+      "Gateway systemd 유닛이 WSL interop PATH를 보존합니다. stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. tui_gateway가 sys.path를 로컬 패키지 shadowing으로부터 보호합니다. Weixin 메시지 중복 제거와 Teams import 경로 수정도 포함됩니다 (main branch).",
     commits: [
       {
         sha: "8ab9f61",
@@ -135,14 +135,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/d90f73bcec3daad4fc72b9f3471392acabdd5747",
       },
       {
+        sha: "b632290",
+        message: "fix(gateway): handle planned service stops",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b6322901664c0af138035d6f753feedeb1d2e8b7",
+      },
+      {
         sha: "fd9c32c",
         message: "fix(email): drop non-allowlisted senders before dispatch to prevent mail loops",
         href: "https://github.com/NousResearch/hermes-agent/commit/fd9c32c0f285bb09f926e50980b71da809b3f1ed",
-      },
-      {
-        sha: "7a8ee8b",
-        message: "fix(gateway): deduplicate Weixin messages by content fingerprint",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7a8ee8b29d86dcb7019677504f5c63587dc70b3b",
       },
       {
         sha: "60b143e",
@@ -153,10 +153,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Telegram DM Topic Mode 확장 + Hyperframes 스킬, Cron no_agent 모드",
+    title: "Telegram DM Topic Mode 확장 + Hyperframes 스킬, Cron no_agent + VAR 확장",
     category: "Gateway / State",
     summary:
-      "Telegram DM topic-mode 세션이 도입되어 하나의 DM에서 여러 세션을 토픽별로 관리할 수 있습니다. topic mode가 CASCADE, General-topic 처리, rename guard, debounce 등으로 개선되었습니다. /topic off, help, auth gate, screenshot debounce 기능이 추가되었습니다. DM topic binding이 switch_session과 /new에서도 유지됩니다. Hyperframes optional creative skill이 추가되었습니다. Cron에 no_agent 모드(watchdog pattern)가 추가되어 스크립트 전용 cron job을 agent 없이 실행할 수 있습니다 (main branch).",
+      "Telegram DM topic-mode 세션이 도입되어 하나의 DM에서 여러 세션을 토픽별로 관리할 수 있습니다. topic mode가 CASCADE, General-topic 처리, rename guard, debounce 등으로 개선되었습니다. /topic off, help, auth gate, screenshot debounce 기능이 추가되었습니다. DM topic binding이 switch_session과 /new에서도 유지됩니다. Topic mode 문서화와 개선 패치도 이어졌습니다. Hyperframes optional creative skill이 추가되고 관련 문서가 정비되었습니다. Cron에 no_agent 모드(watchdog pattern)가 추가되어 스크립트 전용 cron job을 agent 없이 실행할 수 있으며, config.yaml의 ${VAR} 환경변수 확장도 지원합니다 (main branch).",
     commits: [
       {
         sha: "d6615d8",
@@ -174,48 +174,48 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a7683d04a9646f8946c4469c31643d7b2670b815",
       },
       {
-        sha: "d35efb9",
-        message: "feat(telegram): /topic off + help + auth gate + screenshot debounce",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d35efb9898843e22d3d203a7fd6822dddb09d342",
+        sha: "3db6b9c",
+        message: "feat(cron): add no_agent mode for script-only cron jobs (watchdog pattern) (#19709)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3db6b9cc871c6f1c588cccba1ff2bd09601c1b77",
       },
       {
-        sha: "50aabb9",
-        message: "feat(skill): add hyperframes optional creative skill",
-        href: "https://github.com/NousResearch/hermes-agent/commit/50aabb9eb2a8d5b2c4f84a447d8f22529844c192",
+        sha: "75bce31",
+        message: "fix(cron): expand ${VAR} refs in config.yaml during job execution (#15890)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/75bce317a30b33dc7d0610120ad2ea3c970c4ddd",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "CLI/Dashboard: CLI 단축키 충돌/크래시 수정, 번들 스킬 동기화, backup 보호, status API keys",
-    category: "Dashboard / API",
+    title: "Agent: TUI 경로 완성, voice key, terminal cwd guard, local shell 복구, file_ops 충돌 해결",
+    category: "Agent 안정성",
     summary:
-      "CLI의 c-S-c 키 바인딩을 try/except로 감싸 스타트업 크래시를 방지하고, hermes_cli의 단축키 config 충돌을 해결합니다. hermes update 시 bundled skills가 활성 프로필을 포함한 모든 프로필에 동기화됩니다. pre-update backup_keep 값을 최소 1로 설정하여 새 백업이 항상 생존하도록 보장합니다. hermes status 디스플레이에 주요 provider API key 상태가 추가되었습니다 (main branch).",
+      "TUI에서 절대 경로를 path로 완성하고, voice.record_key 설정을 존중하며, prompt separator 너비를 보존합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다. Local shell이 persistent_shell cwd가 삭제되었을 때 복구하고, test root를 ancestor candidate으로 검사합니다. file_ops의 search_files가 하이픈 숫자 파일명에서 path/line 충돌을 해결하고, 숨겨진 루트에서도 파일 검색을 허용합니다. CLI의 c-S-c dead key binding 정리와 doctor의 GITHUB_TOKEN 부재 시 gh auth 상태 확인도 포함됩니다 (main branch).",
     commits: [
       {
-        sha: "429b8ec",
-        message: "fix(cli): guard c-S-c key binding with try/except to prevent startup crash (#19895)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/429b8eceb4e053f8783440396c18e30d41509712",
+        sha: "b816fd4",
+        message: "fix(tui): complete absolute paths as paths",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b816fd4e26d6c7260814f53d5ba7c7eb065548c7",
       },
       {
-        sha: "645a2f4",
-        message: "fix(cli): fix shortcut config conflict in hermes_cli",
-        href: "https://github.com/NousResearch/hermes-agent/commit/645a2f482de6cefcf8694a5f2f896889804d3096",
+        sha: "20428f5",
+        message: "fix(tui): respect voice.record_key config (supersedes #19028, #19339) (#19835)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/20428f5e600cddb414ab1ec6152aabb0497d14e1",
       },
       {
-        sha: "20edca7",
-        message: "fix(update): sync bundled skills to all profiles, including active (#16176)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/20edca75e9929e05435defca4e873d2366ef2fe2",
+        sha: "109c3e4",
+        message: "fix(terminal): guard background process spawn against deleted cwd (#19933)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/109c3e468c8ffaf5733683aa1f02afb925104be4",
       },
       {
-        sha: "b46b0c9",
-        message: "fix(backup): floor pre-update backup_keep to 1 so the new backup survives",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b46b0c98885c78c171d8bd52aee5dd28e082acec",
+        sha: "9644b8a",
+        message: "fix(local): recover when persistent_shell cwd is deleted (#17558)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9644b8ae67a84e4b77f3f79f20fa87ddc44f8559",
       },
       {
-        sha: "42d72b5",
-        message: "fix(status): add missing popular provider API keys to hermes status display",
-        href: "https://github.com/NousResearch/hermes-agent/commit/42d72b59223dca923f8bbc4c723c54837b282fc8",
+        sha: "c050ee6",
+        message: "fix(file_ops): resolve search_files path/line collision for hyphenated numeric filenames",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c050ee6573248057b26dc8e2852fa58d051132eb",
       },
     ],
   },
