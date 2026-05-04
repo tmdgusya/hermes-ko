@@ -51,10 +51,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent: Delegation heartbeat, error classifier, Gemini tool name, model-switch",
+    title: "Agent: Delegation heartbeat, error classifier, Gemini tool name, model-switch, session-search",
     category: "Agent 안정성",
     summary:
-      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. Error classifier가 large-context 상황에서 false overflow 휴리스틱을 회피합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다.",
+      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. Error classifier가 large-context 상황에서 false overflow 휴리스틱을 회피합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다. Session-search가 FTS5 child session 대신 resolved parent에서 source를 보고합니다.",
     commits: [
       {
         sha: "8308077",
@@ -80,6 +80,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "ef8c213",
         message: "fix(model-switch): soft-accept unlisted openai-codex models",
         href: "https://github.com/NousResearch/hermes-agent/commit/ef8c213e880858dc18af1141d14e9f409b19b1d4",
+      },
+      {
+        sha: "6b4ccb9",
+        message: "fix(session-search): report source from resolved parent, not FTS5 child session (#15909)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6b4ccb9b148573f0c9a675b9ed24528824b0d87f",
       },
     ],
   },
@@ -111,6 +116,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/d89e7a3cd42eb7cb30ee06e73cf2b4abbaee3248",
       },
       {
+        sha: "b46b0c9",
+        message: "fix(backup): floor pre-update backup_keep to 1 so the new backup survives",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b46b0c98885c78c171d8bd52aee5dd28e082acec",
+      },
+      {
         sha: "edf9c75",
         message: "fix(env): pass -- to cd for hyphen-prefixed workdirs",
         href: "https://github.com/NousResearch/hermes-agent/commit/edf9c75621e6b50c912b77b86b13543008f47f80",
@@ -119,10 +129,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Gateway: Weixin/Feishu/Telegram/QQ/Teams, context_length",
+    title: "Gateway: Weixin/Feishu/Telegram/QQ/Teams, context_length, friendly error",
     category: "Gateway / State",
     summary:
-      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. Telegram의 send_photo 실패 시 image_dimensions 오류 외 다른 실패에도 document로 대체 전송합니다. QQ bot이 websocket 연결에 프록시 환경 변수를 적용합니다. Teams interactive_setup이 config 대신 cli_output에서 prompt/print 헬퍼를 import합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영합니다.",
+      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. Telegram의 send_photo 실패 시 image_dimensions 오류 외 다른 실패에도 document로 대체 전송합니다. QQ bot이 websocket 연결에 프록시 환경 변수를 적용합니다. Teams interactive_setup이 config 대신 cli_output에서 prompt/print 헬퍼를 import합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영합니다. Gateway가 설치되지 않은 서비스에 대해 친화적인 오류 메시지를 표시합니다.",
     commits: [
       {
         sha: "7a8ee8b",
@@ -148,6 +158,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "38adfeb",
         message: "fix(teams): import prompt/print helpers from cli_output, not config",
         href: "https://github.com/NousResearch/hermes-agent/commit/38adfebe78fb210921ece43c62c46cd966279c5b",
+      },
+      {
+        sha: "3ccf723",
+        message: "fix(gateway): read context_length from custom_providers in session info header",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3ccf723bf999d02698e44a30e1d6a9a90d7713f7",
+      },
+      {
+        sha: "8c8f95b",
+        message: "fix(gateway): show friendly error when service is not installed",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8c8f95bc8e4e5d8fb7f06be8154afc3488fab787",
       },
     ],
   },
