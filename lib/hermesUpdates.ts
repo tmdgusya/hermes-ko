@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-04",
-    title: "Gateway: quick-command dispatch, 프로필 표시, PID 스캔, Signal 인증, Slack 설정",
+    title: "Gateway/채팅: quick-command 우선처리, 프로필 표시, PID 스캔, Signal 인증, QQBot, Telegram 사진 대체",
     category: "Gateway / State",
     summary:
-      "Gateway에서 quick-command dispatch가 built-in 핸들러보다 먼저 처리되도록 수정하여, 커스텀 커맨드가 의도대로 우선 실행됩니다. `gateway status` 명령어가 다른 프로필도 함께 표시하여 혼란을 방지합니다. Gateway 프로세스 스캔에서 상위(ancestor) PID를 제외하여 오탐지를 줄입니다. Signal에서 미인증 발신자의 reaction을 건너뛰어 보안을 강화합니다. Setup에서 SLACK_HOME_CHANNEL 프롬프트가 누락된 문제를 수정합니다.",
+      "Gateway에서 quick-command dispatch가 built-in 핸들러보다 먼저 처리되도록 수정하여, 커스텀 커맨드가 의도대로 우선 실행됩니다. `gateway status` 명령어가 다른 프로필도 함께 표시하여 혼란을 방지합니다. Gateway 프로세스 스캔에서 상위(ancestor) PID를 제외하여 오탐지를 줄입니다. Signal에서 미인증 발신자의 reaction을 건너뛰어 보안을 강화합니다. send_message가 QQBot C2C 및 그룹 채팅을 지원합니다. Telegram에서 사진 크기가 제한을 초과하면 문서(document)로 대체 전송합니다.",
     commits: [
       {
         sha: "74c997d",
@@ -43,40 +43,6 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/8a4fe80f8df35fdd70ecf81284cbcd6940f2157c",
       },
       {
-        sha: "e89376d",
-        message: "fix(setup): add missing SLACK_HOME_CHANNEL prompt to _setup_slack()",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e89376d66ff2f72caf069cdddd65c161bb4f7540",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Gateway/Chat: reload-skills 초기화, Telegram sanitize, require_mention 브리지, 필수인자 숨김, QQBot 지원",
-    category: "Gateway / State",
-    summary:
-      "Gateway에서 new/resume/branch 시 queued reload-skills 노트를 초기화하여 stale 알림을 방지합니다. Telegram help 커맨드 멘션을 sanitize 처리합니다. config.yaml 최상위 require_mention 설정이 Telegram 구성으로 브리지되어, telegram.require_mention이 없을 때도 top-level 설정을 인식합니다. 필수 인자가 있는 커맨드를 텔레그램 봇 메뉴에서 숨겨 사용자 경험을 개선합니다. send_message가 QQBot C2C 및 그룹 채팅을 지원합니다.",
-    commits: [
-      {
-        sha: "74636f9",
-        message: "fix(gateway): clear queued reload-skills notes on new/resume/branch",
-        href: "https://github.com/NousResearch/hermes-agent/commit/74636f9c4aa3e9dbeaff64dc3b540aef9482c375",
-      },
-      {
-        sha: "222767e",
-        message: "fix: sanitize Telegram help command mentions",
-        href: "https://github.com/NousResearch/hermes-agent/commit/222767e5e81696fc2b184d4a806a07e05ce969d7",
-      },
-      {
-        sha: "6fda92a",
-        message: "fix(gateway): bridge top-level require_mention to Telegram config",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6fda92aa7f044ce684f6ac11e3f8871a1a70decc",
-      },
-      {
-        sha: "86e64c1",
-        message: "fix(gateway): hide required-arg commands from Telegram menu",
-        href: "https://github.com/NousResearch/hermes-agent/commit/86e64c1d3bc0324452202cf8e26703dbef7839b3",
-      },
-      {
         sha: "3792b77",
         message: "fix(send_message): support QQBot C2C and group chats",
         href: "https://github.com/NousResearch/hermes-agent/commit/3792b77bd11dcccab3b0994bd31086969fb9f5fb",
@@ -85,16 +51,45 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent/CLI/TUI: preflight 압축 표시, custom:* provider 허용, voice 경합 방지, launch dir 고정, terminal cleanup",
+    title: "Agent/모델: preflight 압축 표시, Qwen3/Ollama 인라인 사고 감지, SDK 재시도 비활성화, Gemini 토큰 추적, Anthropic max_tokens 제한",
     category: "Agent 안정성",
     summary:
-      "Agent가 preflight 압축(preflight compression) 상태를 표시하도록 개선되어, 압축 동작을 투명하게 확인할 수 있습니다. CLI에서 custom:* provider slug를 모델 검증에 허용하여 커스텀 프로바이더 설정이 가능해졌습니다. Voice TTS 재시작 시 경합(race)을 방지합니다. 로컬 백엔드 CLI가 항상 launch directory를 사용하며 .env의 TERMINAL_CWD 동기화를 중단하여, 디렉터리 혼선을 방지합니다. TUI에서 Ink 종료 후 process.exit(0)을 호출하여 터미널 정리(cleanup)가 제대로 이루어집니다.",
+      "Agent가 preflight 압축(preflight compression) 상태를 표시하도록 개선되어, 압축 동작을 투명하게 확인할 수 있습니다. Qwen3/Ollama 모델에서 도구 호출 이후에도 인라인 사고(inline thinking)를 감지합니다. OpenAI SDK의 요청별 재시도를 비활성화하여 불필요한 지연을 방지합니다. Gemini 제공자에서 스트리밍 청크의 usageMetadata를 추출하여 토큰 사용량 추적이 가능해졌습니다. Anthropic/DashScope 경로에서 Qwen 모델의 max_tokens를 65536으로 제한합니다.",
     commits: [
       {
         sha: "8bdec80",
         message: "fix(agent): surface preflight compression status",
         href: "https://github.com/NousResearch/hermes-agent/commit/8bdec8088204a321b15dabe7c0df731ad3a66ae1",
       },
+      {
+        sha: "51dc98d",
+        message: "fix(agent): detect Qwen3/Ollama inline thinking after tool calls",
+        href: "https://github.com/NousResearch/hermes-agent/commit/51dc98d314000d7b326b341bb2b95f23ac6814d4",
+      },
+      {
+        sha: "52c539d",
+        message: "fix(agent): disable SDK retries on per-request OpenAI clients",
+        href: "https://github.com/NousResearch/hermes-agent/commit/52c539d53a2b4d457ccc5963a09c880cae49812f",
+      },
+      {
+        sha: "ba83374",
+        message: "fix(gemini): extract usageMetadata from streaming chunks for token tracking",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ba8337464da1f59888645356d3fe3250f343caaa",
+      },
+      {
+        sha: "dc63ad0",
+        message: "fix(anthropic): cap max_tokens at 65536 for Qwen models via DashScope",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dc63ad0ad2ec73014fb99f6c840a4ddea802b806",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "CLI/TUI/Compressor: custom:* provider 허용, voice 경합 방지, TUI 종료 정리, FD 누수 방지, compressor 쿨다운 초기화",
+    category: "Agent 안정성",
+    summary:
+      "CLI에서 custom:* provider slug를 모델 검증에 허용하여 커스텀 프로바이더 설정이 가능해졌습니다. Voice TTS 재시작 시 경합(race)을 방지합니다. TUI에서 Ink 종료 후 process.exit(0)을 호출하여 터미널 정리(cleanup)가 제대로 이루어집니다. TUI가 세션 종료(teardown) 시 AIAgent를 닫아 파일 디스크립터 누수를 방지합니다. Compressor가 on_session_reset()에서 _summary_failure_cooldown_until을 초기화하여, 세션 재시작 후 압축 실패 쿨다운이 이월되지 않습니다.",
+    commits: [
       {
         sha: "c857592",
         message: "fix(cli): allow custom:* provider slugs in model validation",
@@ -106,57 +101,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a1cb811cb8cfca1d3ae902bae87a9cd7c696a0ad",
       },
       {
-        sha: "a11aed1",
-        message: "fix(cli): local backend CLI always uses launch directory, stops .env sync of TERMINAL_CWD (#19334)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a11aed1accc735ae0d7af80d626b33870d4b696c",
-      },
-      {
         sha: "9c93fc5",
         message: "fix(tui): call process.exit(0) after Ink exit to trigger terminal cleanup",
         href: "https://github.com/NousResearch/hermes-agent/commit/9c93fc5775c872d9a10b5b56c3b9fcc59946f742",
       },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Docker/Web/Compressor/Vision: 단일 컨테이너 대시보드, Chromium 탐지, lockfile 호환성, dedup, type guard",
-    category: "Agent 안정성",
-    summary:
-      "Docker에서 HERMES_DASHBOARD=1 환경변수로 대시보드를 side-process로 실행하여 단일 컨테이너 구성이 가능해졌습니다. _chromium_installed()가 AGENT_BROWSER_EXECUTABLE_PATH와 시스템 Chrome을 확인하여 브라우저 감지 정확도가 향상됩니다. TUI에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)합니다. compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다.",
-    commits: [
       {
-        sha: "5671059",
-        message: "feat(docker): launch dashboard as side-process via HERMES_DASHBOARD=1",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5671059f62ab28fa118b15fa148d5ae9a4200574",
+        sha: "6da970f",
+        message: "fix(tui): close AIAgent on session teardown to prevent FD leak",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6da970f15d78d81dfc6287e54788acc2f869b64c",
       },
       {
-        sha: "45fd451",
-        message: "fix: _chromium_installed() now checks AGENT_BROWSER_EXECUTABLE_PATH and system Chrome",
-        href: "https://github.com/NousResearch/hermes-agent/commit/45fd45103d6cb3d8a1910aad6ec9de7e3d55e4fb",
-      },
-      {
-        sha: "2f2998b",
-        message: "fix(tui): tolerate npm's peer-flag drop in lockfile comparison",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2f2998bb1b0d6a1b1c2c14b66b72982595b91506",
-      },
-      {
-        sha: "408dd8a",
-        message: "fix(compressor): skip non-string tool content in dedup pass to prevent AttributeError",
-        href: "https://github.com/NousResearch/hermes-agent/commit/408dd8aa28cb959f1a1e869929651c181de63e1e",
-      },
-      {
-        sha: "6c4aca7",
-        message: "fix(vision): guard user_prompt type before debug_call_data construction",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6c4aca7adca44e67e45f85b143a46ed3d88a7328",
+        sha: "e2211b2",
+        message: "fix(compressor): reset _summary_failure_cooldown_until in on_session_reset()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2211b2683d0dacbdb39af9bc5a2b712a742597d",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Cron/Curator/Skills/Config: null job 복구, usage 갱신, false-positive 방지, 바이너리 해시, api_key 전파",
+    title: "Cron/Curator/Skills: null job 복구, 무출력 AI 호출 건너뛰기, env-var 덮어쓰기 제거, curator 오탐 방지, 수동 스킬 보호",
     category: "Config / Auth",
     summary:
-      "Cron이 null next_run_at job을 복구하고 non-dict origin을 허용하여 크래시를 방지합니다. Cron job이 스킬을 로드할 때 .usage.json의 usage 카운터를 갱신하여, curator가 cron 전용 스킬을 stale 타임스탬프로 자동 아카이브하지 않도록 합니다. Curator가 substring 매칭으로 인한 false-positive 통합(consolidation)을 방지합니다. Skills-hub에서 바이너리 스킬 번들 파일의 해시를 올바르게 계산하도록 수정되었습니다. auxiliary에서 explicit_api_key를 _try_anthropic()로 전파하여, fallback_model에 api_key가 설정된 경우에도 Anthropic 제공자로 키가 전달됩니다.",
+      "Cron이 null next_run_at job을 복구하고 non-dict origin을 허용하여 크래시를 방지합니다. Cron job에서 스크립트가 출력을 생성하지 않으면 AI 호출을 건너뛰어 불필요한 API 비용을 절감합니다. Cron에서 env-var가 저장된 provider 설정을 덮어쓰는 문제를 수정합니다. Curator가 background-review sediment에 대해 agent-created 마킹만 수행하도록 하여 오탐을 방지합니다. Skills에서 수동(manual) 스킬이 curator의 자동 관리 대상에서 제외됩니다.",
     commits: [
       {
         sha: "78b635e",
@@ -164,24 +130,58 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/78b635ee3c1d489c8dfe7e01119b774edd80e50b",
       },
       {
-        sha: "363cc93",
-        message: "fix(cron): bump skill usage when cron jobs load skills",
-        href: "https://github.com/NousResearch/hermes-agent/commit/363cc936746c3f2964427b635f80f57df528da54",
+        sha: "54cd633",
+        message: "fix(cron): skip AI call when script produces no output",
+        href: "https://github.com/NousResearch/hermes-agent/commit/54cd633366cf51810e2efc31e228a5774556b3c3",
       },
       {
-        sha: "744079f",
-        message: "fix(curator): prevent false-positive consolidation from substring matching",
-        href: "https://github.com/NousResearch/hermes-agent/commit/744079ffe604371774f454ce46779ce0fcd43f0f",
+        sha: "e224804",
+        message: "fix(cron): drop stale env-var override of persisted provider",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2248045f56430acbc5bb2759938f4fd5300cb0b",
       },
       {
-        sha: "3072e55",
-        message: "skills-hub: hash binary skill bundle files correctly",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3072e5543ba01c23358772db5fe1a2e770ee108a",
+        sha: "3c070f9",
+        message: "fix(curator): only mark agent-created for background-review sediment (#19621)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3c070f9f9d00a74462980862590b9703fdc002ca",
       },
       {
-        sha: "808fee1",
-        message: "fix(auxiliary): propagate explicit_api_key to _try_anthropic()",
-        href: "https://github.com/NousResearch/hermes-agent/commit/808fee151d42b77a763ea4a8ec711d7b501cece6",
+        sha: "abcaf05",
+        message: "fix(skills): keep manual skills out of curator",
+        href: "https://github.com/NousResearch/hermes-agent/commit/abcaf0522905ff849cc8241037f42fb669bcb664",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Docker/보안/Config/Feishu: 단일 컨테이너 대시보드, 빌드 컨텍스트 정리, Meet localhost 바인딩, config 백업, Feishu MEDIA 지원",
+    category: "Agent 안정성",
+    summary:
+      "Docker에서 HERMES_DASHBOARD=1 환경변수로 대시보드를 side-process로 실행하여 단일 컨테이너 구성이 가능해졌습니다. Docker 빌드 컨텍스트에서 compose/profile 런타임 상태를 제외하여 불필요한 파일 전송을 방지합니다. Meet 노드 서버를 localhost에 바인딩하고 토큰 파일 접근을 소유자 읽기 전용으로 제한하여 보안을 강화합니다. `hermes setup` 실행 전 config.yaml을 자동으로 백업합니다. Feishu에서 send_message 도구로 MEDIA 첨부 파일 전송이 가능해졌습니다.",
+    commits: [
+      {
+        sha: "5671059",
+        message: "feat(docker): launch dashboard as side-process via HERMES_DASHBOARD=1",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5671059f62ab28fa118b15fa148d5ae9a4200574",
+      },
+      {
+        sha: "d7663c7",
+        message: "fix(docker): exclude compose/profile runtime state from build context",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d7663c78083aff9df70349f36c587ebfc2c3aa59",
+      },
+      {
+        sha: "2c7d7a9",
+        message: "fix(security): bind Meet node server to localhost and restrict token file to owner read",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2c7d7a9b2f75593e7949a8ed64883e6425df9684",
+      },
+      {
+        sha: "aede94e",
+        message: "fix: back up config.yaml before hermes setup modifies it",
+        href: "https://github.com/NousResearch/hermes-agent/commit/aede94e7573fc47cf4837f1812fe4d75a142eac3",
+      },
+      {
+        sha: "cdde0c8",
+        message: "fix(feishu): enable MEDIA attachment delivery in send_message tool",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cdde0c841190613564e86815d0ba84c4d3e654c5",
       },
     ],
   },
