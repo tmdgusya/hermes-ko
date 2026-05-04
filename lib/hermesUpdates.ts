@@ -17,6 +17,40 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-04",
+    title: "Docker 단일 컨테이너 대시보드, CLI launch directory 고정, TUI lockfile 호환성",
+    category: "Agent 안정성",
+    summary:
+      "Docker에서 HERMES_DASHBOARD=1 환경변수로 대시보드를 side-process로 실행하여 단일 컨테이너 구성이 가능해졌습니다. 로컬 백엔드 CLI가 항상 launch directory를 사용하며 .env의 TERMINAL_CWD 동기화를 중단하여, 디렉터리 혼선을 방지합니다. TUI에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)합니다. compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 값에 대해 기본 포트로 폴백하며, file 읽기에서 leaked terminal fences를 제거하고, Windows에서 UTF-8 stdout/stderr를 강제하여 UnicodeEncodeError 크래시를 방지합니다.",
+    commits: [
+      {
+        sha: "5671059",
+        message: "feat(docker): launch dashboard as side-process via HERMES_DASHBOARD=1",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5671059f62ab28fa118b15fa148d5ae9a4200574",
+      },
+      {
+        sha: "a11aed1",
+        message: "fix(cli): local backend CLI always uses launch directory, stops .env sync of TERMINAL_CWD (#19334)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a11aed1accc735ae0d7af80d626b33870d4b696c",
+      },
+      {
+        sha: "2f2998b",
+        message: "fix(tui): tolerate npm's peer-flag drop in lockfile comparison",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2f2998bb1b0d6a1b1c2c14b66b72982595b91506",
+      },
+      {
+        sha: "408dd8a",
+        message: "fix(compressor): skip non-string tool content in dedup pass to prevent AttributeError",
+        href: "https://github.com/NousResearch/hermes-agent/commit/408dd8aa28cb959f1a1e869929651c181de63e1e",
+      },
+      {
+        sha: "6c4aca7",
+        message: "fix(vision): guard user_prompt type before debug_call_data construction",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6c4aca7adca44e67e45f85b143a46ed3d88a7328",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
     title: "Gateway·Telegram: reload-skills 노트 초기화, help 멘션 sanitize, require_mention 브리지, 음성 중복 제거",
     category: "Gateway / State",
     summary:
@@ -138,45 +172,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "6c1322b",
         message: "fix(slack): close previous handler in connect() to prevent zombie Socket Mode connections",
         href: "https://github.com/NousResearch/hermes-agent/commit/6c1322b9972ce61419df7df6ad7ae5a261fef9d2",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Agent 안정성: compressor dedup, vision guard, api_server 폴백, file fence, Windows UTF-8, codex-transport, cron·approval 방어, Docker TUI lockfile",
-    category: "Agent 안정성",
-    summary:
-      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. file 읽기에서 leaked terminal fences를 제거합니다. Windows에서 CLI가 UTF-8 stdout/stderr를 강제하여 cp1252 인코딩으로 인한 UnicodeEncodeError 크래시를 방지합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다. codex-transport가 xai 응답에 대해 요청 오버라이드 헤더를 보존합니다. cron tick에서 non-dict origin을 누락으로 처리하여 크래시를 방지합니다. approval의 sensitive write 대상이 shell RC 및 credential 파일까지 확장됐습니다. Docker 환경에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)하여 TUI 빌드가 깨지지 않도록 합니다.",
-    commits: [
-      {
-        sha: "2f2998b",
-        message: "fix(tui): tolerate npm's peer-flag drop in lockfile comparison",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2f2998bb1b0d6a1b1c2c14b66b72982595b91506",
-      },
-      {
-        sha: "408dd8a",
-        message: "fix(compressor): skip non-string tool content in dedup pass to prevent AttributeError",
-        href: "https://github.com/NousResearch/hermes-agent/commit/408dd8aa28cb959f1a1e869929651c181de63e1e",
-      },
-      {
-        sha: "6c4aca7",
-        message: "fix(vision): guard user_prompt type before debug_call_data construction",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6c4aca7adca44e67e45f85b143a46ed3d88a7328",
-      },
-      {
-        sha: "a5cae16",
-        message: "fix(api_server): fall back to default port on malformed API_SERVER_PORT",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a5cae1649675947d04034010f1fa22d15b2c6c4c",
-      },
-      {
-        sha: "6713274",
-        message: "fix(file): strip leaked terminal fences from reads",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6713274a4297ab1cf601d93655b458ab3e66d083",
-      },
-      {
-        sha: "2d7543c",
-        message: "fix(windows): enforce UTF-8 stdout/stderr to prevent UnicodeEncodeError crash",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2d7543c61f1334bdcfa741776a357c274830de8b",
       },
     ],
   },
