@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-04",
-    title: "Kanban: Multi-project boards, worker task-ownership, dashboard API guard, workspace 인라인 생성",
+    title: "Kanban: Multi-project boards, worker task-ownership, dashboard API guard, reference docs",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban이 multi-project boards를 지원하여 하나의 설치로 여러 kanban을 운영할 수 있습니다. worker의 destructive tool 호출 시 task-ownership을 검사하여 권한 없는 카드 수정을 방지합니다. 대시보드 API를 통한 'running' 상태로의 직접 전환을 거부합니다. Kanban assignee 및 lookup을 위해 profile ID가 정규화됩니다. 대시보드의 인라인 생성 폼에 workspace 종류(kind)와 경로(path) 입력 필드가 추가되었습니다.",
+      "Kanban이 multi-project boards를 지원하여 하나의 설치로 여러 kanban을 운영할 수 있습니다. worker의 destructive tool 호출 시 task-ownership을 검사하여 권한 없는 카드 수정을 방지합니다. 대시보드 API를 통한 'running' 상태로의 직접 전환을 거부합니다. Kanban assignee 및 lookup을 위해 profile ID가 정규화됩니다. Kanban 레퍼런스 문서에 multi-board 관련 내용이 보강되었습니다.",
     commits: [
       {
         sha: "5ec6baa",
@@ -43,18 +43,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a31477dabb9b02c85283070d0069c78b76d860bb",
       },
       {
-        sha: "33f554d",
-        message: "feat(kanban-dashboard): workspace kind + path inputs in inline create form (#19679)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/33f554d83cc6a600ec87fe70449b66d40d0b7852",
+        sha: "b2b479b",
+        message: "docs(kanban): backfill multi-board refs in reference docs (#19704)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b2b479b40ece1d0eec8eaf20382bed15d9c25a6d",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Agent: Delegation provider/hb, Gemini tool name, compressor, error classifier, model-switch",
+    title: "Agent: Delegation provider/hb, Gemini tool name, model-switch, Anthropic Opus fast mode",
     category: "Agent 안정성",
     summary:
-      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 늘려 불안정한 연결에서의 timeout을 완화합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. Compressor의 _prune_old_tool_results 경계 방향을 수정하고, error_classifier가 큰 컨텍스트에서 잘못된 overflow 휴리스틱을 방지합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다.",
+      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 늘려 불안정한 연결에서의 timeout을 완화합니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다. model-switch가 unlisted openai-codex 모델을 soft-accept합니다. Anthropic fast mode가 API 계약에 따라 Opus 4.6으로 제한됩니다.",
     commits: [
       {
         sha: "8308077",
@@ -72,6 +72,25 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/52882dade6f96bf88f37535925dbaeed8616cbe7",
       },
       {
+        sha: "ef8c213",
+        message: "fix(model-switch): soft-accept unlisted openai-codex models",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef8c213e880858dc18af1141d14e9f409b19b1d4",
+      },
+      {
+        sha: "d89e7a3",
+        message: "fix(anthropic): restrict fast mode to Opus 4.6 (Anthropic API contract)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d89e7a3cd42eb7cb30ee06e73cf2b4abbaee3248",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Agent: Compressor, error classifier, browser sandbox, vision auth",
+    category: "Agent 안정성",
+    summary:
+      "Compressor의 _prune_old_tool_results 경계 방향을 수정하고, 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. error_classifier가 큰 컨텍스트에서 잘못된 overflow 휴리스틱을 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. Vision이 custom base_url 사용 시 명시적 provider 인증을 보존합니다.",
+    commits: [
+      {
         sha: "b7bbc62",
         message: "fix(compressor): _prune_old_tool_results boundary direction",
         href: "https://github.com/NousResearch/hermes-agent/commit/b7bbc62503d54cd95de413df7cda2e802fec0206",
@@ -81,14 +100,29 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(error_classifier): avoid large-context false overflow heuristics",
         href: "https://github.com/NousResearch/hermes-agent/commit/d29f90e89d0263d390a71b359e1afa4f5a91e1e9",
       },
+      {
+        sha: "a7417f8",
+        message: "fix(compressor): skip non-string tool content in summarization pass to prevent AttributeError",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a7417f8a4a413196dac350e357dec43b8f8eb3e0",
+      },
+      {
+        sha: "74c1b94",
+        message: "fix(browser): inject --no-sandbox for root and AppArmor userns restrictions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74c1b946e00c89b3b7ff315033d579ccb653de2d",
+      },
+      {
+        sha: "6cf7a9e",
+        message: "fix(vision): preserve explicit provider auth with custom base_url",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6cf7a9e330cadabd2a0b7ae21f25dc400fc3aa63",
+      },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Gateway: Weixin/Feishu/qqbot, /new 세션명, systemd 갱신, context_length, service 에러",
+    title: "Gateway: Weixin/Feishu, /new 세션명, systemd 갱신, context_length",
     category: "Gateway / State",
     summary:
-      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. qqbot이 WebSocket에 프록시 환경 변수를 적용합니다. /new 명령어가 선택적 세션 이름 인자를 받을 수 있고, 부팅 시 systemd 유닛을 갱신합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영하며, 서비스 미설치 시 친절한 에러를 표시합니다.",
+      "Gateway가 Weixin 메시지를 콘텐츠 지문(fingerprint)으로 중복 제거합니다. Feishu 토픽 응답이 새 스레드로 잘못 전환되지 않도록 방지합니다. /new 명령어가 선택적 세션 이름 인자를 받을 수 있고, 부팅 시 systemd 유닛을 갱신합니다. custom_providers에서 context_length를 읽어 세션 정보 헤더에 반영합니다.",
     commits: [
       {
         sha: "7a8ee8b",
@@ -111,77 +145,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/af6f9bc2a12682b06fb3632acf5a9cbf01e74a85",
       },
       {
-        sha: "8c8f95b",
-        message: "fix(gateway): show friendly error when service is not installed",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8c8f95bc8e4e5d8fb7f06be8154afc3488fab787",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "CLI/Tools/MCP: Windows 경로, fork 업데이트, scalar wrapping, MCP AnyUrl, profile 검증",
-    category: "Tools / MCP / Plugins",
-    summary:
-      "CLI가 Windows 숨김 디렉터리 경로를 마크다운에서 보존하고, fork 사용자에게 upstream/main 기준 업데이트를 확인합니다. tools가 배열 타입 인자에 bare scalar를 단일 요소 리스트로 감쌉니다. MCP에서 AnyUrl 임포트를 mcp 의존성과 분리합니다. CLI의 -p/--profile이 잘못된 argv 값을 프로바이더 해석 전에 거부합니다.",
-    commits: [
-      {
-        sha: "026a5e4",
-        message: "fix(cli): preserve Windows hidden-dir paths in markdown",
-        href: "https://github.com/NousResearch/hermes-agent/commit/026a5e47df53ed84c2b6d3573d605fe7a93b8611",
-      },
-      {
-        sha: "75b4a34",
-        message: "fix(cli): check updates against upstream/main for fork users",
-        href: "https://github.com/NousResearch/hermes-agent/commit/75b4a3467032f3382cc860a73a06a706ed580b12",
-      },
-      {
-        sha: "fdf9343",
-        message: "fix(tools): wrap bare scalars in single-element list for array-typed args",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fdf9343c51467c12c5bc8f89b488340f6d14b7dc",
-      },
-      {
-        sha: "135b4c8",
-        message: "fix(mcp): decouple AnyUrl import from mcp dependency",
-        href: "https://github.com/NousResearch/hermes-agent/commit/135b4c8b351cda70da89868b9bc1a78bbbb8cf33",
-      },
-      {
-        sha: "c8ecb56",
-        message: "fix(cli): reject invalid argv values from -p/--profile before resolving",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c8ecb56f27b034187ce8dd24156497997d247c76",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Auth/Config/Security: Nous OAuth, 0600 권한, env cd, redact, Google OAuth TOCTOU",
-    category: "Config / Auth",
-    summary:
-      "Nous OAuth가 공유 토큰 저장소를 통해 여러 프로필에서 지속됩니다. .env, auth.json, state.db 파일이 0600 권한으로 복원됩니다. profile 검증이 엄격하게 유지되고 호출자가 먼저 정규화합니다. env에서 cd 시 하이픈 접두사 workdir에 --를 전달합니다. redact가 code_file 파라미터로 JSON/ENV 패턴의 오탐지를 건너뜁니다. Google OAuth 자격 증명 저장 시 TOCTOU 경쟁 조건을 방지합니다.",
-    commits: [
-      {
-        sha: "a175f39",
-        message: "feat(nous): persist Nous OAuth across profiles via shared token store (#19712)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a175f395776a83e54ac838ade06ad3b837051249",
-      },
-      {
-        sha: "60c4bc9",
-        message: "fix(security): restore .env/auth.json/state.db with 0600 perms",
-        href: "https://github.com/NousResearch/hermes-agent/commit/60c4bc96fd81b51277663a8283fa5eea2be8ab51",
-      },
-      {
-        sha: "ae40fca",
-        message: "fix(profiles): keep validate_profile_name strict; callers normalize first",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ae40fca95523b2daf7d8c3245dd27ea28059a5cb",
-      },
-      {
-        sha: "edf9c75",
-        message: "fix(env): pass -- to cd for hyphen-prefixed workdirs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/edf9c75621e6b50c912b77b86b13543008f47f80",
-      },
-      {
-        sha: "412f238",
-        message: "fix(google_oauth): close TOCTOU window when saving credentials",
-        href: "https://github.com/NousResearch/hermes-agent/commit/412f2389f14a625074fc0ae5a1bda6f97a1c6d8f",
+        sha: "3ccf723",
+        message: "fix(gateway): read context_length from custom_providers in session info header",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3ccf723bf999d02698e44a30e1d6a9a90d7713f7",
       },
     ],
   },
@@ -216,6 +182,40 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "6b4ccb9",
         message: "fix(session-search): report source from resolved parent, not FTS5 child session (#15909)",
         href: "https://github.com/NousResearch/hermes-agent/commit/6b4ccb9b148573f0c9a675b9ed24528824b0d87f",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Tools/Config/Auth: Nous OAuth, 0600 권한, redact code_file, Windows 경로, scalar wrapping",
+    category: "Tools / Config / Auth",
+    summary:
+      "Nous OAuth가 공유 토큰 저장소를 통해 여러 프로필에서 지속됩니다. .env, auth.json, state.db 파일이 0600 권한으로 복원됩니다. redact가 code_file 파라미터로 JSON/ENV 패턴의 오탐지를 건너뜁니다. CLI가 Windows 숨김 디렉터리 경로를 마크다운에서 보존합니다. tools가 배열 타입 인자에 bare scalar를 단일 요소 리스트로 감쌉니다.",
+    commits: [
+      {
+        sha: "a175f39",
+        message: "feat(nous): persist Nous OAuth across profiles via shared token store (#19712)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a175f395776a83e54ac838ade06ad3b837051249",
+      },
+      {
+        sha: "60c4bc9",
+        message: "fix(security): restore .env/auth.json/state.db with 0600 perms",
+        href: "https://github.com/NousResearch/hermes-agent/commit/60c4bc96fd81b51277663a8283fa5eea2be8ab51",
+      },
+      {
+        sha: "6f864f8",
+        message: "fix(redact): add code_file param to skip false-positive ENV/JSON patterns",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f864f8f942b3532bea8e10584024a509bd248b4",
+      },
+      {
+        sha: "026a5e4",
+        message: "fix(cli): preserve Windows hidden-dir paths in markdown",
+        href: "https://github.com/NousResearch/hermes-agent/commit/026a5e47df53ed84c2b6d3573d605fe7a93b8611",
+      },
+      {
+        sha: "fdf9343",
+        message: "fix(tools): wrap bare scalars in single-element list for array-typed args",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fdf9343c51467c12c5bc8f89b488340f6d14b7dc",
       },
     ],
   },
