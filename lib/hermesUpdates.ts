@@ -17,10 +17,112 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-04",
-    title: "Docker 단일 컨테이너 대시보드, CLI launch directory 고정, TUI lockfile 호환성",
+    title: "Gateway: quick-command dispatch, 프로필 표시, PID 스캔, Signal 인증, Slack 설정",
+    category: "Gateway / State",
+    summary:
+      "Gateway에서 quick-command dispatch가 built-in 핸들러보다 먼저 처리되도록 수정하여, 커스텀 커맨드가 의도대로 우선 실행됩니다. `gateway status` 명령어가 다른 프로필도 함께 표시하여 혼란을 방지합니다. Gateway 프로세스 스캔에서 상위(ancestor) PID를 제외하여 오탐지를 줄입니다. Signal에서 미인증 발신자의 reaction을 건너뛰어 보안을 강화합니다. Setup에서 SLACK_HOME_CHANNEL 프롬프트가 누락된 문제를 수정합니다.",
+    commits: [
+      {
+        sha: "74c997d",
+        message: "fix(gateway): move quick-command dispatch before built-in handlers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74c997d9851581f169b35e33a633255f40bcbc6b",
+      },
+      {
+        sha: "81ce945",
+        message: "fix(gateway): show other profiles in `gateway status` to prevent confusion",
+        href: "https://github.com/NousResearch/hermes-agent/commit/81ce945450ac46480980a613b886c6e61e34149d",
+      },
+      {
+        sha: "e8cdcf5",
+        message: "fix: exclude ancestor PIDs from gateway process scan (#13242)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e8cdcf532882edb575f3dca4b0e53adf5c416b69",
+      },
+      {
+        sha: "8a4fe80",
+        message: "fix(signal): skip reactions for unauthorized senders",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8a4fe80f8df35fdd70ecf81284cbcd6940f2157c",
+      },
+      {
+        sha: "e89376d",
+        message: "fix(setup): add missing SLACK_HOME_CHANNEL prompt to _setup_slack()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e89376d66ff2f72caf069cdddd65c161bb4f7540",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Gateway/Chat: reload-skills 초기화, Telegram sanitize, require_mention 브리지, 필수인자 숨김, QQBot 지원",
+    category: "Gateway / State",
+    summary:
+      "Gateway에서 new/resume/branch 시 queued reload-skills 노트를 초기화하여 stale 알림을 방지합니다. Telegram help 커맨드 멘션을 sanitize 처리합니다. config.yaml 최상위 require_mention 설정이 Telegram 구성으로 브리지되어, telegram.require_mention이 없을 때도 top-level 설정을 인식합니다. 필수 인자가 있는 커맨드를 텔레그램 봇 메뉴에서 숨겨 사용자 경험을 개선합니다. send_message가 QQBot C2C 및 그룹 채팅을 지원합니다.",
+    commits: [
+      {
+        sha: "74636f9",
+        message: "fix(gateway): clear queued reload-skills notes on new/resume/branch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74636f9c4aa3e9dbeaff64dc3b540aef9482c375",
+      },
+      {
+        sha: "222767e",
+        message: "fix: sanitize Telegram help command mentions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/222767e5e81696fc2b184d4a806a07e05ce969d7",
+      },
+      {
+        sha: "6fda92a",
+        message: "fix(gateway): bridge top-level require_mention to Telegram config",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6fda92aa7f044ce684f6ac11e3f8871a1a70decc",
+      },
+      {
+        sha: "86e64c1",
+        message: "fix(gateway): hide required-arg commands from Telegram menu",
+        href: "https://github.com/NousResearch/hermes-agent/commit/86e64c1d3bc0324452202cf8e26703dbef7839b3",
+      },
+      {
+        sha: "3792b77",
+        message: "fix(send_message): support QQBot C2C and group chats",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3792b77bd11dcccab3b0994bd31086969fb9f5fb",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Agent/CLI/TUI: preflight 압축 표시, custom:* provider 허용, voice 경합 방지, launch dir 고정, terminal cleanup",
     category: "Agent 안정성",
     summary:
-      "Docker에서 HERMES_DASHBOARD=1 환경변수로 대시보드를 side-process로 실행하여 단일 컨테이너 구성이 가능해졌습니다. 로컬 백엔드 CLI가 항상 launch directory를 사용하며 .env의 TERMINAL_CWD 동기화를 중단하여, 디렉터리 혼선을 방지합니다. TUI에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)합니다. compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다.",
+      "Agent가 preflight 압축(preflight compression) 상태를 표시하도록 개선되어, 압축 동작을 투명하게 확인할 수 있습니다. CLI에서 custom:* provider slug를 모델 검증에 허용하여 커스텀 프로바이더 설정이 가능해졌습니다. Voice TTS 재시작 시 경합(race)을 방지합니다. 로컬 백엔드 CLI가 항상 launch directory를 사용하며 .env의 TERMINAL_CWD 동기화를 중단하여, 디렉터리 혼선을 방지합니다. TUI에서 Ink 종료 후 process.exit(0)을 호출하여 터미널 정리(cleanup)가 제대로 이루어집니다.",
+    commits: [
+      {
+        sha: "8bdec80",
+        message: "fix(agent): surface preflight compression status",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8bdec8088204a321b15dabe7c0df731ad3a66ae1",
+      },
+      {
+        sha: "c857592",
+        message: "fix(cli): allow custom:* provider slugs in model validation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c8575925589dac37dcfbe7e92ac87d07c3e9c3f1",
+      },
+      {
+        sha: "a1cb811",
+        message: "fix(cli): avoid voice TTS restart race",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a1cb811cb8cfca1d3ae902bae87a9cd7c696a0ad",
+      },
+      {
+        sha: "a11aed1",
+        message: "fix(cli): local backend CLI always uses launch directory, stops .env sync of TERMINAL_CWD (#19334)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a11aed1accc735ae0d7af80d626b33870d4b696c",
+      },
+      {
+        sha: "9c93fc5",
+        message: "fix(tui): call process.exit(0) after Ink exit to trigger terminal cleanup",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9c93fc5775c872d9a10b5b56c3b9fcc59946f742",
+      },
+    ],
+  },
+  {
+    date: "2026-05-04",
+    title: "Docker/Web/Compressor/Vision: 단일 컨테이너 대시보드, Chromium 탐지, lockfile 호환성, dedup, type guard",
+    category: "Agent 안정성",
+    summary:
+      "Docker에서 HERMES_DASHBOARD=1 환경변수로 대시보드를 side-process로 실행하여 단일 컨테이너 구성이 가능해졌습니다. _chromium_installed()가 AGENT_BROWSER_EXECUTABLE_PATH와 시스템 Chrome을 확인하여 브라우저 감지 정확도가 향상됩니다. TUI에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)합니다. compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다.",
     commits: [
       {
         sha: "5671059",
@@ -28,9 +130,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/5671059f62ab28fa118b15fa148d5ae9a4200574",
       },
       {
-        sha: "a11aed1",
-        message: "fix(cli): local backend CLI always uses launch directory, stops .env sync of TERMINAL_CWD (#19334)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a11aed1accc735ae0d7af80d626b33870d4b696c",
+        sha: "45fd451",
+        message: "fix: _chromium_installed() now checks AGENT_BROWSER_EXECUTABLE_PATH and system Chrome",
+        href: "https://github.com/NousResearch/hermes-agent/commit/45fd45103d6cb3d8a1910aad6ec9de7e3d55e4fb",
       },
       {
         sha: "2f2998b",
@@ -50,79 +152,45 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-03",
-    title: "File·Windows·API·Debug·TUI: leaked fence 제거, UTF-8 강제, 포트 폴백, 로그 redact, 리사이즈 artifacts",
-    category: "Agent 안정성",
-    summary:
-      "file 읽기에서 leaked terminal fences를 제거하여 출력이 깨지는 문제를 수정합니다. Windows에서 UTF-8 stdout/stderr를 강제하여 UnicodeEncodeError 크래시를 방지합니다. api_server가 잘못된 API_SERVER_PORT 값에 대해 기본 포트로 폴백합니다. hermes debug share 업로드 시 로그 내용을 redact 처리하여 민감 정보 노출을 방지합니다. TUI에서 Apple Terminal 리사이즈 artifacts를 제거합니다. 이 외에도 codex-transport가 xai 응답에 대해 요청 override 헤더를 보존하고, cron이 non-dict origin을 누락으로 처리하여 tick 크래시를 방지하며, approval이 민감 쓰기 대상을 shell RC 및 credential 파일까지 확장하고, /goal 커맨드가 TUI에서도 동작하도록 수정되었습니다.",
-    commits: [
-      {
-        sha: "6713274",
-        message: "fix(file): strip leaked terminal fences from reads",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6713274a4297ab1cf601d93655b458ab3e66d083",
-      },
-      {
-        sha: "2d7543c",
-        message: "fix(windows): enforce UTF-8 stdout/stderr to prevent UnicodeEncodeError crash",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2d7543c61f1334bdcfa741776a357c274830de8b",
-      },
-      {
-        sha: "a5cae16",
-        message: "fix(api_server): fall back to default port on malformed API_SERVER_PORT",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a5cae1649675947d04034010f1fa22d15b2c6c4c",
-      },
-      {
-        sha: "b8ae8cc",
-        message: "fix(debug): redact log content at upload time in hermes debug share",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b8ae8cc801df3bb440d86b826795fcbceffa9372",
-      },
-      {
-        sha: "279b656",
-        message: "fix(tui): clear Apple Terminal resize artifacts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/279b656adc3c64db7529fa85bbd744f1aa28cfbe",
-      },
-    ],
-  },
-  {
     date: "2026-05-04",
-    title: "Gateway·Telegram·QQBot: reload-skills 초기화, help 멘션 sanitize, require_mention 브리지, 음성 중복 제거, QQBot 지원",
-    category: "Gateway / State",
+    title: "Cron/Curator/Skills/Config: null job 복구, usage 갱신, false-positive 방지, 바이너리 해시, api_key 전파",
+    category: "Config / Auth",
     summary:
-      "Gateway에서 new/resume/branch 시 queued reload-skills 노트를 초기화하여 stale 알림을 방지합니다. Telegram help 커맨드 멘션을 sanitize 처리하고, 필수 인자가 있는 커맨드를 봇 메뉴에서 숨겨 사용자 경험을 개선합니다. config.yaml 최상위 require_mention 설정이 Telegram 구성으로 브리지되어, telegram.require_mention이 없을 때도 top-level 설정을 인식합니다. Discord 음성 STT 트랜스크립트의 정확/근사 중복을 제거하여 중복 agent 응답을 방지합니다. send_message가 QQBot C2C 및 그룹 채팅을 지원합니다.",
+      "Cron이 null next_run_at job을 복구하고 non-dict origin을 허용하여 크래시를 방지합니다. Cron job이 스킬을 로드할 때 .usage.json의 usage 카운터를 갱신하여, curator가 cron 전용 스킬을 stale 타임스탬프로 자동 아카이브하지 않도록 합니다. Curator가 substring 매칭으로 인한 false-positive 통합(consolidation)을 방지합니다. Skills-hub에서 바이너리 스킬 번들 파일의 해시를 올바르게 계산하도록 수정되었습니다. auxiliary에서 explicit_api_key를 _try_anthropic()로 전파하여, fallback_model에 api_key가 설정된 경우에도 Anthropic 제공자로 키가 전달됩니다.",
     commits: [
       {
-        sha: "74636f9",
-        message: "fix(gateway): clear queued reload-skills notes on new/resume/branch",
-        href: "https://github.com/NousResearch/hermes-agent/commit/74636f9c4aa3e9dbeaff64dc3b540aef9482c375",
+        sha: "78b635e",
+        message: "fix(cron): recover null next_run_at jobs and tolerate non-dict origin",
+        href: "https://github.com/NousResearch/hermes-agent/commit/78b635ee3c1d489c8dfe7e01119b774edd80e50b",
       },
       {
-        sha: "222767e",
-        message: "fix: sanitize Telegram help command mentions",
-        href: "https://github.com/NousResearch/hermes-agent/commit/222767e5e81696fc2b184d4a806a07e05ce969d7",
+        sha: "363cc93",
+        message: "fix(cron): bump skill usage when cron jobs load skills",
+        href: "https://github.com/NousResearch/hermes-agent/commit/363cc936746c3f2964427b635f80f57df528da54",
       },
       {
-        sha: "6fda92a",
-        message: "fix(gateway): bridge top-level require_mention to Telegram config",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6fda92aa7f044ce684f6ac11e3f8871a1a70decc",
+        sha: "744079f",
+        message: "fix(curator): prevent false-positive consolidation from substring matching",
+        href: "https://github.com/NousResearch/hermes-agent/commit/744079ffe604371774f454ce46779ce0fcd43f0f",
       },
       {
-        sha: "1bd975c",
-        message: "fix(gateway): suppress duplicate voice transcripts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1bd975c0ba87c644d560ca7bd62cc47274a8a919",
+        sha: "3072e55",
+        message: "skills-hub: hash binary skill bundle files correctly",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3072e5543ba01c23358772db5fe1a2e770ee108a",
       },
       {
-        sha: "3792b77",
-        message: "fix(send_message): support QQBot C2C and group chats",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3792b77bd11dcccab3b0994bd31086969fb9f5fb",
+        sha: "808fee1",
+        message: "fix(auxiliary): propagate explicit_api_key to _try_anthropic()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/808fee151d42b77a763ea4a8ec711d7b501cece6",
       },
     ],
   },
   {
     date: "2026-05-03",
-    title: "Gateway·Slack·Discord·WhatsApp: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션, 홈채널, protobufjs",
+    title: "Gateway/Slack/Discord: 세션 복원, /new 경합 방지, ws 스킴, allowlist 인증, zombie 연결",
     category: "Gateway / State",
     summary:
-      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다.",
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다.",
     commits: [
       {
         sha: "f1e0292",
@@ -148,74 +216,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "6c1322b",
         message: "fix(slack): close previous handler in connect() to prevent zombie Socket Mode connections",
         href: "https://github.com/NousResearch/hermes-agent/commit/6c1322b9972ce61419df7df6ad7ae5a261fef9d2",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Config·Auth·Provider: auxiliary api_key 전파, cron skill usage bump, curator 자격증명 전달, OpenRouter 응답 캐싱, CLI 리다이렉트",
-    category: "Config / Auth",
-    summary:
-      "auxiliary에서 explicit_api_key를 _try_anthropic()로 전파하여, fallback_model에 api_key가 설정된 경우에도 Anthropic 제공자로 키가 전달되도록 수정합니다. cron job이 스킬을 로드할 때 .usage.json의 usage 카운터를 갱신(bump)하여, curator가 cron 전용 스킬을 stale 타임스탬프로 자동 아카이브하지 않도록 합니다. curator review fork에서 auxiliary.curator의 슬롯별 자격증명을 runtime resolution으로 전달합니다. OpenRouter 제공자에 응답 캐싱(response caching) 지원이 추가되어 API 비용과 지연을 줄일 수 있습니다. CLI가 MiniMax OAuth httpx 클라이언트에서 307 리다이렉트를 따르도록 수정되었습니다.",
-    commits: [
-      {
-        sha: "808fee1",
-        message: "fix(auxiliary): propagate explicit_api_key to _try_anthropic()",
-        href: "https://github.com/NousResearch/hermes-agent/commit/808fee151d42b77a763ea4a8ec711d7b501cece6",
-      },
-      {
-        sha: "363cc93",
-        message: "fix(cron): bump skill usage when cron jobs load skills",
-        href: "https://github.com/NousResearch/hermes-agent/commit/363cc936746c3f2964427b635f80f57df528da54",
-      },
-      {
-        sha: "3c42024",
-        message: "fix(curator): pass auxiliary curator api_key/base_url into runtime resolution",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3c420245395e3e5e074949c4bfdfb25d3156cb98",
-      },
-      {
-        sha: "457c7b7",
-        message: "feat(openrouter): add response caching support (#19132)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/457c7b76cd69089142f7ee02bf26ed5fef9d8741",
-      },
-      {
-        sha: "65bebb9",
-        message: "fix(cli): follow 307 redirects in MiniMax OAuth httpx clients",
-        href: "https://github.com/NousResearch/hermes-agent/commit/65bebb9b802616122c30fd8fea6c4c47514b45e4",
-      },
-    ],
-  },
-  {
-    date: "2026-05-03",
-    title: "Kanban·MCP·Skills·Tools: worker identity 분리, 경로별 env·로그 앵커, MCP 세션 재연결, video_analyze 도구, video-orchestrator 스킬",
-    category: "Kanban / Multi-agent",
-    summary:
-      "Kanban에서 KANBAN_GUIDANCE의 'You are a Kanban worker' identity claim을 제거하여 SOUL.md의 역할 정의를 보존합니다. 경로별 환경 변수 오버라이드와 dispatcher env 주입이 추가되고, board·workspaces·worker 로그가 공유 Hermes 루트에 앵커됩니다. MCP가 종료된 세션에 대해 자동 재연결을 수행합니다. 네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경되었으며, built-in video_analyze/vision_analyze 도구를 참조하도록 수정되었습니다. write_file 핸들러가 content/path 인자 누락 시 zero-byte 파일을 silently 생성하지 않고 명시적으로 거부합니다.",
-    commits: [
-      {
-        sha: "b58db23",
-        message: "fix(kanban): drop worker identity claim from KANBAN_GUIDANCE (#19427)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b58db237e4e1943daeab34fcc38a25e034bafb30",
-      },
-      {
-        sha: "2658494",
-        message: "fix(kanban): add per-path env overrides + dispatcher env injection",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2658494e815b4644cb2ed47dc6cb6623b6ecf112",
-      },
-      {
-        sha: "4a2f822",
-        message: "fix(mcp): reconnect on terminated sessions",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4a2f822137bf69728bd594613002671c93d2a64d",
-      },
-      {
-        sha: "c9a3f36",
-        message: "feat: add video_analyze tool for native video understanding (#19301)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c9a3f36f5656f1a3d543e5b6be1fd05b98783c53",
-      },
-      {
-        sha: "8163d37",
-        message: "fix(skill): reference built-in video_analyze/vision_analyze tools in kanban-video-orchestrator (#19562)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8163d371922768c32f43eb6036d7d36e56775605",
       },
     ],
   },
