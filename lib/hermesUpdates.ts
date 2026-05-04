@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Config·Auth·Cron: auxiliary api_key 전파, cron skill usage bump, curator 자격증명 전달",
+    title: "Config·Auth·Cron·Provider: auxiliary api_key 전파, cron skill usage bump, curator 자격증명 전달, OpenRouter 응답 캐싱",
     category: "Config / Auth",
     summary:
-      "auxiliary에서 explicit_api_key를 _try_anthropic()로 전파하여, fallback_model에 api_key가 설정된 경우에도 Anthropic 제공자로 키가 전달되도록 수정합니다. cron job이 스킬을 로드할 때 .usage.json의 usage 카운터를 갱신(bump)하여, curator가 cron 전용 스킬을 stale 타임스탬프로 자동 아카이브하지 않도록 합니다. curator review fork에서 auxiliary.curator의 슬롯별 자격증명을 runtime resolution으로 전달합니다.",
+      "auxiliary에서 explicit_api_key를 _try_anthropic()로 전파하여, fallback_model에 api_key가 설정된 경우에도 Anthropic 제공자로 키가 전달되도록 수정합니다. cron job이 스킬을 로드할 때 .usage.json의 usage 카운터를 갱신(bump)하여, curator가 cron 전용 스킬을 stale 타임스탬프로 자동 아카이브하지 않도록 합니다. curator review fork에서 auxiliary.curator의 슬롯별 자격증명을 runtime resolution으로 전달합니다. OpenRouter 제공자에 응답 캐싱(response caching) 지원이 추가되어 API 비용과 지연을 줄일 수 있습니다.",
     commits: [
       {
         sha: "808fee1",
@@ -65,6 +65,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "3c42024",
         message: "fix(curator): pass auxiliary curator api_key/base_url into runtime resolution",
         href: "https://github.com/NousResearch/hermes-agent/commit/3c420245395e3e5e074949c4bfdfb25d3156cb98",
+      },
+      {
+        sha: "457c7b7",
+        message: "feat(openrouter): add response caching support (#19132)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/457c7b76cd69089142f7ee02bf26ed5fef9d8741",
       },
     ],
   },
@@ -104,10 +109,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Gateway·Slack·Discord·WhatsApp: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션, 홈채널 스레드, protobufjs",
+    title: "Gateway·Slack·Discord·WhatsApp: 세션 복원, WebSocket 스킴, /new 경쟁 방지, allowlist 인증, 좀비 커넥션, 홈채널 스레드, protobufjs, QQBot, /goal",
     category: "Gateway / State",
     summary:
-      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다. Telegram 봇 메뉴에서 필수 인자가 있는 커맨드를 숨겨 사용자 경험을 개선합니다.",
+      "Gateway가 crash/restart 후 세션을 일괄 정지(suspend)하지 않고 resume_pending 방식으로 복원합니다. HTTPS URL에 대한 WebSocket 스킴 변환(ws→wss)이 수정됐습니다. /new 응답을 cancel_session_processing보다 먼저 전송하여 경쟁 상태(race)를 방지합니다. Discord 슬래시 커맨드에 allowlist 인증이 적용됐습니다. Slack Socket Mode에서 connect() 시 이전 핸들러를 닫아 zombie 연결을 방지합니다. WhatsApp에서 protobufjs를 7.5.5 이상으로 고정하여 critical 취약점 3건을 해결합니다. Gateway 재시작 알림에서 홈채널 스레드 대상을 보존합니다. Telegram 봇 메뉴에서 필수 인자가 있는 커맨드를 숨겨 사용자 경험을 개선합니다. send_message가 QQBot C2C 및 그룹 채팅을 지원합니다. /goal 커맨드가 TUI에서도 동작하고 gateway verdict 전달이 수정됐습니다.",
     commits: [
       {
         sha: "f1e0292",
@@ -138,10 +143,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Agent 안정성: compressor 중복 제거 패스, vision guard, api_server 포트 폴백, file fence 제거, Windows UTF-8 강제",
+    title: "Agent 안정성: compressor 중복 제거 패스, vision guard, api_server 포트 폴백, file fence 제거, Windows UTF-8 강제, codex-transport, cron·approval 방어",
     category: "Agent 안정성",
     summary:
-      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. file 읽기에서 leaked terminal fences를 제거합니다. Windows에서 CLI가 UTF-8 stdout/stderr를 강제하여 cp1252 인코딩으로 인한 UnicodeEncodeError 크래시를 방지합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다.",
+      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. file 읽기에서 leaked terminal fences를 제거합니다. Windows에서 CLI가 UTF-8 stdout/stderr를 강제하여 cp1252 인코딩으로 인한 UnicodeEncodeError 크래시를 방지합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다. codex-transport가 xai 응답에 대해 요청 오버라이드 헤더를 보존합니다. cron tick에서 non-dict origin을 누락으로 처리하여 크래시를 방지합니다. approval의 sensitive write 대상이 shell RC 및 credential 파일까지 확장됐습니다.",
     commits: [
       {
         sha: "408dd8a",
@@ -172,10 +177,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-03",
-    title: "Kanban·MCP·Skills: worker identity 분리, 경로별 env·로그 앵커, MCP 세션 재연결, video_analyze 도구, debug 로그 redact",
+    title: "Kanban·MCP·Skills·Tools: worker identity 분리, 경로별 env·로그 앵커, MCP 세션 재연결, video_analyze 도구, debug 로그 redact, write_file 검증, TUI 복원",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 KANBAN_GUIDANCE의 'You are a Kanban worker' identity claim을 제거하여 SOUL.md의 역할 정의를 보존합니다. 경로별 환경 변수 오버라이드와 dispatcher env 주입이 추가되고, board·workspaces·worker 로그가 공유 Hermes 루트에 앵커됩니다. MCP가 종료된 세션에 대해 자동 재연결을 수행합니다. 네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다.",
+      "Kanban에서 KANBAN_GUIDANCE의 'You are a Kanban worker' identity claim을 제거하여 SOUL.md의 역할 정의를 보존합니다. 경로별 환경 변수 오버라이드와 dispatcher env 주입이 추가되고, board·workspaces·worker 로그가 공유 Hermes 루트에 앵커됩니다. MCP가 종료된 세션에 대해 자동 재연결을 수행합니다. 네이티브 비디오 이해를 위한 video_analyze 도구가 추가됐습니다. video-orchestrator optional creative skill이 추가되고 kanban-video-orchestrator로 이름이 변경됐습니다. hermes debug share 업로드 시 로그 내용을 redact 처리합니다. write_file 핸들러가 content/path 인자 누락 시 zero-byte 파일을 silently 생성하지 않고 명시적으로 거부합니다. _clamp_command_names가 스킬명을 32자로 자른 후에도 cmd_key를 보존합니다. TUI에서 Apple Terminal 리사이즈 artifacts를 제거합니다.",
     commits: [
       {
         sha: "b58db23",
