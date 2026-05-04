@@ -142,12 +142,17 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-03",
-    title: "Agent 안정성: compressor 중복 제거 패스, vision guard, api_server 포트 폴백, file fence 제거, Windows UTF-8 강제, codex-transport, cron·approval 방어",
+    date: "2026-05-04",
+    title: "Agent 안정성: compressor dedup, vision guard, api_server 폴백, file fence, Windows UTF-8, codex-transport, cron·approval 방어, Docker TUI lockfile",
     category: "Agent 안정성",
     summary:
-      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. file 읽기에서 leaked terminal fences를 제거합니다. Windows에서 CLI가 UTF-8 stdout/stderr를 강제하여 cp1252 인코딩으로 인한 UnicodeEncodeError 크래시를 방지합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다. codex-transport가 xai 응답에 대해 요청 오버라이드 헤더를 보존합니다. cron tick에서 non-dict origin을 누락으로 처리하여 크래시를 방지합니다. approval의 sensitive write 대상이 shell RC 및 credential 파일까지 확장됐습니다.",
+      "compressor의 중복 제거(dedup) 패스에서 비문자열 도구 콘텐츠를 건너뛰어 AttributeError를 방지합니다. video_analyze_tool과 일반 vision 도구에서 user_prompt 타입을 guard하여 debug_call_data 구성 전 타입 오류를 방지합니다. api_server가 잘못된 API_SERVER_PORT 환경변수 값에 대해 기본 포트로 폴백합니다. file 읽기에서 leaked terminal fences를 제거합니다. Windows에서 CLI가 UTF-8 stdout/stderr를 강제하여 cp1252 인코딩으로 인한 UnicodeEncodeError 크래시를 방지합니다. MiniMax OAuth httpx 클라이언트가 307 리디렉션을 따르도록 수정됐습니다. codex-transport가 xai 응답에 대해 요청 오버라이드 헤더를 보존합니다. cron tick에서 non-dict origin을 누락으로 처리하여 크래시를 방지합니다. approval의 sensitive write 대상이 shell RC 및 credential 파일까지 확장됐습니다. Docker 환경에서 npm의 peer-flag 제거로 인한 lockfile 비교 실패를 허용(tolerate)하여 TUI 빌드가 깨지지 않도록 합니다.",
     commits: [
+      {
+        sha: "2f2998b",
+        message: "fix(tui): tolerate npm's peer-flag drop in lockfile comparison",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2f2998bb1b0d6a1b1c2c14b66b72982595b91506",
+      },
       {
         sha: "408dd8a",
         message: "fix(compressor): skip non-string tool content in dedup pass to prevent AttributeError",
