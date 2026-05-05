@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Microsoft Teams 메시징: threading, fallback, 진단 로깅, 문서화, Nix 빌드 갱신",
+    title: "Microsoft Teams 메시징: threading 구현, 400 폴백, 진단 로깅, 문서화 확장",
     category: "Messaging / Platform",
     summary:
-      "Microsoft Teams 메시징 플랫폼이 추가되었습니다. app.reply()를 통한 스레딩(threading)이 구현되고, threading이 400 에러를 반환할 경우 flat send로 폴백합니다. reply() fallback 시 진단 로깅이 추가되었습니다. 여러 문서에 Teams가 플랫폼 목록, 사이드바, messaging 인덱스에 등록되었습니다. Nix TUI 빌드의 오래된 npmDepsHash가 갱신되고 cache-blind 감지가 수정되었습니다. Docker terminal backend가 단일 영속 컨테이너임을 명확히 하는 문서 개선도 포함됩니다 (main branch).",
+      "Microsoft Teams 메시징 플랫폼에서 app.reply()를 통한 스레딩(threading)이 구현되었습니다. threading이 400 에러를 반환할 경우 flat send로 폴백하고, reply() fallback 시 진단 로깅이 추가되었습니다. 문서 측면에서는 messaging/index.md와 사이드바에 Teams가 등록되어 접근성이 개선되었습니다 (main branch).",
     commits: [
       {
         sha: "69aeba0",
@@ -38,14 +38,72 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/601e5f1d57cfd4ceefee50a6df05a860a1a602e8",
       },
       {
-        sha: "93869b4",
-        message: "docs: add Microsoft Teams to platform lists across docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/93869b48ab520ad8df386e2057013c5f78bb8d7a",
+        sha: "10f89d7",
+        message: "docs(teams): add Teams to messaging/index.md",
+        href: "https://github.com/NousResearch/hermes-agent/commit/10f89d7b724bb9f6ae8e97dafbed6b8dba01856e",
       },
       {
-        sha: "13a7cbc",
-        message: "fix(nix): refresh stale tui npmDepsHash + fix cache-blind detection (#20144)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/13a7cbcd6404c6e8ef501f98a0b315da4223228c",
+        sha: "ef94aa2",
+        message: "docs(teams): add Teams to sidebar",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef94aa201fba8c1c95a1c8ee9a4d1ee66ca40dd1",
+      },
+    ],
+  },
+  {
+    date: "2026-05-05",
+    title: "Kanban dispatcher: stuck-warn 억제, non-spawnable assignee 스킵 + Gateway pending prompts 보존",
+    category: "Kanban / Multi-agent",
+    summary:
+      "Kanban dispatcher가 ready queue에 spawn 불가능한 assignee만 있을 때 stuck-warn을 억제하고, 실제 프로필이 아닌 assignee의 ready task를 건너뜁니다. Gateway가 재시작 간 pending update prompts를 보존하여 업데이트 프롬프트가 소실되지 않도록 합니다 (main branch).",
+    commits: [
+      {
+        sha: "f25d3ec",
+        message: "fix(kanban): suppress dispatcher stuck-warn when ready queue holds only non-spawnable assignees",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f25d3ec9176bc15d9be59ab32dbd4537606d0254",
+      },
+      {
+        sha: "ca5595f",
+        message: "fix(kanban): dispatcher skips ready tasks whose assignee is not a real profile",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ca5595fe7b707f7285147623ea2473fb7460b7e7",
+      },
+      {
+        sha: "8ad5e98",
+        message: "fix(gateway): preserve pending update prompts across restarts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ad5e98f8d433e6e302355c77e22931f7a047eea",
+      },
+    ],
+  },
+  {
+    date: "2026-05-05",
+    title: "CLI/TUI/설정: 시작 팁 100개, API 키 관리, 클립보드 복사, 보안 CI, Docker 문서",
+    category: "Config / Auth",
+    summary:
+      "CLI 시작 시 100개의 새로운 팁이 추가되었습니다. Setup에서 API 키가 이미 존재할 때 Keep/Replace/Clear 옵션을 제공하여 키 관리가 개선되었습니다. TUI 클립보드 복사 폴백이 개선되었습니다. OSV-Scanner CI와 github-actions용 Dependabot이 보안 강화를 위해 추가되었습니다. Docker terminal backend가 단일 영속 컨테이너임을 명확히 하는 문서 개선도 포함됩니다 (main branch).",
+    commits: [
+      {
+        sha: "fc4aa66",
+        message: "feat(tips): add 100 new CLI startup tips (#20168)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc4aa66ee4cda20f711416586cf3401a7cb498b7",
+      },
+      {
+        sha: "91ce8fc",
+        message: "fix(setup): offer Keep/Replace/Clear when API key already exists",
+        href: "https://github.com/NousResearch/hermes-agent/commit/91ce8fc000deaa4b4bbf1edb5b3d9f6dd1668f09",
+      },
+      {
+        sha: "c3112ad",
+        message: "fix(tui): improve clipboard copy fallbacks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c3112adac551f5afe4166c68a1165d60f33af74f",
+      },
+      {
+        sha: "c77a6e3",
+        message: "chore(security): add OSV-Scanner CI + Dependabot for github-actions only (#20037)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c77a6e3faaf3d400f639213ba3af02a3891ad05a",
+      },
+      {
+        sha: "a1bed18",
+        message: "docs: clarify that the Docker terminal backend is a single persistent container (#20003)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a1bed18194ff1ee8de1bf3e81007ddba06b61042",
       },
     ],
   },
@@ -138,74 +196,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "429b8ec",
         message: "fix(cli): guard c-S-c key binding with try/except to prevent startup crash (#19895)",
         href: "https://github.com/NousResearch/hermes-agent/commit/429b8eceb4e053f8783440396c18e30d41509712",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Gateway/Cron: stale-code HEAD SHA 체크, no_agent 모드, planned stops, WSL PATH, email loop 방지, update skills 동기화, cron 문서화",
-    category: "Gateway / State",
-    summary:
-      "Gateway의 stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Cron에 no_agent 모드(watchdog 패턴)가 추가되어 script-only cron job을 에이전트 없이 실행할 수 있습니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. WSL 환경에서 systemd unit의 interop PATH를 보존합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. 번들 스킬이 활성 프로필을 포함한 모든 프로필로 동기화되도록 update가 수정되었습니다. Cron job 실행 시 config.yaml의 ${VAR} 환경변수 참조 확장, cron-script-only 가이드 사이드바 등록, no-agent 모드 문서가 agent-driven setup 중심으로 개선되었습니다 (main branch).",
-    commits: [
-      {
-        sha: "d90f73b",
-        message: "fix(gateway): use git HEAD SHA, not file mtimes, for stale-code check (#19740)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d90f73bcec3daad4fc72b9f3471392acabdd5747",
-      },
-      {
-        sha: "3db6b9c",
-        message: "feat(cron): add no_agent mode for script-only cron jobs (watchdog pattern) (#19709)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3db6b9cc871c6f1c588cccba1ff2bd09601c1b77",
-      },
-      {
-        sha: "b632290",
-        message: "fix(gateway): handle planned service stops",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b6322901664c0af138035d6f753feedeb1d2e8b7",
-      },
-      {
-        sha: "8ab9f61",
-        message: "fix(gateway): preserve WSL interop PATH in systemd units",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ab9f61dcf787b6cbf4c2ac258621c5f4c2b18d7",
-      },
-      {
-        sha: "fd9c32c",
-        message: "fix(email): drop non-allowlisted senders before dispatch to prevent mail loops",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fd9c32c0f285bb09f926e50980b71da809b3f1ed",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "Skills: Hyperframes 크리에이티브 스킬 추가, Google Workspace / Himalaya 문서 수정",
-    category: "Tools / MCP / Plugins",
-    summary:
-      "Hyperframes 선택적 크리에이티브 스킬이 추가되었습니다. hyperframes inspect 명령어가 cli.md 및 SKILL.md에 문서화되고, upstream 변경사항과 스킬 문서가 동기화되었습니다. Google Workspace 스킬의 SKILL.md에서 required_credential_files가 복원되었습니다. Email/Himalaya 스킬에 v1.2.0 folder.aliases 문법이 문서화되었습니다 (main branch).",
-    commits: [
-      {
-        sha: "50aabb9",
-        message: "feat(skill): add hyperframes optional creative skill",
-        href: "https://github.com/NousResearch/hermes-agent/commit/50aabb9eb2a8d5b2c4f84a447d8f22529844c192",
-      },
-      {
-        sha: "20859cc",
-        message: "docs(skill): sync hyperframes skill with upstream changes",
-        href: "https://github.com/NousResearch/hermes-agent/commit/20859cc408980fe852e2ee96dcdfbd3fd11a8e4f",
-      },
-      {
-        sha: "e493b1c",
-        message: "docs(skill): add hyperframes inspect command to cli.md + SKILL.md",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e493b1c482caf8c50ba8b1b85c2af2904bb74ab7",
-      },
-      {
-        sha: "81cd678",
-        message: "fix(google-workspace): restore required_credential_files in SKILL.md (#16452)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/81cd67829191beba42eb54589375670122e1b57b",
-      },
-      {
-        sha: "a919269",
-        message: "fix(skills/email/himalaya): document v1.2.0 folder.aliases syntax",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a919269eb5c533cef80a2852e82a68472f5ad15d",
       },
     ],
   },
