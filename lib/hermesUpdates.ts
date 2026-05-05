@@ -16,6 +16,40 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-05",
+    title: "Microsoft Teams 메시징: threading 지원, fallback, 진단 로깅",
+    category: "Gateway / State",
+    summary:
+      "Microsoft Teams 메시징 플랫폼이 추가되었습니다. app.reply()를 통한 스레딩(threading)이 구현되고, threading이 400 에러를 반환할 경우 flat send로 폴백합니다. reply() fallback 시 진단 로깅이 추가되었습니다. 여러 문서에 Teams가 플랫폼 목록과 사이드바, messaging 인덱스에 등록되었습니다 (main branch).",
+    commits: [
+      {
+        sha: "69aeba0",
+        message: "feat(teams): implement threading via app.reply()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/69aeba0df782b3383480ffbf0733d725a714c0a1",
+      },
+      {
+        sha: "3f02345",
+        message: "fix(teams): fall back to flat send when threading returns 400",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3f023450ddab8af48814fd715d3f0ee4318026ee",
+      },
+      {
+        sha: "601e5f1",
+        message: "fix(teams): log reply() fallback for diagnostics",
+        href: "https://github.com/NousResearch/hermes-agent/commit/601e5f1d57cfd4ceefee50a6df05a860a1a602e8",
+      },
+      {
+        sha: "93869b4",
+        message: "docs: add Microsoft Teams to platform lists across docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/93869b48ab520ad8df386e2057013c5f78bb8d7a",
+      },
+      {
+        sha: "10f89d7",
+        message: "docs(teams): add Teams to messaging/index.md",
+        href: "https://github.com/NousResearch/hermes-agent/commit/10f89d7b724bb9f6ae8e97dafbed6b8dba01856e",
+      },
+    ],
+  },
+  {
     date: "2026-05-04",
     title: "Kanban: 대시보드 토글 contrast 개선, drop→running 액션, multi-project boards, worker task-ownership, 알림 토글",
     category: "Kanban / Multi-agent",
@@ -51,10 +85,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent: Delegation 안정성, run_agent lock, Anthropic fast mode 제한, Gemini 호환성",
+    title: "Agent: Delegation 안정성, run_agent lock, Ollama Cloud 모델, MiniMax TTS, doctor gh auth",
     category: "Agent 안정성",
     summary:
-      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. Anthropic fast mode가 API 계약에 따라 Opus 4.6으로 제한됩니다. Gemini 호환성을 위해 모든 role:tool 메시지에 name 필드를 포함합니다 (main branch).",
+      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. models.dev의 Ollama Cloud ID에서 :cloud/-cloud suffix를 제거하여 모델명을 정규화합니다. MiniMax TTS API 엔드포인트가 v1/text_to_speech로 업데이트됩니다. doctor가 GITHUB_TOKEN이 없을 때 gh auth status를 확인합니다. Anthropic fast mode가 API 계약에 따라 Opus 4.6으로 제한되고, Gemini 호환성을 위해 role:tool 메시지에 name 필드가 포함됩니다 (main branch).",
     commits: [
       {
         sha: "8308077",
@@ -72,23 +106,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/fbc477df7181e459fc6b300eeaaf54b479a635dc",
       },
       {
-        sha: "d89e7a3",
-        message: "fix(anthropic): restrict fast mode to Opus 4.6 (Anthropic API contract)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d89e7a3cd42eb7cb30ee06e73cf2b4abbaee3248",
+        sha: "eadf346",
+        message: "fix(models): strip :cloud/-cloud suffix from models.dev Ollama Cloud IDs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eadf34633e038c595dcf615845b992a45443e380",
       },
       {
-        sha: "52882da",
-        message: "fix(agent): include name field on every role:tool message for Gemini compatibility (#16478)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/52882dade6f96bf88f37535925dbaeed8616cbe7",
+        sha: "6875471",
+        message: "fix(tts): update MiniMax API endpoint to v1/text_to_speech",
+        href: "https://github.com/NousResearch/hermes-agent/commit/68754719165265e3dc152f10cabf9f46a4b45122",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Agent 도구: Compressor, browser sandbox, file_ops 경로 충돌 해결, update 스킬 동기화, doctor gh auth 체크",
+    title: "Agent 도구: Compressor, browser sandbox, file_ops 경로 충돌 해결, update 스킬 동기화",
     category: "Agent 안정성",
     summary:
-      "Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. file_ops가 숨겨진 루트(hidden roots)에서 파일 검색을 허용하고, 하이픈이 포함된 숫자 파일명에서 search_files 경로·라인 충돌을 해결합니다. update 시 bundled skills가 활성 프로필을 포함한 모든 프로필로 동기화됩니다. doctor가 GITHUB_TOKEN이 없을 때 gh auth status를 확인합니다 (main branch).",
+      "Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. file_ops가 숨겨진 루트(hidden roots)에서 파일 검색을 허용하고, 하이픈이 포함된 숫자 파일명에서 search_files 경로·라인 충돌을 해결합니다. update 시 bundled skills가 활성 프로필을 포함한 모든 프로필로 동기화됩니다 (main branch).",
     commits: [
       {
         sha: "a7417f8",
@@ -153,44 +187,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Telegram DM Topic Mode: /topic off·help·auth, topic binding 강화, Cron no_agent 모드",
-    category: "Gateway / State",
-    summary:
-      "Telegram DM topic-mode 세션이 도입되어 하나의 DM에서 여러 세션을 토픽별로 관리할 수 있습니다. /topic off, help, auth gate, screenshot debounce 기능이 추가되고 topic mode가 CASCADE, General-topic 처리, rename guard, debounce 등으로 개선되었습니다. DM topic binding이 switch_session을 통과해 유지되고 /new에서 rebind되도록 강화되었습니다. Cron에 no_agent 모드(watchdog pattern)가 추가되어 스크립트 전용 cron job을 agent 없이 실행할 수 있습니다 (main branch).",
-    commits: [
-      {
-        sha: "d6615d8",
-        message: "feat: add Telegram DM topic-mode sessions",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d6615d8ec7d5c5a3d7b63e3c2c4bfddbd6fddd4b",
-      },
-      {
-        sha: "1381c89",
-        message: "fix(telegram): polish topic mode — CASCADE, General-topic handling, rename guard, debounce",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1381c89e56fd3e6abbd0233b5a361069ae1862c1",
-      },
-      {
-        sha: "d35efb9",
-        message: "feat(telegram): /topic off + help + auth gate + screenshot debounce",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d35efb9898843e22d3d203a7fd6822dddb09d342",
-      },
-      {
-        sha: "a7683d0",
-        message: "fix(telegram): harden DM topic binding — persist through switch_session, rebind on /new",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a7683d04a9646f8946c4469c31643d7b2670b815",
-      },
-      {
-        sha: "3db6b9c",
-        message: "feat(cron): add no_agent mode for script-only cron jobs (watchdog pattern) (#19709)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3db6b9cc871c6f1c588cccba1ff2bd09601c1b77",
-      },
-    ],
-  },
-  {
-    date: "2026-05-04",
-    title: "CLI / TUI 안정성: c-S-c 크래시 방지, 경로 완성, voice key, terminal cwd 보호, 프롬프트 separator",
+    title: "CLI/TUI 안정성 + Hyperframes 스킬: c-S-c 크래시 방지, local cwd 복구, sys.path 보호, terminal cwd 보호, 새 creative skill",
     category: "Agent 안정성",
     summary:
-      "CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지하고, shortcut config 충돌을 해결했습니다. TUI에서 절대 경로를 path로 완성하고, voice.record_key 설정을 존중하며 프롬프트 separator 너비를 보존합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다 (main branch).",
+      "CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지하고, 사용되지 않는 c-S-c 바인딩이 제거되었습니다. Local 환경에서 persistent_shell cwd가 삭제되었을 때 복구하고, tui_gateway가 sys.path를 로컬 패키지 shadowing으로부터 보호합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다. TUI에서 voice.record_key 설정을 존중하고, shortcut config 충돌이 해결되었습니다. Hyperframes optional creative skill이 추가되고 관련 문서가 동기화되었습니다 (main branch).",
     commits: [
       {
         sha: "429b8ec",
@@ -198,24 +198,24 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/429b8eceb4e053f8783440396c18e30d41509712",
       },
       {
-        sha: "645a2f4",
-        message: "fix(cli): fix shortcut config conflict in hermes_cli",
-        href: "https://github.com/NousResearch/hermes-agent/commit/645a2f482de6cefcf8694a5f2f896889804d3096",
+        sha: "9644b8a",
+        message: "fix(local): recover when persistent_shell cwd is deleted (#17558)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9644b8ae67a84e4b77f3f79f20fa87ddc44f8559",
       },
       {
-        sha: "b816fd4",
-        message: "fix(tui): complete absolute paths as paths",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b816fd4e26d6c7260814f53d5ba7c7eb065548c7",
-      },
-      {
-        sha: "20428f5",
-        message: "fix(tui): respect voice.record_key config (supersedes #19028, #19339) (#19835)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/20428f5e600cddb414ab1ec6152aabb0497d14e1",
+        sha: "60b143e",
+        message: "fix(tui_gateway): guard sys.path against local package shadowing (#15989)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/60b143e9dfca5f90e2ecb09391a7f1832ee592e1",
       },
       {
         sha: "109c3e4",
         message: "fix(terminal): guard background process spawn against deleted cwd (#19933)",
         href: "https://github.com/NousResearch/hermes-agent/commit/109c3e468c8ffaf5733683aa1f02afb925104be4",
+      },
+      {
+        sha: "50aabb9",
+        message: "feat(skill): add hyperframes optional creative skill",
+        href: "https://github.com/NousResearch/hermes-agent/commit/50aabb9eb2a8d5b2c4f84a447d8f22529844c192",
       },
     ],
   },
