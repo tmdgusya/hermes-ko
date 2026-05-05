@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context, kanban hallucination gate",
+    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context",
     category: "Agent 안정성",
     summary:
-      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Kanban에서 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되었습니다 (main branch).",
+      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다 (main branch).",
     commits: [
       {
         sha: "f8ba265",
@@ -46,11 +46,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c46bc92",
         message: "fix(run_agent): use aux provider for compression context length lookup",
         href: "https://github.com/NousResearch/hermes-agent/commit/c46bc9294991929a3dc8f6c28111c3e7780406a2",
-      },
-      {
-        sha: "de9238d",
-        message: "feat(kanban): hallucination gate + recovery UX for worker-created-card claims (#20232)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/de9238d37e778da3654595a49cc7ae5b8a10fa60",
       },
     ],
   },
@@ -95,10 +90,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "CLI / Skills / Env: TUI /provider 별칭 제거, credential-filtered picker, bracketed paste sanitize, MAX_ITERATIONS fallback, category-qualified skill, 공유 dotenv, claw workspace 처리",
+    title: "CLI / Skills / TUI: /model 통일, credential-filtered picker, bracketed paste sanitize, category-qualified skill, TUI slash parity, overlay 성능 최적화",
     category: "CLI / Skills",
     summary:
-      "TUI에서 /provider 별칭을 제거하고 /model로 통일합니다. CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. HERMES_MAX_ITERATIONS가 유효하지 않을 때 fallback 처리합니다. skills에서 category-qualified local skill name을 지원하고, 환경변수 로딩을 공유 Hermes dotenv loader로 리팩터링합니다. claw에서 _scan_workspace_state 실행 시 존재하지 않는 디렉터리를 처리합니다 (main branch).",
+      "TUI에서 /provider 별칭을 제거하고 /model로 통일하며, slash 명령어 패리티를 CLI와 맞춥니다. CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. skills에서 category-qualified local skill name을 지원합니다. TUI overlay 구독을 focused selector로 좁혀 성능을 개선합니다 (main branch).",
     commits: [
       {
         sha: "0397be5",
@@ -116,34 +111,39 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/02147cc850069294d215d72b55c2a2cc2390eff4",
       },
       {
-        sha: "4e6f511",
-        message: "fix(cli): fall back on invalid HERMES_MAX_ITERATIONS",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4e6f51167dd12d2812bfccbf6226618dacfff3fd",
-      },
-      {
         sha: "244bacd",
         message: "fix(skills): support category-qualified local skill names",
         href: "https://github.com/NousResearch/hermes-agent/commit/244bacd0dc4adcf263bb7c6d677452e9fa51c0b0",
       },
       {
-        sha: "d8097d5",
-        message: "refactor(env): use shared Hermes dotenv loader",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d8097d587f7e6cf6815ff3410e3a21bea87ebd6e",
+        sha: "794f487",
+        message: "fix(tui): close slash parity gaps with CLI (#20339)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/794f48766c7e984236ec993e26b0da1c2586448b",
       },
       {
-        sha: "f667774",
-        message: "fix(claw): handle missing dir in _scan_workspace_state",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f6677748a0376a386bb339a7ac4a7264d2b5675c",
+        sha: "00d2559",
+        message: "perf(ui-tui): narrow overlay subscriptions to focused selectors",
+        href: "https://github.com/NousResearch/hermes-agent/commit/00d25595c1c7656ba8055b375fba278e9bef7f8f",
       },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Tools / Plugins / MCP: plugin command discovery, plugin-builtin 병합, Curator archive/prune, delta lint, MCP keepalive",
+    title: "Tools / Providers / Plugins / MCP: provider modules 33종 플러그화, plugin command discovery, Curator archive/prune, delta lint, ProviderProfile ABC",
     category: "Tools / MCP / Plugins",
     summary:
-      "CLI dispatch 시 plugin commands를 discover하고, plugin tools를 builtin toolsets에 병합(merge)합니다. Curator에 archive 및 prune 서브커맨드가 추가되고, file_tools에서 write_file과 patch 후 delta lint가 실행됩니다. MCP의 _wait_for_lifecycle_event에 주기적 keepalive가 추가되었습니다 (main branch).",
+      "33개 provider 전체를 plugins/model-providers/ 아래에서 플러그화(pluggable)하고 ProviderProfile ABC, fetch_models, transport single-path를 도입합니다. CLI dispatch 시 plugin commands를 discover하고, plugin tools를 builtin toolsets에 병합(merge)합니다. Curator에 archive 및 prune 서브커맨드가 추가되고, file_tools에서 write_file과 patch 후 delta lint가 실행됩니다 (main branch).",
     commits: [
+      {
+        sha: "9022804",
+        message: "feat(providers): make all 33 providers pluggable under plugins/model-providers/",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9022804d78e88253d138d448e9107a3884b2b96c",
+      },
+      {
+        sha: "20a4f79",
+        message: "feat: provider modules — ProviderProfile ABC, 33 providers, fetch_models, transport single-path",
+        href: "https://github.com/NousResearch/hermes-agent/commit/20a4f79ed11da67318756d7a98141c0ebf56183f",
+      },
       {
         sha: "e805380",
         message: "Discover plugin commands during CLI dispatch",
@@ -164,19 +164,14 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat(file_tools): post-write delta lint on write_file + patch, add JSON/YAML/TOML/Python in-process linters (#20191)",
         href: "https://github.com/NousResearch/hermes-agent/commit/5168226d60f66dac01dabe151104cb8e958c99c0",
       },
-      {
-        sha: "44cf334",
-        message: "fix(mcp): add periodic keepalive to _wait_for_lifecycle_event",
-        href: "https://github.com/NousResearch/hermes-agent/commit/44cf33449d4f78f9a13eb37c7d99d2c4b021f696",
-      },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Messaging: Feishu dedup·markdown table·bot identity, WhatsApp 음성변환, hermes_home·receive_id_type 병합",
+    title: "Messaging: Feishu dedup·markdown table·bot identity, WhatsApp 음성변환, Telegram DM typing scoped, hermes_home·receive_id_type 병합",
     category: "Messaging / Platform",
     summary:
-      "Feishu에서 malformed dedup timestamps를 허용(tolerate)하고, markdown tables에 force text mode를 적용하며, hydration 중 bot identity를 refresh합니다. WhatsApp send-media에서 mp3/wav를 ogg/opus로 자동 변환하여 native voice bubbles를 지원합니다. _get_hermes_home() 동적 해석과 feishu receive_id_type 감지를 병합(merge)합니다 (main branch).",
+      "Feishu에서 malformed dedup timestamps를 허용(tolerate)하고, markdown tables에 force text mode를 적용하며, hydration 중 bot identity를 refresh합니다. WhatsApp send-media에서 mp3/wav를 ogg/opus로 자동 변환하여 native voice bubbles를 지원합니다. Telegram에서 DM topic typing을 scoped로 유지하고, typing thread-id resolver를 send와 대칭으로 리팩터링합니다. _get_hermes_home() 동적 해석과 feishu receive_id_type 감지를 병합(merge)합니다 (main branch).",
     commits: [
       {
         sha: "a877c3f",
@@ -203,15 +198,35 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix: merge _get_hermes_home() dynamic resolution and feishu receive_id_type detection",
         href: "https://github.com/NousResearch/hermes-agent/commit/969bfff4491d34b199a212defd7f1a4142a26118",
       },
+      {
+        sha: "41545f7",
+        message: "fix(telegram): keep DM topic typing scoped",
+        href: "https://github.com/NousResearch/hermes-agent/commit/41545f7ec59dfe9b05f58374113635eeae0d1bfc",
+      },
+      {
+        sha: "d5357f8",
+        message: "refactor(telegram): make typing thread-id resolver symmetric with send",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d5357f816d669084b9b7dc2da906100d2034212f",
+      },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Config / i18n / Docs: OpenRouter X-Title·xiaomi, i18n 다국어, AGENTS.md 보강, auxiliary custom path 잠금 방지, SSH scp preflight",
-    category: "Config / Auth",
+    title: "Kanban / Config / Auth: 진단 엔진 추가, OpenRouter X-Title·xiaomi, i18n 다국어, auxiliary custom path 잠금 방지, SSH scp preflight",
+    category: "Kanban / Multi-agent",
     summary:
-      "OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. AGENTS.md에 curator/cron/delegation/toolsets 문서가 보강되고 plugin tree가 수정되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다. SSH preflight 검증에 scp 사용 가능 여부 확인이 추가되었습니다 (main branch).",
+      "Kanban에 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되고, task distress signal을 위한 generic diagnostics engine이 도입되었습니다. OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다. SSH preflight 검증에 scp 사용 가능 여부 확인이 추가되었습니다 (main branch).",
     commits: [
+      {
+        sha: "de9238d",
+        message: "feat(kanban): hallucination gate + recovery UX for worker-created-card claims (#20232)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/de9238d37e778da3654595a49cc7ae5b8a10fa60",
+      },
+      {
+        sha: "f67063b",
+        message: "feat(kanban): generic diagnostics engine for task distress signals (#20332)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f67063ba81f9d7de2e42003dd086633d28448ae8",
+      },
       {
         sha: "6430d67",
         message: "fix(openrouter): use canonical X-Title attribution header",
@@ -226,11 +241,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "19eebf6",
         message: "fix(openrouter): treat xiaomi models as reasoning-capable",
         href: "https://github.com/NousResearch/hermes-agent/commit/19eebf6e0de733ffa2f28133801f79e07fbdec4e",
-      },
-      {
-        sha: "b7bd177",
-        message: "docs(AGENTS.md): add curator/cron/delegation/toolsets, fix plugin tree (#20226)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b7bd177105986a0af5ec13c427e0e3837f8d05c8",
       },
       {
         sha: "96514de",
