@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context",
+    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context, kanban hallucination gate",
     category: "Agent 안정성",
     summary:
-      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다 (main branch).",
+      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Kanban에서 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되었습니다 (main branch).",
     commits: [
       {
         sha: "f8ba265",
@@ -46,6 +46,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c46bc92",
         message: "fix(run_agent): use aux provider for compression context length lookup",
         href: "https://github.com/NousResearch/hermes-agent/commit/c46bc9294991929a3dc8f6c28111c3e7780406a2",
+      },
+      {
+        sha: "de9238d",
+        message: "feat(kanban): hallucination gate + recovery UX for worker-created-card claims (#20232)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/de9238d37e778da3654595a49cc7ae5b8a10fa60",
       },
     ],
   },
@@ -85,10 +90,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "CLI / Skills / Env: credential-filtered picker, bracketed paste sanitize, MAX_ITERATIONS fallback, category-qualified skill, 공유 dotenv",
+    title: "CLI / Skills / Env: credential-filtered picker, bracketed paste sanitize, MAX_ITERATIONS fallback, category-qualified skill, 공유 dotenv, claw workspace 처리",
     category: "CLI / Skills",
     summary:
-      "CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. HERMES_MAX_ITERATIONS가 유효하지 않을 때 fallback 처리합니다. skills에서 category-qualified local skill name을 지원하고, 환경변수 로딩을 공유 Hermes dotenv loader로 리팩터링합니다 (main branch).",
+      "CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. HERMES_MAX_ITERATIONS가 유효하지 않을 때 fallback 처리합니다. skills에서 category-qualified local skill name을 지원하고, 환경변수 로딩을 공유 Hermes dotenv loader로 리팩터링합니다. claw에서 _scan_workspace_state 실행 시 존재하지 않는 디렉터리를 처리합니다 (main branch).",
     commits: [
       {
         sha: "60235db",
@@ -114,6 +119,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d8097d5",
         message: "refactor(env): use shared Hermes dotenv loader",
         href: "https://github.com/NousResearch/hermes-agent/commit/d8097d587f7e6cf6815ff3410e3a21bea87ebd6e",
+      },
+      {
+        sha: "f667774",
+        message: "fix(claw): handle missing dir in _scan_workspace_state",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f6677748a0376a386bb339a7ac4a7264d2b5675c",
       },
     ],
   },
@@ -187,10 +197,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Config / i18n / Docs: OpenRouter X-Title·xiaomi, i18n 다국어, AGENTS.md 보강, auxiliary custom path 잠금 방지",
+    title: "Config / i18n / Docs: OpenRouter X-Title·xiaomi, i18n 다국어, AGENTS.md 보강, auxiliary custom path 잠금 방지, SSH scp preflight",
     category: "Config / Auth",
     summary:
-      "OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. AGENTS.md에 curator/cron/delegation/toolsets 문서가 보강되고 plugin tree가 수정되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다 (main branch).",
+      "OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. AGENTS.md에 curator/cron/delegation/toolsets 문서가 보강되고 plugin tree가 수정되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다. SSH preflight 검증에 scp 사용 가능 여부 확인이 추가되었습니다 (main branch).",
     commits: [
       {
         sha: "6430d67",
@@ -216,6 +226,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "96514de",
         message: "fix(auxiliary): avoid locking into custom path when api_key is empty",
         href: "https://github.com/NousResearch/hermes-agent/commit/96514de472d0019c10e5fa5928738094cb7d6a74",
+      },
+      {
+        sha: "db84c15",
+        message: "fix(ssh): add scp availability check to preflight validation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/db84c1535d63e4ea42fb8d0d612cebbaf72d4066",
       },
     ],
   },
