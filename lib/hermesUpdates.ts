@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context",
+    title: "Agent 안정성 / ACP: 429·Gemini CloudCode fallback, ACP reasoning 보존·atomic rewrite, compression context, VS Code ACP Client 가이드",
     category: "Agent 안정성",
     summary:
-      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다 (main branch).",
+      "auxiliary client에서 429 rate-limit 오류 발생 시 fallback을 트리거하고, Gemini CloudCode rate-limit도 fallback을 우선합니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. VS Code의 ACP Client 연동 설정 가이드가 업데이트되었습니다 (main branch).",
     commits: [
       {
         sha: "f8ba265",
@@ -46,6 +46,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c46bc92",
         message: "fix(run_agent): use aux provider for compression context length lookup",
         href: "https://github.com/NousResearch/hermes-agent/commit/c46bc9294991929a3dc8f6c28111c3e7780406a2",
+      },
+      {
+        sha: "0d945d1",
+        message: "docs: update VS Code setup instructions for ACP Client integration",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0d945d1541eece83efa3f19bf9fc3550e55a32e6",
       },
     ],
   },
@@ -212,10 +217,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Kanban / Config / Auth: 진단 엔진 추가, OpenRouter X-Title·xiaomi, i18n 다국어, auxiliary custom path 잠금 방지, SSH scp preflight",
+    title: "Kanban / Config / Auth: 진단 엔진 추가, failure counter 통합, OpenRouter X-Title·xiaomi, i18n 다국어, auxiliary custom path 잠금 방지, SSH scp preflight",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되고, task distress signal을 위한 generic diagnostics engine이 도입되었습니다. OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다. SSH preflight 검증에 scp 사용 가능 여부 확인이 추가되었습니다 (main branch).",
+      "Kanban에 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되고, task distress signal을 위한 generic diagnostics engine이 도입되었습니다. spawn/timeout/crash 모든 실패 경로에서 failure counter를 통합(unify)하여 일관된 재시도 정책을 적용합니다. OpenRouter에서 canonical X-Title attribution header를 사용하고, xiaomi 모델을 reasoning-capable로 처리합니다. display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 i18n 기능이 추가되었습니다. auxiliary provider가 api_key가 비어 있을 때 custom path에 잠기지(lock) 않도록 수정되었습니다. SSH preflight 검증에 scp 사용 가능 여부 확인이 추가되었습니다 (main branch).",
     commits: [
       {
         sha: "de9238d",
@@ -226,6 +231,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "f67063b",
         message: "feat(kanban): generic diagnostics engine for task distress signals (#20332)",
         href: "https://github.com/NousResearch/hermes-agent/commit/f67063ba81f9d7de2e42003dd086633d28448ae8",
+      },
+      {
+        sha: "1fc8733",
+        message: "fix(kanban): unify failure counter across spawn/timeout/crash outcomes (#20410)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1fc8733a698664441d923408f66eaa307d44dd9a",
       },
       {
         sha: "6430d67",
@@ -251,6 +261,65 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "db84c15",
         message: "fix(ssh): add scp availability check to preflight validation",
         href: "https://github.com/NousResearch/hermes-agent/commit/db84c1535d63e4ea42fb8d0d612cebbaf72d4066",
+      },
+    ],
+  },
+  {
+    date: "2026-05-05",
+    title: "Docs: 중국어 README·zh-Hans 가이드, Gemini·Ollama·Provider cookbook, Open WebUI·Docker API 서버, Doubao 음성, Discord·Bedrock·Telegram 가이드 보강",
+    category: "Docs",
+    summary:
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되었습니다. Google Gemini 가이드, Ollama 로컬 실행 가이드, Together/Groq/Perplexity custom_providers cookbook이 작성되었습니다. Open WebUI bootstrap 스크립트, Docker API_SERVER 환경변수, Docker 로컬 추론 서버(vLLM/Ollama) 연동 문서가 추가되었습니다. Doubao 음성 합성·인식(TTS+STT) 예제, Discord Server Members Intent·음성 채널 가이드, Bedrock IAM·quickstart·fallback provider 문서, Telegram 그룹 채팅 트러블슈팅, Camofox Docker 설정 수정 등 다양한 플랫폼 문서가 보강되었습니다 (main branch).",
+    commits: [
+      {
+        sha: "05cdcac",
+        message: "docs: add Chinese (zh-CN) README translation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/05cdcac36240df5ef1348f7f527cc3e1a341282d",
+      },
+      {
+        sha: "74e4f5f",
+        message: "docs(i18n): add zh-Hans Tool Gateway, image gen, and Windows WSL guide",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74e4f5f97aca5471cfa0b595aa94e1a10e5f3b4e",
+      },
+      {
+        sha: "b1476c7",
+        message: "docs(gemini): add Google Gemini guide",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b1476c76f68db7bbf19e183388da99f8f4b24adc",
+      },
+      {
+        sha: "9a0a4c5",
+        message: "docs(guides): add guide for running Hermes locally with Ollama",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9a0a4c5831256551394c3ca99c3913653ea53691",
+      },
+      {
+        sha: "acca3ec",
+        message: "docs(providers): Together/Groq/Perplexity cookbook via custom_providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/acca3ec3af7ebe99f520bd8f3d1e84f6447b57ac",
+      },
+      {
+        sha: "1c42d8f",
+        message: "docs: add Open WebUI bootstrap script",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1c42d8ff5307849b3c450a5536f641739e220227",
+      },
+      {
+        sha: "de0ac21",
+        message: "docs(docker): document API_SERVER_* env vars for exposing the OpenAI-compatible endpoint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/de0ac21fffe60f733c63bbe5e46578c73332b121",
+      },
+      {
+        sha: "398efdb",
+        message: "docs(docker): add section on connecting to local inference servers (vLLM, Ollama)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/398efdb0fa81dbe3e7fc1b6281f26850da4b8552",
+      },
+      {
+        sha: "39560c9",
+        message: "docs(voice): add Doubao speech integration examples (TTS + STT)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/39560c948dee11244b6df7b11050537f3eabbfd7",
+      },
+      {
+        sha: "7b05ccd",
+        message: "docs(bedrock): fix IAM permissions, add quickstart entry, add fallback provider, fix deployment section",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7b05ccddc79654dbe7126a38ecf8994c317c3a6d",
       },
     ],
   },
