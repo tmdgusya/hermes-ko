@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Microsoft Teams 메시징: threading, fallback, 진단 로깅, 문서화, 보안 CI",
+    title: "Microsoft Teams 메시징: threading, fallback, 진단 로깅, 문서화, Nix 빌드 갱신",
     category: "Messaging / Platform",
     summary:
-      "Microsoft Teams 메시징 플랫폼이 추가되었습니다. app.reply()를 통한 스레딩(threading)이 구현되고, threading이 400 에러를 반환할 경우 flat send로 폴백합니다. reply() fallback 시 진단 로깅이 추가되었습니다. 여러 문서에 Teams가 플랫폼 목록, 사이드바, messaging 인덱스에 등록되었습니다. Docker terminal backend가 단일 영속 컨테이너임을 명확히 하는 문서 개선과 OSV-Scanner CI 및 Dependabot 설정도 포함됩니다 (main branch).",
+      "Microsoft Teams 메시징 플랫폼이 추가되었습니다. app.reply()를 통한 스레딩(threading)이 구현되고, threading이 400 에러를 반환할 경우 flat send로 폴백합니다. reply() fallback 시 진단 로깅이 추가되었습니다. 여러 문서에 Teams가 플랫폼 목록, 사이드바, messaging 인덱스에 등록되었습니다. Nix TUI 빌드의 오래된 npmDepsHash가 갱신되고 cache-blind 감지가 수정되었습니다. Docker terminal backend가 단일 영속 컨테이너임을 명확히 하는 문서 개선도 포함됩니다 (main branch).",
     commits: [
       {
         sha: "69aeba0",
@@ -39,13 +39,13 @@ export const hermesUpdates: HermesUpdate[] = [
       },
       {
         sha: "93869b4",
-        message: "docs: add Microsoft Teams to platform lists + sidebar across docs",
+        message: "docs: add Microsoft Teams to platform lists across docs",
         href: "https://github.com/NousResearch/hermes-agent/commit/93869b48ab520ad8df386e2057013c5f78bb8d7a",
       },
       {
-        sha: "c77a6e3",
-        message: "chore(security): add OSV-Scanner CI + Dependabot for github-actions only",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c77a6e3faaf3d400f639213ba3af02a3891ad05a",
+        sha: "13a7cbc",
+        message: "fix(nix): refresh stale tui npmDepsHash + fix cache-blind detection (#20144)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/13a7cbcd6404c6e8ef501f98a0b315da4223228c",
       },
     ],
   },
@@ -109,10 +109,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent/CLI 런타임 안정성: run_agent lock, file_ops 충돌 해결, local cwd 복구, CLI startup 크래시 방지",
+    title: "Agent/CLI/TUI 런타임 안정성: run_agent lock, file_ops 충돌 해결, local cwd 복구, CLI/TUI 크래시 방지, 경로 완성",
     category: "Agent 안정성",
     summary:
-      "run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. file_ops에서 하이픈이 포함된 숫자 파일명에 대한 search_files 경로/라인 충돌을 해결하고, 숨겨진 루트(hidden roots)에서도 파일 검색을 허용합니다. Local shell이 persistent_shell cwd 삭제를 감지하고 복구하여 크래시를 방지합니다. CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지합니다. 그 외에도 delegation provider override, Compressor 비문자열 tool content 처리, Browser --no-sandbox 자동 주입, TUI voice.record_key config 준수, terminal background spawn cwd 보호, models.dev Ollama Cloud ID 접미사 제거, MiniMax TTS API 엔드포인트 갱신, doctor gh auth 상태 확인 등이 포함됩니다 (main branch).",
+      "run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. file_ops에서 하이픈이 포함된 숫자 파일명에 대한 search_files 경로/라인 충돌을 해결하고, 숨겨진 루트(hidden roots)에서도 파일 검색을 허용합니다. Local shell이 persistent_shell cwd 삭제를 감지하고 복구하여 크래시를 방지합니다. CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지합니다. 그 외에도 TUI에서 절대 경로를 경로로 완성, tui_gateway의 sys.path를 local package shadowing으로부터 보호, CLI shortcut config 충돌 해결, TUI voice.record_key config 준수, terminal background spawn cwd 보호, local root ancestor 후보 테스트, models.dev Ollama Cloud ID 접미사 제거, MiniMax TTS API 엔드포인트 갱신, doctor gh auth 상태 확인, Compressor 비문자열 tool content 처리, Browser --no-sandbox 자동 주입, delegation provider override 등이 포함됩니다 (main branch).",
     commits: [
       {
         sha: "fbc477d",
@@ -143,10 +143,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Gateway/Cron: stale-code HEAD SHA 체크, no_agent 모드, planned stops, WSL PATH, email loop 방지, update skills 동기화",
+    title: "Gateway/Cron: stale-code HEAD SHA 체크, no_agent 모드, planned stops, WSL PATH, email loop 방지, update skills 동기화, cron 문서화",
     category: "Gateway / State",
     summary:
-      "Gateway의 stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Cron에 no_agent 모드(watchdog 패턴)가 추가되어 script-only cron job을 에이전트 없이 실행할 수 있습니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. WSL 환경에서 systemd unit의 interop PATH를 보존합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. 번들 스킬이 활성 프로필을 포함한 모든 프로필로 동기화되도록 update가 수정되었습니다. Cron job 실행 시 config.yaml의 ${VAR} 환경변수 참조 확장, cron-script-only 가이드 사이드바 등록, no-agent 모드 문서 개선도 포함됩니다 (main branch).",
+      "Gateway의 stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Cron에 no_agent 모드(watchdog 패턴)가 추가되어 script-only cron job을 에이전트 없이 실행할 수 있습니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. WSL 환경에서 systemd unit의 interop PATH를 보존합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. 번들 스킬이 활성 프로필을 포함한 모든 프로필로 동기화되도록 update가 수정되었습니다. Cron job 실행 시 config.yaml의 ${VAR} 환경변수 참조 확장, cron-script-only 가이드 사이드바 등록, no-agent 모드 문서가 agent-driven setup 중심으로 개선되었습니다 (main branch).",
     commits: [
       {
         sha: "d90f73b",
