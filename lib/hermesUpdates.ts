@@ -88,7 +88,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Agent 도구: Compressor, browser sandbox, file_ops 숨김 루트, models.dev cloud suffix, MiniMax TTS",
     category: "Agent 안정성",
     summary:
-      "Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지하고, _prune_old_tool_results 경계 방향을 수정합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. file_ops가 숨겨진 루트(hidden roots)에서도 파일 검색을 허용합니다. models.dev Ollama Cloud ID에서 :cloud/-cloud suffix를 제거합니다. MiniMax TTS API 엔드포인트가 v1/text_to_speech로 업데이트되었습니다 (main branch).",
+      "Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. file_ops가 숨겨진 루트(hidden roots)에서도 파일 검색을 허용합니다. models.dev Ollama Cloud ID에서 :cloud/-cloud suffix를 제거합니다. MiniMax TTS API 엔드포인트가 v1/text_to_speech로 업데이트되었습니다 (main branch).",
     commits: [
       {
         sha: "a7417f8",
@@ -96,14 +96,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a7417f8a4a413196dac350e357dec43b8f8eb3e0",
       },
       {
-        sha: "b7bbc62",
-        message: "fix(compressor): _prune_old_tool_results boundary direction",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b7bbc62503d54cd95de413df7cda2e802fec0206",
-      },
-      {
         sha: "74c1b94",
         message: "fix(browser): inject --no-sandbox for root and AppArmor userns restrictions",
         href: "https://github.com/NousResearch/hermes-agent/commit/74c1b946e00c89b3b7ff315033d579ccb653de2d",
+      },
+      {
+        sha: "64ad7de",
+        message: "fix(file-ops): allow file search in hidden roots",
+        href: "https://github.com/NousResearch/hermes-agent/commit/64ad7dec0d02256a0ef8330d98ebe5949b517e5e",
       },
       {
         sha: "eadf346",
@@ -119,10 +119,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Gateway: WSL interop, stale-code 체크, planned service stops, email loop 방지, update skills sync",
+    title: "Gateway: WSL interop, stale-code 체크, planned service stops, email loop 방지, tui_gateway sys.path 보호",
     category: "Gateway / State",
     summary:
-      "Gateway systemd 유닛이 WSL interop PATH를 보존합니다. stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. 번들 스킬이 활성 프로필을 포함한 모든 프로필로 동기화됩니다. 이 외에도 tui_gateway sys.path 보호, Teams import 경로 수정, google-workspace SKILL.md 복원, email himalaya v1.2.0 문서화, Weixin 중복 제거 등이 포함됩니다 (main branch).",
+      "Gateway systemd 유닛이 WSL interop PATH를 보존합니다. stale-code 체크가 파일 mtime 대신 git HEAD SHA를 사용하여 재시작 정확도를 높입니다. Gateway가 planned service stops(의도된 서비스 중지)를 처리하여 불필요한 재시작을 방지합니다. Email이 허용 목록(allowlist)에 없는 발신자를 디스패치 전에 차단하여 메일 루프를 방지합니다. tui_gateway가 sys.path를 로컬 패키지 섀도잉으로부터 보호합니다 (main branch).",
     commits: [
       {
         sha: "8ab9f61",
@@ -145,18 +145,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/fd9c32c0f285bb09f926e50980b71da809b3f1ed",
       },
       {
-        sha: "20edca7",
-        message: "fix(update): sync bundled skills to all profiles, including active (#16176)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/20edca75e9929e05435defca4e873d2366ef2fe2",
+        sha: "60b143e",
+        message: "fix(tui_gateway): guard sys.path against local package shadowing (#15989)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/60b143e9dfca5f90e2ecb09391a7f1832ee592e1",
       },
     ],
   },
   {
     date: "2026-05-04",
-    title: "Telegram DM Topic Mode + Hyperframes 스킬, Cron no_agent 모드",
+    title: "Telegram DM Topic Mode: /topic off·help·auth, Cron no_agent 모드, Hyperframes 스킬",
     category: "Gateway / State",
     summary:
-      "Telegram DM topic-mode 세션이 도입되어 하나의 DM에서 여러 세션을 토픽별로 관리할 수 있습니다. topic mode가 CASCADE, General-topic 처리, rename guard, debounce 등으로 개선되고, /topic off, help, auth gate, screenshot debounce 기능이 추가되었습니다. DM topic binding이 switch_session과 /new에서도 유지됩니다. Hyperframes optional creative skill이 추가되고 관련 CLI 문서(inspect command) 및 SKILL.md가 정비되었습니다. Cron에 no_agent 모드(watchdog pattern)가 추가되어 스크립트 전용 cron job을 agent 없이 실행할 수 있으며, config.yaml의 ${VAR} 환경변수 확장과 concurrency regression test도 포함됩니다 (main branch).",
+      "Telegram DM topic-mode 세션이 도입되어 하나의 DM에서 여러 세션을 토픽별로 관리할 수 있습니다. /topic off, help, auth gate, screenshot debounce 기능이 추가되고 topic mode가 CASCADE, General-topic 처리, rename guard, debounce 등으로 개선되었습니다. Cron에 no_agent 모드(watchdog pattern)가 추가되어 스크립트 전용 cron job을 agent 없이 실행할 수 있습니다. Hyperframes optional creative skill이 추가되었습니다 (main branch).",
     commits: [
       {
         sha: "d6615d8",
@@ -169,9 +169,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/1381c89e56fd3e6abbd0233b5a361069ae1862c1",
       },
       {
-        sha: "a7683d0",
-        message: "fix(telegram): harden DM topic binding — persist through switch_session, rebind on /new",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a7683d04a9646f8946c4469c31643d7b2670b815",
+        sha: "d35efb9",
+        message: "feat(telegram): /topic off + help + auth gate + screenshot debounce",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d35efb9898843e22d3d203a7fd6822dddb09d342",
       },
       {
         sha: "3db6b9c",
@@ -187,10 +187,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent: TUI/CLI/터미널/Local 안정성 — 경로 완성, voice key, cwd 복구, CLI crash 방지",
+    title: "Agent: TUI/CLI/터미널/Local 안정성 — 경로 완성, voice key, cwd 보호, local pipe",
     category: "Agent 안정성",
     summary:
-      "TUI에서 절대 경로를 path로 완성하고, voice.record_key 설정을 존중하며, prompt separator 너비를 보존합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다. Local shell이 persistent_shell cwd가 삭제되었을 때 복구하고, test root를 ancestor candidate으로 검사하며 실제 pipe를 fake stdout에 사용합니다. CLI의 c-S-c key binding을 try/except로 보호하여 startup crash를 방지하고 dead binding을 정리합니다. 이 외에도 file_ops의 하이픈 숫자 파일명 path/line 충돌 해결, 숨김 루트 파일 검색, CLI shortcut config 충돌 수정, doctor의 GITHUB_TOKEN 부재 시 gh auth 상태 확인 등이 포함됩니다 (main branch).",
+      "TUI에서 절대 경로를 path로 완성하고, voice.record_key 설정을 존중합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다. Local shell이 persistent_shell cwd가 삭제되었을 때 복구하고, test root를 ancestor candidate으로 검사하며 실제 pipe를 fake stdout에 사용합니다 (main branch).",
     commits: [
       {
         sha: "b816fd4",
@@ -213,9 +213,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/9644b8ae67a84e4b77f3f79f20fa87ddc44f8559",
       },
       {
-        sha: "429b8ec",
-        message: "fix(cli): guard c-S-c key binding with try/except to prevent startup crash (#19895)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/429b8eceb4e053f8783440396c18e30d41509712",
+        sha: "9fa3a09",
+        message: "fix(local): test root as ancestor candidate; use real pipe for fake stdout",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9fa3a093f29e142c4a5d97a62bc96d03175854fa",
       },
     ],
   },
