@@ -43,9 +43,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/93869b48ab520ad8df386e2057013c5f78bb8d7a",
       },
       {
-        sha: "10f89d7",
-        message: "docs(teams): add Teams to messaging/index.md",
-        href: "https://github.com/NousResearch/hermes-agent/commit/10f89d7b724bb9f6ae8e97dafbed6b8dba01856e",
+        sha: "ef94aa2",
+        message: "docs(teams): add Teams to sidebar",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef94aa201fba8c1c95a1c8ee9a4d1ee66ca40dd1",
       },
     ],
   },
@@ -109,10 +109,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-04",
-    title: "Agent 안정성: Delegation provider override, run_agent lock, Compressor fix, Browser sandbox, Local cwd 복구",
+    title: "Agent 런타임 안정성: Delegation provider override, run_agent lock, Compressor fix, Browser sandbox, Local cwd 복구",
     category: "Agent 안정성",
     summary:
-      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. Local shell이 persistent_shell cwd 삭제를 감지하고 복구하여 크래시를 방지합니다. 그 외 update 시 bundled skills 동기화, Ollama Cloud ID의 :cloud/-cloud suffix 제거, file_ops의 search_files 경로 충돌 및 숨김 디렉터리 검색 수정, TTS MiniMax API 엔드포인트를 v1/text_to_speech로 업데이트하는 등 다수의 안정성 수정이 포함되었습니다 (main branch).",
+      "Delegation에서 provider override를 subagent에 적용하고, heartbeat stale 임계값을 높여 delegation 연결이 더 오래 유지됩니다. run_agent의 IterationBudget.used property에서 lock을 획득하여 동시성 안전성을 강화합니다. Compressor가 요약 단계에서 비문자열 tool content를 건너뛰어 AttributeError를 방지합니다. Browser가 root 및 AppArmor userns 환경에서 --no-sandbox 플래그를 자동 주입합니다. Local shell이 persistent_shell cwd 삭제를 감지하고 복구하여 크래시를 방지합니다 (main branch).",
     commits: [
       {
         sha: "8308077",
@@ -180,7 +180,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "CLI/TUI 안정성: c-S-c 크래시 방지, voice record_key, absolute path 완성, sys.path 보호, terminal cwd 보호",
     category: "Agent 안정성",
     summary:
-      "CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지하고, 사용되지 않는 c-S-c 바인딩이 제거되었습니다. TUI에서 voice.record_key config 설정을 준수하고, absolute path를 경로로 완성(complete)합니다. tui_gateway가 sys.path를 로컬 패키지 shadowing으로부터 보호합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다. Hyperframes optional creative skill이 추가되고 관련 문서가 동기화되었습니다. CLI shortcut config 충돌 수정, google-workspace SKILL.md 복원, email himalaya v1.2.0 문서화, cron-script-only 가이드 sidebar 등록 등 문서 정비도 포함됩니다 (main branch).",
+      "CLI에서 c-S-c 키 바인딩을 try/except로 감싸 startup crash를 방지하고, 사용되지 않는 c-S-c 바인딩이 제거되었습니다. TUI에서 voice.record_key config 설정을 준수하고, absolute path를 경로로 완성(complete)합니다. tui_gateway가 sys.path를 로컬 패키지 shadowing으로부터 보호합니다. Terminal이 background process spawn 시 삭제된 cwd를 감지하여 크래시를 방지합니다 (main branch).",
     commits: [
       {
         sha: "429b8ec",
