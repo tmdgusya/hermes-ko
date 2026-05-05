@@ -56,11 +56,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Gateway / State: deterministic thread eviction, JSONL 직렬화 잠금, human-delay 오류 허용, pending prompts 보존",
+    title: "Gateway / State: lazy session regression 해결, deterministic thread eviction, JSONL 직렬화 잠금, human-delay 오류 허용, pending prompts 보존",
     category: "Gateway / State",
     summary:
-      "Gateway에서 helpers의 thread eviction을 결정적(deterministic)으로 보장하고, custom human-delay 모드와 natural 모드 모두에서 잘못된 환경변수 값을 허용(tolerate)합니다. session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하고, 재시작 간 pending update prompts를 보존합니다 (main branch).",
+      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 helpers의 thread eviction을 결정적(deterministic)으로 보장하고, custom human-delay 모드와 natural 모드 모두에서 잘못된 환경변수 값을 허용(tolerate)합니다. session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하고, 재시작 간 pending update prompts를 보존합니다 (main branch).",
     commits: [
+      {
+        sha: "3b75071",
+        message: "fix: resolve lazy session creation regressions (#18370 fallout) (#20363)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3b750715a39ed8a96fe90dc4f7a5b7b2ff9b794e",
+      },
       {
         sha: "247c9d4",
         message: "fix(gateway): ensure deterministic thread eviction in helpers",
@@ -90,11 +95,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "CLI / Skills / Env: credential-filtered picker, bracketed paste sanitize, MAX_ITERATIONS fallback, category-qualified skill, 공유 dotenv, claw workspace 처리",
+    title: "CLI / Skills / Env: TUI /provider 별칭 제거, credential-filtered picker, bracketed paste sanitize, MAX_ITERATIONS fallback, category-qualified skill, 공유 dotenv, claw workspace 처리",
     category: "CLI / Skills",
     summary:
-      "CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. HERMES_MAX_ITERATIONS가 유효하지 않을 때 fallback 처리합니다. skills에서 category-qualified local skill name을 지원하고, 환경변수 로딩을 공유 Hermes dotenv loader로 리팩터링합니다. claw에서 _scan_workspace_state 실행 시 존재하지 않는 디렉터리를 처리합니다 (main branch).",
+      "TUI에서 /provider 별칭을 제거하고 /model로 통일합니다. CLI에 credential-filtered picker provider 목록(list_picker_providers)이 추가되고, setup 중 bracketed paste markers를 sanitize합니다. HERMES_MAX_ITERATIONS가 유효하지 않을 때 fallback 처리합니다. skills에서 category-qualified local skill name을 지원하고, 환경변수 로딩을 공유 Hermes dotenv loader로 리팩터링합니다. claw에서 _scan_workspace_state 실행 시 존재하지 않는 디렉터리를 처리합니다 (main branch).",
     commits: [
+      {
+        sha: "0397be5",
+        message: "feat(tui): remove /provider alias for /model (#20358)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0397be5939079d0a0f6df491637825e7f1583f2f",
+      },
       {
         sha: "60235db",
         message: "feat(cli): add list_picker_providers for credential-filtered picker",
