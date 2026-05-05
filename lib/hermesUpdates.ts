@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Agent 안정성: compression context length, session_id 반환, reasoning-block leak, stale reasoning 방지",
+    title: "Agent 안정성: compression context length, session_id 반환, reasoning-block leak, stale reasoning 방지, compaction fallback",
     category: "Agent 안정성",
     summary:
-      "run_agent에서 compression context length 조회 시 aux provider를 사용하도록 수정되고, context compression 후 유효한 session_id를 반환합니다. reasoning-block leak을 방지하는 stateful streaming scrubber가 추가되고, 턴 간 stale reasoning이 재사용되지 않도록 수정되었습니다. compression에서 반복 요약의 연속성도 보존됩니다 (main branch).",
+      "run_agent에서 compression context length 조회 시 aux provider를 사용하도록 수정되고, context compression 후 유효한 session_id를 반환합니다. reasoning-block leak을 방지하는 stateful streaming scrubber가 추가되고, 턴 간 stale reasoning이 재사용되지 않도록 수정되었습니다. compaction에서 role=user fallback 시 context summary의 끝을 명시적으로 표시(mark)합니다 (main branch).",
     commits: [
       {
         sha: "c46bc92",
@@ -43,9 +43,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/efe1cb00c88234ab4c81055a8aac07689a315508",
       },
       {
-        sha: "4a3e3e2",
-        message: "fix(compression): preserve iterative summary continuity",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4a3e3e20e5b2ed2fd0c2e727f8204efea4de8a5a",
+        sha: "2eef395",
+        message: "fix(compaction): mark end of context summary in role=user fallback",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2eef395e1cafd32ebfcf91fb6e5c6ecbd4c1e7df",
       },
     ],
   },
@@ -153,10 +153,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Tools / MCP / Plugins: Curator archive/prune, delta lint, MCP keepalive, skills pin 보호, llama.cpp 대응",
+    title: "Tools / MCP / Plugins: Curator archive/prune, delta lint, MCP keepalive, skills pin 보호, Claw workspace",
     category: "Tools / MCP / Plugins",
     summary:
-      "Curator에 archive 및 prune 서브커맨드가 추가되고, frontmatter name으로 hub skill을 보호합니다. file_tools에서 write_file과 patch 후 delta lint가 실행되며 JSON/YAML/TOML/Python in-process linter가 추가되었습니다. MCP의 _wait_for_lifecycle_event에 주기적 keepalive가 추가되고, skills pin이 삭제만 방지하고 편집은 허용하도록 변경되었습니다. llama.cpp grammar 400 에러 시 tool schema의 pattern/format을 reactive하게 제거합니다 (main branch).",
+      "Curator에 archive 및 prune 서브커맨드가 추가되고, frontmatter name으로 hub skill을 보호합니다. file_tools에서 write_file과 patch 후 delta lint가 실행되며 JSON/YAML/TOML/Python in-process linter가 추가되었습니다. MCP의 _wait_for_lifecycle_event에 주기적 keepalive가 추가되고, skills pin이 삭제만 방지하고 편집은 허용하도록 변경되었습니다. Claw에서 _scan_workspace_state의 누락된 디렉터리를 처리(handle)합니다 (main branch).",
     commits: [
       {
         sha: "436672d",
@@ -179,18 +179,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/b10e38e392ba5b1ee0f98fd513d3f120f7277565",
       },
       {
-        sha: "28f4d6d",
-        message: "fix(tool-schemas): reactive strip of pattern/format on llama.cpp grammar 400s",
-        href: "https://github.com/NousResearch/hermes-agent/commit/28f4d6db63f450828ffe419964719d35bbeedc58",
+        sha: "f667774",
+        message: "fix(claw): handle missing dir in _scan_workspace_state",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f6677748a0376a386bb339a7ac4a7264d2b5675c",
       },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Config / Auth / CLI: MAX_ITERATIONS 폴백, 모델 별칭, Codex reasoning, API 키 경로, Session-Key 헤더",
+    title: "Config / CLI / Auth: MAX_ITERATIONS 폴백, 모델 별칭, Codex reasoning, Session-Key 헤더, paste sanitize",
     category: "Config / Auth",
     summary:
-      "CLI에서 잘못된 HERMES_MAX_ITERATIONS 값에 폴백하고, bracketed paste 마커를 setup 중 sanitize합니다. /model alias resolution에서 config.yaml의 model.aliases를 해석하고, OpenRouter에서 xiaomi 모델을 reasoning-capable로 처리합니다. Aux provider가 api_key가 비어 있을 때 custom path에 고정(lock)되지 않도록 하고, Codex reasoning effort가 falsy일 때 medium으로 기본 설정됩니다. API 서버에 X-Hermes-Session-Key 헤더가 추가되어 long-term memory scoping이 가능해졌습니다 (main branch).",
+      "CLI에서 잘못된 HERMES_MAX_ITERATIONS 값에 폴백하고, bracketed paste 마커를 setup 중 sanitize합니다. /model alias resolution에서 config.yaml의 model.aliases를 해석하고, OpenRouter에서 xiaomi 모델을 reasoning-capable로 처리합니다. Codex reasoning effort가 falsy일 때 medium으로 기본 설정됩니다. API 서버에 X-Hermes-Session-Key 헤더가 추가되어 long-term memory scoping이 가능해졌습니다 (main branch).",
     commits: [
       {
         sha: "4e6f511",
@@ -208,14 +208,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/9e893d16d1f4bdb3c1623a547450f8b8bdcc5bee",
       },
       {
-        sha: "96514de",
-        message: "fix(auxiliary): avoid locking into custom path when api_key is empty",
-        href: "https://github.com/NousResearch/hermes-agent/commit/96514de472d0019c10e5fa5928738094cb7d6a74",
-      },
-      {
         sha: "fe8560f",
         message: "feat(api-server): X-Hermes-Session-Key header for long-term memory scoping (#20199)",
         href: "https://github.com/NousResearch/hermes-agent/commit/fe8560fc1249b4a7e448b5c3b80a7d213df9d78f",
+      },
+      {
+        sha: "02147cc",
+        message: "fix(cli): sanitize bracketed paste markers during setup",
+        href: "https://github.com/NousResearch/hermes-agent/commit/02147cc850069294d215d72b55c2a2cc2390eff4",
       },
     ],
   },
