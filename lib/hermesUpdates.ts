@@ -17,11 +17,21 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05",
-    title: "Agent 안정성: reasoning-block leak 방지, stale reasoning 재사용 방지, compaction/compression 연속성 보존",
+    title: "Agent 안정성: compression context length, session_id 반환, reasoning-block leak, stale reasoning 방지",
     category: "Agent 안정성",
     summary:
-      "agent의 reasoning block leak을 방지하는 stateful streaming scrubber가 추가되고, 턴 간 stale reasoning이 재사용되지 않도록 수정되었습니다. compaction에서 role=user fallback 시 컨텍스트 요약 종료 지점을 표시(mark)하고, compression에서 반복 요약의 연속성을 보존(preserve)합니다. CLI에서 수동 compress handoff가 유지(persist)됩니다 (main branch).",
+      "run_agent에서 compression context length 조회 시 aux provider를 사용하도록 수정되고, context compression 후 유효한 session_id를 반환합니다. reasoning-block leak을 방지하는 stateful streaming scrubber가 추가되고, 턴 간 stale reasoning이 재사용되지 않도록 수정되었습니다. compression에서 반복 요약의 연속성도 보존됩니다 (main branch).",
     commits: [
+      {
+        sha: "c46bc92",
+        message: "fix(run_agent): use aux provider for compression context length lookup",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c46bc9294991929a3dc8f6c28111c3e7780406a2",
+      },
+      {
+        sha: "7f735b4",
+        message: "fix: return effective session_id after context compression (#16938)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7f735b4db2967849d935ef4b03bd6933107e48ff",
+      },
       {
         sha: "2a285d5",
         message: "fix(agent): stateful streaming scrubber for reasoning-block leaks (#17924) (#20184)",
@@ -33,25 +43,49 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/efe1cb00c88234ab4c81055a8aac07689a315508",
       },
       {
-        sha: "2eef395",
-        message: "fix(compaction): mark end of context summary in role=user fallback",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2eef395e1cafd32ebfcf91fb6e5c6ecbd4c1e7df",
-      },
-      {
         sha: "4a3e3e2",
         message: "fix(compression): preserve iterative summary continuity",
         href: "https://github.com/NousResearch/hermes-agent/commit/4a3e3e20e5b2ed2fd0c2e727f8204efea4de8a5a",
-      },
-      {
-        sha: "aacf36e",
-        message: "fix(cli): persist manual compress handoff",
-        href: "https://github.com/NousResearch/hermes-agent/commit/aacf36e94309df06bd9221e5b9027e8b3c3f0b0b",
       },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Kanban: Dispatcher stuck-warn 억제, zombie worker 감지, dashboard completion 보존, default assignee 포함",
+    title: "Gateway / State: human-delay 환경변수 오류 허용, reply_to_mode, DoH DNS, pending prompts 보존",
+    category: "Gateway / State",
+    summary:
+      "Gateway에서 custom human-delay 모드와 natural 모드 모두에서 잘못된 환경변수 값을 허용(tolerate)하고 정상 동작합니다. Discord와 Telegram의 reply_to_mode를 config.yaml에서 로드하고, DoH 확인된 Telegram IP를 시스템 DNS와 일치시키며, 재시작 간 pending update prompts를 보존합니다 (main branch).",
+    commits: [
+      {
+        sha: "285c208",
+        message: "fix(gateway): also tolerate malformed env vars in custom human-delay mode",
+        href: "https://github.com/NousResearch/hermes-agent/commit/285c208cf7b5bd67d055a952cd7e748b32ecaf73",
+      },
+      {
+        sha: "3b16c59",
+        message: "fix(gateway): ignore malformed custom delay env vars in natural mode",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3b16c590e03f8208989ea2eab588c6d84b75eca7",
+      },
+      {
+        sha: "6b76ea4",
+        message: "fix(gateway): load reply_to_mode from config.yaml for Discord and Telegram",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6b76ea4707e75cba4d8a1fd6094c89d778fae412",
+      },
+      {
+        sha: "f6b68f0",
+        message: "fix(gateway): keep DoH-confirmed Telegram IPs that match system DNS (#14520)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f6b68f0f5079eeb10ce00253b29236015f96d9bb",
+      },
+      {
+        sha: "8ad5e98",
+        message: "fix(gateway): preserve pending update prompts across restarts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ad5e98f8d433e6e302355c77e22931f7a047eea",
+      },
+    ],
+  },
+  {
+    date: "2026-05-05",
+    title: "Kanban: stuck-warn 억제, zombie worker 감지, dashboard completion 보존, default assignee 포함",
     category: "Kanban / Multi-agent",
     summary:
       "Kanban dispatcher가 ready queue에 spawn 불가능한 assignee만 있을 때 stuck-warn을 억제하고, 실제 프로필이 아닌 assignee의 ready task를 건너뜁니다. 대시보드 completion summary가 보존(preserve)되고, darwin 환경에서 zombie worker가 감지(detect)됩니다. Kanban assignee 목록에 default profile이 포함됩니다 (main branch).",
@@ -85,44 +119,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Microsoft Teams 메시징: threading 구현, 400 폴백, 진단 로깅, 플랫폼 문서 등록",
+    title: "Messaging: Telegram /topic 멀티세션, Teams threading, Feishu/WeCom 안정화, 플랫폼 등록",
     category: "Messaging / Platform",
     summary:
-      "Microsoft Teams 메시징에서 app.reply()를 통한 threading이 구현되고, threading이 400 에러를 반환할 때 flat send로 폴백합니다. reply() fallback 시 진단 로깅이 추가되었습니다. 문서 측면에서는 여러 플랫폼 목록과 사이드바에 Teams가 등록되어 접근성이 개선되었습니다 (main branch).",
-    commits: [
-      {
-        sha: "69aeba0",
-        message: "feat(teams): implement threading via app.reply()",
-        href: "https://github.com/NousResearch/hermes-agent/commit/69aeba0df782b3383480ffbf0733d725a714c0a1",
-      },
-      {
-        sha: "3f02345",
-        message: "fix(teams): fall back to flat send when threading returns 400",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3f023450ddab8af48814fd715d3f0ee4318026ee",
-      },
-      {
-        sha: "601e5f1",
-        message: "fix(teams): log reply() fallback for diagnostics",
-        href: "https://github.com/NousResearch/hermes-agent/commit/601e5f1d57cfd4ceefee50a6df05a860a1a602e8",
-      },
-      {
-        sha: "93869b4",
-        message: "docs: add Microsoft Teams to platform lists across docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/93869b48ab520ad8df386e2057013c5f78bb8d7a",
-      },
-      {
-        sha: "ef94aa2",
-        message: "docs(teams): add Teams to sidebar",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ef94aa201fba8c1c95a1c8ee9a4d1ee66ca40dd1",
-      },
-    ],
-  },
-  {
-    date: "2026-05-05",
-    title: "Telegram /topic 멀티세션 DM + Gateway: reply_to_mode, DoH DNS, pending prompts 보존",
-    category: "Messaging / Platform",
-    summary:
-      "Telegram에 /topic off, /topic help 명령어, auth gate, screenshot debounce를 갖춘 멀티세션 DM 모드가 추가되고, CASCADE 처리, General-topic 핸들링, rename guard, debounce가 개선(polish)되었습니다. Gateway에서 Discord와 Telegram의 reply_to_mode를 config.yaml에서 로드하고, DoH 확인된 Telegram IP를 시스템 DNS와 일치시키며, 재시작 간 pending update prompts를 보존합니다 (main branch).",
+      "Telegram에 /topic off, /topic help, auth gate, screenshot debounce를 갖춘 멀티세션 DM 모드가 추가되고 CASCADE 처리, General-topic 핸들링, rename guard가 개선되었습니다. Microsoft Teams에서 app.reply()를 통한 threading이 구현되고 400 에러 시 flat send로 폴백합니다. Feishu는 hydration 시 봇 ID를 갱신하고, WeCom은 base64 AES 키를 decode 전에 패딩합니다. api_server 플랫폼이 PLATFORM_HINTS에 등록되었습니다 (main branch).",
     commits: [
       {
         sha: "d35efb9",
@@ -135,28 +135,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/1381c89e56fd3e6abbd0233b5a361069ae1862c1",
       },
       {
-        sha: "6b76ea4",
-        message: "fix(gateway): load reply_to_mode from config.yaml for Discord and Telegram",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6b76ea4707e75cba4d8a1fd6094c89d778fae412",
+        sha: "69aeba0",
+        message: "feat(teams): implement threading via app.reply()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/69aeba0df782b3383480ffbf0733d725a714c0a1",
       },
       {
-        sha: "f6b68f0",
-        message: "fix(gateway): keep DoH-confirmed Telegram IPs that match system DNS (#14520)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f6b68f0f5079eeb10ce00253b29236015f96d9bb",
+        sha: "80b386a",
+        message: "fix(feishu): refresh bot identity during hydration",
+        href: "https://github.com/NousResearch/hermes-agent/commit/80b386a472fdb37113e137360da3cc60e796d782",
       },
       {
-        sha: "8ad5e98",
-        message: "fix(gateway): preserve pending update prompts across restarts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ad5e98f8d433e6e302355c77e22931f7a047eea",
+        sha: "8f4c0bf",
+        message: "fix(wecom): pad base64 AES key before decode",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8f4c0bf0882c3c7258a65e3adade12d5b08068ea",
       },
     ],
   },
   {
     date: "2026-05-05",
-    title: "Curator, File Tools, Linting: archive/prune, delta lint, in-process linter, llama.cpp grammar 대응",
+    title: "Tools / MCP / Plugins: Curator archive/prune, delta lint, MCP keepalive, skills pin 보호, llama.cpp 대응",
     category: "Tools / MCP / Plugins",
     summary:
-      "Curator에 archive 및 prune 서브커맨드가 추가되고, frontmatter name으로 hub skill을 보호(protect)합니다. file_tools에서 write_file과 patch 후 delta lint가 실행되며 JSON/YAML/TOML/Python in-process linter가 추가되었습니다. llama.cpp grammar 400 에러 발생 시 tool schema의 pattern/format을 reactive하게 제거(strip)합니다. Honcho의 get_prefetch_context에 user_message가 search_query로 전달됩니다 (main branch).",
+      "Curator에 archive 및 prune 서브커맨드가 추가되고, frontmatter name으로 hub skill을 보호합니다. file_tools에서 write_file과 patch 후 delta lint가 실행되며 JSON/YAML/TOML/Python in-process linter가 추가되었습니다. MCP의 _wait_for_lifecycle_event에 주기적 keepalive가 추가되고, skills pin이 삭제만 방지하고 편집은 허용하도록 변경되었습니다. llama.cpp grammar 400 에러 시 tool schema의 pattern/format을 reactive하게 제거합니다 (main branch).",
     commits: [
       {
         sha: "436672d",
@@ -164,58 +164,58 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/436672de0efd8bcc50c6043a16223c102d30d71b",
       },
       {
-        sha: "68c1a08",
-        message: "fix(curator): protect hub skills by frontmatter name",
-        href: "https://github.com/NousResearch/hermes-agent/commit/68c1a08ad114e6d1cfdcecd09880b5b594230b77",
-      },
-      {
         sha: "5168226",
         message: "feat(file_tools): post-write delta lint on write_file + patch, add JSON/YAML/TOML/Python in-process linters (#20191)",
         href: "https://github.com/NousResearch/hermes-agent/commit/5168226d60f66dac01dabe151104cb8e958c99c0",
+      },
+      {
+        sha: "44cf334",
+        message: "fix(mcp): add periodic keepalive to _wait_for_lifecycle_event",
+        href: "https://github.com/NousResearch/hermes-agent/commit/44cf33449d4f78f9a13eb37c7d99d2c4b021f696",
+      },
+      {
+        sha: "b10e38e",
+        message: "fix(skills): pin protects against deletion only, not edits (#20220)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b10e38e392ba5b1ee0f98fd513d3f120f7277565",
       },
       {
         sha: "28f4d6d",
         message: "fix(tool-schemas): reactive strip of pattern/format on llama.cpp grammar 400s",
         href: "https://github.com/NousResearch/hermes-agent/commit/28f4d6db63f450828ffe419964719d35bbeedc58",
       },
-      {
-        sha: "0a7cc85",
-        message: "fix(honcho): pass user_message as search_query in get_prefetch_context",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0a7cc85eab299667777489a31995eb324d8b7818",
-      },
     ],
   },
   {
     date: "2026-05-05",
-    title: "CLI/TUI/Config: 시작 팁 100개, API 키 관리, TUI 클립보드/서브프로세스 보호, Nix 캐시 갱신",
+    title: "Config / Auth / CLI: MAX_ITERATIONS 폴백, 모델 별칭, Codex reasoning, API 키 경로, Session-Key 헤더",
     category: "Config / Auth",
     summary:
-      "CLI 시작 시 100개의 새로운 팁이 추가되고, setup에서 API 키가 이미 존재할 때 Keep/Replace/Clear 옵션을 제공하여 키 관리가 개선되었습니다. TUI 클립보드 복사 폴백이 개선되고, React effect cleanup이 python TUI gateway 서브프로세스를 종료(kill)하지 않도록 방지합니다. Nix 환경에서 stale tui npmDepsHash를 갱신하고 cache-blind 감지를 수정합니다 (main branch).",
+      "CLI에서 잘못된 HERMES_MAX_ITERATIONS 값에 폴백하고, bracketed paste 마커를 setup 중 sanitize합니다. /model alias resolution에서 config.yaml의 model.aliases를 해석하고, OpenRouter에서 xiaomi 모델을 reasoning-capable로 처리합니다. Aux provider가 api_key가 비어 있을 때 custom path에 고정(lock)되지 않도록 하고, Codex reasoning effort가 falsy일 때 medium으로 기본 설정됩니다. API 서버에 X-Hermes-Session-Key 헤더가 추가되어 long-term memory scoping이 가능해졌습니다 (main branch).",
     commits: [
       {
-        sha: "fc4aa66",
-        message: "feat(tips): add 100 new CLI startup tips (#20168)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fc4aa66ee4cda20f711416586cf3401a7cb498b7",
+        sha: "4e6f511",
+        message: "fix(cli): fall back on invalid HERMES_MAX_ITERATIONS",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4e6f51167dd12d2812bfccbf6226618dacfff3fd",
       },
       {
-        sha: "91ce8fc",
-        message: "fix(setup): offer Keep/Replace/Clear when API key already exists",
-        href: "https://github.com/NousResearch/hermes-agent/commit/91ce8fc000deaa4b4bbf1edb5b3d9f6dd1668f09",
+        sha: "34c6f93",
+        message: "fix: resolve model.aliases from config.yaml in /model alias resolution",
+        href: "https://github.com/NousResearch/hermes-agent/commit/34c6f93496244c4e4e0f7898f938b64d10a40537",
       },
       {
-        sha: "c3112ad",
-        message: "fix(tui): improve clipboard copy fallbacks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c3112adac551f5afe4166c68a1165d60f33af74f",
+        sha: "9e893d1",
+        message: "fix(aux): default Codex reasoning effort to medium when extra_body.reasoning.effort is falsy",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9e893d16d1f4bdb3c1623a547450f8b8bdcc5bee",
       },
       {
-        sha: "660ce7c",
-        message: "fix(ui-tui): prevent React effect cleanup from killing python TUI gateway subprocess",
-        href: "https://github.com/NousResearch/hermes-agent/commit/660ce7c54b9c397b2b1d23d9904159b645f04d30",
+        sha: "96514de",
+        message: "fix(auxiliary): avoid locking into custom path when api_key is empty",
+        href: "https://github.com/NousResearch/hermes-agent/commit/96514de472d0019c10e5fa5928738094cb7d6a74",
       },
       {
-        sha: "13a7cbc",
-        message: "fix(nix): refresh stale tui npmDepsHash + fix cache-blind detection (#20144)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/13a7cbcd6404c6e8ef501f98a0b315da4223228c",
+        sha: "fe8560f",
+        message: "feat(api-server): X-Hermes-Session-Key header for long-term memory scoping (#20199)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fe8560fc1249b4a7e448b5c3b80a7d213df9d78f",
       },
     ],
   },
