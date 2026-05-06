@@ -51,11 +51,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬: TUI 접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저 엔진·Chrome fallback, 대시보드 'default-large' 테마, Linear Documents·shop-app 스킬, install.sh Python 격리, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
-    category: "CLI / UI / Browser / Dashboard / Install / Skills",
+    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬 / CI: TUI 가상 히스토리·접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저 엔진·Chrome fallback, 대시보드 'default-large' 테마, Linear Documents·shop-app 스킬, install.sh Python 격리, typecheck CI 추가, ruff/ty 활성화, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
+    category: "CLI / UI / Browser / Dashboard / Install / Skills / CI",
     summary:
-      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다 (main branch).",
+      "TUI에서 virtual history offset 검색 범위를 제한(bound)하고, startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하며, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다. CI에 typecheck가 warnings-only로 추가되고 ruff/ty가 활성화됩니다 (main branch).",
     commits: [
+      {
+        sha: "946ef0e",
+        message: "fix(tui): bound virtual history offset searches",
+        href: "https://github.com/NousResearch/hermes-agent/commit/946ef0ea19c9b898037f5e6178d8961ab260f079",
+      },
       {
         sha: "6388aaf",
         message: "feat(dashboard): add 'default-large' built-in theme with 18px base size (#20820)",
@@ -141,15 +146,35 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(cli): catch OSError in _resolve_attachment_path to prevent ENAMETOOLONG dropping long slash commands",
         href: "https://github.com/NousResearch/hermes-agent/commit/906881c38bdd4494420bd557cb17986e347b29ee",
       },
+      {
+        sha: "9627ee7",
+        message: "feat(ci): add typecheck (warnings only in CI)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9627ee70e57a22bf9410f1f6f6aa2d2c386c4de8",
+      },
+      {
+        sha: "63c51d8",
+        message: "change: enable ruff/ty",
+        href: "https://github.com/NousResearch/hermes-agent/commit/63c51d89628a6a8658591fd1dc2c2099c7d9c9d5",
+      },
     ],
   },
   {
     date: "2026-05-06",
-    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리, 코드 요소 배경 초기화",
+    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리, 코드 요소 배경 초기화, failure-column rename 안정화, migration fix 후속 정리",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다 (main branch).",
+      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다. fragile한 failure-column rename을 방지하고 Kanban migration fix 후속 정리를 진행합니다 (main branch).",
     commits: [
+      {
+        sha: "b1d420e",
+        message: "fix(kanban): avoid fragile failure-column renames",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b1d420e75f42560738ed69d230a62feb1f7c7594",
+      },
+      {
+        sha: "a2ff193",
+        message: "chore: follow-up cleanup for Kanban migration fix",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a2ff193050b8054b52f3bffd4139333a60058be7",
+      },
       {
         sha: "1768791",
         message: "fix(kanban): reset code element background inside board",
