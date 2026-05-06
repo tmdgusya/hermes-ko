@@ -17,54 +17,44 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
-    title: "CLI / Install / Skills: Linear Documents 지원·Python 헬퍼 스크립트 추가, CLI 리사이즈 출력 복구, signal handler logger 보호, pip 진행 상황 표시, install.sh Python 환경 격리 강화, shop-app 쇼핑 어시스턴트 스킬 추가, 긴 슬래시 명령어 첨부파일 경로 ENAMETOOLONG 방어",
-    category: "CLI / Install / Skills",
+    title: "Web Search / Feishu: SearXNG 네이티브 검색 백엔드 추가, searxng-search 선택적 스킬 및 문서, Feishu 토픽 스레드 응답 유지",
+    category: "Web / Search / Integrations",
     summary:
-      "CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다 (main branch).",
+      "웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정하고 관련 후속 정리를 진행합니다 (main branch).",
     commits: [
       {
-        sha: "ad7aad2",
-        message: "feat(skills/linear): add Documents support + Python helper script (#20752)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ad7aad251c60cfe36bb2247603a34a958b9cdbc4",
+        sha: "5c906d7",
+        message: "feat(web): add SearXNG as a native search-only backend",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5c906d70266c1bbce88fd227ea98a3f7646551fe",
       },
       {
-        sha: "b045e7a",
-        message: "feat(skills): add shop-app personal shopping assistant (optional) (#20702)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b045e7a2ba2ef6a1449b459e03a8a701eb9c46f0",
+        sha: "94016dd",
+        message: "docs+skill: add searxng-search optional skill and documentation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/94016dd1aa7eac05765bdebf8de0838d76402dc0",
       },
       {
-        sha: "76074d9",
-        message: "fix(cli): recover classic CLI output after resize",
-        href: "https://github.com/NousResearch/hermes-agent/commit/76074d9ee6e4d0d2688ae154acda15dbf0a3e287",
+        sha: "48c2418",
+        message: "docs: add Web Search + Extract feature page with SearXNG setup guide",
+        href: "https://github.com/NousResearch/hermes-agent/commit/48c241840aa21a9b727a7efde4e4e371416d9ad3",
       },
       {
-        sha: "043a118",
-        message: "fix: harden install.sh against inherited Python env leakage",
-        href: "https://github.com/NousResearch/hermes-agent/commit/043a118d4128e51480eb228d5085ad0366150c8a",
+        sha: "441ef75",
+        message: "fix(feishu): keep topic replies in threads",
+        href: "https://github.com/NousResearch/hermes-agent/commit/441ef75d157d6308a9f14d42a7b0ec8566866ef8",
       },
       {
-        sha: "e70e490",
-        message: "fix(cli): guard logger.debug in signal handler (#13710 regression) (#20673)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e70e49016fe25bdd0db3b0086e0e0403daeaa834",
-      },
-      {
-        sha: "a6f5f9c",
-        message: "fix(update): drop pip --quiet so slow installs don't look hung (#20679)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a6f5f9c484ae63950d600f6c005b055499db62e5",
-      },
-      {
-        sha: "906881c",
-        message: "fix(cli): catch OSError in _resolve_attachment_path to prevent ENAMETOOLONG dropping long slash commands",
-        href: "https://github.com/NousResearch/hermes-agent/commit/906881c38bdd4494420bd557cb17986e347b29ee",
+        sha: "28299af",
+        message: "chore: follow-up cleanup for Feishu topic thread fix",
+        href: "https://github.com/NousResearch/hermes-agent/commit/28299afc21a37784d93b90924317f004ea2298af",
       },
     ],
   },
   {
     date: "2026-05-06",
-    title: "UI / Browser / Dashboard: startup banner 접이식 섹션, 긴 시스템 메시지 접기, FaceTicker·상태 표시줄 안정화, Lightpanda 브라우저 엔진 지원 및 Chrome fallback, 대시보드 'default-large' 테마(18px), 웹 검색/추출 백엔드 분리",
-    category: "UI / Browser / Dashboard",
+    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬: TUI 접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저 엔진·Chrome fallback, 대시보드 'default-large' 테마, Linear Documents·shop-app 스킬, install.sh Python 격리, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
+    category: "CLI / UI / Browser / Dashboard / Install / Skills",
     summary:
-      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다 (main branch).",
+      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다 (main branch).",
     commits: [
       {
         sha: "6388aaf",
@@ -115,6 +105,41 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "629d8b8",
         message: "fix(browser): tighten Lightpanda fallback edge cases",
         href: "https://github.com/NousResearch/hermes-agent/commit/629d8b843d8d8507925fd35344f57de776cb1490",
+      },
+      {
+        sha: "ad7aad2",
+        message: "feat(skills/linear): add Documents support + Python helper script (#20752)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ad7aad251c60cfe36bb2247603a34a958b9cdbc4",
+      },
+      {
+        sha: "b045e7a",
+        message: "feat(skills): add shop-app personal shopping assistant (optional) (#20702)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b045e7a2ba2ef6a1449b459e03a8a701eb9c46f0",
+      },
+      {
+        sha: "76074d9",
+        message: "fix(cli): recover classic CLI output after resize",
+        href: "https://github.com/NousResearch/hermes-agent/commit/76074d9ee6e4d0d2688ae154acda15dbf0a3e287",
+      },
+      {
+        sha: "043a118",
+        message: "fix: harden install.sh against inherited Python env leakage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/043a118d4128e51480eb228d5085ad0366150c8a",
+      },
+      {
+        sha: "e70e490",
+        message: "fix(cli): guard logger.debug in signal handler (#13710 regression) (#20673)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e70e49016fe25bdd0db3b0086e0e0403daeaa834",
+      },
+      {
+        sha: "a6f5f9c",
+        message: "fix(update): drop pip --quiet so slow installs don't look hung (#20679)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a6f5f9c484ae63950d600f6c005b055499db62e5",
+      },
+      {
+        sha: "906881c",
+        message: "fix(cli): catch OSError in _resolve_attachment_path to prevent ENAMETOOLONG dropping long slash commands",
+        href: "https://github.com/NousResearch/hermes-agent/commit/906881c38bdd4494420bd557cb17986e347b29ee",
       },
     ],
   },
@@ -315,7 +340,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Docs: 플러그인 서페이스·이미지 생성 프로바이더 가이드 및 스킬 퍼블리싱 안내, 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지, WSL2 심화 가이드, 플러그인 서페이스·모델 프로바이더 가이드 등 대규모 문서화",
     category: "Docs",
     summary:
-      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다. 그 외 Doubao 음성 통합(TTS+STT), Obsidian 파일 워크플로우 현대화, Discord Server Members Intent·SSRC-mapping·음성 슬래시 선택, Telegram 그룹 채팅 트러블슈팅, Codex OAuth 사전 요구사항, Kanban handoff evidence 메타데이터, Gateway 의존성 FAQ 등 다양한 문서가 업데이트되었습니다 (main branch).",
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다 (main branch).",
     commits: [
       {
         sha: "773cf48",
