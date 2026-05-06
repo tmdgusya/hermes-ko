@@ -232,11 +232,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-06",
-    title: "Gateway / State: lazy session regression 해결, kanban worker lifecycle 보호, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지",
+    title: "Gateway / State / Checkpoints: checkpoints v2 단일 저장소 재작성 + 실 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle 보호, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지",
     category: "Gateway / State",
     summary:
-      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다 (main branch).",
+      "checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다 (main branch).",
     commits: [
+      {
+        sha: "a0fedfb",
+        message: "feat(checkpoints): v2 single-store rewrite with real pruning + disk guardrails (#20709)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a0fedfbb1b7eab8db6c8aaa187f8c35cbf12f3e2",
+      },
       {
         sha: "3b75071",
         message: "fix: resolve lazy session creation regressions (#18370 fallout) (#20363)",
