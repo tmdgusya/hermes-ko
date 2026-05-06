@@ -17,6 +17,55 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
+    title: "TUI / Browser: startup banner 접이식 섹션, 긴 시스템 메시지 접기, FaceTicker·상태 표시줄 안정화, Lightpanda 브라우저 엔진 지원 및 Chrome fallback",
+    category: "TUI / Browser",
+    summary:
+      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다 (main branch).",
+    commits: [
+      {
+        sha: "d78c349",
+        message: "feat(tui): collapsible sections in startup banner (skills, system prompt, MCP)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d78c34928fe9fd56c4506861a87b4134be20b448",
+      },
+      {
+        sha: "68162eb",
+        message: "fix(tui): collapse long system messages in transcript with expand toggle",
+        href: "https://github.com/NousResearch/hermes-agent/commit/68162eb18fca0d8dc8dbf4dc1572fe14daf253d9",
+      },
+      {
+        sha: "ca5febf",
+        message: "fix(tui): stabilize FaceTicker elapsed width to prevent composer drift",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ca5febfed1429ad0e2b1565cfac48b079f5ff94d",
+      },
+      {
+        sha: "a0556b8",
+        message: "fix(tui): restore gap before duration when verb segment is hidden",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a0556b861f2667a49ded048c9cfac88defff8c5f",
+      },
+      {
+        sha: "e45df2e",
+        message: "fix(ui): reduce status-line jitter while scrolling",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e45df2e81ec818d2fb6767c0ba4eb29ed573a799",
+      },
+      {
+        sha: "395dbcc",
+        message: "feat(browser): add Lightpanda engine support with automatic Chrome fallback",
+        href: "https://github.com/NousResearch/hermes-agent/commit/395dbcc873c85b8873f4e36ff91b87c739bed242",
+      },
+      {
+        sha: "3ebdd26",
+        message: "fix(browser): surface Lightpanda Chrome fallback warnings",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3ebdd26449dc3d4f5c92e1af96b880d2ddc067d4",
+      },
+      {
+        sha: "629d8b8",
+        message: "fix(browser): tighten Lightpanda fallback edge cases",
+        href: "https://github.com/NousResearch/hermes-agent/commit/629d8b843d8d8507925fd35344f57de776cb1490",
+      },
+    ],
+  },
+  {
+    date: "2026-05-06",
     title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리",
     category: "Kanban / Multi-agent",
     summary:
@@ -143,11 +192,11 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-05",
-    title: "Gateway / State: lazy session regression 해결, kanban worker lifecycle 보호, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존",
+    date: "2026-05-05 ~ 2026-05-06",
+    title: "Gateway / State: lazy session regression 해결, kanban worker lifecycle 보호, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지",
     category: "Gateway / State",
     summary:
-      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다 (main branch).",
+      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다 (main branch).",
     commits: [
       {
         sha: "3b75071",
@@ -178,6 +227,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "8ad5e98",
         message: "fix(gateway): preserve pending update prompts across restarts",
         href: "https://github.com/NousResearch/hermes-agent/commit/8ad5e98f8d433e6e302355c77e22931f7a047eea",
+      },
+      {
+        sha: "466f3a1",
+        message: "fix(gateway): preserve model picker current context",
+        href: "https://github.com/NousResearch/hermes-agent/commit/466f3a11de47b50a65230cfb019265603a5adb01",
       },
     ],
   },
@@ -218,39 +272,10 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "docs(browser): document WSL-to-Windows Chrome MCP bridge",
         href: "https://github.com/NousResearch/hermes-agent/commit/a11234dd68107228f7f4c9f2b8c3eea3de7aa31a",
       },
-    ],
-  },
-  {
-    date: "2026-05-05",
-    title: "CLI / Tools / Plugins: provider 33종 플러그화, plugin command discovery·tools 병합, /model 통일, TUI slash parity, delta lint",
-    category: "CLI / Tools / Plugins",
-    summary:
-      "33개 provider 전체를 plugins/model-providers/ 아래에서 플러그화(pluggable)하고 ProviderProfile ABC, fetch_models, transport single-path를 도입합니다. CLI dispatch 시 plugin commands를 discover하고, plugin tools를 builtin toolsets에 병합(merge)합니다. TUI에서 /provider 별칭을 제거하고 /model로 통일하며, slash 명령어 패리티를 CLI와 맞춥니다. file_tools에서 write_file과 patch 후 delta lint가 실행됩니다 (main branch).",
-    commits: [
       {
-        sha: "9022804",
-        message: "feat(providers): make all 33 providers pluggable under plugins/model-providers/",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9022804d78e88253d138d448e9107a3884b2b96c",
-      },
-      {
-        sha: "20a4f79",
-        message: "feat: provider modules — ProviderProfile ABC, 33 providers, fetch_models, transport single-path",
-        href: "https://github.com/NousResearch/hermes-agent/commit/20a4f79ed11da67318756d7a98141c0ebf56183f",
-      },
-      {
-        sha: "0397be5",
-        message: "feat(tui): remove /provider alias for /model (#20358)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0397be5939079d0a0f6df491637825e7f1583f2f",
-      },
-      {
-        sha: "794f487",
-        message: "fix(tui): close slash parity gaps with CLI (#20339)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/794f48766c7e984236ec993e26b0da1c2586448b",
-      },
-      {
-        sha: "5168226",
-        message: "feat(file_tools): post-write delta lint on write_file + patch, add JSON/YAML/TOML/Python in-process linters (#20191)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5168226d60f66dac01dabe151104cb8e958c99c0",
+        sha: "1c42d8f",
+        message: "docs: add Open WebUI bootstrap script",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1c42d8ff5307849b3c450a5536f641739e220227",
       },
     ],
   },
