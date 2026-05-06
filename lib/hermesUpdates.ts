@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
-    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결",
+    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다 (main branch).",
+      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고합니다 (main branch).",
     commits: [
       {
         sha: "a49670c",
@@ -47,14 +47,24 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(kanban): accept created_cards linked as child of completing task",
         href: "https://github.com/NousResearch/hermes-agent/commit/6d302b340e99e85e417f1bcc7d7aa498066ab2b4",
       },
+      {
+        sha: "1fc8733",
+        message: "fix(kanban): unify failure counter across spawn/timeout/crash outcomes (#20410)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1fc8733a698664441d923408f66eaa307d44dd9a",
+      },
+      {
+        sha: "eda326d",
+        message: "fix(doctor): report Kanban worker tools as runtime-gated",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eda326df160acf94c9aff362c86504391265b4ed",
+      },
     ],
   },
   {
     date: "2026-05-06",
-    title: "Models / i18n / Provider: grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델 추가, 터키어·우크라이나어 로케일 지원",
+    title: "Models / i18n / Provider: grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델 추가, 프랑스어·터키어·우크라이나어 로케일 지원, 터키어 로케일 참조 보강",
     category: "Models / i18n / Provider",
     summary:
-      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 터키어(tr)와 우크라이나어(uk) 로케일 지원이 추가되며, 터키어 로케일 참조가 config, tests, docs 전반에 반영되었습니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다 (main branch).",
+      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 터키어 로케일 참조가 보강되었습니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다 (main branch).",
     commits: [
       {
         sha: "f27fcb6",
@@ -81,15 +91,30 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat(i18n): add Ukrainian locale",
         href: "https://github.com/NousResearch/hermes-agent/commit/c4b287ba539de06f79b867319568a4aa8c02a5ac",
       },
+      {
+        sha: "0d41e94",
+        message: "feat(i18n): add French (fr) locale support",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0d41e94ca99ca873148081e597fabf5d339f267b",
+      },
+      {
+        sha: "39f451f",
+        message: "fix: add Turkish locale references in config, tests, and docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/39f451f5ada6546a12fefd97397faca189d0169c",
+      },
     ],
   },
   {
-    date: "2026-05-05",
-    title: "Agent 안정성 / ACP / API: Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, compression context",
+    date: "2026-05-06",
+    title: "Agent 안정성 / ACP / API: salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, compression context",
     category: "Agent 안정성",
     summary:
-      "Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다 (main branch).",
+      "salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다 (main branch).",
     commits: [
+      {
+        sha: "aa88dcc",
+        message: "fix: salvage batch — compaction guidance, memory authority, cache eviction after compression",
+        href: "https://github.com/NousResearch/hermes-agent/commit/aa88dcc57b1717cbcfb80e4eca580a3a77056702",
+      },
       {
         sha: "3082fa0",
         message: "feat(hindsight): probe API for update_mode='append' support, dedupe across processes",
@@ -119,15 +144,20 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Gateway / State: lazy session regression 해결, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존",
+    title: "Gateway / State: lazy session regression 해결, kanban worker lifecycle 보호, kanban.max_spawn 동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존",
     category: "Gateway / State",
     summary:
-      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban.max_spawn config를 존중하여 동시 작업 수를 제한하고, helpers의 thread eviction을 결정적(deterministic)으로 보장합니다. session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하고, 재시작 간 pending update prompts를 보존합니다 (main branch).",
+      "lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다 (main branch).",
     commits: [
       {
         sha: "3b75071",
         message: "fix: resolve lazy session creation regressions (#18370 fallout) (#20363)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3b750715a39ed8a96fe90dc4f7a5b7b2ff9b794e",
+      },
+      {
+        sha: "56b4795",
+        message: "guard kanban worker lifecycle by run id",
+        href: "https://github.com/NousResearch/hermes-agent/commit/56b4795115e309b8d65bc68729fc591e90e6ffaa",
       },
       {
         sha: "f0d2784",
