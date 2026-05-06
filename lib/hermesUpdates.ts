@@ -51,11 +51,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬 / CI: TUI skin 하이라이트·가상 오프셋 갱신·thin PTY Submit, Docker CI 중복 빌드 방지, 접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저·Chrome fallback, 'default-large' 테마, Linear·shop-app 스킬, install.sh Python 격리, typecheck CI, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
+    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬 / CI: voice push-to-talk 패리티 복원·transcript 스크롤바 안정화, TUI skin 하이라이트·가상 오프셋 갱신·thin PTY Submit, Docker CI 중복 빌드 방지, 접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저·Chrome fallback, 'default-large' 테마, Linear·shop-app 스킬, install.sh Python 격리, typecheck CI, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
     category: "CLI / UI / Browser / Dashboard / Install / Skills / CI",
     summary:
-      "TUI에서 skin 하이라이트 색상을 준수(honor)하고, row resize 이후 가상 오프셋을 갱신하며, thin PTY에서 LF Enter submit을 정상 처리합니다. Docker CI에서 중복 빌드 취소를 방지하고 :latest 태그를 가드합니다. TUI에서 virtual history offset 검색 범위를 제한(bound)하고, startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하며, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다. CI에 typecheck가 warnings-only로 추가되고 ruff/ty가 활성화됩니다 (main branch).",
+      "TUI에서 음성 push-to-talk 패리티(parity)를 복원하여 음성 입력 동작을 수정하고, transcript 스크롤바를 안정화(steady)하여 흔들림을 줄입니다. TUI에서 skin 하이라이트 색상을 준수(honor)하고, row resize 이후 가상 오프셋을 갱신하며, thin PTY에서 LF Enter submit을 정상 처리합니다. Docker CI에서 중복 빌드 취소를 방지하고 :latest 태그를 가드합니다. TUI에서 virtual history offset 검색 범위를 제한(bound)하고, startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하며, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다. CI에 typecheck가 warnings-only로 추가되고 ruff/ty가 활성화됩니다 (main branch).",
     commits: [
+      {
+        sha: "04cf478",
+        message: "fix(tui): restore voice push-to-talk parity (#20897)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/04cf4788ccc05003785992682e3cb25205e509cc",
+      },
+      {
+        sha: "5ccab51",
+        message: "fix(tui): steady transcript scrollbar (#20917)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5ccab51fa851d258da69ab12912657ec14bf3bc8",
+      },
       {
         sha: "f1a8e99",
         message: "fix(tui): honor skin highlight colors (#20895)",
