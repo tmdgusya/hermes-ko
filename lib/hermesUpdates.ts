@@ -283,11 +283,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-06",
-    title: "Agent 안정성 / Gateway / State: salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지",
+    title: "Agent 안정성 / Gateway / State: salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지, provider auth.json 글로벌 폴백",
     category: "Agent 안정성 / Gateway / State",
     summary:
-      "salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다 (main branch).",
+      "salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다 (main branch).",
     commits: [
+      {
+        sha: "33bf5f6",
+        message: "fix(auth): fall back to global-root auth.json for providers missing in profile",
+        href: "https://github.com/NousResearch/hermes-agent/commit/33bf5f6292f49f109f11fb9c035afae6dcd356e3",
+      },
       {
         sha: "aa88dcc",
         message: "fix: salvage batch — compaction guidance, memory authority, cache eviction after compression",
@@ -362,11 +367,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-06",
-    title: "Docs: 플러그인 서페이스·이미지 생성 프로바이더 가이드 및 스킬 퍼블리싱 안내, 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지, WSL2 심화 가이드, 플러그인 서페이스·모델 프로바이더 가이드 등 대규모 문서화",
+    title: "Docs: 플러그인 서페이스·이미지 생성 프로바이더 가이드 및 스킬 퍼블리싱 안내, 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지, WSL2 심화 가이드, 플러그인 서페이스·모델 프로바이더 가이드, Tool Gateway 마케팅 페이지 재작성 등 대규모 문서화",
     category: "Docs",
     summary:
-      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다 (main branch).",
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다. Tool Gateway 문서가 pitch-first 마케팅 페이지로 재작성되었습니다 (main branch).",
     commits: [
+      {
+        sha: "d514dd4",
+        message: "docs(tool-gateway): rewrite as pitch-first marketing page (#20827)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d514dd40552c6747eb465a539d5991376125c709",
+      },
       {
         sha: "773cf48",
         message: "docs(plugins): close the gaps — image-gen-provider-plugin guide + publishing a skill tap (#20800)",
