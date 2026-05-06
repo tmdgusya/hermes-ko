@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
-    title: "Kanban / Multi-agent: 대시보드 task_runs.summary 표시, 의존성 선택 수정, 부모 완료 전 자식 디스패치 방지, max runtime 측정, 생성 카드 연동",
+    title: "Kanban / Multi-agent: 대시보드 task_runs.summary 표시, 의존성 선택 수정, 부모 완료 전 자식 디스패치 방지, worker lifecycle guard, failure counter 통합",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 의존성 선택(dependency selects)을 올바르게 연결(wire)하고, 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지합니다. max runtime을 현재 실행 기준으로 측정하고, 완료된 작업의 created_cards를 자식으로 연결(link)하여 수용합니다. doctor에서 Kanban worker 도구를 runtime-gated로 보고합니다 (main branch).",
+      "Kanban 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 의존성 선택(dependency selects)을 올바르게 연결(wire)하고, 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지합니다. Kanban worker의 lifecycle을 run id로 guard하여 중복 실행을 막고, spawn/timeout/crash 실패 카운터를 통합(unify)합니다 (main branch).",
     commits: [
       {
         sha: "3f97297",
@@ -38,28 +38,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/d2c6eceed98d2f276240553269f630c952e022c9",
       },
       {
-        sha: "b28ab4f",
-        message: "fix(kanban): measure max runtime from current run",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b28ab4fc3fab1725be11c86c44ec0b09c32557e2",
+        sha: "56b4795",
+        message: "guard kanban worker lifecycle by run id",
+        href: "https://github.com/NousResearch/hermes-agent/commit/56b4795115e309b8d65bc68729fc591e90e6ffaa",
       },
       {
-        sha: "6d302b3",
-        message: "fix(kanban): accept created_cards linked as child of completing task",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6d302b340e99e85e417f1bcc7d7aa498066ab2b4",
-      },
-      {
-        sha: "eda326d",
-        message: "fix(doctor): report Kanban worker tools as runtime-gated",
-        href: "https://github.com/NousResearch/hermes-agent/commit/eda326df160acf94c9aff362c86504391265b4ed",
+        sha: "1fc8733",
+        message: "fix(kanban): unify failure counter across spawn/timeout/crash outcomes (#20410)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1fc8733a698664441d923408f66eaa307d44dd9a",
       },
     ],
   },
   {
     date: "2026-05-06",
-    title: "i18n / Provider: 터키어·우크라이나어 로케일 추가, Arcee temperature·compression 오버라이드",
+    title: "i18n / Provider: 터키어·우크라이나어·프랑스어 로케일 추가, 터키어 참조 정리, Arcee temperature·compression 오버라이드",
     category: "i18n / Provider",
     summary:
-      "터키어(tr) 및 우크라이나어(uk) 로케일 지원이 추가되고, 터키어 관련 config·test·docs 참조가 정리되었습니다. Arcee provider에서 Trinity Large Thinking 모델의 temperature 및 compression 오버라이드가 적용됩니다 (main branch).",
+      "터키어(tr), 우크라이나어(uk), 프랑스어(fr) 로케일 지원이 추가되고, 터키어 관련 config·test·docs 참조가 정리되었습니다. Arcee provider에서 Trinity Large Thinking 모델의 temperature 및 compression 오버라이드가 적용됩니다 (main branch).",
     commits: [
       {
         sha: "9851338",
@@ -70,6 +65,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c4b287b",
         message: "feat(i18n): add Ukrainian locale",
         href: "https://github.com/NousResearch/hermes-agent/commit/c4b287ba539de06f79b867319568a4aa8c02a5ac",
+      },
+      {
+        sha: "0d41e94",
+        message: "feat(i18n): add French (fr) locale support",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0d41e94ca99ca873148081e597fabf5d339f267b",
+      },
+      {
+        sha: "39f451f",
+        message: "fix: add Turkish locale references in config, tests, and docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/39f451f5ada6546a12fefd97397faca189d0169c",
       },
       {
         sha: "2d4eaed",
@@ -103,7 +108,7 @@ export const hermesUpdates: HermesUpdate[] = [
       {
         sha: "5795b3b",
         message: "fix(acp): use SessionDB.replace_messages for atomic history rewrite",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5795b3be4e2aa5a840ce810925e3e88e3370f4f0",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5795b3be4e2aa5a840ce810925e3e3370f4f0",
       },
       {
         sha: "c46bc92",
@@ -182,10 +187,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05",
-    title: "Docs: 중국어 README·zh-Hans 가이드, WSL Chrome MCP, Gemini·Ollama 가이드, Provider cookbook, Discord·Obsidian·cron·import 가이드 보강",
+    title: "Docs: 중국어 README·zh-Hans 가이드, VS Code ACP 연동, 플랫폼 통계 갱신, Obsidian 파일 워크플로 현대화",
     category: "Docs",
     summary:
-      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되었습니다. WSL-to-Windows Chrome MCP bridge 문서가 새로 작성되었습니다. Google Gemini 가이드, Ollama 로컬 실행 가이드, Together/Groq/Perplexity custom_providers cookbook이 추가되었습니다. Discord Server Members Intent·음성 채널 가이드, Obsidian file workflows 현대화, cron context_from chaining, Dispatch tools from slash commands, hermes import reference 확장, bundled skills 복원 가이드, 플랫폼/LOC/test 카운트 갱신 등 문서 전반이 보강되었습니다 (main branch).",
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되었습니다. VS Code에서 ACP Client 연동을 위한 설정 방법이 업데이트되었습니다. 플랫폼/LOC/테스트 카운트가 최신화되고 gateway vs plugin 플랫폼 구분이 명확해졌습니다. Obsidian 파일 워크플로 가이드가 현대화(modernize)되었습니다 (main branch).",
     commits: [
       {
         sha: "05cdcac",
@@ -198,24 +203,19 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/74e4f5f97aca5471cfa0b595aa94e1a10e5f3b4e",
       },
       {
-        sha: "a11234d",
-        message: "docs(browser): document WSL-to-Windows Chrome MCP bridge",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a11234dd68107228f7f4c9f2b8c3eea3de7aa31a",
+        sha: "0d945d1",
+        message: "docs: update VS Code setup instructions for ACP Client integration",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0d945d1541eece83efa3f19bf9fc3550e55a32e6",
       },
       {
-        sha: "b1476c7",
-        message: "docs(gemini): add Google Gemini guide",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b1476c76f68db7bbf19e183388da99f8f4b24adc",
+        sha: "3beef57",
+        message: "docs: refresh stale platform/LOC/test counts; clarify gateway vs plugin platforms",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3beef5782530507a8663696300c76f62e5cc2451",
       },
       {
-        sha: "9a0a4c5",
-        message: "docs(guides): add guide for running Hermes locally with Ollama",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9a0a4c5831256551394c3ca99c3913653ea53691",
-      },
-      {
-        sha: "acca3ec",
-        message: "docs(providers): Together/Groq/Perplexity cookbook via custom_providers",
-        href: "https://github.com/NousResearch/hermes-agent/commit/acca3ec3af7ebe99f520bd8f3d1e84f6447b57ac",
+        sha: "15be493",
+        message: "docs(skills): modernize Obsidian file workflows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/15be493055eb89d97d1faff9ff890996da0e2737",
       },
     ],
   },
