@@ -182,12 +182,32 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-06",
-    title: "Docs: 모델 별칭 가이드, WSL Chrome MCP 브릿지, Doubao 음성 통합, Obsidian 파일 워크플로우 현대화, 중국어 README 등",
+    date: "2026-05-05 ~ 2026-05-06",
+    title: "Docs: 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지 등 대규모 문서화",
     category: "Docs",
     summary:
-      "/model 명령어의 커스텀 모델 별칭(alias) 문서가 추가되었습니다. WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드, Doubao 음성 통합(TTS+STT) 예제, Obsidian 파일 워크플로우 현대화 가이드가 포함됩니다. 중국어(zh-CN) README 번역, Ollama 로컬 실행 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP 연동 설정, Docker API_SERVER 환경변수, zh-Hans Tool Gateway·이미지 생성·WSL 가이드, Discord/Telegram 트러블슈팅, Kanban handoff evidence 문서 등 다양한 문서 업데이트가 이루어졌습니다 (main branch).",
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. 그 외 Doubao 음성 통합(TTS+STT), Obsidian 파일 워크플로우 현대화, Discord Server Members Intent·SSRC-mapping·음성 슬래시 선택, Telegram 그룹 채팅 트러블슈팅, Codex OAuth 사전 요구사항, Kanban handoff evidence 메타데이터, Gateway 의존성 FAQ 등 다양한 문서가 업데이트되었습니다 (main branch).",
     commits: [
+      {
+        sha: "05cdcac",
+        message: "docs: add Chinese (zh-CN) README translation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/05cdcac36240df5ef1348f7f527cc3e1a341282d",
+      },
+      {
+        sha: "74e4f5f",
+        message: "docs(i18n): add zh-Hans Tool Gateway, image gen, and Windows WSL guide",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74e4f5f97aca5471cfa0b595aa94e1a10e5f3b4e",
+      },
+      {
+        sha: "9a0a4c5",
+        message: "docs(guides): add guide for running Hermes locally with Ollama",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9a0a4c5831256551394c3ca99c3913653ea53691",
+      },
+      {
+        sha: "0d945d1",
+        message: "docs: update VS Code setup instructions for ACP Client integration",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0d945d1541eece83efa3f19bf9fc3550e55a32e6",
+      },
       {
         sha: "e598e18",
         message: "docs: document custom model aliases for /model command (#20475)",
@@ -197,21 +217,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "a11234d",
         message: "docs(browser): document WSL-to-Windows Chrome MCP bridge",
         href: "https://github.com/NousResearch/hermes-agent/commit/a11234dd68107228f7f4c9f2b8c3eea3de7aa31a",
-      },
-      {
-        sha: "39560c9",
-        message: "docs(voice): add Doubao speech integration examples (TTS + STT)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/39560c948dee11244b6df7b11050537f3eabbfd7",
-      },
-      {
-        sha: "15be493",
-        message: "docs(skills): modernize Obsidian file workflows",
-        href: "https://github.com/NousResearch/hermes-agent/commit/15be493055eb89d97d1faff9ff890996da0e2737",
-      },
-      {
-        sha: "05cdcac",
-        message: "docs: add Chinese (zh-CN) README translation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/05cdcac36240df5ef1348f7f527cc3e1a341282d",
       },
     ],
   },
