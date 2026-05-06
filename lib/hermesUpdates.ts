@@ -17,6 +17,40 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
+    title: "CLI / Install / Skills: CLI 리사이즈 출력 복구, signal handler logger 보호, pip 진행 상황 표시, install.sh Python 환경 격리 강화, shop-app 쇼핑 어시스턴트 스킬 추가",
+    category: "CLI / Install / Skills",
+    summary:
+      "CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다 (main branch).",
+    commits: [
+      {
+        sha: "b045e7a",
+        message: "feat(skills): add shop-app personal shopping assistant (optional) (#20702)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b045e7a2ba2ef6a1449b459e03a8a701eb9c46f0",
+      },
+      {
+        sha: "76074d9",
+        message: "fix(cli): recover classic CLI output after resize",
+        href: "https://github.com/NousResearch/hermes-agent/commit/76074d9ee6e4d0d2688ae154acda15dbf0a3e287",
+      },
+      {
+        sha: "043a118",
+        message: "fix: harden install.sh against inherited Python env leakage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/043a118d4128e51480eb228d5085ad0366150c8a",
+      },
+      {
+        sha: "e70e490",
+        message: "fix(cli): guard logger.debug in signal handler (#13710 regression) (#20673)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e70e49016fe25bdd0db3b0086e0e0403daeaa834",
+      },
+      {
+        sha: "a6f5f9c",
+        message: "fix(update): drop pip --quiet so slow installs don't look hung (#20679)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a6f5f9c484ae63950d600f6c005b055499db62e5",
+      },
+    ],
+  },
+  {
+    date: "2026-05-06",
     title: "TUI / Browser: startup banner 접이식 섹션, 긴 시스템 메시지 접기, FaceTicker·상태 표시줄 안정화, Lightpanda 브라우저 엔진 지원 및 Chrome fallback",
     category: "TUI / Browser",
     summary:
@@ -66,11 +100,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리",
+    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리, 코드 요소 배경 초기화",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고합니다 (main branch).",
+      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다 (main branch).",
     commits: [
+      {
+        sha: "1768791",
+        message: "fix(kanban): reset code element background inside board",
+        href: "https://github.com/NousResearch/hermes-agent/commit/17687911b7c57a2357123c05ab3265d820b5e6d6",
+      },
       {
         sha: "a49670c",
         message: "fix(kanban): wire dependency selects",
