@@ -10,18 +10,23 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-06";
+export const hermesUpdatesLastChecked = "2026-05-07";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-06",
-    title: "CLI / Install / Skills: CLI 리사이즈 출력 복구, signal handler logger 보호, pip 진행 상황 표시, install.sh Python 환경 격리 강화, shop-app 쇼핑 어시스턴트 스킬 추가, 긴 슬래시 명령어 첨부파일 경로 ENAMETOOLONG 방어",
+    title: "CLI / Install / Skills: Linear Documents 지원·Python 헬퍼 스크립트 추가, CLI 리사이즈 출력 복구, signal handler logger 보호, pip 진행 상황 표시, install.sh Python 환경 격리 강화, shop-app 쇼핑 어시스턴트 스킬 추가, 긴 슬래시 명령어 첨부파일 경로 ENAMETOOLONG 방어",
     category: "CLI / Install / Skills",
     summary:
-      "CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다 (main branch).",
+      "CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다 (main branch).",
     commits: [
+      {
+        sha: "ad7aad2",
+        message: "feat(skills/linear): add Documents support + Python helper script (#20752)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ad7aad251c60cfe36bb2247603a34a958b9cdbc4",
+      },
       {
         sha: "b045e7a",
         message: "feat(skills): add shop-app personal shopping assistant (optional) (#20702)",
@@ -150,6 +155,16 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(doctor): report Kanban worker tools as runtime-gated",
         href: "https://github.com/NousResearch/hermes-agent/commit/eda326df160acf94c9aff362c86504391265b4ed",
       },
+      {
+        sha: "8a1a42d",
+        message: "test(kanban): backdate task_runs.started_at alongside tasks.started_at",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8a1a42d0985631e267361921aac6020e9ccb0323",
+      },
+      {
+        sha: "0b9cbc8",
+        message: "test(kanban): cover metadata handoff round-trip",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0b9cbc8b23fc922b0317d788806f5a8270370f56",
+      },
     ],
   },
   {
@@ -173,6 +188,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "2d4eaed",
         message: "arcee temperature + compression",
         href: "https://github.com/NousResearch/hermes-agent/commit/2d4eaed1117caccd98f34a9f48684995a6e313df",
+      },
+      {
+        sha: "f0b95cc",
+        message: "test(arcee): cover Trinity Large Thinking temperature + compression overrides",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f0b95cc93dda1ee42cf587d1b0b6de7dd707f05d",
       },
       {
         sha: "9851338",
@@ -277,11 +297,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-06",
-    title: "Docs: 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지, WSL2 심화 가이드, 플러그인 서페이스·모델 프로바이더 가이드 등 대규모 문서화",
+    title: "Docs: 플러그인 서페이스·이미지 생성 프로바이더 가이드 및 스킬 퍼블리싱 안내, 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, 모델 별칭, WSL Chrome MCP 브릿지, WSL2 심화 가이드, 플러그인 서페이스·모델 프로바이더 가이드 등 대규모 문서화",
     category: "Docs",
     summary:
-      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 그 외 Doubao 음성 통합(TTS+STT), Obsidian 파일 워크플로우 현대화, Discord Server Members Intent·SSRC-mapping·음성 슬래시 선택, Telegram 그룹 채팅 트러블슈팅, Codex OAuth 사전 요구사항, Kanban handoff evidence 메타데이터, Gateway 의존성 FAQ 등 다양한 문서가 업데이트되었습니다 (main branch).",
+      "중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 대폭 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다. 그 외 Doubao 음성 통합(TTS+STT), Obsidian 파일 워크플로우 현대화, Discord Server Members Intent·SSRC-mapping·음성 슬래시 선택, Telegram 그룹 채팅 트러블슈팅, Codex OAuth 사전 요구사항, Kanban handoff evidence 메타데이터, Gateway 의존성 FAQ 등 다양한 문서가 업데이트되었습니다 (main branch).",
     commits: [
+      {
+        sha: "773cf48",
+        message: "docs(plugins): close the gaps — image-gen-provider-plugin guide + publishing a skill tap (#20800)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/773cf48c50b468f25c9a46495218b43edac137f9",
+      },
       {
         sha: "05cdcac",
         message: "docs: add Chinese (zh-CN) README translation",
