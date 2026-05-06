@@ -51,11 +51,31 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬 / CI: TUI 가상 히스토리·접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저 엔진·Chrome fallback, 대시보드 'default-large' 테마, Linear Documents·shop-app 스킬, install.sh Python 격리, typecheck CI 추가, ruff/ty 활성화, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
+    title: "CLI·UI / 브라우저·대시보드 / 설치·스킬 / CI: TUI skin 하이라이트·가상 오프셋 갱신·thin PTY Submit, Docker CI 중복 빌드 방지, 접이식 섹션·시스템 메시지 접기, Lightpanda 브라우저·Chrome fallback, 'default-large' 테마, Linear·shop-app 스킬, install.sh Python 격리, typecheck CI, 웹 검색·추출 백엔드 분리, FaceTicker·상태 표시줄 안정화",
     category: "CLI / UI / Browser / Dashboard / Install / Skills / CI",
     summary:
-      "TUI에서 virtual history offset 검색 범위를 제한(bound)하고, startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하며, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다. CI에 typecheck가 warnings-only로 추가되고 ruff/ty가 활성화됩니다 (main branch).",
+      "TUI에서 skin 하이라이트 색상을 준수(honor)하고, row resize 이후 가상 오프셋을 갱신하며, thin PTY에서 LF Enter submit을 정상 처리합니다. Docker CI에서 중복 빌드 취소를 방지하고 :latest 태그를 가드합니다. TUI에서 virtual history offset 검색 범위를 제한(bound)하고, startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하며, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다. CLI에서 터미널 리사이즈 후 classic 출력이 정상 복구되도록 수정하고, signal handler 내 logger.debug 호출을 보호(guard)하여 #13710 regression을 해결합니다. `hermes update` 명령어에서 pip --quiet 플래그를 제거하여 느린 설치가 멈춘 것처럼 보이지 않게 합니다. install.sh에서 상속된 Python 환경 변수가 누출되지 않도록 격리(harden) 처리합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. 긴 슬래시 명령어가 ENAMETOOLONG으로 드롭되는 것을 방지하기 위해 _resolve_attachment_path에서 OSError를 catch합니다. CI에 typecheck가 warnings-only로 추가되고 ruff/ty가 활성화됩니다 (main branch).",
     commits: [
+      {
+        sha: "f1a8e99",
+        message: "fix(tui): honor skin highlight colors (#20895)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f1a8e99942e6150d5785bdd734c4d9ff63dfa7f7",
+      },
+      {
+        sha: "da60198",
+        message: "fix(tui): refresh virtual offsets after row resize (#20898)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/da6019820a916ff7b6b89fa0fba2cccf700554d6",
+      },
+      {
+        sha: "5044e1c",
+        message: "fix(cli): submit LF enter in thin PTYs (#20896)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5044e1cbf135af1a999935c6d141e137d60d5d1b",
+      },
+      {
+        sha: "f4031df",
+        message: "ci(docker): don't cancel overlapping builds, guard :latest",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f4031df05dd457ad6ae17aff6a89848384447013",
+      },
       {
         sha: "946ef0e",
         message: "fix(tui): bound virtual history offset searches",
@@ -283,11 +303,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-06",
-    title: "Agent 안정성 / Gateway / State: salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지, provider auth.json 글로벌 폴백",
+    title: "Agent 안정성 / Gateway / State: Gateway 재시작 알림 게이팅·플랫폼별 플래그, salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지, provider auth.json 글로벌 폴백",
     category: "Agent 안정성 / Gateway / State",
     summary:
-      "salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다 (main branch).",
+      "Gateway에서 재시작 전 'Gateway restarting' 알림도 게이팅(gate)하고, 플랫폼별 gateway_restart_notification 플래그를 지원합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다 (main branch).",
     commits: [
+      {
+        sha: "7df6115",
+        message: "feat(gateway): also gate pre-restart \"Gateway restarting\" notification",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7df6115199278f415bd3d3dacf439e467341245c",
+      },
+      {
+        sha: "b71f80e",
+        message: "feat(gateway): per-platform gateway_restart_notification flag",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b71f80e6ce2af7a75e319170340dec9d64461576",
+      },
       {
         sha: "33bf5f6",
         message: "fix(auth): fall back to global-root auth.json for providers missing in profile",
