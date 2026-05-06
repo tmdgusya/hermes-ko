@@ -61,11 +61,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "TUI / Browser: startup banner 접이식 섹션, 긴 시스템 메시지 접기, FaceTicker·상태 표시줄 안정화, Lightpanda 브라우저 엔진 지원 및 Chrome fallback",
-    category: "TUI / Browser",
+    title: "UI / Browser / Dashboard: startup banner 접이식 섹션, 긴 시스템 메시지 접기, FaceTicker·상태 표시줄 안정화, Lightpanda 브라우저 엔진 지원 및 Chrome fallback, 대시보드 'default-large' 테마(18px), 웹 검색/추출 백엔드 분리",
+    category: "UI / Browser / Dashboard",
     summary:
-      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다 (main branch).",
+      "TUI startup banner에서 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환하고, transcript에서 긴 시스템 메시지를 펼침/접기 토글로 표시합니다. FaceTicker elapsed width를 고정하여 composer drift를 방지하고, duration 앞 공백을 verb segment가 숨겨졌을 때 복원하며, 스크롤 중 status-line 흔들림을 줄입니다. 브라우저에 Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가되고, 웹 검색·추출 기능이 기능별(capability) 백엔드 선택 방식으로 리팩터링됩니다 (main branch).",
     commits: [
+      {
+        sha: "6388aaf",
+        message: "feat(dashboard): add 'default-large' built-in theme with 18px base size (#20820)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6388aafbd6cbfd22c26036291d884d4055b5f6bc",
+      },
+      {
+        sha: "cd2cbc7",
+        message: "refactor(web): per-capability backend selection for search/extract split",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cd2cbc73b7c56f0c19f41a6bb21808239078653c",
+      },
       {
         sha: "d78c349",
         message: "feat(tui): collapsible sections in startup banner (skills, system prompt, MCP)",
@@ -169,11 +179,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06",
-    title: "Models / i18n / Provider: grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델 추가, 프랑스어·터키어·우크라이나어 로케일 지원, 터키어 로케일 참조 보강",
+    title: "Models / i18n / Provider: grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델 추가, 프랑스어·터키어·우크라이나어 로케일 지원, opencode-go 프로바이더 hijack 방지",
     category: "Models / i18n / Provider",
     summary:
-      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 터키어 로케일 참조가 보강되었습니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다 (main branch).",
+      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 터키어 로케일 참조가 보강되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다 (main branch).",
     commits: [
+      {
+        sha: "a24789d",
+        message: "fix(opencode-go): keep users on opencode-go instead of hijacking to native providers (#20802)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a24789d738b1074786f58952e299818b41da596e",
+      },
       {
         sha: "f27fcb6",
         message: "feat(models): add x-ai/grok-4.3 to OpenRouter + Nous Portal curated lists (#20497)",
