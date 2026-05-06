@@ -16,6 +16,69 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-06",
+    title: "Kanban / Multi-agent: 대시보드 task_runs.summary 표시, 의존성 선택 수정, 부모 완료 전 자식 디스패치 방지, max runtime 측정, 생성 카드 연동",
+    category: "Kanban / Multi-agent",
+    summary:
+      "Kanban 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 의존성 선택(dependency selects)을 올바르게 연결(wire)하고, 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지합니다. max runtime을 현재 실행 기준으로 측정하고, 완료된 작업의 created_cards를 자식으로 연결(link)하여 수용합니다. doctor에서 Kanban worker 도구를 runtime-gated로 보고합니다 (main branch).",
+    commits: [
+      {
+        sha: "3f97297",
+        message: "feat(kanban): surface task_runs.summary on dashboard cards + `kanban show`",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3f972974133659a366f5d63b01423a4709c507b3",
+      },
+      {
+        sha: "a49670c",
+        message: "fix(kanban): wire dependency selects",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a49670c21b3deb8384fd2069142be2040aa71187",
+      },
+      {
+        sha: "d2c6ece",
+        message: "fix(kanban): prevent child task dispatch when parent is not done",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d2c6eceed98d2f276240553269f630c952e022c9",
+      },
+      {
+        sha: "b28ab4f",
+        message: "fix(kanban): measure max runtime from current run",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b28ab4fc3fab1725be11c86c44ec0b09c32557e2",
+      },
+      {
+        sha: "6d302b3",
+        message: "fix(kanban): accept created_cards linked as child of completing task",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6d302b340e99e85e417f1bcc7d7aa498066ab2b4",
+      },
+      {
+        sha: "eda326d",
+        message: "fix(doctor): report Kanban worker tools as runtime-gated",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eda326df160acf94c9aff362c86504391265b4ed",
+      },
+    ],
+  },
+  {
+    date: "2026-05-06",
+    title: "i18n / Provider: 터키어·우크라이나어 로케일 추가, Arcee temperature·compression 오버라이드",
+    category: "i18n / Provider",
+    summary:
+      "터키어(tr) 및 우크라이나어(uk) 로케일 지원이 추가되고, 터키어 관련 config·test·docs 참조가 정리되었습니다. Arcee provider에서 Trinity Large Thinking 모델의 temperature 및 compression 오버라이드가 적용됩니다 (main branch).",
+    commits: [
+      {
+        sha: "9851338",
+        message: "feat(i18n): add Turkish (tr) locale",
+        href: "https://github.com/NousResearch/hermes-agent/commit/985133852a22863c3995424c657fd8cf4ac2938f",
+      },
+      {
+        sha: "c4b287b",
+        message: "feat(i18n): add Ukrainian locale",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c4b287ba539de06f79b867319568a4aa8c02a5ac",
+      },
+      {
+        sha: "2d4eaed",
+        message: "arcee temperature + compression",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2d4eaed1117caccd98f34a9f48684995a6e313df",
+      },
+    ],
+  },
+  {
     date: "2026-05-05",
     title: "Agent 안정성 / ACP / API: Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, compression context",
     category: "Agent 안정성",
@@ -114,74 +177,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "5168226",
         message: "feat(file_tools): post-write delta lint on write_file + patch, add JSON/YAML/TOML/Python in-process linters (#20191)",
         href: "https://github.com/NousResearch/hermes-agent/commit/5168226d60f66dac01dabe151104cb8e958c99c0",
-      },
-    ],
-  },
-  {
-    date: "2026-05-05",
-    title: "Kanban / Multi-agent: 진단 엔진 추가, worker lifecycle guard, failure counter 통합, hallucination gate, metadata handoff test",
-    category: "Kanban / Multi-agent",
-    summary:
-      "Kanban에 worker-created-card 클레임에 대한 hallucination gate와 복구 UX가 추가되고, task distress signal을 위한 generic diagnostics engine이 도입되었습니다. kanban worker lifecycle을 run id로 guard하고, spawn/timeout/crash 모든 실패 경로에서 failure counter를 통합(unify)하여 일관된 재시도 정책을 적용합니다. metadata handoff round-trip 테스트가 추가되었습니다 (main branch).",
-    commits: [
-      {
-        sha: "f67063b",
-        message: "feat(kanban): generic diagnostics engine for task distress signals (#20332)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f67063ba81f9d7de2e42003dd086633d28448ae8",
-      },
-      {
-        sha: "de9238d",
-        message: "feat(kanban): hallucination gate + recovery UX for worker-created-card claims (#20232)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/de9238d37e778da3654595a49cc7ae5b8a10fa60",
-      },
-      {
-        sha: "56b4795",
-        message: "guard kanban worker lifecycle by run id",
-        href: "https://github.com/NousResearch/hermes-agent/commit/56b4795115e309b8d65bc68729fc591e90e6ffaa",
-      },
-      {
-        sha: "1fc8733",
-        message: "fix(kanban): unify failure counter across spawn/timeout/crash outcomes (#20410)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1fc8733a698664441d923408f66eaa307d44dd9a",
-      },
-      {
-        sha: "0b9cbc8",
-        message: "test(kanban): cover metadata handoff round-trip",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0b9cbc8b23fc922b0317d788806f5a8270370f56",
-      },
-    ],
-  },
-  {
-    date: "2026-05-05",
-    title: "Messaging / i18n: 프랑스어 로케일 추가, 다국어 display.language, Feishu dedup·markdown table, WhatsApp 음성변환",
-    category: "Messaging / Platform",
-    summary:
-      "i18n에 프랑스어(fr) 로케일 지원이 추가되고, display.language 설정으로 정적 메시지를 zh/ja/de/es로 번역하는 기능이 도입되었습니다. Feishu에서 malformed dedup timestamps를 허용(tolerate)하고, markdown tables에 force text mode를 적용합니다. WhatsApp send-media에서 mp3/wav를 ogg/opus로 자동 변환하여 native voice bubbles를 지원합니다 (main branch).",
-    commits: [
-      {
-        sha: "0d41e94",
-        message: "feat(i18n): add French (fr) locale support",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0d41e94ca99ca873148081e597fabf5d339f267b",
-      },
-      {
-        sha: "7de3c86",
-        message: "feat(i18n): add display.language for static message translation (zh/ja/de/es) (#20231)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7de3c86c5a793485d7b686ac80448336ae996689",
-      },
-      {
-        sha: "a877c3f",
-        message: "fix(feishu): tolerate malformed dedup timestamps",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a877c3f6d9aefdd7338f2189b83d5bc290e17929",
-      },
-      {
-        sha: "8e18d10",
-        message: "fix(feishu): force text mode for markdown tables",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8e18d10318f9fb69f0b748db11e37de44b71da85",
-      },
-      {
-        sha: "dad62c4",
-        message: "fix(whatsapp): auto-convert mp3/wav to ogg/opus in send-media for native voice bubbles",
-        href: "https://github.com/NousResearch/hermes-agent/commit/dad62c4c474164b19cfd7b5e96746a2cdde50931",
       },
     ],
   },
