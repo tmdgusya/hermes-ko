@@ -16,6 +16,20 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-07",
+    title: "Profiles: --no-skills 플래그로 빈 프로필 생성 지원",
+    category: "Config / Auth",
+    summary:
+      "프로필 생성 시 --no-skills 플래그를 지정하면 스킬 없이 빈 프로필을 생성할 수 있는 기능이 추가되었습니다 (main branch).",
+    commits: [
+      {
+        sha: "51f9953",
+        message: "feat(profiles): --no-skills flag for empty profile creation (#20986)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/51f9953e69d303c3d278e41295b1a5c786bf8d87",
+      },
+    ],
+  },
+  {
     date: "2026-05-06",
     title: "Web Search / Feishu: SearXNG 네이티브 검색 백엔드 추가, searxng-search 선택적 스킬 및 문서, Feishu 토픽 스레드 응답 유지",
     category: "Web / Search / Integrations",
