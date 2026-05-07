@@ -189,12 +189,22 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-06",
-    title: "Kanban: dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리, 코드 요소 배경 초기화, failure-column rename 안정화, migration fix 후속 정리",
+    date: "2026-05-06 ~ 2026-05-07",
+    title: "Kanban: orchestrator·worker 스킬 설정 가이드 수정, dependency selects, task_runs.summary 표시, 부모 완료 전 자식 디스패치 방지, runtime 측정, 완료 태스크의 created_cards 연결, failure counter 통합, Kanban worker tools runtime-gated 처리, 코드 요소 배경 초기화, failure-column rename 안정화, migration fix 후속 정리",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다. fragile한 failure-column rename을 방지하고 Kanban migration fix 후속 정리를 진행합니다 (main branch).",
+      "Kanban orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. Kanban에서 dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다. fragile한 failure-column rename을 방지하고 Kanban migration fix 후속 정리를 진행합니다 (main branch).",
     commits: [
+      {
+        sha: "49c3c2e",
+        message: "docs(kanban): fix worker skill setup instructions too (#20960)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/49c3c2e0d37c96dc593a807a5e81fdf4f0aa3d85",
+      },
+      {
+        sha: "45cbf93",
+        message: "docs(kanban): fix orchestrator skill setup instructions (#20958)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/45cbf93899a9f9f1e96c8b85d9192b452e6459d4",
+      },
       {
         sha: "b1d420e",
         message: "fix(kanban): avoid fragile failure-column renames",
@@ -312,12 +322,22 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-05 ~ 2026-05-06",
-    title: "Agent 안정성 / Gateway / State: Gateway 재시작 알림 게이팅·플랫폼별 플래그, salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지, provider auth.json 글로벌 폴백",
+    date: "2026-05-05 ~ 2026-05-07",
+    title: "Agent 안정성 / Gateway / State: systemd 재시작 대기·Discord rate-limit 정리, Gateway 재시작 알림 게이팅·플랫폼별 플래그, salvage batch 압축·메모리·캐시 개선, Hindsight append·dedupe, SSE token batching, ACP reasoning 보존·atomic rewrite, checkpoints v2 단일 저장소 재작성 + 프루닝·디스크 가드레일, lazy session regression 해결, kanban worker lifecycle·동시성 제한, deterministic thread eviction, JSONL 직렬화 잠금, pending prompts 보존, model picker context 유지, provider auth.json 글로벌 폴백",
     category: "Agent 안정성 / Gateway / State",
     summary:
-      "Gateway에서 재시작 전 'Gateway restarting' 알림도 게이팅(gate)하고, 플랫폼별 gateway_restart_notification 플래그를 지원합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다 (main branch).",
+      "Gateway에서 systemd 재시작 후 준비 완료까지 대기하도록 수정합니다. Discord 통합에서 rate-limit catch 범위를 좁히고 sync state를 gateway/ 아래로 이동합니다. Gateway에서 재시작 전 'Gateway restarting' 알림도 게이팅(gate)하고, 플랫폼별 gateway_restart_notification 플래그를 지원합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선되었습니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가되었습니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고, SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다 (main branch).",
     commits: [
+      {
+        sha: "d797755",
+        message: "fix(gateway): wait for systemd restart readiness",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d797755a1c17566b0aef4d77548a4b460142d26a",
+      },
+      {
+        sha: "5a3cadf",
+        message: "fix(discord): narrow rate-limit catch and move sync state under gateway/",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5a3cadf6ebcb749f1ad69e73cecb5aad9af0400e",
+      },
       {
         sha: "3cdbf33",
         message: "fix(gateway): don't dead-end setup wizard when only system-scope unit is installed",
