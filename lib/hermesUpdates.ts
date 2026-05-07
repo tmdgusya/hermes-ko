@@ -993,11 +993,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06 ~ 2026-05-07",
-    title: "Models / i18n / Provider / Web / Integrations: QQBot 인라인 키보드·첨부파일·청크 업로드, Google Chat 번들 플랫폼, tencent/hy3-preview·alibaba-coding-plan·grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, Z.AI 비전 호환성·image_gen.model config, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
+    title: "Models / i18n / Provider / Web / Integrations: Brave Search·DDGS 검색 프로바이더, QQBot 인라인 키보드·첨부파일·청크 업로드, Google Chat 번들 플랫폼, tencent/hy3-preview·alibaba-coding-plan·grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, Z.AI 비전 호환성·image_gen.model config, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
     category: "Models / i18n / Provider / Web / Integrations",
     summary:
-      "QQBot 플랫폼에서 네이티브 툴 승인 UX를 인라인 키보드로 연결하고, 인용 메시지의 첨부파일을 처리하며, 인라인 키보드 승인과 프롬프트를 업데이트하고, 구조화된 에러 타입과 함께 청크 업로드를 추가합니다. Google Chat 플랫폼 어댑터가 번들 플러그인으로 추가됩니다.\n\nOpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. OpenRouter에 tencent/hy3-preview 유료 라우트와 alibaba-coding-plan 모델이 큐레이션 목록에 추가됩니다. Z.AI 비전 모델 호환성을 위해 엔드포인트 라우팅과 max_tokens 처리가 수정됩니다. image-gen에서 config.yaml의 image_gen.model을 플러그인 디스패치에 반영합니다 (main branch).",
+      "QQBot 플랫폼에서 네이티브 툴 승인 UX를 인라인 키보드로 연결하고, 인용 메시지의 첨부파일을 처리하며, 인라인 키보드 승인과 프롬프트를 업데이트하고, 구조화된 에러 타입과 함께 청크 업로드를 추가합니다. Google Chat 플랫폼 어댑터가 번들 플러그인으로 추가됩니다.\n\nOpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 Brave Search(무료 티어)와 DDGS를 새로운 검색 프로바이더로 추가합니다. SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. OpenRouter에 tencent/hy3-preview 유료 라우트와 alibaba-coding-plan 모델이 큐레이션 목록에 추가됩니다. Z.AI 비전 모델 호환성을 위해 엔드포인트 라우팅과 max_tokens 처리가 수정됩니다. image-gen에서 config.yaml의 image_gen.model을 플러그인 디스패치에 반영합니다 (main branch).",
     commits: [
+      {
+        sha: "04193cf",
+        message: "feat(web): add Brave Search (free tier) and DDGS search providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/04193cf71c2c208b747870f845c7c2539d50455f",
+      },
+      {
+        sha: "cdc0a47",
+        message: "test(hermes_constants): cover parse_reasoning_effort()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cdc0a47dd58321ef6fdc434908980a7a326b1813",
+      },
       {
         sha: "4de3ef3",
         message: "feat(qqbot): wire native tool-approval UX via inline keyboards",
