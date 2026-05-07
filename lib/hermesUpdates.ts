@@ -17,11 +17,51 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05 ~ 2026-05-07",
-    title: "Agent 안정성 / Gateway / State / Memory / Config / Auth / Security: Gateway 재시작 안정화·[[as_document]] 디렉티브·LRU eviction·list 명령어, chat 앱 허용 채널 화이트리스트(Telegram·Mattermost·Matrix·DingTalk·Slack)·WhatsApp 낯선 사람 차단·긴 메시지 분할, Gateway goal turn budget·runtime-status 통합·부트스트랩 실패 표면화·에이전트 태스크 실패 로깅, model max tokens 존중·compressor 요약 프롬프트 완화·delegate composite toolsets 확장, Codex 스키마 조합자 제거·memory dead schema 정리·auxiliary Codex 스트림 타임아웃, memory schema 검증·OpenViking 업로드·인증, credential pool 키 충돌 해결, checkpoints v2 단일 저장소, anthropic context beta 회피, WhatsApp 프로세스 누수 해결, Profiles --no-skills 플래그, SRI 무결성 검증·Teams 승인 버튼 allowlist, Gateway auth 폴백 모델 사용 등",
+    title: "Agent 안정성 / Gateway / State / Memory / Config / Auth / Security: Cron MCP 초기화·프롬프트 스캔, Webhook INSECURE_NO_AUTH 루프백 검사·비로컬호스트 차단, Gateway 플러그인 훅(env enablement·cron delivery)·IRC·Teams 마이그레이션, pairing approve_code 잠금, 테스트 asyncio DeprecationWarning 회피, Gateway 재시작 안정화·[[as_document]] 디렉티브·LRU eviction·list 명령어, chat 앱 허용 채널 화이트리스트(Telegram·Mattermost·Matrix·DingTalk·Slack)·WhatsApp 낯선 사람 차단·긴 메시지 분할, Gateway goal turn budget·runtime-status 통합·부트스트랩 실패 표면화·에이전트 태스크 실패 로깅, model max tokens 존중·compressor 요약 프롬프트 완화·delegate composite toolsets 확장, Codex 스키마 조합자 제거·memory dead schema 정리·auxiliary Codex 스트림 타임아웃, memory schema 검증·OpenViking 업로드·인증, credential pool 키 충돌 해결, checkpoints v2 단일 저장소, anthropic context beta 회피, WhatsApp 프로세스 누수 해결, Profiles --no-skills 플래그, SRI 무결성 검증·Teams 승인 버튼 allowlist, Gateway auth 폴백 모델 사용 등",
     category: "Agent 안정성 / Gateway / State",
     summary:
-      "Gateway에서 systemd 재시작 후 준비 완료까지 대기하고, 재시작 전 알림도 게이팅(gate)하며 플랫폼별 알림 플래그를 지원합니다. Gateway에 `hermes gateway list` 명령어가 추가되어 모든 프로필의 게이트웨이 상태를 확인할 수 있습니다. Gateway에 `[[as_document]]` 디렉티브가 추가되어 스킬 미디어 라우팅을 지원하고, 캐시된 세션 소스를 LRU eviction으로 제한하며 스레드 라우팅을 보존합니다. env reload 후에도 max turns가 보존되도록 수정합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. memory에서 action별 필수 schema fields를 검증하고, OpenViking 로컬 리소스 업로드를 지원·보강(harden)하며 Bearer 인증 헤더를 추가합니다. credential_pool에서 커스텀 프로바이더가 base_url을 공유할 때 발생하는 키 충돌을 해결합니다. model_tools에서 플러그인 훅 예외를 무시하지 않고 로깅합니다. model picker에서 커스텀 프로바이더의 실시간 모델 디스커버리를 지원합니다. bedrock에서 reasoningContent가 converse 정규화 과정에서 보존되도록 수정합니다. 지원되지 않는 anthropic context beta를 기본적으로 회피합니다. WhatsApp 브릿지의 프로세스 누수를 해결하고 config 비대칭을 수정합니다. install.sh에서 uv exclude-newer 제한을 제거합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선됩니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가됩니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고 SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. Discord 통합에서 rate-limit catch 범위를 좁히고 sync state를 gateway/ 아래로 이동합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. 대시보드 재개 시 최신 자식 세션을 따라갑니다. 프로필 생성 시 --no-skills 플래그로 빈 프로필을 생성할 수 있습니다. Telegram, Mattermost, Matrix, DingTalk에 allowed_{chats,channels,rooms} 화이트리스트가 추가되고, Slack에 allowed_channels 화이트리스트 config가 추가되어 채팅 앱 접근 제어가 강화됩니다. WhatsApp에서 낯선 사람(stranger)을 기본 거부하고 셀프 채팅 응답을 방지하며, 긴 메시지 분할(splitting)을 수정합니다. Gateway에서 goal turn budget을 존중(honor)하고, runtime-status writes를 통합하며 rate-limit failure 로그를 적용하고, 플랫폼 상태 쓰기 실패를 로깅하며, 부트스트랩 실패를 stderr에 표면화(surface)하고 예외 상세를 포함시킵니다. 에이전트 태스크 실패 시 usage data 손실을 방지하기 위해 로깅합니다. Gateway auth fallback에 configured model을 사용합니다. agent에서 설정된 model max tokens를 존중합니다. compressor에서 콘텐츠 필터를 위한 요약 프롬프트를 완화(soften)합니다. delegate_task에서 composite toolsets를 확장(expand)하여 intersection 전에 처리합니다. Codex-hostile 최상위 스키마 조합자(combinators)를 제거(strip)합니다. memory에서 dead allOf 스키마 블록을 제거합니다. auxiliary에서 Codex Responses 스트림 타임아웃을 강제(enforce)합니다. 보안 측면에서 대시보드 플러그인 스크립트에 SRI 무결성 검증을 지원하고, Teams 승인 버튼에 명시적 allowlist 또는 TEAMS_ALLOW_ALL_USERS opt-in을 요구합니다 (main branch).",
+      "Cron 작업에서 AIAgent 생성 전 MCP 서버를 먼저 초기화하고, 스킬 콘텐츠를 포함한 조립된 프롬프트를 스캔합니다. Gateway에 env enablement와 cron delivery를 위한 제네릭 플러그인 훅이 추가되고, IRC·Teams 플랫폼이 새로운 훅으로 마이그레이션됩니다. Webhook에서 INSECURE_NO_AUTH 루프백 검사를 확장하고 비로컬호스트 바인딩을 차단합니다. pairing에서 generate_code뿐 아니라 approve_code에도 잠금(lockout)을 적용합니다. 테스트에서 asyncio DeprecationWarning을 회피합니다.\n\nGateway에서 systemd 재시작 후 준비 완료까지 대기하고, 재시작 전 알림도 게이팅(gate)하며 플랫폼별 알림 플래그를 지원합니다. Gateway에 `hermes gateway list` 명령어가 추가되어 모든 프로필의 게이트웨이 상태를 확인할 수 있습니다. Gateway에 `[[as_document]]` 디렉티브가 추가되어 스킬 미디어 라우팅을 지원하고, 캐시된 세션 소스를 LRU eviction으로 제한하며 스레드 라우팅을 보존합니다. env reload 후에도 max turns가 보존되도록 수정합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. memory에서 action별 필수 schema fields를 검증하고, OpenViking 로컬 리소스 업로드를 지원·보강(harden)하며 Bearer 인증 헤더를 추가합니다. credential_pool에서 커스텀 프로바이더가 base_url을 공유할 때 발생하는 키 충돌을 해결합니다. model_tools에서 플러그인 훅 예외를 무시하지 않고 로깅합니다. model picker에서 커스텀 프로바이더의 실시간 모델 디스커버리를 지원합니다. bedrock에서 reasoningContent가 converse 정규화 과정에서 보존되도록 수정합니다. 지원되지 않는 anthropic context beta를 기본적으로 회피합니다. WhatsApp 브릿지의 프로세스 누수를 해결하고 config 비대칭을 수정합니다. install.sh에서 uv exclude-newer 제한을 제거합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선됩니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가됩니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고 SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. Discord 통합에서 rate-limit catch 범위를 좁히고 sync state를 gateway/ 아래로 이동합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. 대시보드 재개 시 최신 자식 세션을 따라갑니다. 프로필 생성 시 --no-skills 플래그로 빈 프로필을 생성할 수 있습니다. Telegram, Mattermost, Matrix, DingTalk에 allowed_{chats,channels,rooms} 화이트리스트가 추가되고, Slack에 allowed_channels 화이트리스트가 추가됩니다. WhatsApp에서 기본적으로 낯선 사람을 차단(reject strangers)하고 셀프 채팅에 응답하지 않으며, 긴 메시지 분할을 수정합니다. Gateway에서 goal turn budget을 존중하고, runtime-status 기록을 통합하며 실패 로그를 rate-limit합니다. Gateway auth 폴백에 설정된 모델을 사용하고, 부트스트랩 실패를 stderr에 표면화하며 예외 상세를 포함시킵니다. agent 태스크 실패를 로깅하여 사용량 데이터 유실을 방지합니다. Security에서 SRI 무결성 검증과 Teams 승인 버튼 allowlist를 적용합니다 (main branch).",
     commits: [
+      {
+        sha: "0491834",
+        message: "fix(cron): initialize MCP servers before constructing the cron AIAgent (#21354)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/04918345ea31b1106d2ee6d4f42822f4f57616ee",
+      },
+      {
+        sha: "a1fe5f4",
+        message: "fix(cron): scan assembled prompt including skill content (#3968) (#21350)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a1fe5f473d4d381a4452dcaf4dd2bbc77c19de0b",
+      },
+      {
+        sha: "af9336d",
+        message: "feat(gateway): generic plugin hooks for env enablement + cron delivery",
+        href: "https://github.com/NousResearch/hermes-agent/commit/af9336d575ef680b49cf56f9ef6031968e6f5ce1",
+      },
+      {
+        sha: "be87a96",
+        message: "refactor(plugins/platforms): migrate IRC + Teams to new env_enablement + cron_deliver hooks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/be87a96296175a68ecbe221723673a7d4c4add45",
+      },
+      {
+        sha: "898b6d7",
+        message: "fix(webhook): widen INSECURE_NO_AUTH loopback check + tests + docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/898b6d7d55bd1c340ebe7fe3cf91f86bc43d1a81",
+      },
+      {
+        sha: "fb4f953",
+        message: "fix: block INSECURE_NO_AUTH on non-localhost webhook bindings",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fb4f95356945e2ddaf0fe9e04541455ff92f1e3f",
+      },
+      {
+        sha: "145e8ec",
+        message: "fix(pairing): enforce lockout on approve_code, not just generate_code (#10195) (#21325)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/145e8ec2372bbfe70783d10bee10e76fa29744df",
+      },
+      {
+        sha: "d5fcc83",
+        message: "fix(tests): avoid asyncio DeprecationWarning in event loop fixture on 3.12+",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d5fcc8392212f7e67d7aa43d233f1157823f32ba",
+      },
       {
         sha: "8308d18",
         message: "fix(gateway): preserve max turns after env reload",
@@ -480,11 +520,26 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-06 ~ 2026-05-07",
-    title: "Kanban / Multi-agent: 인라인 생성 multiline textarea·Enter 제출·Shift+Enter 개행·테마 면역 code/pre 스타일링, 대시보드 보드 핀 권한 강화·이벤트 스트림 취소 정상 처리·미완료 워커 자동 차단, orchestrator·worker 스킬 설정 가이드, dependency selects, task_runs.summary 표시, runtime 측정, created_cards 연결, failure counter 통합 등",
+    title: "Kanban / Multi-agent: 대시보드 보드 테넌트 필터링·태스크별 max_retries 재정의, 인라인 생성 multiline textarea·Enter 제출·Shift+Enter 개행·테마 면역 code/pre 스타일링, 대시보드 보드 핀 권한 강화·이벤트 스트림 취소 정상 처리·미완료 워커 자동 차단, orchestrator·worker 스킬 설정 가이드, dependency selects, task_runs.summary 표시, runtime 측정, created_cards 연결, failure counter 통합 등",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 대시보드 보드 핀(dashboard board pin)이 서버 current file보다 우선(authoritative)하도록 하여 설정 충돌을 방지합니다. 대시보드 이벤트 스트림 취소(CancelledError)를 정상 종료(normal shutdown)로 처리하여 불필요한 오류를 제거합니다. 작업을 완료하지 않고 종료된 워커를 자동 차단(auto-block)합니다. orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, fragile한 failure-column rename을 방지합니다. 인라인 생성(inline-create) 타이틀 입력이 multiline textarea로 전환되고, Enter=submit·Shift+Enter=newline 동작이 복원됩니다. 보드 내 code/pre 스타일링이 모든 테마에서 면역(theme-immune) 처리됩니다 (main branch).",
+      "Kanban에서 대시보드 보드가 선택된 테넌트(selected tenant)로 필터링되고, 태스크별 max_retries 재정의(override)가 추가됩니다. 대시보드 보드 핀(dashboard board pin)이 서버 current file보다 우선(authoritative)하도록 하여 설정 충돌을 방지합니다. 대시보드 이벤트 스트림 취소(CancelledError)를 정상 종료(normal shutdown)로 처리하여 불필요한 오류를 제거합니다. 작업을 완료하지 않고 종료된 워커를 자동 차단(auto-block)합니다. orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, fragile한 failure-column rename을 방지합니다. 인라인 생성(inline-create) 타이틀 입력이 multiline textarea로 전환되고, Enter=submit·Shift+Enter=newline 동작이 복원됩니다. 보드 내 code/pre 스타일링이 모든 테마에서 면역(theme-immune) 처리됩니다 (main branch).",
     commits: [
+      {
+        sha: "162ad3d",
+        message: "fix(kanban): filter dashboard board by selected tenant",
+        href: "https://github.com/NousResearch/hermes-agent/commit/162ad3dd1624e64472a2961440c688e80b96409d",
+      },
+      {
+        sha: "f4de381",
+        message: "test(kanban): cover dashboard select filter wiring",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f4de3810efa640c1d2dfe9c190dd182cef37e95d",
+      },
+      {
+        sha: "ac51c4c",
+        message: "feat(kanban): per-task max_retries override (#20263 follow-up, supersedes #20972) (#21330)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ac51c4c1ad09a98c8c25d0b05009b3f387fd183d",
+      },
       {
         sha: "b9f1ac8",
         message: "fix(kanban): make dashboard board pin authoritative over server current file (#21230)",
@@ -594,11 +649,31 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-07",
-    title: "Tools / MCP / Plugins / Curator: MCP SSE 트랜스포트·OAuth 메타데이터 영속화·argparse 충돌 해결·예외 타입 포함·pipe 전송 재시도·타임아웃 보고·stale 인터럽트 정리·CancelledError 재전파, transform_llm_output 플러그인 훅 추가, `hermes curator list-archived`·manual run 동기화·CLI 문서 업데이트",
+    title: "Tools / MCP / Plugins: MCP 유틸리티 스텁 게이트·숫자 인자 방어적 변환·이미지 결과 MEDIA 태그 표시·SSE OAuth 전달, QQBot 인라인 키보드 승인·청크 업로드·첨부파일 처리, Google Chat 번들 플러그인, transform_llm_output 훅, Curator list-archived·manual run 동기화, SSE 트랜스포트·OAuth 메타데이터 영속화·argparse 충돌 해결·예외 타입 포함·pipe 전송 재시도·CancelledError 재전파",
     category: "Tools / MCP / Plugins",
     summary:
-      "MCP 클라이언트에 SSE 트랜스포트 지원이 추가되어 서버와의 통신 옵션이 확장됩니다. MCP OAuth 서버 메타데이터를 프로세스 재시작 간에도 유지(persist)하도록 수정하여 재인증 부담을 줄입니다. `mcp add --command`의 argparse dest 충돌을 해결하여 명령줄 등록이 정상 동작하도록 합니다. LLM 출력을 변환(transform)할 수 있는 `transform_llm_output` 플러그인 훅이 새로 추가되고 관련 테스트와 문서가 보강됩니다. Curator에서 아카이브된 항목을 조회할 수 있는 `hermes curator list-archived` 명령어가 추가되고, 수동 실행(manual run)이 동기식(synchronous)으로 기본 전환되며 관련 CLI 문서가 업데이트됩니다. MCP 서버 태스크에서 CancelledError를 명시적으로 재전파(re-raise)하고, str(exc)가 빈 경우 예외 타입을 에러 메시지에 포함시킵니다. MCP pipe 전송 실패 시 재시도(retry)하며, MCP 호출 에러에 설정된 타임아웃을 보고합니다. MCP 디스커버리 전에 stale 스레드 인터럽트를 정리합니다 (main branch).",
+      "MCP에서 서버가 광고(advertise)한 기능(capabilities)을 기준으로 유틸리티 스텁을 게이트(gate)하고, 숫자 툴 인자를 방어적으로 변환(coerce)합니다. MCP 이미지 툴 결과를 드롭하지 않고 MEDIA 태그로 표시(surface)하며, SSE 트랜스포트에서 OAuth 인증을 전달(forward)하고 sse_read_timeout을 증가시킵니다. QQBot 플랫폼에서 네이티브 툴 승인 UX를 인라인 키보드로 연결(wire)하고, 청크 업로드(chunked upload)에 구조화된 에러 타입을 추가하며, 인용(quote) 메시지의 첨부파일을 처리하고 인라인 키보드 승인과 프롬프트를 업데이트합니다. Google Chat 플랫폼 어댑터가 번들 플러그인으로 추가됩니다.\n\nMCP 클라이언트에 SSE 트랜스포트 지원이 추가되어 서버와의 통신 옵션이 확장됩니다. MCP OAuth 서버 메타데이터를 프로세스 재시작 간에도 유지(persist)하도록 수정하여 재인증 부담을 줄입니다. `mcp add --command`의 argparse dest 충돌을 해결하여 명령줄 등록이 정상 동작하도록 합니다. LLM 출력을 변환(transform)할 수 있는 `transform_llm_output` 플러그인 훅이 새로 추가되고 관련 테스트와 문서가 보강됩니다. Curator에서 아카이브된 항목을 조회할 수 있는 `hermes curator list-archived` 명령어가 추가되고, 수동 실행(manual run)이 동기식(synchronous)으로 기본 전환되며 관련 CLI 문서가 업데이트됩니다. MCP 서버 태스크에서 CancelledError를 명시적으로 재전파(re-raise)하고, str(exc)가 빈 경우 예외 타입을 에러 메시지에 포함시킵니다. MCP pipe 전송 실패 시 재시도(retry)하며, MCP 호출 에러에 설정된 타임아웃을 보고합니다. MCP 디스커버리 전에 stale 스레드 인터럽트를 정리합니다 (main branch).",
     commits: [
+      {
+        sha: "74c9c0e",
+        message: "fix(mcp): gate utility stubs on server-advertised capabilities (#21347)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/74c9c0eec903749443e4aa9ad1427d1859acae2c",
+      },
+      {
+        sha: "62c2f5d",
+        message: "fix(mcp): coerce numeric tool args defensively",
+        href: "https://github.com/NousResearch/hermes-agent/commit/62c2f5d8d2a6a21adfdea2d8d1f28fd8f04b5dd7",
+      },
+      {
+        sha: "c8e3e39",
+        message: "fix(mcp): surface image tool results as MEDIA tags instead of dropping them (#21328)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c8e3e3918509d4c43432ec2cf19ef6a1cfe9cd9c",
+      },
+      {
+        sha: "dd2dc2b",
+        message: "fix(mcp): forward OAuth auth and bump sse_read_timeout on SSE transport (#21323)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dd2dc2bddf43d72e24e61fd306206c696298df47",
+      },
       {
         sha: "12289c2",
         message: "feat: add SSE transport support for MCP client",
@@ -667,12 +742,37 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-06",
-    title: "Models / Vision / Image-gen / i18n / Provider / Web Search / Integrations: tencent/hy3-preview·alibaba-coding-plan·grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, Z.AI 비전 호환성·image_gen.model config, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
+    date: "2026-05-06 ~ 2026-05-07",
+    title: "Models / i18n / Provider / Web / Integrations: QQBot 인라인 키보드·첨부파일·청크 업로드, Google Chat 번들 플랫폼, tencent/hy3-preview·alibaba-coding-plan·grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, Z.AI 비전 호환성·image_gen.model config, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
     category: "Models / i18n / Provider / Web / Integrations",
     summary:
-      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. OpenRouter에 tencent/hy3-preview 유료 라우트와 alibaba-coding-plan 모델이 큐레이션 목록에 추가됩니다. Z.AI 비전 모델 호환성을 위해 엔드포인트 라우팅과 max_tokens 처리가 수정됩니다. image-gen에서 config.yaml의 image_gen.model을 플러그인 디스패치에 반영합니다 (main branch).",
+      "QQBot 플랫폼에서 네이티브 툴 승인 UX를 인라인 키보드로 연결하고, 인용 메시지의 첨부파일을 처리하며, 인라인 키보드 승인과 프롬프트를 업데이트하고, 구조화된 에러 타입과 함께 청크 업로드를 추가합니다. Google Chat 플랫폼 어댑터가 번들 플러그인으로 추가됩니다.\n\nOpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. OpenRouter에 tencent/hy3-preview 유료 라우트와 alibaba-coding-plan 모델이 큐레이션 목록에 추가됩니다. Z.AI 비전 모델 호환성을 위해 엔드포인트 라우팅과 max_tokens 처리가 수정됩니다. image-gen에서 config.yaml의 image_gen.model을 플러그인 디스패치에 반영합니다 (main branch).",
     commits: [
+      {
+        sha: "4de3ef3",
+        message: "feat(qqbot): wire native tool-approval UX via inline keyboards",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4de3ef38b1f0d2f8ae0e86f83455d7ff61795b2e",
+      },
+      {
+        sha: "5b121c6",
+        message: "feat(qqbot): process attachments in quoted (reply) messages",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5b121c6e358a4eb83ee3cb1ec2cfd1b8cae3c7b7",
+      },
+      {
+        sha: "de584cd",
+        message: "feat(qqbot): add inline-keyboard approvals and update prompts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/de584cd1dd4ed82a335a9dcd367406316c9923e0",
+      },
+      {
+        sha: "9feaeb6",
+        message: "feat(qqbot): add chunked upload with structured error types",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9feaeb632bd6d787ac3b1f555f0d057e9be0b448",
+      },
+      {
+        sha: "44cd79e",
+        message: "feat(plugins/google_chat): Google Chat platform adapter as a bundled plugin",
+        href: "https://github.com/NousResearch/hermes-agent/commit/44cd79e798e4aed6ee316f02e595b33cde7687a0",
+      },
       {
         sha: "f27fcb6",
         message: "feat(models): add x-ai/grok-4.3 to OpenRouter + Nous Portal curated lists (#20497)",
@@ -787,11 +887,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-05 ~ 2026-05-07",
-    title: "Docs: 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, WSL Chrome MCP 브릿지·WSL2 심화 가이드, 플러그인 서페이스·이미지 생성 프로바이더·스킬 퍼블리싱 가이드, Tool Gateway 마케팅 페이지 재작성, CONTRIBUTING 도구 정비·API 서버 툴 지역성 명시·README 정정 등",
+    title: "Docs: 플랫폼 env_enablement_fn·cron_deliver_env_var 훅 문서화, README .venv 선호 안내, 중국어 README·zh-Hans 가이드, Ollama 로컬 실행, VS Code ACP 연동, WSL Chrome MCP 브릿지·WSL2 심화 가이드, 플러그인 서페이스·이미지 생성 프로바이더·스킬 퍼블리싱 가이드, Tool Gateway 마케팅 페이지 재작성, CONTRIBUTING 도구 정비·API 서버 툴 지역성 명시·README 정정 등",
     category: "Docs",
     summary:
-      "CONTRIBUTING 문서에서 도구 발견(tool discovery)과 테스트 러너를 AGENTS.md와 일치하도록 정비합니다. API 서버의 툴 실행 지역성(tool execution locality)에 대한 문서 설명을 명확히 합니다. README에서 잘못된 RL install-extras 안내를 제거하고 CONTRIBUTING을 참조하도록 수정합니다. 중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다. Tool Gateway 문서가 pitch-first 마케팅 페이지로 재작성되었습니다 (main branch).",
+      "플랫폼 개발자를 위한 env_enablement_fn과 cron_deliver_env_var 훅 문서가 추가되었습니다. README에서 .venv 사용을 AGENTS.md 및 scripts/run_tests.sh와 일치하도록 권장합니다.\n\nCONTRIBUTING 문서에서 도구 발견(tool discovery)과 테스트 러너를 AGENTS.md와 일치하도록 정비합니다. API 서버의 툴 실행 지역성(tool execution locality)에 대한 문서 설명을 명확히 합니다. README에서 잘못된 RL install-extras 안내를 제거하고 CONTRIBUTING을 참조하도록 수정합니다. 중국어(zh-CN) README 번역과 zh-Hans Tool Gateway·이미지 생성·Windows WSL 가이드가 추가되어 중국어 사용자 지원이 강화되었습니다. Ollama로 Hermes를 로컬 실행하는 가이드, Open WebUI 부트스트랩 스크립트, VS Code ACP Client 연동 설정 가이드가 추가되었습니다. /model 명령어의 커스텀 모델 별칭(alias) 문서, WSL 환경에서 Windows Chrome MCP 브릿지 구성 가이드가 포함됩니다. WSL2 심화 가이드로 파일시스템·네트워킹·서비스·주의사항을 보강하고, 플러그인 서페이스 커버리지 문서로 모델 프로바이더 가이드·전체 플러그인 맵·opt-in 수정사항을 정리합니다. 이미지 생성 프로바이더 플러그인(image-gen-provider-plugin) 가이드와 스킬 퍼블리싱 안내(skill tap)가 추가되어 플러그인 문서의 공백을 메웁니다. Tool Gateway 문서가 pitch-first 마케팅 페이지로 재작성되었습니다 (main branch).",
     commits: [
+      {
+        sha: "5c08b85",
+        message: "docs(platforms): document env_enablement_fn + cron_deliver_env_var hooks (#21331)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5c08b851dfcc23508c8e435510d910f09ba8da31",
+      },
+      {
+        sha: "ff09853",
+        message: "docs(readme): prefer .venv to match AGENTS.md and scripts/run_tests.sh (#21334)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ff0985323509b587063cfc3aaecf0625490d9a5f",
+      },
       {
         sha: "647f95b",
         message: "docs(contributing): align tool discovery and test runner with AGENTS.md",
@@ -856,7 +966,7 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d514dd4",
         message: "docs(tool-gateway): rewrite as pitch-first marketing page (#20827)",
         href: "https://github.com/NousResearch/hermes-agent/commit/d514dd40552c6747eb465a539d5991376125c709",
-      },
+      }
     ],
   },
 ];
