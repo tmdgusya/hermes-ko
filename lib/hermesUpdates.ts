@@ -10,12 +10,242 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-07";
+export const hermesUpdatesLastChecked = "2026-05-08";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-07",
+    title: "Agent / ACP / Gateway 자동 복구 / Security / Auth / Discord: ACP 이미지 첨부파일 image_url 전달·인라인 리소스, Agent orphan tool-tail 빈 응답 루프 차단·빈 응답 sentinel 제거·복구 스캐폴딩 미영속화, Gateway 자동 재개(auto-resume)·크래시 복구·재시작 전 reset-failed·중복 응답 방지·모노토닉 데드라인·QR 온보딩, Secret redaction 기본 활성화·credential/MCP OAuth TOCTOU 봉쇄, Discord 역할 스코핑(CVSS 8.1)·메시지 삭제·DM role-auth, Auth 크리덴셜 401 쿨다운 단축·파일락 중복 제거·Nous 리프레시 토큰 동기화·Spotify 로그아웃 모델 설정 유지, Docker 루트 실행 거부·node_modules 소유권·update config 마이그레이션·CLI 도움말 대시보드 추가, Telegram forum 스레드·이미지 문서 라우팅, OAuth monotonic deadlines, optional-skills Anthropic 금융 스킬 번들, image-routing MIME 감지·멀티모달 경로 노출, TUI 빈 final_response 시 백엔드 에러 표시·스크롤백 리셋 루프 방지, Weixin aiohttp→asyncio.wait_for·긴 줄 래핑, Windows 터미널 drain·CWD 경로 변환, Matrix 리액션 정리 지연, GitHub Copilot max_completion_tokens·DashScope China 재시도·비전 라우팅 등",
+    category: "Agent / ACP / Gateway / Security",
+    summary:
+      "ACP에서 이미지 파일 첨부파일을 image_url 파트로 전달(pass through)하고, 파일 첨부 리소스를 인라인(inline) 처리합니다. run_agent에서 orphan tool-tail로 인한 영구적인 빈 응답 루프를 차단(break)하고, 터미널 빈 응답 sentinel을 제거(drop)하며, 빈 응답 복구 스캐폴딩이 영속화되지 않도록 수정합니다.\\n\\nGateway에 자동 재개(auto-resume) 기능이 추가되어 중단된 세션을 재시작 후 자동 복구하고, 크래시 복구(crash recovery)로 확장합니다. 재시작 인터럽트 중에도 resume marker가 보존되고, fallback 재시작 전에 reset-failed를 수행하여 gateway가 stranded되는 것을 방지합니다. Gateway에서 중복 응답 이력(duplicated responses history)을 방지하고, 임시 진행 버블(progress bubbles)을 opt-in으로 정리(cleanup)합니다. QR 온보딩 플로우와 OAuth/Gateway 폴링 루프에 모노토닉 데드라인(monotonic deadlines)을 적용합니다.\\n\\n보안 측면에서 secret redaction이 기본 활성화(enable by default)되고, hermes_cli/auth.py의 credential writers와 MCP OAuth credential 저장 시 TOCTOU 윈도우가 봉쇄(close)됩니다. Discord에서 DISCORD_ALLOWED_ROLES가 길드별로 스코핑(CVSS 8.1)되고, DM role-auth opt-in이 config.yaml로 라우팅되며 슬래시 커맨드까지 확장됩니다. Discord 메시지 삭제(deletion) 액션이 새로 추가됩니다.\\n\\n인증 측면에서 credential 401 쿨다운이 단축(shorten)되고, 파일 락(file-lock) 헬퍼가 중복 제거(dedupe)되며 Nous lock order가 문서화됩니다. 공유 Nous 리프레시 토큰이 동기화(sync)되고, Spotify 로그아웃 시 모델 설정이 리셋되지 않도록 보존합니다.\\n\\nDocker에서 공식 이미지의 루트(root) gateway 실행을 거부(refuse)하고, 런타임 node_modules 트리의 소유권을 hermes 사용자로 변경(chown)합니다. 비대화형(non-interactive) 업데이트에서 config 마이그레이션이 정상 동작하도록 하고, CLI 도움말(help epilogue)에 대시보드가 추가되며 Docker CI smoke test가 포함됩니다.\\n\\nTelegram에서 forum General 토픽의 typing indicator를 위해 thread_id=1을 보존하고, 이미지 문서를 photo 핸들링으로 라우팅합니다. 선택적 스킬(optional-skills)로 Anthropic 금융 서비스(financial-services) 스킬이 번들로 추가됩니다. 이미지 라우팅에서 MIME magic bytes를 sniffing하여 잘못된 suffix를 무시하고, 네이티브 멀티모달 텍스트 파트에 첨부 이미지 경로를 노출합니다. GitHub Copilot에 max_completion_tokens를 사용하고, doctor에서 DashScope China 엔드포인트를 재시도(retry)하며, 비전 라우팅 시 이미지 모달리티를 선호(prefer)합니다.\\n\\nTUI에서 final_response가 비었을 때 백엔드 에러를 가시적인 텍스트로 표시(surface)하고, 메인 화면 스크롤백 리셋 루프를 방지합니다. Weixin에서 aiohttp ClientTimeout을 asyncio.wait_for()로 교체하고, 복사하기 어려운 긴 줄을 래핑(wrap)합니다. Windows에서 터미널 drain과 CWD 경로 변환을 지원하고, Matrix에서 리액션 정리(cleanup) redaction을 지연(defer)합니다. Gateway에서 Docker 백엔드용 인바운드 문서 호스트 경로를 컨테이너 경로로 변환(translate)합니다.",
+    commits: [
+      {
+        sha: "7e2af0c",
+        message: "feat(acp): pass image file attachments through as image_url parts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7e2af0c2e8727b3b01b974cb9bf8f0886ee00aac",
+      },
+      {
+        sha: "733e297",
+        message: "fix(acp): inline file attachment resources",
+        href: "https://github.com/NousResearch/hermes-agent/commit/733e297b8a5c7ab277db331672c206134587ffa7",
+      },
+      {
+        sha: "812ce0b",
+        message: "fix(run_agent): break permanent empty-response loop from orphan tool-tail (#21385)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/812ce0b9878d1dc9ac1f7c419a620deeb57117f3",
+      },
+      {
+        sha: "2021c18",
+        message: "fix(agent): drop terminal empty-response sentinels",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2021c186551c406be1158ec394cd6f7f3f0f9be0",
+      },
+      {
+        sha: "e735089",
+        message: "fix(agent): avoid persisting empty-response recovery scaffolding",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e73508979f23d220eae5c378d714b150b8748580",
+      },
+      {
+        sha: "fad684b",
+        message: "feat(gateway): auto-resume interrupted sessions after restart",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fad684b1f35baa20b2b01556e50bec24ce6ffccd",
+      },
+      {
+        sha: "38b1c7d",
+        message: "refactor(gateway): simplify auto-resume + extend to crash recovery",
+        href: "https://github.com/NousResearch/hermes-agent/commit/38b1c7dce558f7ad1077b89e1efd3217bf8d6c69",
+      },
+      {
+        sha: "961a353",
+        message: "fix(gateway): preserve resume marker on interrupted restart",
+        href: "https://github.com/NousResearch/hermes-agent/commit/961a3535fa375c630562f3e16f8051959d34fb20",
+      },
+      {
+        sha: "1d2029b",
+        message: "fix(update): reset-failed before every fallback restart so the gateway can't get stranded (#21371)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1d2029b2b7cd2cf21a15ad54df05c68268b48998",
+      },
+      {
+        sha: "8a96fa4",
+        message: "fix(gateway): avoid duplicated responses history",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8a96fa48c10d7c06db07b70d53b2b489e9add2a3",
+      },
+      {
+        sha: "bf843ad",
+        message: "feat(gateway): opt-in cleanup of temporary progress bubbles (#21186)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bf843adf05b84f42930a5d1e76e2bc4c20a84645",
+      },
+      {
+        sha: "2e00bca",
+        message: "fix(oauth,gateway): monotonic deadlines for polling/timeout loops",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2e00bcaaab091679072ae765fe9f316196e43fab",
+      },
+      {
+        sha: "6e8f1e0",
+        message: "fix(gateway): use monotonic deadlines in QR onboarding flows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6e8f1e09a995782581e6e8015b40f592d0392ed2",
+      },
+      {
+        sha: "fb1ce79",
+        message: "feat(security): enable secret redaction by default (#17691, #20785) (#21193)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fb1ce793e6ad4751c4fa5b53bab217bc04a9d28b",
+      },
+      {
+        sha: "042eb93",
+        message: "fix(security): close TOCTOU window in hermes_cli/auth.py credential writers (#21194)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/042eb930e212da477bf1bb03fbd9d5d1f1e82ef4",
+      },
+      {
+        sha: "7d36e83",
+        message: "fix(security): close TOCTOU window when saving MCP OAuth credentials",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7d36e8346bbecec59085e7a37a6bf08d8eb45ad4",
+      },
+      {
+        sha: "ef1e565",
+        message: "fix(discord): scope DISCORD_ALLOWED_ROLES to originating guild (CVSS 8.1)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef1e565570a056081cf91576ab4ac7f3a72d3b58",
+      },
+      {
+        sha: "80717a1",
+        message: "fix(discord): route DM role-auth opt-in through config.yaml (not env var)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/80717a157f9cc7d747b0a3229346ec4f26d0c393",
+      },
+      {
+        sha: "5c045b8",
+        message: "fix(discord): extend role-scope fix to slash surface + fixture update",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5c045b8f6ca5d6ca682ea9a7e56bad68fe0d6143",
+      },
+      {
+        sha: "8b32a9d",
+        message: "feat: add Discord message deletion action",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8b32a9d0f1705a126d838e2ecac173de7960b87a",
+      },
+      {
+        sha: "4876959",
+        message: "fix(auth): shorten credential 401 cooldown",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4876959a1957bb3a2340499072089ddb5a73b0bb",
+      },
+      {
+        sha: "429e785",
+        message: "refactor(auth): dedupe file-lock helper; document Nous lock order",
+        href: "https://github.com/NousResearch/hermes-agent/commit/429e78589b63247969f7ca88311a1291285a2a46",
+      },
+      {
+        sha: "a84e56d",
+        message: "fix(auth): sync shared Nous refresh tokens",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a84e56d4c662770798584a79d34260fb86c6600d",
+      },
+      {
+        sha: "8dcdc3c",
+        message: "fix(auth): keep Spotify logout from resetting model config",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8dcdc3cbc299d09d868556d3ed526b518c9e292c",
+      },
+      {
+        sha: "84287b0",
+        message: "fix(docker): refuse root gateway runs in official image",
+        href: "https://github.com/NousResearch/hermes-agent/commit/84287b0de8dd5d2566d8dccffb6ed3f1fdfb5ec0",
+      },
+      {
+        sha: "498c014",
+        message: "fix(docker): chown runtime node_modules trees to hermes user (#18800)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/498c01406fce45c0f64b3474bbbc210bc3dafed7",
+      },
+      {
+        sha: "9442a8f",
+        message: "fix(update): migrate config in non-interactive updates",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9442a8fa22e58edeeb0dbff9dcea9a6727b84b18",
+      },
+      {
+        sha: "2f2f654",
+        message: "fix: add dashboard to CLI help epilogue and Docker CI smoke test",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2f2f654486f95e74d9a6d63670e01df324bcf590",
+      },
+      {
+        sha: "2564132",
+        message: "fix(telegram): preserve thread_id=1 for forum General typing indicator (#21390)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2564132a1f6c4cc5c452b74d07364ee086f985e3",
+      },
+      {
+        sha: "bd0c54d",
+        message: "fix: route Telegram image documents through photo handling",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bd0c54d171efb8a31644df570b3b6a95826e8731",
+      },
+      {
+        sha: "fce58cb",
+        message: "feat(optional-skills): port Anthropic financial-services skills as optional finance bundle (#21180)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fce58cbe2e02728377935e5e329f34b61474c1de",
+      },
+      {
+        sha: "5cf7032",
+        message: "fix(image-routing): sniff magic bytes for image MIME, ignore misleading suffix",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5cf703245bbce4b8cb34fbfb42571bfa50c4c00e",
+      },
+      {
+        sha: "11b9b14",
+        message: "fix(image-routing): expose attached image paths in native multimodal text part",
+        href: "https://github.com/NousResearch/hermes-agent/commit/11b9b146f111e45c9349c622c7a65ea3e7629518",
+      },
+      {
+        sha: "f648c2e",
+        message: "fix: use max_completion_tokens for GitHub Copilot",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f648c2e3aaf6b83220302670c1529a6bef3a63d4",
+      },
+      {
+        sha: "5ead126",
+        message: "fix(doctor): retry DashScope China endpoint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5ead126709a7b22113f3949d4095391169c3f62c",
+      },
+      {
+        sha: "14f3882",
+        message: "fix(models): prefer image modalities for vision routing",
+        href: "https://github.com/NousResearch/hermes-agent/commit/14f38822fa56a740899afa1d0b1f2df8c90cb422",
+      },
+      {
+        sha: "a494a61",
+        message: "fix(tui): avoid main-screen scrollback reset loops",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a494a614d03e9fbfba51827f040a59faf2f5a62b",
+      },
+      {
+        sha: "6e46f99",
+        message: "fix(tui): surface backend error as visible text when final_response is empty (#21245)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6e46f99e7e8e4d5c843cd33afcb6547c2f54b54b",
+      },
+      {
+        sha: "3a0d52d",
+        message: "fix(weixin): replace all aiohttp ClientTimeout with asyncio.wait_for()",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3a0d52d57992249cdc06e6469a94d9dead13bea3",
+      },
+      {
+        sha: "7244a1f",
+        message: "fix(weixin): wrap long copy-unfriendly lines",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7244a1f0d3c17631661fbf103440a3790ab0bab9",
+      },
+      {
+        sha: "c2d6b38",
+        message: "fix(windows): terminal drain and cwd path conversion for native Windows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c2d6b385f19d812ca9e98d4746234fcb94beb11f",
+      },
+      {
+        sha: "31f2289",
+        message: "fix(matrix): defer reaction cleanup redactions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/31f22890eaf15fe6fb027a8335335e98ad7e8242",
+      },
+      {
+        sha: "a5c9c83",
+        message: "fix(web): force light color-scheme on docs iframe",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a5c9c83b7861c4ca5529e8a327b93e0d50fcc667",
+      },
+      {
+        sha: "7c0766e",
+        message: "fix(gateway): translate inbound document host paths to container paths for Docker backend",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7c0766e06ad87fee014499e42f28c9393e7665e4",
+      }
+    ],
+  },
+  {
+
     date: "2026-05-05 ~ 2026-05-07",
     title: "Agent 안정성 / Gateway / State / Memory / Config / Auth / Security: Cron MCP 초기화·프롬프트 스캔, Webhook INSECURE_NO_AUTH 루프백 검사·비로컬호스트 차단, Gateway 플러그인 훅(env enablement·cron delivery)·IRC·Teams 마이그레이션, pairing approve_code 잠금, 테스트 asyncio DeprecationWarning 회피, Gateway 재시작 안정화·[[as_document]] 디렉티브·LRU eviction·list 명령어, chat 앱 허용 채널 화이트리스트(Telegram·Mattermost·Matrix·DingTalk·Slack)·WhatsApp 낯선 사람 차단·긴 메시지 분할, Gateway goal turn budget·runtime-status 통합·부트스트랩 실패 표면화·에이전트 태스크 실패 로깅, model max tokens 존중·compressor 요약 프롬프트 완화·delegate composite toolsets 확장, Codex 스키마 조합자 제거·memory dead schema 정리·auxiliary Codex 스트림 타임아웃, memory schema 검증·OpenViking 업로드·인증, credential pool 키 충돌 해결, checkpoints v2 단일 저장소, anthropic context beta 회피, WhatsApp 프로세스 누수 해결, Profiles --no-skills 플래그, SRI 무결성 검증·Teams 승인 버튼 allowlist, Gateway auth 폴백 모델 사용 등",
     category: "Agent 안정성 / Gateway / State",
@@ -525,6 +755,26 @@ export const hermesUpdates: HermesUpdate[] = [
     summary:
       "Kanban에서 대시보드 보드가 선택된 테넌트(selected tenant)로 필터링되고, 태스크별 max_retries 재정의(override)가 추가됩니다. 대시보드 보드 핀(dashboard board pin)이 서버 current file보다 우선(authoritative)하도록 하여 설정 충돌을 방지합니다. 대시보드 이벤트 스트림 취소(CancelledError)를 정상 종료(normal shutdown)로 처리하여 불필요한 오류를 제거합니다. 작업을 완료하지 않고 종료된 워커를 자동 차단(auto-block)합니다. orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, fragile한 failure-column rename을 방지합니다. 인라인 생성(inline-create) 타이틀 입력이 multiline textarea로 전환되고, Enter=submit·Shift+Enter=newline 동작이 복원됩니다. 보드 내 code/pre 스타일링이 모든 테마에서 면역(theme-immune) 처리됩니다 (main branch).",
     commits: [
+      {
+        sha: "411cfa2",
+        message: "fix: auto-block repeated kanban retries",
+        href: "https://github.com/NousResearch/hermes-agent/commit/411cfa26e31daf198355f5007229483fc92a6eb6",
+      },
+      {
+        sha: "b49a3f8",
+        message: "fix(kanban): reap completed worker children in dispatch_once",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b49a3f84749926066511fa32571b6201026e7c0d",
+      },
+      {
+        sha: "06f2435",
+        message: "fix(kanban): stop reclaimed workers before retry",
+        href: "https://github.com/NousResearch/hermes-agent/commit/06f24351c57666e5a15de8ed7b8743b694b5a809",
+      },
+      {
+        sha: "40b51c9",
+        message: "fix(kanban): heartbeat tool extends claim TTL, not just last_heartbeat_at",
+        href: "https://github.com/NousResearch/hermes-agent/commit/40b51c93a2d9bce63d656ccb3751e624711e6e3c",
+      },
       {
         sha: "162ad3d",
         message: "fix(kanban): filter dashboard board by selected tenant",
