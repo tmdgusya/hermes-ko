@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-05 ~ 2026-05-07",
-    title: "Agent 안정성 / Gateway / State / Memory / Config / Auth: Gateway 재시작 안정화·[[as_document]] 디렉티브·LRU eviction·list 명령어, memory schema 검증·OpenViking 업로드·인증, credential pool 키 충돌 해결, checkpoints v2 단일 저장소, anthropic context beta 회피, WhatsApp 프로세스 누수 해결, Profiles --no-skills 플래그 등",
+    title: "Agent 안정성 / Gateway / State / Memory / Config / Auth / Security: Gateway 재시작 안정화·[[as_document]] 디렉티브·LRU eviction·list 명령어, chat 앱 허용 채널 화이트리스트(Telegram·Mattermost·Matrix·DingTalk·Slack)·WhatsApp 낯선 사람 차단·긴 메시지 분할, Gateway goal turn budget·runtime-status 통합·부트스트랩 실패 표면화·에이전트 태스크 실패 로깅, model max tokens 존중·compressor 요약 프롬프트 완화·delegate composite toolsets 확장, Codex 스키마 조합자 제거·memory dead schema 정리·auxiliary Codex 스트림 타임아웃, memory schema 검증·OpenViking 업로드·인증, credential pool 키 충돌 해결, checkpoints v2 단일 저장소, anthropic context beta 회피, WhatsApp 프로세스 누수 해결, Profiles --no-skills 플래그, SRI 무결성 검증·Teams 승인 버튼 allowlist, Gateway auth 폴백 모델 사용 등",
     category: "Agent 안정성 / Gateway / State",
     summary:
-      "Gateway에서 systemd 재시작 후 준비 완료까지 대기하고, 재시작 전 알림도 게이팅(gate)하며 플랫폼별 알림 플래그를 지원합니다. Gateway에 `hermes gateway list` 명령어가 추가되어 모든 프로필의 게이트웨이 상태를 확인할 수 있습니다. Gateway에 `[[as_document]]` 디렉티브가 추가되어 스킬 미디어 라우팅을 지원하고, 캐시된 세션 소스를 LRU eviction으로 제한하며 스레드 라우팅을 보존합니다. env reload 후에도 max turns가 보존되도록 수정합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. memory에서 action별 필수 schema fields를 검증하고, OpenViking 로컬 리소스 업로드를 지원·보강(harden)하며 Bearer 인증 헤더를 추가합니다. credential_pool에서 커스텀 프로바이더가 base_url을 공유할 때 발생하는 키 충돌을 해결합니다. model_tools에서 플러그인 훅 예외를 무시하지 않고 로깅합니다. model picker에서 커스텀 프로바이더의 실시간 모델 디스커버리를 지원합니다. bedrock에서 reasoningContent가 converse 정규화 과정에서 보존되도록 수정합니다. 지원되지 않는 anthropic context beta를 기본적으로 회피합니다. WhatsApp 브릿지의 프로세스 누수를 해결하고 config 비대칭을 수정합니다. install.sh에서 uv exclude-newer 제한을 제거합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선됩니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가됩니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고 SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. Discord 통합에서 rate-limit catch 범위를 좁히고 sync state를 gateway/ 아래로 이동합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. 대시보드 재개 시 최신 자식 세션을 따라갑니다. 프로필 생성 시 --no-skills 플래그로 빈 프로필을 생성할 수 있습니다 (main branch).",
+      "Gateway에서 systemd 재시작 후 준비 완료까지 대기하고, 재시작 전 알림도 게이팅(gate)하며 플랫폼별 알림 플래그를 지원합니다. Gateway에 `hermes gateway list` 명령어가 추가되어 모든 프로필의 게이트웨이 상태를 확인할 수 있습니다. Gateway에 `[[as_document]]` 디렉티브가 추가되어 스킬 미디어 라우팅을 지원하고, 캐시된 세션 소스를 LRU eviction으로 제한하며 스레드 라우팅을 보존합니다. env reload 후에도 max turns가 보존되도록 수정합니다. checkpoints가 v2 단일 저장소(single-store)로 재작성되어 실제 프루닝(pruning)과 디스크 가드레일(disk guardrails)을 갖추었습니다. lazy session creation regression(#18370 fallout)을 해결합니다. memory에서 action별 필수 schema fields를 검증하고, OpenViking 로컬 리소스 업로드를 지원·보강(harden)하며 Bearer 인증 헤더를 추가합니다. credential_pool에서 커스텀 프로바이더가 base_url을 공유할 때 발생하는 키 충돌을 해결합니다. model_tools에서 플러그인 훅 예외를 무시하지 않고 로깅합니다. model picker에서 커스텀 프로바이더의 실시간 모델 디스커버리를 지원합니다. bedrock에서 reasoningContent가 converse 정규화 과정에서 보존되도록 수정합니다. 지원되지 않는 anthropic context beta를 기본적으로 회피합니다. WhatsApp 브릿지의 프로세스 누수를 해결하고 config 비대칭을 수정합니다. install.sh에서 uv exclude-newer 제한을 제거합니다. 프로바이더가 프로필별 auth.json을 찾지 못할 때 전역(global-root) auth.json으로 폴백합니다. salvage batch에서 compaction guidance, memory authority, cache eviction after compression이 개선됩니다. Hindsight에서 update_mode='append' 지원 여부를 probe하고 프로세스 간 dedupe를 수행합니다. API Server에서 SSE token batching과 Open WebUI 성능 개선을 위한 오류 처리가 추가됩니다. ACP에서 session persistence 시 assistant reasoning metadata를 보존하고 SessionDB.replace_messages로 atomic history rewrite를 수행합니다. run_agent에서 compression context length 조회 시 aux provider를 사용합니다. Gateway에서 kanban worker lifecycle을 run id 기준으로 보호(guard)하고, kanban.max_spawn config를 존중하여 동시 작업 수를 제한합니다. helpers의 thread eviction을 결정적(deterministic)으로 보장하고, session에서 JSONL transcript appends를 기존 잠금 아래에서 직렬화(serialize)하며, 재시작 간 pending update prompts를 보존합니다. model picker에서 현재 컨텍스트를 보존합니다. Discord 통합에서 rate-limit catch 범위를 좁히고 sync state를 gateway/ 아래로 이동합니다. setup wizard가 system-scope 유닛만 설치된 상태에서 막다른 길(dead-end)에 빠지지 않도록 수정합니다. 대시보드 재개 시 최신 자식 세션을 따라갑니다. 프로필 생성 시 --no-skills 플래그로 빈 프로필을 생성할 수 있습니다. Telegram, Mattermost, Matrix, DingTalk에 allowed_{chats,channels,rooms} 화이트리스트가 추가되고, Slack에 allowed_channels 화이트리스트 config가 추가되어 채팅 앱 접근 제어가 강화됩니다. WhatsApp에서 낯선 사람(stranger)을 기본 거부하고 셀프 채팅 응답을 방지하며, 긴 메시지 분할(splitting)을 수정합니다. Gateway에서 goal turn budget을 존중(honor)하고, runtime-status writes를 통합하며 rate-limit failure 로그를 적용하고, 플랫폼 상태 쓰기 실패를 로깅하며, 부트스트랩 실패를 stderr에 표면화(surface)하고 예외 상세를 포함시킵니다. 에이전트 태스크 실패 시 usage data 손실을 방지하기 위해 로깅합니다. Gateway auth fallback에 configured model을 사용합니다. agent에서 설정된 model max tokens를 존중합니다. compressor에서 콘텐츠 필터를 위한 요약 프롬프트를 완화(soften)합니다. delegate_task에서 composite toolsets를 확장(expand)하여 intersection 전에 처리합니다. Codex-hostile 최상위 스키마 조합자(combinators)를 제거(strip)합니다. memory에서 dead allOf 스키마 블록을 제거합니다. auxiliary에서 Codex Responses 스트림 타임아웃을 강제(enforce)합니다. 보안 측면에서 대시보드 플러그인 스크립트에 SRI 무결성 검증을 지원하고, Teams 승인 버튼에 명시적 allowlist 또는 TEAMS_ALLOW_ALL_USERS opt-in을 요구합니다 (main branch).",
     commits: [
       {
         sha: "8308d18",
@@ -212,14 +212,109 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(gateway): preserve model picker current context",
         href: "https://github.com/NousResearch/hermes-agent/commit/466f3a11de47b50a65230cfb019265603a5adb01",
       },
+      {
+        sha: "69d025e",
+        message: "feat(gateway): add allowed_{chats,channels,rooms} whitelist to Telegram, Mattermost, Matrix, DingTalk",
+        href: "https://github.com/NousResearch/hermes-agent/commit/69d025e4a744c8e5968e9aab0c1a8679299840a5",
+      },
+      {
+        sha: "cd3ef68",
+        message: "feat(slack): add allowed_channels whitelist config",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cd3ef685c4f472d3c43cd27db11aba1189a2e897",
+      },
+      {
+        sha: "6a4ecc0",
+        message: "fix(whatsapp): reject strangers by default, never respond in self-chat (#8389) (#21291)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6a4ecc0a9fdb857cd6ef93cf0ebce77250a2a290",
+      },
+      {
+        sha: "a9ebee5",
+        message: "Fix WhatsApp long message splitting",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a9ebee5f02b5148ceb9fb540eea58954d04e160d",
+      },
+      {
+        sha: "4d48075",
+        message: "fix(gateway): honor configured goal turn budget",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4d4807585ab879c9812deac026188510ad5ede44",
+      },
+      {
+        sha: "0efc547",
+        message: "fix(gateway): consolidate runtime-status writes + rate-limit failure logs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0efc547962df99a15f9cacff65f513f70520e7f2",
+      },
+      {
+        sha: "5d90611",
+        message: "fix(gateway): log platform status write failures instead of silently swallowing",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5d9061148fda8963a01a269022b5f93ee1609051",
+      },
+      {
+        sha: "f7b71aa",
+        message: "fix: use configured model for gateway auth fallback",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f7b71aa0daf4acd56dba7e9c6aee1aa8cfe477a1",
+      },
+      {
+        sha: "4d32f40",
+        message: "fix(gateway): include exception detail in bootstrap warning output",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4d32f40306aa632b4dff6f5368c93016e5cd1831",
+      },
+      {
+        sha: "926402d",
+        message: "fix(gateway): surface bootstrap failures to stderr instead of silently swallowing",
+        href: "https://github.com/NousResearch/hermes-agent/commit/926402dd13abdc0a52ed69bd38adced2b44995d4",
+      },
+      {
+        sha: "98ca069",
+        message: "fix(gateway): log agent task failures instead of silently losing usage data",
+        href: "https://github.com/NousResearch/hermes-agent/commit/98ca0694d6fd7f13adb3a0bc536fe44f0f24272a",
+      },
+      {
+        sha: "a78e622",
+        message: "fix(agent): honor configured model max tokens",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a78e622dfe5504dd7d08c5243f60ed00f6a1f08f",
+      },
+      {
+        sha: "fc88eec",
+        message: "fix(compressor): soften summary prompt for content filters",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc88eec926a90c11a8949a3d7e0b852cfdfb0c3a",
+      },
+      {
+        sha: "e795b7e",
+        message: "fix(delegate): expand composite toolsets before intersection in delegate_task",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e795b7e3ab1df4dd1998f1eb4f77732396b4a69a",
+      },
+      {
+        sha: "3924cb4",
+        message: "fix: strip Codex-hostile top-level schema combinators",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3924cb408bb1e133b22a2c9e848135c9e9c027ce",
+      },
+      {
+        sha: "5a3e5b2",
+        message: "fix(memory): remove dead allOf schema block at the source",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5a3e5b23d251829629736641284bce2d5be7132a",
+      },
+      {
+        sha: "5533ad7",
+        message: "fix(auxiliary): enforce Codex Responses stream timeout",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5533ad76449557ddd610aca7b200172cc5ef6798",
+      },
+      {
+        sha: "5909526",
+        message: "fix(security): support SRI integrity verification for dashboard plugin scripts",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5909526a06f2b894d4d769ab7cb8afce7221b0a4",
+      },
+      {
+        sha: "b739fcd",
+        message: "fix(security): require explicit allowlist or TEAMS_ALLOW_ALL_USERS opt-in for Teams approval buttons",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b739fcdfcec2af8e5dba17f8abd48ab6ff54104e",
+      }
     ],
   },
   {
     date: "2026-05-06 ~ 2026-05-07",
-    title: "CLI / TUI / Dashboard / Browser: 컨텍스트 압축 횟수 상태 표시줄 표시, 대시보드 임베디드 채팅 스크롤 안정화·재개·마우스 휠 라우팅, TUI 스크롤 높이 갱신·툴 프리뷰 길이, Lightpanda 브라우저·Chrome fallback, 'default-large' 테마, voice push-to-talk·transcript 스크롤바·skin 하이라이트·가상 오프셋·thin PTY Submit 등 TUI 안정화, SSRF 방어",
+    title: "CLI / TUI / Dashboard / Browser: 컨텍스트 압축 횟수 상태 표시줄 표시, 대시보드 임베디드 채팅 스크롤 안정화·재개·마우스 휠 라우팅·X-Forwarded-Prefix URL 프리픽스·resumeId 리네임, TUI 스크롤 높이 갱신·툴 프리뷰 길이·resume 시 구조화 콘텐츠 렌더링, CLI get_event_loop RuntimeWarning 제거, Lightpanda 브라우저·Chrome fallback, 'default-large' 테마, voice push-to-talk·transcript 스크롤바·skin 하이라이트·가상 오프셋·thin PTY Submit 등 TUI 안정화, SSRF 방어",
     category: "CLI / UI / Browser / Dashboard",
     summary:
-      "CLI와 TUI 상태 표시줄에 컨텍스트 압축(context compression) 횟수가 표시되고, 텍스트 'cmp'를 🗜️ 이모지로 대체합니다. 대시보드에서 임베디드 채팅이 단일 스크롤 시스템을 사용하도록 하고, 채팅 재개(resume)와 스크롤백(scrollback)을 안정화하며, 브라우저 마우스 휠 이벤트를 내부 TUI 스크롤로 라우팅합니다. TUI에서 캐시된 하단에서 스크롤 높이를 갱신(refresh)하고, CLI에서 긍정(positive) 툴 프리뷰 길이를 존중(honor)합니다. 브라우저에서 하이브리드 라우팅 시 cloud-metadata SSRF를 enforce하는 방어선(floor)을 추가합니다. Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가됩니다. TUI에서 voice push-to-talk 패리티 복원, transcript 스크롤바 안정화, skin 하이라이트 색상 준수, row resize 후 가상 오프셋 갱신, thin PTY에서 LF Enter submit 처리, virtual history offset 검색 범위 제한, startup banner의 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환, 긴 시스템 메시지 펼침/접기 토글, FaceTicker elapsed width 고정으로 composer drift 방지, verb segment 숨김 시 duration 앞 공백 복원, 스크롤 중 status-line 흔들림 감소 등이 포함됩니다. CLI에서 터미널 리사이즈 후 classic 출력 복구, signal handler 내 logger.debug 호출 보호(guard), 긴 슬래시 명령어의 ENAMETOOLONG 방지를 위한 OSError catch가 적용됩니다 (main branch).",
+      "CLI와 TUI 상태 표시줄에 컨텍스트 압축(context compression) 횟수가 표시되고, 텍스트 'cmp'를 🗜️ 이모지로 대체합니다. 대시보드에서 임베디드 채팅이 단일 스크롤 시스템을 사용하도록 하고, 채팅 재개(resume)와 스크롤백(scrollback)을 안정화하며, 브라우저 마우스 휠 이벤트를 내부 TUI 스크롤로 라우팅합니다. TUI에서 캐시된 하단에서 스크롤 높이를 갱신(refresh)하고, CLI에서 긍정(positive) 툴 프리뷰 길이를 존중(honor)합니다. 브라우저에서 하이브리드 라우팅 시 cloud-metadata SSRF를 enforce하는 방어선(floor)을 추가합니다. Lightpanda 엔진 지원이 추가되어 자동 Chrome fallback과 함께 동작하며, fallback 경고를 표시하고 엣지 케이스를 보완합니다. 대시보드에 18px 기본 폰트 크기의 'default-large' 빌트인 테마가 추가됩니다. TUI에서 voice push-to-talk 패리티 복원, transcript 스크롤바 안정화, skin 하이라이트 색상 준수, row resize 후 가상 오프셋 갱신, thin PTY에서 LF Enter submit 처리, virtual history offset 검색 범위 제한, startup banner의 skills·system prompt·MCP 섹션을 접이식(collapsible)으로 전환, 긴 시스템 메시지 펼침/접기 토글, FaceTicker elapsed width 고정으로 composer drift 방지, verb segment 숨김 시 duration 앞 공백 복원, 스크롤 중 status-line 흔들림 감소 등이 포함됩니다. CLI에서 터미널 리사이즈 후 classic 출력 복구, signal handler 내 logger.debug 호출 보호(guard), 긴 슬래시 명령어의 ENAMETOOLONG 방지를 위한 OSError catch, get_event_loop()를 get_running_loop()로 교체하여 process_loop 스레드의 RuntimeWarning을 제거합니다. 대시보드에서 ChatPage의 resumeId→resumeParam 리네임을 완료하고, X-Forwarded-Prefix를 통한 URL 프리픽스 서빙을 지원합니다. TUI에서 resume 시 구조화 콘텐츠(structured content)를 렌더링합니다 (main branch).",
     commits: [
       {
         sha: "103e119",
@@ -361,14 +456,34 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(cli): catch OSError in _resolve_attachment_path to prevent ENAMETOOLONG dropping long slash commands",
         href: "https://github.com/NousResearch/hermes-agent/commit/906881c38bdd4494420bd557cb17986e347b29ee",
       },
+      {
+        sha: "12a0f59",
+        message: "fix(dashboard): finish resumeId -> resumeParam rename in ChatPage (#21317)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/12a0f5901cd0fc798adba374af0aefdaa0c7c34f",
+      },
+      {
+        sha: "52e2777",
+        message: "feat(dashboard): support serving under URL prefix via X-Forwarded-Prefix",
+        href: "https://github.com/NousResearch/hermes-agent/commit/52e277782127ef53ab7c3f08d5d0b199598b3f52",
+      },
+      {
+        sha: "ec9d0e2",
+        message: "fix(tui): render structured content on resume",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ec9d0e26d4ed4e3fdbb4c7a27b6e542139d6d918",
+      },
+      {
+        sha: "edbbc96",
+        message: "fix(cli): replace get_event_loop() with get_running_loop() to silence RuntimeWarning in process_loop thread (#19285)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/edbbc96b558f0d9da16150d8b48b4ac4f1a7e486",
+      }
     ],
   },
   {
     date: "2026-05-06 ~ 2026-05-07",
-    title: "Kanban / Multi-agent: 대시보드 보드 핀 권한 강화·이벤트 스트림 취소 정상 처리·미완료 워커 자동 차단, orchestrator·worker 스킬 설정 가이드, dependency selects, task_runs.summary 표시, runtime 측정, created_cards 연결, failure counter 통합 등",
+    title: "Kanban / Multi-agent: 인라인 생성 multiline textarea·Enter 제출·Shift+Enter 개행·테마 면역 code/pre 스타일링, 대시보드 보드 핀 권한 강화·이벤트 스트림 취소 정상 처리·미완료 워커 자동 차단, orchestrator·worker 스킬 설정 가이드, dependency selects, task_runs.summary 표시, runtime 측정, created_cards 연결, failure counter 통합 등",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 대시보드 보드 핀(dashboard board pin)이 서버 current file보다 우선(authoritative)하도록 하여 설정 충돌을 방지합니다. 대시보드 이벤트 스트림 취소(CancelledError)를 정상 종료(normal shutdown)로 처리하여 불필요한 오류를 제거합니다. 작업을 완료하지 않고 종료된 워커를 자동 차단(auto-block)합니다. orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, 보드 내 인라인 코드 요소의 배경을 초기화하여 표시를 정리합니다. fragile한 failure-column rename을 방지합니다 (main branch).",
+      "Kanban에서 대시보드 보드 핀(dashboard board pin)이 서버 current file보다 우선(authoritative)하도록 하여 설정 충돌을 방지합니다. 대시보드 이벤트 스트림 취소(CancelledError)를 정상 종료(normal shutdown)로 처리하여 불필요한 오류를 제거합니다. 작업을 완료하지 않고 종료된 워커를 자동 차단(auto-block)합니다. orchestrator와 worker의 스킬 설정 가이드의 잘못된 부분을 수정합니다. dependency selects를 연결(wire)하고, 대시보드 카드와 `kanban show` 명령어에 task_runs.summary를 표시합니다. 부모 작업이 완료되지 않은 상태에서 자식 작업이 디스패치되는 것을 방지하고, 작업의 max runtime을 current run 기준으로 측정합니다. 완료되는 태스크에 연결된 created_cards를 자식으로 수락(accept)합니다. spawn/timeout/crash 전반에서 failure counter를 통합하여 일관된 실패 추적을 제공합니다. doctor 명령어에서 Kanban worker tools를 runtime-gated로 보고하며, fragile한 failure-column rename을 방지합니다. 인라인 생성(inline-create) 타이틀 입력이 multiline textarea로 전환되고, Enter=submit·Shift+Enter=newline 동작이 복원됩니다. 보드 내 code/pre 스타일링이 모든 테마에서 면역(theme-immune) 처리됩니다 (main branch).",
     commits: [
       {
         sha: "b9f1ac8",
@@ -460,14 +575,29 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "test(kanban): cover metadata handoff round-trip",
         href: "https://github.com/NousResearch/hermes-agent/commit/0b9cbc8b23fc922b0317d788806f5a8270370f56",
       },
+      {
+        sha: "76d2dcd",
+        message: "fix(kanban): make code/pre styling theme-immune across all themes (#21086) (#21247)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/76d2dcdc8e10e61599d070cdd0eae6cb6394852c",
+      },
+      {
+        sha: "fa58274",
+        message: "fix(kanban): restore Enter=submit, Shift+Enter=newline in inline-create textarea",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fa582749e16523d46998043c1bfca9ed3d81a4f6",
+      },
+      {
+        sha: "b93c9f6",
+        message: "feat(kanban): convert inline-create title input to multiline textarea",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b93c9f6393810657fbc12847cc98c99c938ad99e",
+      }
     ],
   },
   {
     date: "2026-05-07",
-    title: "Tools / MCP / Plugins / Curator: MCP SSE 트랜스포트·OAuth 메타데이터 영속화·argparse 충돌 해결, transform_llm_output 플러그인 훅 추가, `hermes curator list-archived`·manual run 동기화·CLI 문서 업데이트",
+    title: "Tools / MCP / Plugins / Curator: MCP SSE 트랜스포트·OAuth 메타데이터 영속화·argparse 충돌 해결·예외 타입 포함·pipe 전송 재시도·타임아웃 보고·stale 인터럽트 정리·CancelledError 재전파, transform_llm_output 플러그인 훅 추가, `hermes curator list-archived`·manual run 동기화·CLI 문서 업데이트",
     category: "Tools / MCP / Plugins",
     summary:
-      "MCP 클라이언트에 SSE 트랜스포트 지원이 추가되어 서버와의 통신 옵션이 확장됩니다. MCP OAuth 서버 메타데이터를 프로세스 재시작 간에도 유지(persist)하도록 수정하여 재인증 부담을 줄입니다. `mcp add --command`의 argparse dest 충돌을 해결하여 명령줄 등록이 정상 동작하도록 합니다. LLM 출력을 변환(transform)할 수 있는 `transform_llm_output` 플러그인 훅이 새로 추가되고 관련 테스트와 문서가 보강됩니다. Curator에서 아카이브된 항목을 조회할 수 있는 `hermes curator list-archived` 명령어가 추가되고, 수동 실행(manual run)이 동기식(synchronous)으로 기본 전환되며 관련 CLI 문서가 업데이트됩니다 (main branch).",
+      "MCP 클라이언트에 SSE 트랜스포트 지원이 추가되어 서버와의 통신 옵션이 확장됩니다. MCP OAuth 서버 메타데이터를 프로세스 재시작 간에도 유지(persist)하도록 수정하여 재인증 부담을 줄입니다. `mcp add --command`의 argparse dest 충돌을 해결하여 명령줄 등록이 정상 동작하도록 합니다. LLM 출력을 변환(transform)할 수 있는 `transform_llm_output` 플러그인 훅이 새로 추가되고 관련 테스트와 문서가 보강됩니다. Curator에서 아카이브된 항목을 조회할 수 있는 `hermes curator list-archived` 명령어가 추가되고, 수동 실행(manual run)이 동기식(synchronous)으로 기본 전환되며 관련 CLI 문서가 업데이트됩니다. MCP 서버 태스크에서 CancelledError를 명시적으로 재전파(re-raise)하고, str(exc)가 빈 경우 예외 타입을 에러 메시지에 포함시킵니다. MCP pipe 전송 실패 시 재시도(retry)하며, MCP 호출 에러에 설정된 타임아웃을 보고합니다. MCP 디스커버리 전에 stale 스레드 인터럽트를 정리합니다 (main branch).",
     commits: [
       {
         sha: "12289c2",
@@ -509,14 +639,39 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "docs(curator): update CLI docs for synchronous-by-default manual run",
         href: "https://github.com/NousResearch/hermes-agent/commit/6b3a9b4bfab255263f75bd9768bd56a882dc5a35",
       },
+      {
+        sha: "e0a2b08",
+        message: "fix(mcp): re-raise CancelledError explicitly in MCPServerTask.run (#21318)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e0a2b087681e98233e619ebbd073a9ee3d592295",
+      },
+      {
+        sha: "f9b4b8a",
+        message: "fix(mcp): include exception type in error messages when str(exc) is empty",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f9b4b8af3410e13ba002129e25c3f212568ee031",
+      },
+      {
+        sha: "a1f85ef",
+        message: "fix(mcp): retry stale pipe transport failures",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a1f85ef2b987a79868193b741f647eb4d3fd9182",
+      },
+      {
+        sha: "80548f9",
+        message: "fix(mcp): report configured timeout in MCP call errors",
+        href: "https://github.com/NousResearch/hermes-agent/commit/80548f9a4fd1f33edd67c9ae415176a6b3666afc",
+      },
+      {
+        sha: "9575bce",
+        message: "fix(mcp): clear stale thread interrupt before MCP discovery",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9575bce6ca95c0fe088e04f1abfaf4009a1d3e12",
+      }
     ],
   },
   {
     date: "2026-05-06",
-    title: "Models / i18n / Provider / Web Search / Integrations: grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
+    title: "Models / Vision / Image-gen / i18n / Provider / Web Search / Integrations: tencent/hy3-preview·alibaba-coding-plan·grok-4.3·deepseek-v4-pro·Arcee Trinity Large Thinking 모델, Z.AI 비전 호환성·image_gen.model config, 프랑스어·터키어·우크라이나어 로케일, SearXNG 네이티브 검색 백엔드·searxng-search 스킬, opencode-go hijack 방지, Feishu 토픽 스레드 응답, Linear·shop-app 스킬",
     category: "Models / i18n / Provider / Web / Integrations",
     summary:
-      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다 (main branch).",
+      "OpenRouter 및 Nous Portal 큐레이션 목록에 x-ai/grok-4.3과 deepseek/deepseek-v4-pro 모델이 추가되었습니다. Arcee Trinity Large Thinking 모델에 temperature 및 compression 오버라이드가 적용됩니다. 프랑스어(fr), 터키어(tr), 우크라이나어(uk) 로케일 지원이 추가되며, config·tests·docs 전반에 걸쳐 참조가 보강되었습니다. 웹 검색에 SearXNG를 네이티브 검색 전용 백엔드로 추가하고, per-capability 백엔드 선택 리팩터링과 함께 동작합니다. searxng-search 선택적(opt-in) 스킬과 문서가 추가되었으며, SearXNG 설정 가이드를 포함한 웹 검색·추출(Web Search + Extract) 기능 페이지가 문서화되었습니다. opencode-go 사용자가 네이티브 프로바이더로 hijack되지 않도록 수정하여 opencode-go backend를 그대로 유지합니다. /model 명령어의 커스텀 별칭(alias) 문서화도 함께 진행되었습니다. Feishu에서 토픽 응답이 스레드 내에 유지되도록 수정합니다. Linear 스킬에 Documents 지원 및 Python 헬퍼 스크립트가 추가되었습니다. 선택적(opt-in) 스킬로 shop-app 개인 쇼핑 어시스턴트가 추가되었습니다. OpenRouter에 tencent/hy3-preview 유료 라우트와 alibaba-coding-plan 모델이 큐레이션 목록에 추가됩니다. Z.AI 비전 모델 호환성을 위해 엔드포인트 라우팅과 max_tokens 처리가 수정됩니다. image-gen에서 config.yaml의 image_gen.model을 플러그인 디스패치에 반영합니다 (main branch).",
     commits: [
       {
         sha: "f27fcb6",
@@ -608,6 +763,26 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat(skills): add shop-app personal shopping assistant (optional) (#20702)",
         href: "https://github.com/NousResearch/hermes-agent/commit/b045e7a2ba2ef6a1449b459e03a8a701eb9c46f0",
       },
+      {
+        sha: "2c19212",
+        message: "feat(models): add paid tencent/hy3-preview route on OpenRouter (#21077)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2c1921241ca2bdcd2fe48b02f3a93f226cf41ad2",
+      },
+      {
+        sha: "8ad117a",
+        message: "fix(models): add alibaba-coding-plan to _PROVIDER_MODELS curated list",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ad117a3d6233609d2d67b9f77d43bc39d41accb",
+      },
+      {
+        sha: "6ea4a6a",
+        message: "fix(vision): Z.AI vision model compatibility — endpoint routing and max_tokens handling",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6ea4a6a740ae66183490059c214b775847a82009",
+      },
+      {
+        sha: "a9c7bda",
+        message: "feat(image-gen): honor image_gen.model from config.yaml in plugin dispatch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a9c7bdaea6543c2addb45cfafbe14b587245c34b",
+      }
     ],
   },
   {
