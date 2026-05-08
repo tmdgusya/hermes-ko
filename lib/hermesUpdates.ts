@@ -122,6 +122,130 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "auth: use get_default_hermes_root() for shared nous_auth.json path",
         href: "https://github.com/NousResearch/hermes-agent/commit/62b4ebb7db4e18fd3628ada0a1a30609ed6a109e",
       },
+      {
+        sha: "a54cae6",
+        message: "fix(setup): offer gateway service install on Windows (#22099)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a54cae60d4ac72640f203193e810eec46d4a9859",
+      },
+      {
+        sha: "3299be6",
+        message: "docs(windows): add native Windows guide + install one-liner on landing page (#22089)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3299be6bdb0a604b3730481004d2e0e33d0e83c7",
+      },
+      {
+        sha: "59fbcd5",
+        message: "fix(install.ps1): strip UTF-8 BOM that broke [scriptblock]::Create",
+        href: "https://github.com/NousResearch/hermes-agent/commit/59fbcd5ccb4d080f9a00d8a862f6998aa04a1ed7",
+      },
+      {
+        sha: "0548fac",
+        message: "fix(windows): gateway status dedup + install.ps1 platform-SDK bootstrap",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0548facc506ff6d19044be28a10879c188b55087",
+      },
+      {
+        sha: "324567c",
+        message: "fix(windows): os.kill(pid, 0) is NOT a no-op on Windows — route through new _pid_exists helper",
+        href: "https://github.com/NousResearch/hermes-agent/commit/324567c93662d726e05650c83b06078dce599e37",
+      },
+      {
+        sha: "52e497c",
+        message: "fix(windows installer): UTF-8 BOM, tiered extras, skip tinker-atropos by default",
+        href: "https://github.com/NousResearch/hermes-agent/commit/52e497ce7f3f6910764679fcaeef6d53ebd7e46c",
+      },
+      {
+        sha: "107de03",
+        message: "execute_code: set PYTHONIOENCODING=utf-8 + PYTHONUTF8=1 in child env",
+        href: "https://github.com/NousResearch/hermes-agent/commit/107de0321d0e8b9e23a60ec7439fdc50f45d2137",
+      },
+      {
+        sha: "da18443",
+        message: "execute_code: write sandbox files as UTF-8 on Windows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/da184439db42a6ac6816d31bb0c2fedd18d93c23",
+      },
+      {
+        sha: "5c859e5",
+        message: "execute_code: pass through Windows OS-essential env vars",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5c859e57165df24aabb0c9b3a01a5b5b6b5276e7",
+      },
+      {
+        sha: "a2efad6",
+        message: "fix(windows): prefer npm.cmd over npm.ps1, skip .py argv0 in relaunch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a2efad6bea303a3a04a477dc662c711ec761f782",
+      },
+      {
+        sha: "8f91d7b",
+        message: "fix(windows): %1 install error, patch CRLF false-negative, SOUL.md BOM",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8f91d7bfa9d8427ca40a392c5fa1ce3dd2fe9231",
+      },
+      {
+        sha: "d52e541",
+        message: "fix(install.ps1): step out of $InstallDir before touching it + harden repo probe",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d52e54170ab2d1d7be609fdccfcc820557b8defb",
+      },
+      {
+        sha: "c469a05",
+        message: "fix(install.ps1): validate existing repo via git itself + clean up broken stubs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c469a05ce58b0f269b9750dc6e9a857abcff7ccf",
+      },
+      {
+        sha: "fc91886",
+        message: "fix(windows): quote cache paths in bash + augment PATH so rg/bash resolve on first launch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc918867b2bcc311ba8992b73b519d7c49626f3e",
+      },
+      {
+        sha: "b53bd12",
+        message: "fix(windows-editor): default EDITOR=notepad so /edit and Ctrl+X Ctrl+E work",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b53bd12fe4c2b5518049c61692090fe26a786d30",
+      },
+      {
+        sha: "291a158",
+        message: "fix(skills): move platforms key out of folded description: > scalars",
+        href: "https://github.com/NousResearch/hermes-agent/commit/291a158441c2a94cbc33bff6506262ff001050a6",
+      },
+    ],
+  },
+  {
+    date: "2026-05-08",
+    title: "CI / Tests / Entry Points 안정화: 진입점 hermes_bootstrap import guard·부분 업데이트 brick 방지, CI lint.yml ruff-check·windows-footguns 블로킹 job 추가, PLW1514 lint 블로킹 규칙 활성화, 오래된/broken 테스트 50개 제거, os.kill monkeypatch 테스트 마이그레이션, POSIX-venv-layout Windows 스킵·execute_code env scrubber 가드 테스트",
+    category: "CI / Tests / Entry Points",
+    summary:
+      "Hermes 진입점(entry-points)에서 hermes_bootstrap 임포트를 guard하여 부분 업데이트(partial update) 시 Hermes가 brick되는 것을 방지합니다 (#22091). CI lint.yml에 ruff-check과 windows-footguns를 블로킹(blocking) job으로 추가하고, PLW1514 lint 규칙을 블로킹으로 활성화합니다. 오래되었거나 깨진(stale/broken) 테스트 50개를 제거하여 CI를 복구합니다 (#22098). os.kill monkeypatch를 gateway.status._pid_exists로 마이그레이션하고, POSIX-venv-layout 테스트를 Windows에서 건너뛰며, execute_code env scrubber의 POSIX-equivalence 가드를 테스트합니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "26bac67",
+        message: "fix(entry-points): guard hermes_bootstrap import so partial updates don't brick hermes (#22091)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/26bac67ef90d99646b491f5df4ef3856abb072ad",
+      },
+      {
+        sha: "66320de",
+        message: "test: remove 50 stale/broken tests to unblock CI (#22098)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/66320de52e9d77c5afc9767a350447011c8577f1",
+      },
+      {
+        sha: "d3120ae",
+        message: "ci(lint): add blocking ruff-check + windows-footguns jobs to lint.yml",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d3120aeab064c7d8275cd85d39c567313a93f6b2",
+      },
+      {
+        sha: "3be853a",
+        message: "lint: enable PLW1514 as a blocking ruff rule",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3be853a9b848ad24827cb5d64b66d87f2797b05c",
+      },
+      {
+        sha: "f5ee780",
+        message: "test: migrate stale os.kill monkeypatches to gateway.status._pid_exists",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f5ee780124904be1992771cb7c9f7a9263d833e7",
+      },
+      {
+        sha: "e614e87",
+        message: "tests: skip POSIX-venv-layout tests on Windows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e614e87954638a164c3e6e552408971e231a10f1",
+      },
+      {
+        sha: "3b9cd58",
+        message: "tests: lock in POSIX-equivalence guard for execute_code env scrubber",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3b9cd5820898796ead8f7d5913efc42071d2e94a",
+      },
     ],
   },
   {
