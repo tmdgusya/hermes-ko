@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
-    title: "Config / Goals / Gateway: Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, SearXNG 문서 수정",
-    category: "Config / Goals / Gateway",
+    title: "Config / Goals / Gateway / Model: Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
+    category: "Config / Goals / Gateway / Model",
     summary:
-      "Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+      "Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
     commits: [
       {
         sha: "34f7297",
@@ -38,14 +38,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/03ddff889719c7be164c3d329f9903fdd55aea31",
       },
       {
+        sha: "7338e5d",
+        message: "fix(model-switch): prevent stale Ollama credentials after provider switch (#21703)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7338e5d9ba94c1d90a644d0588ac003d1aaee350",
+      },
+      {
         sha: "faa13e4",
         message: "docs(web): fix SearXNG env configuration",
         href: "https://github.com/NousResearch/hermes-agent/commit/faa13e49f81480771ceeb55991bb0c27edf1a5fb",
-      },
-      {
-        sha: "1bdacb6",
-        message: "chore(release): add BennetYrWang to AUTHOR_MAP",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1bdacb697c6a5857a31287feb6eb55a23d3418d1",
       },
     ],
   },
