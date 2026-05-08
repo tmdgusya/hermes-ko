@@ -17,11 +17,31 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
-    title: "TUI / Cron / Auth / Google Workspace / Config / GMI / Goals / Gateway / Model: TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
-    category: "TUI / Cron / Auth / Config / Gateway",
+    title: "Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / GMI / Gateway / Model: Google Workspace Drive 쓰기·Docs/Sheets 생성/추가, Goals Ctrl+C 자동 일시정지, Docker 첫 부팅 시 auth.json env 부트스트랩, Cron job 출력 디렉토리 정리, TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
+    category: "Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / Gateway",
     summary:
-      "TUI에서 사용자 메시지 턴을 구분하는 규칙(rule) 세그먼트를 추가하고, 티커(ticker)의 데드 스페이스를 정리(trim)하여 UI를 개선합니다. Cron 작업에 라우팅 인텐트(routing intent) `deliver=all`이 추가되어 모든 연결된 채널로 메시지를 팬아웃(fan out)할 수 있습니다. Auth에서 Nous 리프레시 토큰을 헤더(header)를 통해 전송하도록 수정하고, check_auth_live의 docstring 문법 오류를 수정합니다. Google Workspace에서 --check-live 옵션으로 disabled_client를 감지(detect)하고, salvage 정리를 개선합니다. 빠른 설정 마법사(quick setup wizard)에 터미널 백엔드가 포함되어 초기 설정이 간편해집니다.\\n\\nGMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+      "Google Workspace에 Drive 파일 쓰기(write), Google Docs/Sheets 문서 생성(create) 및 추가(append) 기능이 추가됩니다. Goals에서 /goal 루프 실행 중 Ctrl+C로 goal을 자동 일시정지(auto-pause)할 수 있습니다. Docker 첫 부팅 시 환경 변수(env)에서 auth.json을 자동 생성(부트스트랩)합니다. Cron job 제거(remove_job) 시 job 출력 디렉토리도 함께 정리합니다.\\n\\nTUI에서 사용자 메시지 턴을 구분하는 규칙(rule) 세그먼트를 추가하고, 티커(ticker)의 데드 스페이스를 정리(trim)하여 UI를 개선합니다. Cron 작업에 라우팅 인텐트(routing intent) `deliver=all`이 추가되어 모든 연결된 채널로 메시지를 팬아웃(fan out)할 수 있습니다. Auth에서 Nous 리프레시 토큰을 헤더(header)를 통해 전송하도록 수정하고, check_auth_live의 docstring 문법 오류를 수정합니다. Google Workspace에서 --check-live 옵션으로 disabled_client를 감지(detect)하고, salvage 정리를 개선합니다. 빠른 설정 마법사(quick setup wizard)에 터미널 백엔드가 포함되어 초기 설정이 간편해집니다.\\n\\nGMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
     commits: [
+      {
+        sha: "e43d2fe",
+        message: "feat(google-workspace): Drive write ops + Docs/Sheets create/append (#21895)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e43d2fe5205ef3a2027924f14380a6af08bda35e",
+      },
+      {
+        sha: "674fad1",
+        message: "fix(goals): Ctrl+C during /goal loop auto-pauses the goal (#21888)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/674fad14832006bfd742c5e3183f34c24018e43a",
+      },
+      {
+        sha: "5643c29",
+        message: "feat(docker): bootstrap auth.json from env on first boot",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5643c297901312d817713a8cc870a28a439e3114",
+      },
+      {
+        sha: "f4e621f",
+        message: "fix(cron): clean up job output dir in remove_job",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f4e621f7d834fe8dc879dd4f4fbf3e14d3d986cf",
+      },
       {
         sha: "42f9234",
         message: "feat(tui): segment turns with rule above non-first user msgs; trim ticker dead space (#21846)",
