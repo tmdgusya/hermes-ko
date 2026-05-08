@@ -82,6 +82,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/e73508979f23d220eae5c378d714b150b8748580",
       },
       {
+        sha: "d12be46",
+        message: "fix(skills): lock usage telemetry updates",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d12be46df8753931c21946fc0b0caccb83ff2209",
+      },
+      {
         sha: "9076a2e",
         message: "fix(agent): keep Nous GPT-5 fallback on chat completions",
         href: "https://github.com/NousResearch/hermes-agent/commit/9076a2e74ef0a3d862312e205e03a693ba6dbad6",
