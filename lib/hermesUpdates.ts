@@ -42,6 +42,11 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "docs(web): fix SearXNG env configuration",
         href: "https://github.com/NousResearch/hermes-agent/commit/faa13e49f81480771ceeb55991bb0c27edf1a5fb",
       },
+      {
+        sha: "1bdacb6",
+        message: "chore(release): add BennetYrWang to AUTHOR_MAP",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1bdacb697c6a5857a31287feb6eb55a23d3418d1",
+      },
     ],
   },
   {
