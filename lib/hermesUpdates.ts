@@ -17,6 +17,115 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
+    title: "Windows / 크로스플랫폼 / 스킬 플랫폼 / 인코딩: Windows 네이티브 설치·제거·Scheduled Task 게이트웨이·UTF-8 stdio·POSIX 호환성·브라우저·Playwright·PortableGit·npm.cmd·EDITOR 설정, 크로스플랫폼 psutil PID 관리·Windows footgun 진단, 스킬 platforms 프론트매터 142종 선언·Windows 스킬 게이트, PLW1514 인코딩 lint·시스템 프롬프트 환경 힌트·Ctrl+Enter 개행·Windows Quirks 문서·auth.json 공유 경로·Profiles UTF-8",
+    category: "Windows / Cross-platform / Skills",
+    summary:
+      "Windows 네이티브 지원이 대규모로 추가됩니다. 네이티브 Windows 설치 간극을 해소하여 crash-free 시작, UTF-8 stdio, tzdata 의존성, 문서를 포함한 완전한 설치 환경을 제공합니다. 남은 POSIX 전용 landmine들을 해결하여 TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash 의존성, npm .cmd shim, cwd tracking, detach flag 문제를 모두 수정합니다. Windows installer가 winget 대신 portable MinGit을 번들하고, 게이트웨이를 Scheduled Task로 등록하며 Startup-folder fallback을 지원합니다. Windows uninstaller가 User env, PATH, Scheduled Task, portable tooling을 정리합니다.\\\\\\\\n\\\\\\\\n크로스플랫폼 지원을 위해 psutil 기반 PID/프로세스 관리와 Windows footgun checker가 추가됩니다. os.kill(pid, 0)이 Windows에서 no-op이 아닌 문제를 새로운 _pid_exists 헬퍼로 해결합니다. gateway 상태 중복 제거(dedup)와 install.ps1 플랫폼-SDK 부트스트랩이 추가됩니다. Windows installer에서 UTF-8 BOM 처리, tiered extras, tinker-atropos 기본 건너뛰기가 적용됩니다.\\\\\\\\n\\\\\\\\nWindows에서 browser tool과 subprocess spawning의 spurious SIGINT 문제를 수정합니다. execute_code가 AF_UNIX 게이트에 막혀 있던 문제를 해결하고, PYTHONIOENCODING=utf-8 + PYTHONUTF8=1을 설정하며 sandbox 파일을 UTF-8로 작성합니다. Windows OS-essential env var를 통과시키고, Playwright Chromium을 자동 설치하여 doctor에 표시합니다. PortableGit을 MinGit 대신 사용하고, os.execvp crash를 수정하며 npm 에러를 표면화합니다. npm.cmd를 npm.ps1보다 우선하고, .py argv0을 relaunch에서 건너뜁니다.\\\\\\\\n\\\\\\\\nWindows 에디터 기본값으로 EDITOR=notepad를 설정하여 /edit과 Ctrl+X Ctrl+E가 동작합니다. Ctrl+Enter로 Windows Terminal에서 개행을 삽입할 수 있습니다. 시스템 프롬프트에 호스트와 터미널 백엔드 정보를 포함하는 환경 힌트가 추가됩니다.\\\\\\\\n\\\\\\\\n스킬 시스템에 플랫폼(platforms) 프론트매터가 추가되어 79개 빌트인 스킬과 63개 optional 스킬에 플랫폼이 선언됩니다. Linux/macOS 전용 7개 스킬이 Windows에서 게이트(gate)됩니다.\\\\\\\\n\\\\\\\\n코드베이스 전반에 PLW1514 lint 규칙이 활성화되고 모든 bare open() 호출에 encoding='utf-8'이 추가됩니다. Windows 전용 UTF-8 stdio shim이 모든 진입점에 적용됩니다. auth에서 공유 nous_auth.json 경로에 get_default_hermes_root()를 사용합니다. 프로필 distribution.yaml 열기에 encoding=utf-8이 전달됩니다. Windows 관련 Quirks 문서와 keystroke 진단이 hermes-agent 스킬 문서에 추가됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "9de893e",
+        message: "feat(windows): close native-Windows install gaps — crash-free startup, UTF-8 stdio, tzdata dep, docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9de893e3b078e7ef51437af1ce6743d96a103c6d",
+      },
+      {
+        sha: "e93bfc6",
+        message: "feat(windows): close remaining POSIX-only landmines — TUI crash, kanban waitpid, AF_UNIX sandbox, /bin/bash, npm .cmd shims, cwd tracking, detach flags",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e93bfc6c93bfa6f9edd02629a03f717fc29ce013",
+      },
+      {
+        sha: "b7fe7ed",
+        message: "feat(windows-install): bundle portable MinGit instead of relying on winget",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b7fe7ed7bd1740b01315c4bd15b254aa738124e5",
+      },
+      {
+        sha: "9c263fb",
+        message: "feat(windows): gateway as a Scheduled Task + Startup-folder fallback",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9c263fbf8a622566f0831b8b727ded31b67c64af",
+      },
+      {
+        sha: "35fce76",
+        message: "feat(windows uninstall): clean up User env, PATH, Scheduled Task, and portable tooling",
+        href: "https://github.com/NousResearch/hermes-agent/commit/35fce7699ef61eb11963a498c5489b4e7c7a508b",
+      },
+      {
+        sha: "cc38282",
+        message: "feat(cross-platform): psutil for PID/process management + Windows footgun checker",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cc38282b04d997468db782caa3443387fd454359",
+      },
+      {
+        sha: "98db898",
+        message: "feat(skills): declare platforms frontmatter for all 79 undeclared built-in skills",
+        href: "https://github.com/NousResearch/hermes-agent/commit/98db898c0bd4df0b09a5830b6a18a069c771e67c",
+      },
+      {
+        sha: "db22efb",
+        message: "feat(optional-skills): declare platforms frontmatter for all 63 undeclared skills",
+        href: "https://github.com/NousResearch/hermes-agent/commit/db22efbe88bd822331a3220b9020e6d4800c37d1",
+      },
+      {
+        sha: "b18b17f",
+        message: "feat(skills): gate 7 Linux/macOS-only skills from Windows via platforms frontmatter",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b18b17f9c9de0f43975a8987821f37be954603a2",
+      },
+      {
+        sha: "0ba1e12",
+        message: "fix(windows): browser tool + spurious SIGINT from subprocess spawning",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0ba1e12abc5aef96429413d7532341a69e37d8d8",
+      },
+      {
+        sha: "21efeb5",
+        message: "fix(windows): enable execute_code — stale AF_UNIX gate was blocking the tool",
+        href: "https://github.com/NousResearch/hermes-agent/commit/21efeb51bb01bc4a24bb3afb9c621b9baaccabf7",
+      },
+      {
+        sha: "03566e5",
+        message: "fix(windows): auto-install Playwright Chromium + surface it in doctor",
+        href: "https://github.com/NousResearch/hermes-agent/commit/03566e5124d106656f4152c1b084c233d9c07f3f",
+      },
+      {
+        sha: "3601e20",
+        message: "fix(windows): use PortableGit (not MinGit), fix relaunch os.execvp crash, surface npm errors",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3601e20f47c886d9174aae4129f310f90a00a682",
+      },
+      {
+        sha: "d183804",
+        message: "feat: Ctrl+Enter inserts newline on Windows Terminal",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d1838041e52499094b501056172cc7322233a7bc",
+      },
+      {
+        sha: "40e7a71",
+        message: "feat: enrich system-prompt environment hints with host + terminal-backend info",
+        href: "https://github.com/NousResearch/hermes-agent/commit/40e7a71c350121a94a67d44e9f1e09239d6196d1",
+      },
+      {
+        sha: "cbce5e9",
+        message: "codebase: add encoding='utf-8' to all bare open() calls (PLW1514)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cbce5e93fcb9a923ab71f45d2a0f0f172dd54967",
+      },
+      {
+        sha: "d94fb47",
+        message: "hermes_bootstrap: Windows-only UTF-8 stdio shim for all entry points",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d94fb47717eb6e2c343e1615fdabf436f19b350a",
+      },
+      {
+        sha: "b63f964",
+        message: "docs: add Windows-Specific Quirks section to hermes-agent skill + keystroke diagnostic",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b63f9645f08af894f2685521ffe4ee55df79d620",
+      },
+      {
+        sha: "ea2cc4f",
+        message: "fix(profiles): pass encoding=utf-8 to distribution.yaml open (#22083)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ea2cc4f9023c02a2cc130814fdfacc51098efbcf",
+      },
+      {
+        sha: "62b4ebb",
+        message: "auth: use get_default_hermes_root() for shared nous_auth.json path",
+        href: "https://github.com/NousResearch/hermes-agent/commit/62b4ebb7db4e18fd3628ada0a1a30609ed6a109e",
+      },
+    ],
+  },
+  {
+    date: "2026-05-08",
     title: "MS Graph / Watchers / Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / GMI / Gateway / Model / Profile: MS Graph 인증·클라이언트 기초·파일 다운로드 스트리밍·토큰 캐시·Azure 앱 등록 문서·웹훅 리스너 플랫폼·웹훅 중복 제거·인증 강화·IP 허용·응답 위생, Watchers 스킬 (RSS/HTTP JSON/GitHub 크론 no-agent 폴링), Cron job 승인 컨텍스트 분리·API 서버 run approval 이벤트 노출, Google Workspace Drive 쓰기·Docs/Sheets 생성/추가, Goals Ctrl+C 자동 일시정지, Docker 첫 부팅 시 auth.json env 부트스트랩, Cron job 출력 디렉토리 정리, TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정, 프로필 Git 공유 배포",
     category: "MS Graph / Watchers / Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / Gateway / Profile",
     summary:
