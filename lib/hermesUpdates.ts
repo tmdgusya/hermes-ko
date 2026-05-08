@@ -17,11 +17,36 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
-    title: "Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / GMI / Gateway / Model: Cron job 승인 컨텍스트 분리·API 서버 run approval 이벤트 노출, Google Workspace Drive 쓰기·Docs/Sheets 생성/추가, Goals Ctrl+C 자동 일시정지, Docker 첫 부팅 시 auth.json env 부트스트랩, Cron job 출력 디렉토리 정리, TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
-    category: "Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / Gateway",
+    title: "MS Graph / Watchers / Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / GMI / Gateway / Model: MS Graph 인증·클라이언트 기초·파일 다운로드 스트리밍·토큰 캐시·Azure 앱 등록 문서, Watchers 스킬 (RSS/HTTP JSON/GitHub 크론 no-agent 폴링), Cron job 승인 컨텍스트 분리·API 서버 run approval 이벤트 노출, Google Workspace Drive 쓰기·Docs/Sheets 생성/추가, Goals Ctrl+C 자동 일시정지, Docker 첫 부팅 시 auth.json env 부트스트랩, Cron job 출력 디렉토리 정리, TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
+    category: "MS Graph / Watchers / Approval / API Server / Google Workspace / Goals / Cron / Docker / TUI / Auth / Config / Gateway",
     summary:
-      "Cron job이 gateway context로 잘못 처리되어 승인(approval)이 동작하지 않던 문제를 수정합니다. API 서버에서 run approval 이벤트를 SSE로 노출(expose)하여 클라이언트가 승인 상태 변화를 실시간으로 구독할 수 있습니다.\\\\n\\\\nGoogle Workspace에 Drive 파일 쓰기(write), Google Docs/Sheets 문서 생성(create) 및 추가(append) 기능이 추가됩니다. Goals에서 /goal 루프 실행 중 Ctrl+C로 goal을 자동 일시정지(auto-pause)할 수 있습니다. Docker 첫 부팅 시 환경 변수(env)에서 auth.json을 자동 생성(부트스트랩)합니다. Cron job 제거(remove_job) 시 job 출력 디렉토리도 함께 정리합니다.\\\\n\\\\nTUI에서 사용자 메시지 턴을 구분하는 규칙(rule) 세그먼트를 추가하고, 티커(ticker)의 데드 스페이스를 정리(trim)하여 UI를 개선합니다. Cron 작업에 라우팅 인텐트(routing intent) `deliver=all`이 추가되어 모든 연결된 채널로 메시지를 팬아웃(fan out)할 수 있습니다. Auth에서 Nous 리프레시 토큰을 헤더(header)를 통해 전송하도록 수정하고, check_auth_live의 docstring 문법 오류를 수정합니다. Google Workspace에서 --check-live 옵션으로 disabled_client를 감지(detect)하고, salvage 정리를 개선합니다. 빠른 설정 마법사(quick setup wizard)에 터미널 백엔드가 포함되어 초기 설정이 간편해집니다.\\\\n\\\\nGMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+      "Microsoft Graph(MS Graph) API 연동을 위한 인증(auth) 및 클라이언트 기초(foundation)가 추가됩니다. MS Graph 파일 다운로드 시 본문을 버퍼링하지 않고 스트리밍(streaming)하여 메모리 사용을 개선합니다. 동시 토큰 캐시 재사용(concurrent token cache reuse)에 대한 테스트가 추가됩니다. Azure 앱 등록 워크스루(walkthrough) 및 환경 변수(env var) 참조 문서가 추가됩니다.\\\\n\\\\nWatchers 스킬이 추가되어 cron을 통해 RSS 피드, HTTP JSON, GitHub를 no-agent 방식으로 폴링(poll)할 수 있습니다.\\\\n\\\\nCron job이 gateway context로 잘못 처리되어 승인(approval)이 동작하지 않던 문제를 수정합니다. API 서버에서 run approval 이벤트를 SSE로 노출(expose)하여 클라이언트가 승인 상태 변화를 실시간으로 구독할 수 있습니다.\\\\n\\\\nGoogle Workspace에 Drive 파일 쓰기(write), Google Docs/Sheets 문서 생성(create) 및 추가(append) 기능이 추가됩니다. Goals에서 /goal 루프 실행 중 Ctrl+C로 goal을 자동 일시정지(auto-pause)할 수 있습니다. Docker 첫 부팅 시 환경 변수(env)에서 auth.json을 자동 생성(부트스트랩)합니다. Cron job 제거(remove_job) 시 job 출력 디렉토리도 함께 정리합니다.\\\\n\\\\nTUI에서 사용자 메시지 턴을 구분하는 규칙(rule) 세그먼트를 추가하고, 티커(ticker)의 데드 스페이스를 정리(trim)하여 UI를 개선합니다. Cron 작업에 라우팅 인텐트(routing intent) `deliver=all`이 추가되어 모든 연결된 채널로 메시지를 팬아웃(fan out)할 수 있습니다. Auth에서 Nous 리프레시 토큰을 헤더(header)를 통해 전송하도록 수정하고, check_auth_live의 docstring 문법 오류를 수정합니다. Google Workspace에서 --check-live 옵션으로 disabled_client를 감지(detect)하고, salvage 정리를 개선합니다. 빠른 설정 마법사(quick setup wizard)에 터미널 백엔드가 포함되어 초기 설정이 간편해집니다.\\\\n\\\\nGMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
     commits: [
+      {
+        sha: "cf648a9",
+        message: "docs(msgraph): add Azure app registration walkthrough + env var reference",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cf648a9b7e4f3a346451d543648ce76922971e1a",
+      },
+      {
+        sha: "45d860d",
+        message: "fix(msgraph): stream download_to_file body instead of buffering",
+        href: "https://github.com/NousResearch/hermes-agent/commit/45d860d424ffbfd143c66ce0ce266c321cd89006",
+      },
+      {
+        sha: "b878f89",
+        message: "test(msgraph): cover concurrent token cache reuse",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b878f89f669cefbea3d24ba49b39aaf22c640469",
+      },
+      {
+        sha: "a152c70",
+        message: "feat(msgraph): add auth and client foundation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a152c706b7bbde3efc921e86f302c75fdaef99a2",
+      },
+      {
+        sha: "ea8e608",
+        message: "feat(skills): watchers skill — poll RSS / HTTP JSON / GitHub via cron no-agent (#21881)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ea8e608821b18f1cfa2f45c65542f7bc6c2f7b96",
+      },
       {
         sha: "839cdd1",
         message: "fix(approval): cron jobs must not be treated as gateway context",
