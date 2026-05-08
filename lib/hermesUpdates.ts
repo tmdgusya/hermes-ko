@@ -17,11 +17,51 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
-    title: "GMI / Config / Goals / Gateway / Model: GMI User-Agent를 profile.default_headers로 이동, Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
-    category: "GMI / Config / Goals / Gateway / Model",
+    title: "TUI / Cron / Auth / Google Workspace / Config / GMI / Goals / Gateway / Model: TUI 턴 세그먼트 규칙·티커 데드 스페이스 정리, Cron 라우팅 인텐트 deliver=all, Auth Nous 리프레시 토큰 헤더 전송·check_auth_live 문서화 수정, Google Workspace disabled_client 감지·--check-live 추가, 빠른 설정 마법사에 터미널 백엔드 포함, GMI User-Agent profile.default_headers 이동, Hermes config 접근 직렬화, Goals 자동 일시정지, Gateway goal 상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
+    category: "TUI / Cron / Auth / Config / Gateway",
     summary:
-      "GMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+      "TUI에서 사용자 메시지 턴을 구분하는 규칙(rule) 세그먼트를 추가하고, 티커(ticker)의 데드 스페이스를 정리(trim)하여 UI를 개선합니다. Cron 작업에 라우팅 인텐트(routing intent) `deliver=all`이 추가되어 모든 연결된 채널로 메시지를 팬아웃(fan out)할 수 있습니다. Auth에서 Nous 리프레시 토큰을 헤더(header)를 통해 전송하도록 수정하고, check_auth_live의 docstring 문법 오류를 수정합니다. Google Workspace에서 --check-live 옵션으로 disabled_client를 감지(detect)하고, salvage 정리를 개선합니다. 빠른 설정 마법사(quick setup wizard)에 터미널 백엔드가 포함되어 초기 설정이 간편해집니다.\\n\\nGMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
     commits: [
+      {
+        sha: "42f9234",
+        message: "feat(tui): segment turns with rule above non-first user msgs; trim ticker dead space (#21846)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/42f9234da34e59e456240cb3ddb8bad1995427a4",
+      },
+      {
+        sha: "7190e20",
+        message: "fix: include terminal backend in quick setup wizard (#21842)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7190e20e0b84c581fe182b5038ade7483482e69e",
+      },
+      {
+        sha: "486b14b",
+        message: "feat(cron): routing intent — deliver=all fans out to every connected channel (#21495)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/486b14b423e85120691e445df7bfc57f093459a0",
+      },
+      {
+        sha: "b32461f",
+        message: "fix(auth): send Nous refresh token via header",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b32461f6e864dddcd9c7e0a8976b4e4ca50616db",
+      },
+      {
+        sha: "80775d7",
+        message: "test(auth): assert Nous refresh rotation payload",
+        href: "https://github.com/NousResearch/hermes-agent/commit/80775d758562821c4bd5ad6e2f26afa3d5223d5d",
+      },
+      {
+        sha: "617ac05",
+        message: "fix: correct docstring syntax error in check_auth_live",
+        href: "https://github.com/NousResearch/hermes-agent/commit/617ac0535b191998b96979a48c7df2268670087c",
+      },
+      {
+        sha: "5fa493a",
+        message: "fix(google-workspace): detect disabled_client in --check and add --check-live",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5fa493a2ca6a5899acc40026283d3f47303f5937",
+      },
+      {
+        sha: "83c23e8",
+        message: "fix(google-workspace): cleanup for --check-live salvage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/83c23e88617c97ab5d3663ee8895eeda258a1eb9",
+      },
       {
         sha: "81928f0",
         message: "refactor(gmi): move User-Agent to profile.default_headers",
