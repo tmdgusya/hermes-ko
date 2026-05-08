@@ -17,11 +17,16 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-08",
-    title: "Config / Goals / Gateway / Model: Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
-    category: "Config / Goals / Gateway / Model",
+    title: "GMI / Config / Goals / Gateway / Model: GMI User-Agent를 profile.default_headers로 이동, Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, Model-Switch Ollama 인증 정보 정리, SearXNG 문서 수정",
+    category: "GMI / Config / Goals / Gateway / Model",
     summary:
-      "Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+      "GMI(GitHub Model Interface)의 User-Agent 설정을 profile.default_headers로 이동하여 프로필 수준에서 관리할 수 있도록 개선합니다. Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. Model-Switch에서 프로바이더 전환 후 이전 Ollama 인증 정보(credentials)가 그대로 남아 오작동하는 문제를 수정합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
     commits: [
+      {
+        sha: "81928f0",
+        message: "refactor(gmi): move User-Agent to profile.default_headers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/81928f03ab5841362e526df011e3eb74159aea8b",
+      },
       {
         sha: "34f7297",
         message: "Serialize Hermes config access",
