@@ -180,6 +180,80 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
+    date: "2026-05-08",
+    title: "Computer-Use / Teams Pipeline / TUI / Profiles: CUA 드라이버 백엔드·범용 any-model 스키마·백그라운드 포커스 안전 백엔드(set_value·구조화 윈도우·MIME 감지)·비Anthropic 멀티모달 툴 결과 언래핑·이미지 거절 폴백 강화·사이드바 내비게이션, Teams 파이프라인 플러그인 런타임·Operator CLI·기존 어댑터 아웃바운드 딜리버리·드롭 스케줄러 폴백·딜리버리 URL 보완·미팅 요약 문서, TUI 기존 게이트웨이 attach, 프로필 배포 전체 사용자 가이드",
+    category: "Computer-Use / Teams / TUI / Profiles",
+    summary:
+      "Computer-Use(컴퓨터 사용) 기능이 대폭 확장됩니다. CUA(Computer-Use Agent) 드라이버 백엔드와 범용 any-model 스키마가 추가되어 다양한 모델에서 컴퓨터 사용이 가능해집니다. 백그라운드에서도 안전하게 동작하는 포커스-세이프(focus-safe) 백엔드가 도입되어 set_value, 구조화된 윈도우(structured windows), MIME 감지(detection)를 지원합니다. Anthropic 외 다른 프로바이더(non-Anthropic providers)에서 멀티모달 툴 결과를 content list로 올바르게 언래핑(unwrap)합니다. 이미지 거절 폴백(image-rejection fallback)을 강화(harden)하고 AUTHOR_MAP을 정리합니다. Computer-Use 문서가 사이드바 내비게이션의 Media and Web 섹션에 추가됩니다.\\n\\nMicrosoft Teams 파이프라인 기능이 새롭게 추가됩니다. Teams 파이프라인 플러그인 런타임(runtime)과 Operator CLI가 추가되어 파이프라인을 구성하고 관리할 수 있습니다. 기존 어댑터를 통한 아웃바운드 딜리버리(outbound delivery)가 추가되고, 드롭 스케줄러 폴백(drop-scheduler fallback) 및 enablement gate 테스트 와이어링이 보완됩니다. 중복 delivery-mode 분기를 제거(refactor)하고, 어댑터 재사용 테스트에서 누락된 딜리버리 URL을 보완합니다. Teams 미팅 요약(meeting summary) 딜리버리 섹션과 환경 변수 참조 문서가 추가됩니다.\\n\\nTUI에서 `hermes tui --attach`로 기존에 실행 중인 게이트웨이(gateway)에 연결(attach)할 수 있는 기능이 추가됩니다. 프로필 배포(profile distributions)에 대한 전체 사용자 가이드가 문서화됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "850413f",
+        message: "feat(computer-use): cua-driver backend, universal any-model schema",
+        href: "https://github.com/NousResearch/hermes-agent/commit/850413f1203f02c42ac6b9fd21ff86a2402a974e",
+      },
+      {
+        sha: "e31f3b3",
+        message: "feat(computer-use): background focus-safe backend — set_value, structured windows, MIME detection",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e31f3b3c56e33ba96213de4312367b4f61a745ed",
+      },
+      {
+        sha: "2937f9b",
+        message: "fix(computer-use): unwrap _multimodal tool results to content list for non-Anthropic providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2937f9bef60c7a2d5b1531833ffdebfc0af006e2",
+      },
+      {
+        sha: "d0aad4b",
+        message: "fix(computer-use): harden image-rejection fallback + AUTHOR_MAP",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d0aad4b021b445fbb605dfcfeaa3c533b88bee74",
+      },
+      {
+        sha: "a735b72",
+        message: "docs(computer-use): add to sidebar nav under Media and Web",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a735b72131304f26d455b628de2dc713766c4cc0",
+      },
+      {
+        sha: "07bbd93",
+        message: "feat(teams-pipeline): add plugin runtime and operator cli",
+        href: "https://github.com/NousResearch/hermes-agent/commit/07bbd933370882e8977e69f2d19b6f26a66ed271",
+      },
+      {
+        sha: "397f750",
+        message: "feat(teams): add pipeline outbound delivery via existing adapter",
+        href: "https://github.com/NousResearch/hermes-agent/commit/397f750bb402f1807c0e7c732ff7637b1f2d52e8",
+      },
+      {
+        sha: "a995477",
+        message: "fix(teams-pipeline): drop-scheduler fallback + test wiring for enablement gate",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a99547740dab830c8b121574e4ef50db8fc500f8",
+      },
+      {
+        sha: "d36ccc2",
+        message: "refactor(teams): remove redundant delivery-mode branch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d36ccc29c968343f4aecd07a29853d2bede72ecd",
+      },
+      {
+        sha: "5e8dfc9",
+        message: "fix(teams-pipeline): fill in missing delivery URL in adapter-reuse test",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5e8dfc9f6dad585b23502e8cd142e6e45d3f024c",
+      },
+      {
+        sha: "9680827",
+        message: "docs(teams): meeting summary delivery section + env var reference",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9680827078c4d73cbbadf3f97674aaa4f9839a7c",
+      },
+      {
+        sha: "1997b3b",
+        message: "feat(tui): support attaching to an existing gateway (#21978)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1997b3baf81440f5afd4b7963a23663e85557d18",
+      },
+      {
+        sha: "ea86714",
+        message: "docs(profiles): full user guide for profile distributions (#22017)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ea86714cc0e0b3461a8f69b778116d8bbd3dc61c",
+      },
+    ],
+  },
+  {
     date: "2026-05-07",
     title: "Agent / ACP / Gateway 자동 복구 / Security / Auth / Discord (main branch v0.13.0 태그): Agent Nous GPT-5 fallback 유지, ACP 이미지 첨부파일 image_url 전달·인라인 리소스, Agent orphan tool-tail 빈 응답 루프 차단·빈 응답 sentinel 제거·복구 스캐폴딩 미영속화, Gateway 자동 재개(auto-resume)·크래시 복구·재시작 전 reset-failed·중복 응답 방지·모노토닉 데드라인·QR 온보딩, Secret redaction 기본 활성화·credential/MCP OAuth TOCTOU 봉쇄, Discord 역할 스코핑(CVSS 8.1)·메시지 삭제·DM role-auth, Auth 크리덴셜 401 쿨다운 단축·파일락 중복 제거·Nous 리프레시 토큰 동기화·Spotify 로그아웃 모델 설정 유지, Docker 루트 실행 거부·node_modules 소유권·update config 마이그레이션·CLI 도움말 대시보드 추가, Telegram forum 스레드·이미지 문서 라우팅, OAuth monotonic deadlines, optional-skills Anthropic 금융 스킬 번들, image-routing MIME 감지·멀티모달 경로 노출, TUI 빈 final_response 시 백엔드 에러 표시·스크롤백 리셋 루프 방지, Weixin aiohttp→asyncio.wait_for·긴 줄 래핑, Windows 터미널 drain·CWD 경로 변환, Matrix 리액션 정리 지연, GitHub Copilot max_completion_tokens·DashScope China 재시도·비전 라우팅, analytics Claude 4.5–4.7 가격 등",
     category: "Agent / ACP / Gateway / Security",
