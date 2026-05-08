@@ -16,6 +16,35 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-08",
+    title: "Config / Goals / Gateway: Hermes 설정 접근 직렬화, Goals 자동 일시정지·상태 알림 지연, SearXNG 문서 수정",
+    category: "Config / Goals / Gateway",
+    summary:
+      "Hermes 설정(config) 접근을 직렬화(Serialize)하여 동시 접근으로 인한 경합을 방지합니다. Goals에서 judge 모델이 파싱 불가능한(unparseable) 출력을 반환할 때 자동으로 일시정지(auto-pause)하여 잘못된 goal 진행을 차단합니다. Gateway에서 goal 상태 알림(goal status notices)을 응답 전달(response delivery) 이후로 지연(defer)하여 메시지 순서를 개선합니다. SearXNG 환경 설정 관련 문서 오류를 수정합니다 (main branch).",
+    commits: [
+      {
+        sha: "34f7297",
+        message: "Serialize Hermes config access",
+        href: "https://github.com/NousResearch/hermes-agent/commit/34f7297359bb5bf38d0ad8c48574ea42f35111ca",
+      },
+      {
+        sha: "307c85e",
+        message: "fix(goals): auto-pause when judge model returns unparseable output",
+        href: "https://github.com/NousResearch/hermes-agent/commit/307c85e5c1b0dd0ca0d94ec362976254cbd949b4",
+      },
+      {
+        sha: "03ddff8",
+        message: "fix(gateway): defer goal status notices until after response delivery",
+        href: "https://github.com/NousResearch/hermes-agent/commit/03ddff889719c7be164c3d329f9903fdd55aea31",
+      },
+      {
+        sha: "faa13e4",
+        message: "docs(web): fix SearXNG env configuration",
+        href: "https://github.com/NousResearch/hermes-agent/commit/faa13e49f81480771ceeb55991bb0c27edf1a5fb",
+      },
+    ],
+  },
+  {
     date: "2026-05-07",
     title: "Agent / ACP / Gateway 자동 복구 / Security / Auth / Discord (main branch v0.13.0 태그): Agent Nous GPT-5 fallback 유지, ACP 이미지 첨부파일 image_url 전달·인라인 리소스, Agent orphan tool-tail 빈 응답 루프 차단·빈 응답 sentinel 제거·복구 스캐폴딩 미영속화, Gateway 자동 재개(auto-resume)·크래시 복구·재시작 전 reset-failed·중복 응답 방지·모노토닉 데드라인·QR 온보딩, Secret redaction 기본 활성화·credential/MCP OAuth TOCTOU 봉쇄, Discord 역할 스코핑(CVSS 8.1)·메시지 삭제·DM role-auth, Auth 크리덴셜 401 쿨다운 단축·파일락 중복 제거·Nous 리프레시 토큰 동기화·Spotify 로그아웃 모델 설정 유지, Docker 루트 실행 거부·node_modules 소유권·update config 마이그레이션·CLI 도움말 대시보드 추가, Telegram forum 스레드·이미지 문서 라우팅, OAuth monotonic deadlines, optional-skills Anthropic 금융 스킬 번들, image-routing MIME 감지·멀티모달 경로 노출, TUI 빈 final_response 시 백엔드 에러 표시·스크롤백 리셋 루프 방지, Weixin aiohttp→asyncio.wait_for·긴 줄 래핑, Windows 터미널 drain·CWD 경로 변환, Matrix 리액션 정리 지연, GitHub Copilot max_completion_tokens·DashScope China 재시도·비전 라우팅, analytics Claude 4.5–4.7 가격 등",
     category: "Agent / ACP / Gateway / Security",
