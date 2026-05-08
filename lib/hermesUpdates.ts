@@ -181,11 +181,26 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-08",
-    title: "Computer-Use / Teams Pipeline / TUI / Profiles: CUA 드라이버 백엔드·범용 any-model 스키마·백그라운드 포커스 안전 백엔드(set_value·구조화 윈도우·MIME 감지)·비Anthropic 멀티모달 툴 결과 언래핑·이미지 거절 폴백 강화·사이드바 내비게이션, Teams 파이프라인 플러그인 런타임·Operator CLI·기존 어댑터 아웃바운드 딜리버리·드롭 스케줄러 폴백·딜리버리 URL 보완·미팅 요약 문서, TUI 기존 게이트웨이 attach, 프로필 배포 전체 사용자 가이드",
+    title: "Computer-Use / Teams Pipeline / TUI / Profiles: CUA 드라이버 백엔드·범용 any-model 스키마·백그라운드 포커스 안전 백엔드(set_value·구조화 윈도우·MIME 감지)·비Anthropic 멀티모달 툴 결과 언래핑·이미지 거절 폴백 강화·사이드바 내비게이션, Teams 파이프라인 플러그인 런타임·Operator CLI·기존 어댑터 아웃바운드 딜리버리·드롭 스케줄러 폴백·딜리버리 URL 보완·미팅 요약 문서·cron 갱신 레시피·사이드바 연결·스킬 재작성·스킬 에셋 추가·비동기 테스트 환경 수정·미팅 설정 문서 분리, TUI 기존 게이트웨이 attach, 프로필 배포 전체 사용자 가이드",
     category: "Computer-Use / Teams / TUI / Profiles",
     summary:
-      "Computer-Use(컴퓨터 사용) 기능이 대폭 확장됩니다. CUA(Computer-Use Agent) 드라이버 백엔드와 범용 any-model 스키마가 추가되어 다양한 모델에서 컴퓨터 사용이 가능해집니다. 백그라운드에서도 안전하게 동작하는 포커스-세이프(focus-safe) 백엔드가 도입되어 set_value, 구조화된 윈도우(structured windows), MIME 감지(detection)를 지원합니다. Anthropic 외 다른 프로바이더(non-Anthropic providers)에서 멀티모달 툴 결과를 content list로 올바르게 언래핑(unwrap)합니다. 이미지 거절 폴백(image-rejection fallback)을 강화(harden)하고 AUTHOR_MAP을 정리합니다. Computer-Use 문서가 사이드바 내비게이션의 Media and Web 섹션에 추가됩니다.\\n\\nMicrosoft Teams 파이프라인 기능이 새롭게 추가됩니다. Teams 파이프라인 플러그인 런타임(runtime)과 Operator CLI가 추가되어 파이프라인을 구성하고 관리할 수 있습니다. 기존 어댑터를 통한 아웃바운드 딜리버리(outbound delivery)가 추가되고, 드롭 스케줄러 폴백(drop-scheduler fallback) 및 enablement gate 테스트 와이어링이 보완됩니다. 중복 delivery-mode 분기를 제거(refactor)하고, 어댑터 재사용 테스트에서 누락된 딜리버리 URL을 보완합니다. Teams 미팅 요약(meeting summary) 딜리버리 섹션과 환경 변수 참조 문서가 추가됩니다.\\n\\nTUI에서 `hermes tui --attach`로 기존에 실행 중인 게이트웨이(gateway)에 연결(attach)할 수 있는 기능이 추가됩니다. 프로필 배포(profile distributions)에 대한 전체 사용자 가이드가 문서화됩니다 (main branch 기준).",
+      "Computer-Use(컴퓨터 사용) 기능이 대폭 확장됩니다. CUA(Computer-Use Agent) 드라이버 백엔드와 범용 any-model 스키마가 추가되어 다양한 모델에서 컴퓨터 사용이 가능해집니다. 백그라운드에서도 안전하게 동작하는 포커스-세이프(focus-safe) 백엔드가 도입되어 set_value, 구조화된 윈도우(structured windows), MIME 감지(detection)를 지원합니다. Anthropic 외 다른 프로바이더(non-Anthropic providers)에서 멀티모달 툴 결과를 content list로 올바르게 언래핑(unwrap)합니다. 이미지 거절 폴백(image-rejection fallback)을 강화(harden)하고 AUTHOR_MAP을 정리합니다. Computer-Use 문서가 사이드바 내비게이션의 Media and Web 섹션에 추가됩니다.\\\\n\\\\nMicrosoft Teams 파이프라인 기능이 새롭게 추가됩니다. Teams 파이프라인 플러그인 런타임(runtime)과 Operator CLI가 추가되어 파이프라인을 구성하고 관리할 수 있습니다. 기존 어댑터를 통한 아웃바운드 딜리버리(outbound delivery)가 추가되고, 드롭 스케줄러 폴백(drop-scheduler fallback) 및 enablement gate 테스트 와이어링이 보완됩니다. 중복 delivery-mode 분기를 제거(refactor)하고, 어댑터 재사용 테스트에서 누락된 딜리버리 URL을 보완합니다. Teams 미팅 요약(meeting summary) 딜리버리 섹션과 환경 변수 참조 문서가 추가됩니다. Teams Pipeline cron 갱신(cron renewal) 레시피 문서와 사이드바 연결(sidebar wiring), 스킬 재작성(skill rewrite)이 추가되고, 스킬 에셋(skill asset)이 추가되며 비동기 테스트 환경(async test env)이 수정됩니다. Teams 미팅 설정(meetings setup) 문서가 Operator 런북(runbook)에서 분리되어 독립적인 문서로 정리됩니다.\\\\n\\\\nTUI에서 `hermes tui --attach`로 기존에 실행 중인 게이트웨이(gateway)에 연결(attach)할 수 있는 기능이 추가됩니다. 프로필 배포(profile distributions)에 대한 전체 사용자 가이드가 문서화됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "242da9d",
+        message: "docs(teams-pipeline): cron renewal recipe, sidebar wiring, skill rewrite",
+        href: "https://github.com/NousResearch/hermes-agent/commit/242da9db965ca5618995c5ff92659171f7aae629",
+      },
+      {
+        sha: "729a659",
+        message: "fix(teams-pipeline): add skill asset and fix async test env",
+        href: "https://github.com/NousResearch/hermes-agent/commit/729a659a3c8a949dc9c3b6a2ffe1ae3a49f33bd7",
+      },
+      {
+        sha: "b79ef88",
+        message: "docs(teams): split meetings setup from operator runbook",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b79ef8827fdcbe46064ea0ea5fd9b7dc2b1cba54",
+      },
       {
         sha: "850413f",
         message: "feat(computer-use): cua-driver backend, universal any-model schema",
