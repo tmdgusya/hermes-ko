@@ -16,6 +16,25 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-09",
+    title: "Gateway 안정성: restart TimeoutExpired 예외도 함께 catch·stop 시 adapter disconnect cap",
+    category: "Gateway / State",
+    summary:
+      "Gateway 재시작(restart) 시 TimeoutExpired 예외도 함께 catch하여 친절한(friendly) 메시지를 출력합니다. 이전에는 일부 타임아웃 예외가 처리되지 않아 불완전한 에러 메시지가 표시될 수 있었습니다 (#78b0008). Gateway 정지(stop) 시 adapter 연결 해제(disconnect)에 상한(cap)을 두어, 정지 과정에서 adapter가 과도하게 연결 해제를 시도하지 않도록 제한합니다 (#dccf1fb) (main branch 기준).",
+    commits: [
+      {
+        sha: "78b0008",
+        message: "fix(gateway): also catch restart TimeoutExpired; friendly message",
+        href: "https://github.com/NousResearch/hermes-agent/commit/78b0008f4451c4b3047107926e466dcfc257ae3e",
+      },
+      {
+        sha: "dccf1fb",
+        message: "fix(gateway): cap adapter disconnect during stop",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dccf1fb6e0eacca33a3c46f44bccde35f9fa2880",
+      },
+    ],
+  },
+  {
     date: "2026-05-08 ~ 2026-05-09",
     title: "CLI 성능 최적화 / Agent 안정성 / Termux / Windows: CLI 콜드스타트 ~19초 단축(skills cache·lazy Feishu·no Nous HTTP)·플러그인 탐색 건너뛰기·Shift+Enter 개행 인식, TUI /quit 동작 CLI 정렬, Termux 업데이트 경로 강화(uv bootstrap·env guard), update systemd RestartSec 우회(graceful drain 후), Ctrl+Enter Windows Terminal 문서화·Windows 네이티브 early beta 표기",
     category: "CLI / Agent / Windows",
