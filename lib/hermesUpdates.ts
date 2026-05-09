@@ -16,6 +16,114 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-08 ~ 2026-05-09",
+    title: "CLI 성능 최적화 / Agent 안정성 / Termux / Windows: CLI 콜드스타트 ~19초 단축(skills cache·lazy Feishu·no Nous HTTP)·플러그인 탐색 건너뛰기·Shift+Enter 개행 인식, TUI /quit 동작 CLI 정렬, Termux 업데이트 경로 강화(uv bootstrap·env guard), update systemd RestartSec 우회(graceful drain 후), Ctrl+Enter Windows Terminal 문서화·Windows 네이티브 early beta 표기",
+    category: "CLI / Agent / Windows",
+    summary:
+      "CLI 콜드스타트(cold start) 시간을 약 19초 단축합니다. 스킬 캐시(skills cache) 활용, Feishu 지연 로딩(lazy import), Nous HTTP 체크 제거로 초기 구동 속도를 대폭 개선합니다 (#22138). 기본 제공 서브커맨드(subcommand)에서 즉시(eager) 플러그인 탐색(plugin discovery)을 건너뛰어 CLI 실행 속도를 추가로 개선합니다 (#22120). CLI에서 Shift+Enter를 개행(newline) 키로 인식하여 여러 줄 입력이 더 편리해집니다. Windows Terminal 사용자를 위한 Ctrl+Enter 개행 방법을 CLI 문서에 명시합니다.\n\nTUI의 /quit 동작이 CLI 종료 흐름(exit flow)과 일관되게 정렬(align)됩니다. Termux 환경에서 uv 부트스트랩(bootstrap)과 환경 가드(env guard)를 통해 업데이트 경로가 강화(harden)됩니다. 업데이트에서 graceful drain 이후 systemd RestartSec을 우회(bypass)하여 불필요한 지연을 제거합니다 (#22101). Windows 네이티브 지원이 early beta 단계임을 문서에 명시합니다 (#22115) (main branch 기준).",
+    commits: [
+      {
+        sha: "0ec052c",
+        message: "perf(cli): cut ~19s from 'hermes' cold start (skills cache + lazy Feishu + no Nous HTTP) (#22138)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0ec052ca24476379b0004af800d049abde17323d",
+      },
+      {
+        sha: "5089596",
+        message: "perf(cli): skip eager plugin discovery on known built-in subcommands (#22120)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5089596685826ef2f63214f2fd184da88cc4cdb7",
+      },
+      {
+        sha: "f5b635f",
+        message: "feat(cli): recognise Shift+Enter as a newline key",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f5b635f6ab6d81499d8940f7ab650b6e11956272",
+      },
+      {
+        sha: "d606df8",
+        message: "docs(cli): call out Ctrl+Enter for Windows Terminal users",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d606df81263dcd4a791f438031f08f3b5bd639e3",
+      },
+      {
+        sha: "6f7b698",
+        message: "fix: keep tui /quit behavior aligned with cli exit flow",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f7b698a08bce285a8104d05b298d706e360fc14",
+      },
+      {
+        sha: "7c174e6",
+        message: "fix: harden termux update path with uv bootstrap and env guard",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7c174e65f749dd166c71eda497b05bffe271cec2",
+      },
+      {
+        sha: "d971b26",
+        message: "fix(update): bypass systemd RestartSec after graceful drain (#22101)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d971b26bfd8305285cac1f47c84cceef67624701",
+      },
+      {
+        sha: "7a4d5c1",
+        message: "docs(windows): label native Windows support as early beta (#22115)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7a4d5c123a29e60dec647977572116bad2036a13",
+      },
+    ],
+  },
+  {
+    date: "2026-05-08 ~ 2026-05-09",
+    title: "CI / Docker / Patch Tool / 통합(Slack·Google Chat) / Release: Docker 빌드 PR·arm64 smoke test·uv.lock 블로킹 체크·의존성 레이어 캐싱·per-arch 네이티브 러너, patch-tool 스키마 문서화·테스트 통합, Slack 앱 홈 DM 쓰기 활성화, Google Chat 설정 프롬프트 임포트 복구, AUTHOR_MAP 정리",
+    category: "CI / Docker / Tools / Integrations",
+    summary:
+      "CI 인프라가 강화됩니다. PR에서 Docker 빌드를 실행하고 arm64 smoke test를 수행합니다. uv.lock 체크를 블로킹(blocking) CI job으로 추가하여 의존성 일관성을 검증합니다. uv.lock을 최신 상태로 업데이트합니다. Docker 빌드에서 Python 의존성 설치를 `COPY . .` 위쪽의 캐시된 레이어(cached layer)로 분리하여 빌드 속도를 개선합니다. docker-publish를 아키텍처별 네이티브 러너(per-arch native runner)로 분할하여 멀티아키텍처 빌드를 효율화합니다.\n\npatch-tool에서 모드별 필수 파라미터를 스키마 설명(schema descriptions)에 명시하여 LLM이 올바른 인자를 전달하도록 개선합니다. 9개의 schema-shape 테스트를 2개의 불변성(invariant) 테스트로 통합(collapse)하여 테스트 유지보수성을 높입니다.\n\nSlack에서 앱 홈(home) DM 쓰기를 활성화(enable writable)하여 매니페스트(manifest) 기반 설정을 보완합니다. Google Chat의 설정 프롬프트 임포트(setup prompt imports)가 깨져 있던 것을 복구합니다. 릴리스 관리 측면에서 salvaged PR #20503의 기여자(dandacompany)를 AUTHOR_MAP에 추가합니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "93679ef",
+        message: "ci: run docker build on PRs + smoke test arm64",
+        href: "https://github.com/NousResearch/hermes-agent/commit/93679ef27d74d7d8430b603acb9d0bdc3b1e7607",
+      },
+      {
+        sha: "758c401",
+        message: "ci: add blocking uv.lock check",
+        href: "https://github.com/NousResearch/hermes-agent/commit/758c40135f0f0929ba2ed0a432c8801debe6f056",
+      },
+      {
+        sha: "0a51863",
+        message: "fix(ci): update uv.lock",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0a51863f5bb8c8f0393062515c7491fed5650377",
+      },
+      {
+        sha: "afc186f",
+        message: "docker: split python dep install into cached layer above COPY . .",
+        href: "https://github.com/NousResearch/hermes-agent/commit/afc186fa4eed44e0d5e4c5a5f1d2b3b8ac8f0f13",
+      },
+      {
+        sha: "bf80508",
+        message: "ci: split docker-publish into per-arch native runners",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bf80508d65665b91aba43919c9d11efaba5a1e2e",
+      },
+      {
+        sha: "3adcc64",
+        message: "fix(patch-tool): advertise per-mode required params in schema descriptions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3adcc6441916c40f0c5135e65194ff9642c99f29",
+      },
+      {
+        sha: "8e4f3ba",
+        message: "test(patch-tool): collapse 9 schema-shape tests into 2 invariants",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8e4f3ba4da5337e1ad674a876ac4fb8490f0b79c",
+      },
+      {
+        sha: "24d3216",
+        message: "fix(slack): enable writable app home DMs in manifest",
+        href: "https://github.com/NousResearch/hermes-agent/commit/24d3216175cdcac5e1f8e4747db1892f7e3cee0a",
+      },
+      {
+        sha: "cacb984",
+        message: "fix(google-chat): repair setup prompt imports",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cacb98473222b8cd18b3a5937cc2b9e8d2f522ab",
+      },
+      {
+        sha: "524cbab",
+        message: "chore(release): add dandacompany to AUTHOR_MAP for salvaged PR #20503",
+        href: "https://github.com/NousResearch/hermes-agent/commit/524cbabd89811ce388bf51e997c6f6d3fd3ce4e2",
+      },
+    ],
+  },
+  {
     date: "2026-05-08",
     title: "Windows / 크로스플랫폼 / 스킬 플랫폼 / 인코딩: Windows 네이티브 설치·제거·Scheduled Task 게이트웨이·UTF-8 stdio·POSIX 호환성·브라우저·Playwright·PortableGit·npm.cmd·EDITOR 설정, 크로스플랫폼 psutil PID 관리·Windows footgun 진단, 스킬 platforms 프론트매터 142종 선언·Windows 스킬 게이트, PLW1514 인코딩 lint·시스템 프롬프트 환경 힌트·Ctrl+Enter 개행·Windows Quirks 문서·auth.json 공유 경로·Profiles UTF-8",
     category: "Windows / Cross-platform / Skills",
