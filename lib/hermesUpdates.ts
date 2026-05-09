@@ -36,10 +36,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-08 ~ 2026-05-09",
-    title: "CLI 성능 최적화 / Agent 안정성 / Termux / Windows: CLI 콜드스타트 ~19초 단축(skills cache·lazy Feishu·no Nous HTTP)·플러그인 탐색 건너뛰기·Shift+Enter 개행 인식, TUI /quit 동작 CLI 정렬, Termux 업데이트 경로 강화(uv bootstrap·env guard), update systemd RestartSec 우회(graceful drain 후), Ctrl+Enter Windows Terminal 문서화·Windows 네이티브 early beta 표기",
+    title: "CLI 성능 최적화 / Agent 안정성 / TUI / Termux / Windows: CLI 콜드스타트 ~19초 단축(skills cache·lazy Feishu·no Nous HTTP)·플러그인 탐색 건너뛰기·Shift+Enter 개행 인식, TUI /quit 동작 CLI 정렬·마크다운 래핑 공백 정리, Termux 업데이트 경로 강화(uv bootstrap·env guard), update systemd RestartSec 우회(graceful drain 후), Ctrl+Enter Windows Terminal 문서화·Windows 네이티브 early beta 표기",
     category: "CLI / Agent / Windows",
     summary:
-      "CLI 콜드스타트(cold start) 시간을 약 19초 단축합니다. 스킬 캐시(skills cache) 활용, Feishu 지연 로딩(lazy import), Nous HTTP 체크 제거로 초기 구동 속도를 대폭 개선합니다 (#22138). 기본 제공 서브커맨드(subcommand)에서 즉시(eager) 플러그인 탐색(plugin discovery)을 건너뛰어 CLI 실행 속도를 추가로 개선합니다 (#22120). CLI에서 Shift+Enter를 개행(newline) 키로 인식하여 여러 줄 입력이 더 편리해집니다. Windows Terminal 사용자를 위한 Ctrl+Enter 개행 방법을 CLI 문서에 명시합니다.\n\nTUI의 /quit 동작이 CLI 종료 흐름(exit flow)과 일관되게 정렬(align)됩니다. Termux 환경에서 uv 부트스트랩(bootstrap)과 환경 가드(env guard)를 통해 업데이트 경로가 강화(harden)됩니다. 업데이트에서 graceful drain 이후 systemd RestartSec을 우회(bypass)하여 불필요한 지연을 제거합니다 (#22101). Windows 네이티브 지원이 early beta 단계임을 문서에 명시합니다 (#22115) (main branch 기준).",
+      "CLI 콜드스타트(cold start) 시간을 약 19초 단축합니다. 스킬 캐시(skills cache) 활용, Feishu 지연 로딩(lazy import), Nous HTTP 체크 제거로 초기 구동 속도를 대폭 개선합니다 (#22138). 기본 제공 서브커맨드(subcommand)에서 즉시(eager) 플러그인 탐색(plugin discovery)을 건너뛰어 CLI 실행 속도를 추가로 개선합니다 (#22120). CLI에서 Shift+Enter를 개행(newline) 키로 인식하여 여러 줄 입력이 더 편리해집니다. Windows Terminal 사용자를 위한 Ctrl+Enter 개행 방법을 CLI 문서에 명시합니다.\n\nTUI에서 /quit 동작이 CLI 종료 흐름(exit flow)과 일관되게 정렬(align)되고, 마크다운 래핑(wrap) 시 발생하는 불필요한 공백을 정리(trim)하여 렌더링을 개선합니다 (#22062). Termux 환경에서 uv 부트스트랩(bootstrap)과 환경 가드(env guard)를 통해 업데이트 경로가 강화(harden)됩니다. 업데이트에서 graceful drain 이후 systemd RestartSec을 우회(bypass)하여 불필요한 지연을 제거합니다 (#22101). Windows 네이티브 지원이 early beta 단계임을 문서에 명시합니다 (#22115) (main branch 기준).",
     commits: [
       {
         sha: "0ec052c",
@@ -65,6 +65,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "6f7b698",
         message: "fix: keep tui /quit behavior aligned with cli exit flow",
         href: "https://github.com/NousResearch/hermes-agent/commit/6f7b698a08bce285a8104d05b298d706e360fc14",
+      },
+      {
+        sha: "a7e7921",
+        message: "fix(tui): trim markdown wrap spaces (#22062)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a7e7921dbc0a593027f40b571861f50a71221aec",
       },
       {
         sha: "7c174e6",
