@@ -17,6 +17,40 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-11",
+    title: "Skills / Telegram / Nix / Deps: Stocks & Finance 스킬 추가, Telegram 캐던스 튜닝, Nix sealed venv extras, Docker extra args·타임스탬프",
+    category: "Skills / Telegram / Nix",
+    summary:
+      "Yahoo Finance 기반 Stocks & Finance 스킬이 추가됩니다 (#896a7ce). Telegram 게이트웨이의 캐던스(cadence)를 튜닝하고 짧은 응답에 대한 적응형 빠른 경로(adaptive fast-path)가 추가됩니다 (#ac95b8c). Nix에서 sealed venv의 extra dependency groups를 지원합니다 (#5606258). Nix 컨테이너 진입점에서 chown -R을 타겟팅된 find로 교체합니다 (#64145a1). CLI/터미널에 docker_extra_args와 display.timestamps 옵션이 추가됩니다 (#ebf2ea5) (main branch 기준).",
+    commits: [
+      {
+        sha: "896a7ce",
+        message: "feat: add stocks & finance skill (Yahoo Finance, no API key)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/896a7ce261f8fc6dc427550becb5d661f1040457",
+      },
+      {
+        sha: "ac95b8c",
+        message: "perf(gateway): tune Telegram cadence + adaptive fast-path for short replies",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ac95b8cdbec1748d1255cee8bb39aa5f92254864",
+      },
+      {
+        sha: "5606258",
+        message: "feat(nix): add extraDependencyGroups for sealed venv extras (#21817)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5606258855f7937659527ffffca9d9d7ef6fadc5",
+      },
+      {
+        sha: "64145a1",
+        message: "fix(nix): replace chown -R with targeted find in container entrypoint (#23633)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/64145a1996554e4e81b694e9737421f34f44e212",
+      },
+      {
+        sha: "ebf2ea5",
+        message: "feat(terminal,cli): docker_extra_args + display.timestamps",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ebf2ea584ab2ca37cd70b80b4d8c3bc23604cf47",
+      },
+    ],
+  },
+  {
+    date: "2026-05-11",
     title: "CLI / TUI / Agent Tools: HERMES_SESSION_ID 노출, Claude 세션 간 프리픽스 캐시, CJK 마크다운 테이블 정렬, Nous Portal 모델 카탈로그, TUI 슬래시 확인 모달",
     category: "CLI / TUI / Agent Tools",
     summary:
@@ -119,10 +153,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "Kanban / Multi-agent: 아카이브 태스크 의존성 해제·반복 예산 프로토콜 위반 방지·게이트웨이 자동 구독 라우팅·워커 send_message 허용·워커 환경변수 주입·슬래시 오버라이드 복원",
+    title: "Kanban / Multi-agent / Dashboard: 아카이브 태스크 의존성 해제, 반복 예산 프로토콜 위반 방지, stranded 진단, 대시보드 배치 QOL, 워커 send_message 허용",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리하여 정확한 의존성 그래프를 유지합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 게이트웨이 생성 시 자동 구독(auto-subscribe)을 명시적 보드로 라우팅합니다 (#f6d4f3c). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c). 워커 서브프로세스 환경에 HERMES_HOME을 주입합니다 (#5af315c). 범위 지정된 슬래시 오버라이드 후 HERMES_KANBAN_BOARD를 복원합니다 (#641e40c) (main branch 기준).",
+      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 미확인(unclaimed) 태스크를 진단하는 stranded_in_ready 기능이 추가됩니다 (#3b122cc). 대시보드에 i18n, 접기(collapse), 담당자 대소문자(assignee-casing) 처리를 포함한 배치 QOL 개선이 병합됩니다 (#b8bf2f8). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c) (main branch 기준).",
     commits: [
       {
         sha: "a1854ac",
@@ -135,35 +169,6 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/2b3bf17dfa7f75c05174198f80457e6f483d2131",
       },
       {
-        sha: "f6d4f3c",
-        message: "fix(kanban): route gateway create auto-subscribe to explicit board",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f6d4f3c37daddc88040dd44d68399400ac12df29",
-      },
-      {
-        sha: "8ac998c",
-        message: "fix(send_message): allow kanban workers to call send_message",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ac998cb0caba8dbc382ecf6af1b17c5ecad6ad0",
-      },
-      {
-        sha: "5af315c",
-        message: "fix(kanban): inject HERMES_HOME into worker subprocess env",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5af315c4cc833e20d7306053cbee295b3f0639af",
-      },
-      {
-        sha: "641e40c",
-        message: "fix(kanban): restore HERMES_KANBAN_BOARD after scoped slash override",
-        href: "https://github.com/NousResearch/hermes-agent/commit/641e40c4bd8eb3f7db995cf3181ad9e81483f13f",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Kanban 대시보드 UI: stranded 진단·배치 QOL(i18n·접기·대소문자)·shift-click 범위 선택·현지화 열 라벨",
-    category: "Kanban / Dashboard",
-    summary:
-      "Kanban에 미확인(unclaimed) 태스크를 진단하는 stranded_in_ready 기능이 추가됩니다 (#3b122cc). 대시보드에 i18n, 접기(collapse), 담당자 대소문자(assignee-casing) 처리를 포함한 배치 QOL 개선이 병합됩니다 (#b8bf2f8). 대시보드에서 shift-click 범위 선택, 컬럼 전체 선택 토글, 일괄 작업 낙관적 UI(optimistic UI)가 수정됩니다 (#3df7e30). select-all ARIA 라벨에 현지화(localized)된 열 라벨을 사용합니다 (#27cfe72) (main branch 기준).",
-    commits: [
-      {
         sha: "3b122cc",
         message: "feat(kanban): stranded_in_ready diagnostic for unclaimed tasks (#23578)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3b122cc1ac3ae91e690ec8b29e54af10e52fdb18",
@@ -174,14 +179,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/b8bf2f817d7cdde1980d0940fa0b4bc90fdfddcb",
       },
       {
-        sha: "3df7e30",
-        message: "kanban dashboard: fix shift-click range selection, column select-all toggle, and bulk action optimistic UI",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3df7e30244c0311d63d4ef45128cb0692e185b5b",
-      },
-      {
-        sha: "27cfe72",
-        message: "fix(kanban): use localized column label in select-all aria label",
-        href: "https://github.com/NousResearch/hermes-agent/commit/27cfe725431346e8cbac141a8b91bedba0121f4a",
+        sha: "8ac998c",
+        message: "fix(send_message): allow kanban workers to call send_message",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ac998cb0caba8dbc382ecf6af1b17c5ecad6ad0",
       },
     ],
   },
