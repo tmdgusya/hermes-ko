@@ -90,10 +90,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "CLI / TUI / Agent Tools: HERMES_SESSION_ID 노출, Claude 세션 간 프리픽스 캐시, CJK 마크다운 테이블 정렬, Nous Portal 모델 카탈로그, TUI 슬래시 확인 모달",
+    title: "CLI / TUI / Agent Tools: HERMES_SESSION_ID 노출, Claude 세션 간 프리픽스 캐시, CJK 마크다운 테이블 정렬, Nous Portal 모델 카탈로그, TUI 슬래시 확인 모달, 마크다운 링크 페이지 제목 해석, TUI 빌드 로직 단순화",
     category: "CLI / TUI / Agent Tools",
     summary:
-      "에이전트 도구에서 HERMES_SESSION_ID를 ContextVar와 환경 변수로 노출합니다 (#2718834). Anthropic·OpenRouter·Nous Portal에서 Claude에 대한 세션 간(cross-session) 1시간 프리픽스 캐시가 추가됩니다 (#7b76366). CLI/TUI에서 CJK 및 와이드 문자 마크다운 테이블 정렬이 수정됩니다 (#1d00716). /model 명령에서 Nous Portal 원격 카탈로그 매니페스트의 모델을 표시합니다 (#8e2eb4b). 슬래시 명령 확인(confirm)에 TUI 모달을 사용합니다 (#054f568) (main branch 기준).",
+      "에이전트 도구에서 HERMES_SESSION_ID를 ContextVar와 환경 변수로 노출합니다 (#2718834). Anthropic·OpenRouter·Nous Portal에서 Claude에 대한 세션 간(cross-session) 1시간 프리픽스 캐시가 추가됩니다 (#7b76366). CLI/TUI에서 CJK 및 와이드 문자 마크다운 테이블 정렬이 수정됩니다 (#1d00716). /model 명령에서 Nous Portal 원격 카탈로그 매니페스트의 모델을 표시합니다 (#8e2eb4b). 슬래시 명령 확인(confirm)에 TUI 모달을 사용합니다 (#054f568). 마크다운 링크를 읽기 쉬운 페이지 제목으로 해석합니다 (#75b428c). TUI 빌드 로직을 단순화하고 오래된(stale) 상태 확인을 제거합니다 (#c6ca116) (main branch 기준).",
     commits: [
       {
         sha: "2718834",
@@ -119,6 +119,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "054f568",
         message: "fix: use TUI modal for slash confirmations",
         href: "https://github.com/NousResearch/hermes-agent/commit/054f56857842a25b8ef5f627c7c951de28eee52a",
+      },
+      {
+        sha: "75b428c",
+        message: "feat(ui-tui): resolve markdown links to readable page titles (#24013)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/75b428c8521d7676991c93b9ecd66eb12c6469b6",
+      },
+      {
+        sha: "c6ca116",
+        message: "refactor(tui): simplify TUI build logic, remove stale staleness checks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c6ca11618a87c6b12e9a4025d339eb905a03ac8c",
       },
     ],
   },
