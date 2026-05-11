@@ -17,15 +17,49 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-11",
-    title: "Skills / Telegram / Nix / Deps: Stocks & Finance 스킬 추가, Telegram 캐던스 튜닝, Nix sealed venv extras, Docker extra args·타임스탬프",
+    title: "Model / Provider Metadata: kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드",
+    category: "Model / Provider",
+    summary:
+      "OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). 모델 카탈로그가 리빌드됩니다 (#e155f2a) (main branch 기준).",
+    commits: [
+      {
+        sha: "e2b713c",
+        message: "fix(model-metadata): skip OpenRouter for known providers, add kimi/moonshot to PROVIDER_TO_MODELS_DEV",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2b713cced07076ccb751e28b30d235fede1fa59",
+      },
+      {
+        sha: "91eef62",
+        message: "fix: correct context-length resolution for kimi-k2.6 on Ollama Cloud and Kimi Coding",
+        href: "https://github.com/NousResearch/hermes-agent/commit/91eef6255e39e0be7b0730aabf6ad2ea49eefe77",
+      },
+      {
+        sha: "e155f2a",
+        message: "rebuild model catalog",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e155f2aca9dc9135141d37d3aade060a9a02e470",
+      },
+    ],
+  },
+  {
+    date: "2026-05-11",
+    title: "Skills / Telegram / Nix / Deps: Stocks & Finance 스킬 추가·리로케이션, Telegram 캐던스 튜닝, Nix sealed venv extras, Docker extra args·타임스탬프, hindsight-client 옵셔널 디펜던시",
     category: "Skills / Telegram / Nix",
     summary:
-      "Yahoo Finance 기반 Stocks & Finance 스킬이 추가됩니다 (#896a7ce). Telegram 게이트웨이의 캐던스(cadence)를 튜닝하고 짧은 응답에 대한 적응형 빠른 경로(adaptive fast-path)가 추가됩니다 (#ac95b8c). Nix에서 sealed venv의 extra dependency groups를 지원합니다 (#5606258). Nix 컨테이너 진입점에서 chown -R을 타겟팅된 find로 교체합니다 (#64145a1). CLI/터미널에 docker_extra_args와 display.timestamps 옵션이 추가됩니다 (#ebf2ea5) (main branch 기준).",
+      "Yahoo Finance 기반 Stocks & Finance 스킬이 추가됩니다 (#896a7ce). 스킬이 optional-skills/finance/stocks/로 리로케이션되고 SKILL.md가 최신 포맷으로 정비됩니다 (#2ea957f, #9526040). Telegram 게이트웨이의 캐던스(cadence)를 튜닝하고 짧은 응답에 대한 적응형 빠른 경로(adaptive fast-path)가 추가됩니다 (#ac95b8c). Nix에서 sealed venv의 extra dependency groups를 지원합니다 (#5606258). Nix 컨테이너 진입점에서 chown -R을 타겟팅된 find로 교체합니다 (#64145a1). CLI/터미널에 docker_extra_args와 display.timestamps 옵션이 추가됩니다 (#ebf2ea5). hindsight-client가 옵셔널 디펜던시로 추가됩니다 (#d992fd9) (main branch 기준).",
     commits: [
       {
         sha: "896a7ce",
         message: "feat: add stocks & finance skill (Yahoo Finance, no API key)",
         href: "https://github.com/NousResearch/hermes-agent/commit/896a7ce261f8fc6dc427550becb5d661f1040457",
+      },
+      {
+        sha: "2ea957f",
+        message: "chore(skills/stocks): relocate to optional-skills/finance/stocks/",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2ea957fc41f47fb6db177cb077e18722b17ef0d0",
+      },
+      {
+        sha: "9526040",
+        message: "chore(skills/stocks): tighten SKILL.md to modern format",
+        href: "https://github.com/NousResearch/hermes-agent/commit/95260407002819d98962c6f4859eae22bd2caa52",
       },
       {
         sha: "ac95b8c",
@@ -46,6 +80,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "ebf2ea5",
         message: "feat(terminal,cli): docker_extra_args + display.timestamps",
         href: "https://github.com/NousResearch/hermes-agent/commit/ebf2ea584ab2ca37cd70b80b4d8c3bc23604cf47",
+      },
+      {
+        sha: "d992fd9",
+        message: "feat(deps): add hindsight-client as optional dependency (#21818)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d992fd9aaf9fdb3a3f6f4ab449581da77da81e72",
       },
     ],
   },
@@ -85,10 +124,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "Provider / Gateway / Integrations 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근",
-    category: "Provider / Gateway 안정성",
+    title: "Provider / Gateway / Agent 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근, Dashboard 빌드·dist 검증, Windows 디코딩, Codex data-URL, /goal 롤백",
+    category: "Provider / Gateway / Agent 안정성",
     summary:
-      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788) (main branch 기준).",
+      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788). Dashboard 빌드에서 --skip-build 설정 시 dist 존재 여부를 검증합니다 (#283381b). 빌드 실패 시 오래된(stale) dist로 폴백하고 재시도하며 --skip-build 플래그를 추가합니다 (#7085f4e). Windows에서 웹 UI 빌드 출력 디코딩을 견고하게 만듭니다 (#a479ec0). ChatGPT 계정의 Codex에서 data-URL이 거부되는 경우 이미지를 압축 대신 제거(strip)하도록 catch합니다 (#7026af4). /goal 체크리스트 및 /subgoal 기능 스택이 롤백(revert)됩니다 (#3e7145e) (main branch 기준).",
     commits: [
       {
         sha: "111b859",
@@ -114,6 +153,31 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "cc9e788",
         message: "fix(cli): defensive _slash_confirm_state access + AUTHOR_MAP",
         href: "https://github.com/NousResearch/hermes-agent/commit/cc9e788c14188bb9691237472d1c8c5bcf929eeb",
+      },
+      {
+        sha: "283381b",
+        message: "fix(dashboard): validate dist exists when --skip-build is set",
+        href: "https://github.com/NousResearch/hermes-agent/commit/283381b1ce9dd8d69aaba88639d50d1f825c2121",
+      },
+      {
+        sha: "7085f4e",
+        message: "fix(dashboard): fallback to stale dist, retry build, add --skip-build flag",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7085f4e238508b94c9bf034c3d9bc268a49d8228",
+      },
+      {
+        sha: "a479ec0",
+        message: "fix: make web UI build output decoding robust on Windows",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a479ec01ed73ed43d8649f88781e433aedd980a0",
+      },
+      {
+        sha: "7026af4",
+        message: "fix(agent): catch ChatGPT-account Codex data-URL rejection so images are stripped instead of cascading to compression (#23602)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7026af4e23030a1c01a388ac60575bbf3b011187",
+      },
+      {
+        sha: "3e7145e",
+        message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
       },
     ],
   },
@@ -153,10 +217,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "Kanban / Multi-agent / Dashboard: 아카이브 태스크 의존성 해제, 반복 예산 프로토콜 위반 방지, stranded 진단, 대시보드 배치 QOL, 워커 send_message 허용",
+    title: "Kanban / Multi-agent / Dashboard: 아카이브 태스크 의존성 해제, 반복 예산 프로토콜 위반 방지, stranded 진단, 대시보드 배치 QOL, 워커 send_message 허용, 로컬라이즈드 컬럼 라벨, HERMES_HOME/HERMES_KANBAN_BOARD 환경 변수, 게이트웨이 auto-subscribe 라우팅",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 미확인(unclaimed) 태스크를 진단하는 stranded_in_ready 기능이 추가됩니다 (#3b122cc). 대시보드에 i18n, 접기(collapse), 담당자 대소문자(assignee-casing) 처리를 포함한 배치 QOL 개선이 병합됩니다 (#b8bf2f8). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c) (main branch 기준).",
+      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 미확인(unclaimed) 태스크를 진단하는 stranded_in_ready 기능이 추가됩니다 (#3b122cc). 대시보드에 i18n, 접기(collapse), 담당자 대소문자(assignee-casing) 처리를 포함한 배치 QOL 개선이 병합됩니다 (#b8bf2f8). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c). select-all aria label에서 로컬라이즈드 컬럼 라벨을 사용합니다 (#27cfe72). 워커 서브프로세스에 HERMES_HOME 환경 변수를 주입합니다 (#5af315c). 스코프드 슬래시 오버라이드 이후 HERMES_KANBAN_BOARD를 복원합니다 (#641e40c). 게이트웨이 create auto-subscribe를 명시적 보드로 라우팅합니다 (#f6d4f3c) (main branch 기준).",
     commits: [
       {
         sha: "a1854ac",
@@ -183,39 +247,25 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(send_message): allow kanban workers to call send_message",
         href: "https://github.com/NousResearch/hermes-agent/commit/8ac998cb0caba8dbc382ecf6af1b17c5ecad6ad0",
       },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Dashboard 빌드 안정성 / Agent / Goals: dist 검증·재시도·skip-build, Windows 빌드 디코딩, Codex data-URL catch, /goal 롤백",
-    category: "Dashboard / Agent",
-    summary:
-      "Dashboard 빌드에서 --skip-build 설정 시 dist 존재 여부를 검증합니다 (#283381b). 빌드 실패 시 오래된(stale) dist로 폴백하고 재시도하며, --skip-build 플래그를 추가합니다 (#7085f4e). Windows에서 웹 UI 빌드 출력 디코딩을 견고하게(robust) 만듭니다 (#a479ec0). ChatGPT 계정의 Codex에서 data-URL이 거부되는 경우 이미지를 압축 대신 제거(strip)하도록 catch합니다 (#7026af4). /goal 체크리스트 및 /subgoal 기능 스택이 롤백(revert)됩니다 (#3e7145e) (main branch 기준).",
-    commits: [
       {
-        sha: "283381b",
-        message: "fix(dashboard): validate dist exists when --skip-build is set",
-        href: "https://github.com/NousResearch/hermes-agent/commit/283381b1ce9dd8d69aaba88639d50d1f825c2121",
+        sha: "27cfe72",
+        message: "fix(kanban): use localized column label in select-all aria label",
+        href: "https://github.com/NousResearch/hermes-agent/commit/27cfe725431346e8cbac141a8b91bedba0121f4a",
       },
       {
-        sha: "7085f4e",
-        message: "fix(dashboard): fallback to stale dist, retry build, add --skip-build flag",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7085f4e238508b94c9bf034c3d9bc268a49d8228",
+        sha: "5af315c",
+        message: "fix(kanban): inject HERMES_HOME into worker subprocess env",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5af315c4cc833e20d7306053cbee295b3f0639af",
       },
       {
-        sha: "a479ec0",
-        message: "fix: make web UI build output decoding robust on Windows",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a479ec01ed73ed43d8649f88781e433aedd980a0",
+        sha: "641e40c",
+        message: "fix(kanban): restore HERMES_KANBAN_BOARD after scoped slash override",
+        href: "https://github.com/NousResearch/hermes-agent/commit/641e40c4bd8eb3f7db995cf3181ad9e81483f13f",
       },
       {
-        sha: "7026af4",
-        message: "fix(agent): catch ChatGPT-account Codex data-URL rejection so images are stripped instead of cascading to compression (#23602)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7026af4e23030a1c01a388ac60575bbf3b011187",
-      },
-      {
-        sha: "3e7145e",
-        message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
+        sha: "f6d4f3c",
+        message: "fix(kanban): route gateway create auto-subscribe to explicit board",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f6d4f3c37daddc88040dd44d68399400ac12df29",
       },
     ],
   },
