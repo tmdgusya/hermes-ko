@@ -10,11 +10,79 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-13";
+export const hermesUpdatesLastChecked = "2026-05-12";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-11",
+    title: "CLI / TUI / Agent Tools: HERMES_SESSION_ID 노출, Claude 세션 간 프리픽스 캐시, CJK 마크다운 테이블 정렬, Nous Portal 모델 카탈로그, TUI 슬래시 확인 모달",
+    category: "CLI / TUI / Agent Tools",
+    summary:
+      "에이전트 도구에서 HERMES_SESSION_ID를 ContextVar와 환경 변수로 노출합니다 (#2718834). Anthropic·OpenRouter·Nous Portal에서 Claude에 대한 세션 간(cross-session) 1시간 프리픽스 캐시가 추가됩니다 (#7b76366). CLI/TUI에서 CJK 및 와이드 문자 마크다운 테이블 정렬이 수정됩니다 (#1d00716). /model 명령에서 Nous Portal 원격 카탈로그 매니페스트의 모델을 표시합니다 (#8e2eb4b). 슬래시 명령 확인(confirm)에 TUI 모달을 사용합니다 (#054f568) (main branch 기준).",
+    commits: [
+      {
+        sha: "2718834",
+        message: "feat: expose HERMES_SESSION_ID to agent tools via ContextVar + env (#23847)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/271883447e7b8a5b9bd95879aca71afadc87616f",
+      },
+      {
+        sha: "7b76366",
+        message: "feat(prompt-cache): cross-session 1h prefix cache for Claude on Anthropic / OpenRouter / Nous Portal (#23828)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7b76366552eb0e2fbdf156c261403202ac064737",
+      },
+      {
+        sha: "1d00716",
+        message: "fix(cli,tui): align CJK / wide-char markdown tables (#23863)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1d007167541ef5405fde620fdcce6dfcd79c0628",
+      },
+      {
+        sha: "8e2eb4b",
+        message: "fix(/model): surface Nous Portal models from remote catalog manifest (#23912)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8e2eb4b511967a0ad776c0c667f6914072e1b7ec",
+      },
+      {
+        sha: "054f568",
+        message: "fix: use TUI modal for slash confirmations",
+        href: "https://github.com/NousResearch/hermes-agent/commit/054f56857842a25b8ef5f627c7c951de28eee52a",
+      },
+    ],
+  },
+  {
+    date: "2026-05-11",
+    title: "Provider / Gateway / Integrations 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근",
+    category: "Provider / Gateway 안정성",
+    summary:
+      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788) (main branch 기준).",
+    commits: [
+      {
+        sha: "111b859",
+        message: "fix(auxiliary): evict async wrappers on poisoned client (follow-up to #23482)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/111b859e49fd7b2abe30c1426ebd74101bb59477",
+      },
+      {
+        sha: "228b7d2",
+        message: "fix(auxiliary): cache 402'd providers as unhealthy with TTL to stop per-call retry storms (#23597)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/228b7d27bdb9b8461b9650137dd3aa2b739879eb",
+      },
+      {
+        sha: "ace1c4e",
+        message: "fix(discord): typing indicator task not cleaned up after API error",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ace1c4ea8ccefd8019e7a6a8378f6197c47636fc",
+      },
+      {
+        sha: "5712483",
+        message: "fix: guard resolve_profile_env against missing profile dirs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/571248348725b840acf0bcde43ffbecbba56fe2d",
+      },
+      {
+        sha: "cc9e788",
+        message: "fix(cli): defensive _slash_confirm_state access + AUTHOR_MAP",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cc9e788c14188bb9691237472d1c8c5bcf929eeb",
+      },
+    ],
+  },
   {
     date: "2026-05-11",
     title: "Security / Config: sudo 권한 상승 탐지·차단, quick command 환경 정제·리덕션, YAML 파싱 경고, 방어적 수정 3건",
@@ -51,10 +119,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "Kanban / Multi-agent: 아카이브 태스크 의존성 해제·반복 예산 프로토콜 위반 방지·게이트웨이 자동 구독 라우팅·워커 send_message 허용·워커 환경변수 주입",
+    title: "Kanban / Multi-agent: 아카이브 태스크 의존성 해제·반복 예산 프로토콜 위반 방지·게이트웨이 자동 구독 라우팅·워커 send_message 허용·워커 환경변수 주입·슬래시 오버라이드 복원",
     category: "Kanban / Multi-agent",
     summary:
-      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리하여 정확한 의존성 그래프를 유지합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 게이트웨이 생성 시 자동 구독(auto-subscribe)을 명시적 보드로 라우팅합니다 (#f6d4f3c). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c). 워커 서브프로세스 환경에 HERMES_HOME을 주입합니다 (#5af315c) (main branch 기준).",
+      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리하여 정확한 의존성 그래프를 유지합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 게이트웨이 생성 시 자동 구독(auto-subscribe)을 명시적 보드로 라우팅합니다 (#f6d4f3c). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c). 워커 서브프로세스 환경에 HERMES_HOME을 주입합니다 (#5af315c). 범위 지정된 슬래시 오버라이드 후 HERMES_KANBAN_BOARD를 복원합니다 (#641e40c) (main branch 기준).",
     commits: [
       {
         sha: "a1854ac",
@@ -80,6 +148,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "5af315c",
         message: "fix(kanban): inject HERMES_HOME into worker subprocess env",
         href: "https://github.com/NousResearch/hermes-agent/commit/5af315c4cc833e20d7306053cbee295b3f0639af",
+      },
+      {
+        sha: "641e40c",
+        message: "fix(kanban): restore HERMES_KANBAN_BOARD after scoped slash override",
+        href: "https://github.com/NousResearch/hermes-agent/commit/641e40c4bd8eb3f7db995cf3181ad9e81483f13f",
       },
     ],
   },
@@ -143,74 +216,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "3e7145e",
         message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Integrations / Skills / Nix: Telegram 분할 전송·적응형 빠른 경로, 주식·금융 스킬, REST/GraphQL 디버그 스킬, Nix extraDependencyGroups, docker_extra_args + display.timestamps",
-    category: "Integrations / Skills / Nix",
-    summary:
-      "Telegram에서 편집 메시지가 길이 제한을 초과할 때 자르는 대신 분할하여 전송(split-and-deliver)합니다 (#bf1f409). Telegram 전송 케이던스(cadence)를 조정하고 짧은 응답에 대한 적응형 빠른 경로(adaptive fast-path)를 추가합니다 (#ac95b8c). API 키 없이 Yahoo Finance 데이터를 활용하는 주식·금융(stocks & finance) 스킬이 추가됩니다 (#896a7ce). api-testing 스킬이 추가되며 rest-graphql-debug로 이름이 변경됩니다 (#4c57a5b). Nix에서 sealed venv extras를 위한 extraDependencyGroups가 추가됩니다 (#5606258). 터미널과 CLI에 docker_extra_args 및 display.timestamps 설정이 추가됩니다 (#ebf2ea5) (main branch 기준).",
-    commits: [
-      {
-        sha: "bf1f409",
-        message: "fix(telegram): split-and-deliver oversized edits instead of silent truncation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bf1f40996f195d7387ea0bdffd511637bab9e833",
-      },
-      {
-        sha: "ac95b8c",
-        message: "perf(gateway): tune Telegram cadence + adaptive fast-path for short replies",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ac95b8cdbec1748d1255cee8bb39aa5f92254864",
-      },
-      {
-        sha: "896a7ce",
-        message: "feat: add stocks & finance skill (Yahoo Finance, no API key)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/896a7ce261f8fc6dc427550becb5d661f1040457",
-      },
-      {
-        sha: "4c57a5b",
-        message: "feat(skills): add api-testing optional skill (#1800)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4c57a5b318378144a239f275f58f5e1b648aba7f",
-      },
-      {
-        sha: "5606258",
-        message: "feat(nix): add extraDependencyGroups for sealed venv extras (#21817)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5606258855f7937659527ffffca9d9d7ef6fadc5",
-      },
-    ],
-  },
-  {
-    date: "2026-05-08 ~ 2026-05-09",
-    title: "CLI 성능 최적화 / Agent 안정성 / Termux: CLI 콜드스타트 ~19초 단축·플러그인 탐색 건너뛰기·Shift+Enter 개행 인식, Termux 업데이트 경로 강화, update systemd RestartSec 우회(graceful drain 후)",
-    category: "CLI / Agent / Windows",
-    summary:
-      "CLI 콜드스타트(cold start) 시간을 약 19초 단축합니다. 스킬 캐시(skills cache) 활용, Feishu 지연 로딩(lazy import), Nous HTTP 체크 제거로 초기 구동 속도를 대폭 개선합니다 (#0ec052c). 기본 제공 서브커맨드(subcommand)에서 즉시(eager) 플러그인 탐색(plugin discovery)을 건너뛰어 CLI 실행 속도를 추가로 개선합니다 (#5089596). CLI에서 Shift+Enter를 개행(newline) 키로 인식하여 여러 줄 입력이 더 편리해집니다 (#f5b635f). Termux 환경에서 uv 부트스트랩(bootstrap)과 환경 가드(env guard)를 통해 업데이트 경로가 강화(harden)됩니다 (#7c174e6). 업데이트에서 graceful drain 이후 systemd RestartSec을 우회(bypass)하여 불필요한 지연을 제거합니다 (#d971b26) (main branch 기준).",
-    commits: [
-      {
-        sha: "0ec052c",
-        message: "perf(cli): cut ~19s from 'hermes' cold start (skills cache + lazy Feishu + no Nous HTTP) (#22138)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0ec052ca24476379b0004af800d049abde17323d",
-      },
-      {
-        sha: "5089596",
-        message: "perf(cli): skip eager plugin discovery on known built-in subcommands (#22120)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5089596685826ef2f63214f2fd184da88cc4cdb7",
-      },
-      {
-        sha: "f5b635f",
-        message: "feat(cli): recognise Shift+Enter as a newline key",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f5b635f6ab6d81499d8940f7ab650b6e11956272",
-      },
-      {
-        sha: "7c174e6",
-        message: "fix: harden termux update path with uv bootstrap and env guard",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7c174e65f749dd166c71eda497b05bffe271cec2",
-      },
-      {
-        sha: "d971b26",
-        message: "fix(update): bypass systemd RestartSec after graceful drain (#22101)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d971b26bfd8305285cac1f47c84cceef67624701",
       },
     ],
   },
