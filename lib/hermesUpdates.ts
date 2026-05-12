@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-12",
-    title: "Agent: 턴별 파일 변경 검증 푸터, Nous Portal 모델 메타데이터 권한 전환",
+    title: "Agent: 턴별 파일 변경 검증 푸터, Nous Portal 모델 메타데이터 권한 전환, 유료 추천 통합",
     category: "Agent",
     summary:
-      "에이전트 각 턴마다 파일 변경(mutation) 검증 footer가 추가됩니다 (#c594a23). Nous Portal이 모델 메타데이터의 권한(authority)으로 사용되도록 전환됩니다 (#2863e94) (main branch 기준).",
+      "에이전트 각 턴마다 파일 변경(mutation) 검증 footer가 추가됩니다 (#c594a23). Nous Portal이 모델 메타데이터의 권한(authority)으로 사용되도록 전환됩니다 (#2863e94). Nous Portal의 유료(paid) 추천(recommendations)이 정적 목록과 통합(union)됩니다 (#c23a87b) (main branch 기준).",
     commits: [
       {
         sha: "c594a23",
@@ -32,19 +32,29 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "Use nous portal as model metadata authority (#24502)",
         href: "https://github.com/NousResearch/hermes-agent/commit/2863e9484a1841d0a17044383c9a32482c01b20e",
       },
+      {
+        sha: "c23a87b",
+        message: "union paid recs from nous portal with static list (#24509)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c23a87bc163b188abc7e40fbdccf07a9739231c3",
+      },
     ],
   },
   {
     date: "2026-05-12",
-    title: "Security / Supply Chain: 공급망 어드바이저리 체커 + lazy-install 프레임워크, 공개 어드바이저리 페이지 제거",
-    category: "Security / Supply Chain",
+    title: "Security / Supply Chain / Install: 공급망 어드바이저리 체커 + lazy-install 프레임워크, uv install 에러 표시, 공개 어드바이저리 페이지 제거",
+    category: "Security / Supply Chain / Install",
     summary:
-      "공급망 보안 어드바이저리 체커와 lazy-install 프레임워크, 계층형(tiered) 설치 폴백이 추가됩니다 (#c1eb2dc). 공개 어드바이저리 페이지가 제거되고 커뮤니티 소통은 별도로 처리됩니다 (#dd0923b) (main branch 기준).",
+      "공급망 보안 어드바이저리 체커와 lazy-install 프레임워크, 계층형(tiered) 설치 폴백이 추가됩니다 (#c1eb2dc). uv install 및 uv.lock 동기화 에러가 조용히 무시되지 않고 명시적으로 표시됩니다 (#d186186). 공개 어드바이저리 페이지가 제거되고 커뮤니티 소통은 별도로 처리됩니다 (#dd0923b) (main branch 기준).",
     commits: [
       {
         sha: "c1eb2dc",
         message: "feat(security): supply-chain advisory checker + lazy-install framework + tiered install fallback (#24220)",
         href: "https://github.com/NousResearch/hermes-agent/commit/c1eb2dcda7d729e7c5353ec7b5744f331aa752fe",
+      },
+      {
+        sha: "d186186",
+        message: "fix(install): surface uv install + uv.lock sync errors instead of silently hanging (#24504)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d186186e1af74c3e4568e4775d55e0f24f5c2071",
       },
       {
         sha: "dd0923b",
