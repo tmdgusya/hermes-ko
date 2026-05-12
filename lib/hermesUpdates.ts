@@ -10,11 +10,30 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-12";
+export const hermesUpdatesLastChecked = "2026-05-13";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-12",
+    title: "Agent: 턴별 파일 변경 검증 푸터, Nous Portal 모델 메타데이터 권한 전환",
+    category: "Agent",
+    summary:
+      "에이전트 각 턴마다 파일 변경(mutation) 검증 footer가 추가됩니다 (#c594a23). Nous Portal이 모델 메타데이터의 권한(authority)으로 사용되도록 전환됩니다 (#2863e94) (main branch 기준).",
+    commits: [
+      {
+        sha: "c594a23",
+        message: "feat(agent): per-turn file-mutation verifier footer (#24498)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c594a2304734b708e7ebc68d4fe2eff1bb57abbc",
+      },
+      {
+        sha: "2863e94",
+        message: "Use nous portal as model metadata authority (#24502)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2863e9484a1841d0a17044383c9a32482c01b20e",
+      },
+    ],
+  },
   {
     date: "2026-05-12",
     title: "Security / Supply Chain: 공급망 어드바이저리 체커 + lazy-install 프레임워크, 공개 어드바이저리 페이지 제거",
@@ -252,60 +271,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "3e7145e",
         message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Kanban / Multi-agent: 아카이브 태스크 의존성 해제, 반복 예산 프로토콜 위반 방지, stranded 진단, 대시보드 배치 QOL, 워커 send_message 허용, 로컬라이즈드 컬럼 라벨, HERMES_HOME/HERMES_KANBAN_BOARD 환경 변수, 게이트웨이 auto-subscribe 라우팅",
-    category: "Kanban / Multi-agent",
-    summary:
-      "Kanban에서 아카이브된 상위 태스크를 의존성 해제 시 종료(terminal) 상태로 처리합니다 (#a1854ac). 반복 예산(iteration budget)이 소진되면 kanban_block을 호출하여 프로토콜 위반을 방지합니다 (#2b3bf17). 미확인(unclaimed) 태스크를 진단하는 stranded_in_ready 기능이 추가됩니다 (#3b122cc). 대시보드에 i18n, 접기(collapse), 담당자 대소문자(assignee-casing) 처리를 포함한 배치 QOL 개선이 병합됩니다 (#b8bf2f8). Kanban 워커가 send_message를 호출할 수 있도록 허용합니다 (#8ac998c). select-all aria label에서 로컬라이즈드 컬럼 라벨을 사용합니다 (#27cfe72). 워커 서브프로세스에 HERMES_HOME 환경 변수를 주입합니다 (#5af315c). 스코프드 슬래시 오버라이드 이후 HERMES_KANBAN_BOARD를 복원합니다 (#641e40c). 게이트웨이 create auto-subscribe를 명시적 보드로 라우팅합니다 (#f6d4f3c) (main branch 기준).",
-    commits: [
-      {
-        sha: "a1854ac",
-        message: "fix(kanban): treat archived parent tasks as terminal for dependency resolution",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a1854ac07c08c903ee1d4124746d8c08d911614a",
-      },
-      {
-        sha: "2b3bf17",
-        message: "fix(kanban): call kanban_block on iteration-budget exhaustion to prevent protocol violation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2b3bf17dfa7f75c05174198f80457e6f483d2131",
-      },
-      {
-        sha: "3b122cc",
-        message: "feat(kanban): stranded_in_ready diagnostic for unclaimed tasks (#23578)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3b122cc1ac3ae91e690ec8b29e54af10e52fdb18",
-      },
-      {
-        sha: "b8bf2f8",
-        message: "fix(kanban): merge dashboard batch QOL with i18n + collapse + assignee-casing",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b8bf2f817d7cdde1980d0940fa0b4bc90fdfddcb",
-      },
-      {
-        sha: "8ac998c",
-        message: "fix(send_message): allow kanban workers to call send_message",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ac998cb0caba8dbc382ecf6af1b17c5ecad6ad0",
-      },
-      {
-        sha: "27cfe72",
-        message: "fix(kanban): use localized column label in select-all aria label",
-        href: "https://github.com/NousResearch/hermes-agent/commit/27cfe725431346e8cbac141a8b91bedba0121f4a",
-      },
-      {
-        sha: "5af315c",
-        message: "fix(kanban): inject HERMES_HOME into worker subprocess env",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5af315c4cc833e20d7306053cbee295b3f0639af",
-      },
-      {
-        sha: "641e40c",
-        message: "fix(kanban): restore HERMES_KANBAN_BOARD after scoped slash override",
-        href: "https://github.com/NousResearch/hermes-agent/commit/641e40c4bd8eb3f7db995cf3181ad9e81483f13f",
-      },
-      {
-        sha: "f6d4f3c",
-        message: "fix(kanban): route gateway create auto-subscribe to explicit board",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f6d4f3c37daddc88040dd44d68399400ac12df29",
       },
     ],
   },
