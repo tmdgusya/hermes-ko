@@ -17,7 +17,26 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-12",
-    title: "Computer Use / TUI Clipboard: hermes update 시 cua-driver 갱신 + OSC52 터미널 클립보드 안전망 스킵 + guard·comment 정리",
+    title: "Security / Supply Chain: 공급망 어드바이저리 체커 + lazy-install 프레임워크, 공개 어드바이저리 페이지 제거",
+    category: "Security / Supply Chain",
+    summary:
+      "공급망 보안 어드바이저리 체커와 lazy-install 프레임워크, 계층형(tiered) 설치 폴백이 추가됩니다 (#c1eb2dc). 공개 어드바이저리 페이지가 제거되고 커뮤니티 소통은 별도로 처리됩니다 (#dd0923b) (main branch 기준).",
+    commits: [
+      {
+        sha: "c1eb2dc",
+        message: "feat(security): supply-chain advisory checker + lazy-install framework + tiered install fallback (#24220)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c1eb2dcda7d729e7c5353ec7b5744f331aa752fe",
+      },
+      {
+        sha: "dd0923b",
+        message: "docs: remove public advisory page (handle community comms separately) (#24253)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dd0923bb89ed2dd56f82cb63656a1323f6f42e6f",
+      },
+    ],
+  },
+  {
+    date: "2026-05-12",
+    title: "Computer Use / TUI: hermes update 시 cua-driver 갱신 + OSC52 터미널 클립보드 안전망 스킵 + guard·comment 정리",
     category: "Computer Use / TUI",
     summary:
       "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990). OSC52 기능을 지원하는 터미널에서 불필요한 네이티브 클립보드 안전망(native safety net)을 건너뛰도록 수정됩니다 (#3c23b15). guard 조건 수정(#057fc7b), 주석 정리(#32abe74, #f0c2964)가 포함됩니다 (main branch 기준).",
@@ -223,55 +242,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "3e7145e",
         message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Security / Config / Infrastructure: sudo 권한 상승 탐지·차단, 환경 정제·리덕션, YAML 파싱 경고, 방어적 수정, nix 컨테이너 엔트리포인트, sealed venv extras, hindsight-client 의존성",
-    category: "Security / Config / Infrastructure",
-    summary:
-      "승인(approval) 시스템이 sudo 권한 상승 시도를 stdin/askpass/shell 플래그와 함께 탐지하여 차단합니다 (#976d8e2). SUDO_PASSWORD가 설정되지 않은 경우 sudo -S를 통한 비밀번호 추측을 차단합니다 (#9520a1c). Quick command에서 환경 변수를 정제(sanitize)하고 출력을 리덕션(redact)합니다 (#f6736ce). YAML 파싱 실패 시 조용히 기본값으로 대체하는 대신 명확한 경고를 표시합니다 (#228a4d1). PR #1974에서 도출된 3건의 방어적(defensive) 수정이 적용됩니다 (#3af3c4e). nix 컨테이너 엔트리포인트에서 chown -R을 대상별 find로 교체합니다 (#64145a1). sealed venv extras를 위한 extraDependencyGroups가 추가됩니다 (#5606258). hindsight-client가 선택적 의존성으로 추가됩니다 (#d992fd9) (main branch 기준).",
-    commits: [
-      {
-        sha: "976d8e2",
-        message: "fix(approval): catch sudo with stdin/askpass/shell privilege flags",
-        href: "https://github.com/NousResearch/hermes-agent/commit/976d8e27ad4f2ba59ba5fc14a0c1e811267712d5",
-      },
-      {
-        sha: "9520a1c",
-        message: "fix(terminal): block sudo -S password guessing when SUDO_PASSWORD is not set",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9520a1ccdfd4d735b9450fe8624c44ff7f54d5fd",
-      },
-      {
-        sha: "f6736ce",
-        message: "fix(security): sanitize env and redact output in quick commands + remove write-only _pending_messages",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f6736ced8123e4e17bc0bde89b208c0baedbf0c4",
-      },
-      {
-        sha: "228a4d1",
-        message: "fix(config): warn loudly on YAML parse failure instead of silent default fallback (#23585)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/228a4d11ae258635cfecc1c322c1712191b6db3c",
-      },
-      {
-        sha: "3af3c4e",
-        message: "fix(misc): three small defensive fixes from PR #1974",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3af3c4eb8c65c42bdba1a7d9b11266ded5fa6d9f",
-      },
-      {
-        sha: "64145a1",
-        message: "fix(nix): replace chown -R with targeted find in container entrypoint (#23633)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/64145a1996554e4e81b694e9737421f34f44e212",
-      },
-      {
-        sha: "5606258",
-        message: "feat(nix): add extraDependencyGroups for sealed venv extras (#21817)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5606258855f7937659527ffffca9d9d7ef6fadc5",
-      },
-      {
-        sha: "d992fd9",
-        message: "feat(deps): add hindsight-client as optional dependency (#21818)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d992fd9aaf9fdb3a3f6f4ab449581da77da81e72",
       },
     ],
   },
