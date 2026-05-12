@@ -16,6 +16,20 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-12",
+    title: "Computer Use / CUA Driver: hermes update 시 cua-driver 갱신 + install --upgrade 옵션 추가",
+    category: "Computer Use",
+    summary:
+      "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990) (main branch 기준).",
+    commits: [
+      {
+        sha: "ced1990",
+        message: "feat(computer-use): refresh cua-driver on `hermes update` + add `install --upgrade` (#24063)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ced1990c1cab2413e6778d0eb35f526b6b9c1359",
+      },
+    ],
+  },
+  {
     date: "2026-05-11",
     title: "Model / Provider Metadata: kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드",
     category: "Model / Provider",
@@ -36,55 +50,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "e155f2a",
         message: "rebuild model catalog",
         href: "https://github.com/NousResearch/hermes-agent/commit/e155f2aca9dc9135141d37d3aade060a9a02e470",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Skills / Telegram / Nix / Deps: Stocks & Finance 스킬 추가·리로케이션, Telegram 캐던스 튜닝, Nix sealed venv extras, Docker extra args·타임스탬프, hindsight-client 옵셔널 디펜던시",
-    category: "Skills / Telegram / Nix",
-    summary:
-      "Yahoo Finance 기반 Stocks & Finance 스킬이 추가됩니다 (#896a7ce). 스킬이 optional-skills/finance/stocks/로 리로케이션되고 SKILL.md가 최신 포맷으로 정비됩니다 (#2ea957f, #9526040). Telegram 게이트웨이의 캐던스(cadence)를 튜닝하고 짧은 응답에 대한 적응형 빠른 경로(adaptive fast-path)가 추가됩니다 (#ac95b8c). Nix에서 sealed venv의 extra dependency groups를 지원합니다 (#5606258). Nix 컨테이너 진입점에서 chown -R을 타겟팅된 find로 교체합니다 (#64145a1). CLI/터미널에 docker_extra_args와 display.timestamps 옵션이 추가됩니다 (#ebf2ea5). hindsight-client가 옵셔널 디펜던시로 추가됩니다 (#d992fd9) (main branch 기준).",
-    commits: [
-      {
-        sha: "896a7ce",
-        message: "feat: add stocks & finance skill (Yahoo Finance, no API key)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/896a7ce261f8fc6dc427550becb5d661f1040457",
-      },
-      {
-        sha: "2ea957f",
-        message: "chore(skills/stocks): relocate to optional-skills/finance/stocks/",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2ea957fc41f47fb6db177cb077e18722b17ef0d0",
-      },
-      {
-        sha: "9526040",
-        message: "chore(skills/stocks): tighten SKILL.md to modern format",
-        href: "https://github.com/NousResearch/hermes-agent/commit/95260407002819d98962c6f4859eae22bd2caa52",
-      },
-      {
-        sha: "ac95b8c",
-        message: "perf(gateway): tune Telegram cadence + adaptive fast-path for short replies",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ac95b8cdbec1748d1255cee8bb39aa5f92254864",
-      },
-      {
-        sha: "5606258",
-        message: "feat(nix): add extraDependencyGroups for sealed venv extras (#21817)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5606258855f7937659527ffffca9d9d7ef6fadc5",
-      },
-      {
-        sha: "64145a1",
-        message: "fix(nix): replace chown -R with targeted find in container entrypoint (#23633)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/64145a1996554e4e81b694e9737421f34f44e212",
-      },
-      {
-        sha: "ebf2ea5",
-        message: "feat(terminal,cli): docker_extra_args + display.timestamps",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ebf2ea584ab2ca37cd70b80b4d8c3bc23604cf47",
-      },
-      {
-        sha: "d992fd9",
-        message: "feat(deps): add hindsight-client as optional dependency (#21818)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d992fd9aaf9fdb3a3f6f4ab449581da77da81e72",
       },
     ],
   },
