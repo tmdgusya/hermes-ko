@@ -51,10 +51,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-12",
-    title: "Model / Provider: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅, Voice & TTS 프로바이더 테이블 문서 수정, aux 추론 요청 클라이언트 마커, MiniMax OAuth 강화",
-    category: "Model / Provider",
+    title: "Model / Provider / Deps: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅, Voice & TTS 프로바이더 테이블 문서 수정, aux 추론 요청 클라이언트 마커, MiniMax OAuth 강화, mistralai 의존성 격리 조치",
+    category: "Model / Provider / Deps",
     summary:
-      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a). Voice & TTS 프로바이더 테이블 문서가 수정됩니다 (#407683b). aux 추론 요청에 클라이언트 마커 태그가 추가됩니다 (#94d9db7). MiniMax OAuth 대시보드 및 런타임이 강화됩니다 (#58e2109) (main branch 기준).",
+      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a). Voice & TTS 프로바이더 테이블 문서가 수정됩니다 (#407683b). aux 추론 요청에 클라이언트 마커 태그가 추가됩니다 (#94d9db7). MiniMax OAuth 대시보드 및 런타임이 강화됩니다 (#58e2109). PyPI에서 mistralai가 격리(quarantined)된 동안 [all] 설치가 실패하지 않도록 해당 의존성을 임시 제거합니다 (#99ad2d1) (main branch 기준).",
     commits: [
       {
         sha: "e855925",
@@ -100,6 +100,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "58e2109",
         message: "fix(minimax): harden OAuth dashboard and runtime",
         href: "https://github.com/NousResearch/hermes-agent/commit/58e2109f10b5ea5e29b6c4011187762f9358c4a8",
+      },
+      {
+        sha: "99ad2d1",
+        message: "fix(deps): unbreak [all] install — drop mistralai while PyPI quarantined (#24205)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/99ad2d1372d3b5ff9134e9d8930fed6de4fc7b62",
       },
     ],
   },
