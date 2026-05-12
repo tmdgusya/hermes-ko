@@ -51,10 +51,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-12",
-    title: "Model / Provider: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅",
+    title: "Model / Provider: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅, Voice & TTS 프로바이더 테이블 문서 수정, aux 추론 요청 클라이언트 마커, MiniMax OAuth 강화",
     category: "Model / Provider",
     summary:
-      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a) (main branch 기준).",
+      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a). Voice & TTS 프로바이더 테이블 문서가 수정됩니다 (#407683b). aux 추론 요청에 클라이언트 마커 태그가 추가됩니다 (#94d9db7). MiniMax OAuth 대시보드 및 런타임이 강화됩니다 (#58e2109) (main branch 기준).",
     commits: [
       {
         sha: "e855925",
@@ -85,6 +85,21 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "e155f2a",
         message: "rebuild model catalog",
         href: "https://github.com/NousResearch/hermes-agent/commit/e155f2aca9dc9135141d37d3aade060a9a02e470",
+      },
+      {
+        sha: "407683b",
+        message: "fix(docs): repair Voice & TTS provider table",
+        href: "https://github.com/NousResearch/hermes-agent/commit/407683b72db0017f74eb7bc3b84e052f6b2e19c7",
+      },
+      {
+        sha: "94d9db7",
+        message: "add client marker tag on aux inference requests",
+        href: "https://github.com/NousResearch/hermes-agent/commit/94d9db72ba5fdca8b34f7d7767e1750efd5dd952",
+      },
+      {
+        sha: "58e2109",
+        message: "fix(minimax): harden OAuth dashboard and runtime",
+        href: "https://github.com/NousResearch/hermes-agent/commit/58e2109f10b5ea5e29b6c4011187762f9358c4a8",
       },
     ],
   },
