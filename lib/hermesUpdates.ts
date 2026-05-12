@@ -17,6 +17,64 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-12",
+    title: "Browser / Camofox: 외부 관리 Camofox 세션 지원, 환경변수 문서화",
+    category: "Browser / Camofox",
+    summary:
+      "외부에서 관리되는(externally managed) Camofox 세션을 지원하는 기능이 추가됩니다 (#62fd905). 관련 환경변수 및 AUTHOR_MAP 항목이 문서화됩니다 (#f63d520). externally-managed sessions 섹션이 확장됩니다 (#38441a7) (main branch 기준).",
+    commits: [
+      {
+        sha: "62fd905",
+        message: "feat(browser): support externally managed Camofox sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/62fd905340969deb5fd914c623e4d1ab99dba8b0",
+      },
+      {
+        sha: "f63d520",
+        message: "chore(camofox): document new env vars + AUTHOR_MAP entry",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f63d520496f647d652e232e60bc2de5d404cc46d",
+      },
+      {
+        sha: "38441a7",
+        message: "docs(camofox): expand externally-managed sessions section (#24584)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/38441a7d776f116347ee0752368a643817ba3a85",
+      },
+    ],
+  },
+  {
+    date: "2026-05-12",
+    title: "Gateway / State / Dashboard: SSE EOS sentinel 큐잉, macOS stale scoped lock 탐지, Dashboard UI 개선",
+    category: "Gateway / State / Dashboard",
+    summary:
+      "태스크 완료 시 SSE EOS sentinel이 큐에 들어가도록(enqueue) 수정됩니다 (#4bb0a82). macOS에서 start_time이 없는 경우 cmdline을 통해 stale scoped lock을 탐지합니다 (#653d304). scoped-lock 테스트에서 os.kill 대신 _pid_exists를 패치합니다 (#629c33c). Dashboard 모달·레이아웃·일관성 개선 및 테스트 수정이 적용됩니다 (#fc3fd6b). Dashboard 수정 PR이 머지됩니다 (#642768c) (main branch 기준).",
+    commits: [
+      {
+        sha: "4bb0a82",
+        message: "fix(gateway): enqueue SSE EOS sentinel on task completion",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4bb0a82a2b8dc4d4fd952d977a81ae2ccbc52fbc",
+      },
+      {
+        sha: "653d304",
+        message: "fix(gateway): detect stale scoped locks via cmdline when start_time is absent on macOS",
+        href: "https://github.com/NousResearch/hermes-agent/commit/653d30429039d1f5f048889e5397c1297c1fda38",
+      },
+      {
+        sha: "629c33c",
+        message: "test(gateway): patch _pid_exists instead of os.kill for scoped-lock tests",
+        href: "https://github.com/NousResearch/hermes-agent/commit/629c33c633a12e43e9a334fbd07a973b317c950e",
+      },
+      {
+        sha: "fc3fd6b",
+        message: "fix(dashboard): UI polish — modals, layout, consistency, test fixes",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc3fd6bb6b3cb4aa01d71bb52c0092ec4b5db1b8",
+      },
+      {
+        sha: "642768c",
+        message: "Merge pull request #24161 from NousResearch/austin/fix/dashboard",
+        href: "https://github.com/NousResearch/hermes-agent/commit/642768c5c70b428507acc7b31d17e1e53141067b",
+      },
+    ],
+  },
+  {
+    date: "2026-05-12",
     title: "Agent: 턴별 파일 변경 검증 푸터, Nous Portal 모델 메타데이터 권한 전환, 유료 추천 통합",
     category: "Agent",
     summary:
@@ -41,10 +99,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-12",
-    title: "Security / Supply Chain / Install: 공급망 어드바이저리 체커 + lazy-install 프레임워크, uv install 에러 표시, 공개 어드바이저리 페이지 제거",
+    title: "Security / Supply Chain / Install: 공급망 어드바이저리 체커 + lazy-install 프레임워크, uv install 에러 표시, extras 설치 수정, 공개 어드바이저리 페이지 제거",
     category: "Security / Supply Chain / Install",
     summary:
-      "공급망 보안 어드바이저리 체커와 lazy-install 프레임워크, 계층형(tiered) 설치 폴백이 추가됩니다 (#c1eb2dc). uv install 및 uv.lock 동기화 에러가 조용히 무시되지 않고 명시적으로 표시됩니다 (#d186186). 공개 어드바이저리 페이지가 제거되고 커뮤니티 소통은 별도로 처리됩니다 (#dd0923b) (main branch 기준).",
+      "공급망 보안 어드바이저리 체커와 lazy-install 프레임워크, 계층형(tiered) 설치 폴백이 추가됩니다 (#c1eb2dc). uv install 및 uv.lock 동기화 에러가 조용히 무시되지 않고 명시적으로 표시됩니다 (#d186186). --extra all 대신 --all-extras를 사용하도록 수정되고, lazy-covered extras가 [all]에서 제거됩니다 (#3955aef). 공개 어드바이저리 페이지가 제거되고 커뮤니티 소통은 별도로 처리됩니다 (#dd0923b) (main branch 기준).",
     commits: [
       {
         sha: "c1eb2dc",
@@ -55,6 +113,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d186186",
         message: "fix(install): surface uv install + uv.lock sync errors instead of silently hanging (#24504)",
         href: "https://github.com/NousResearch/hermes-agent/commit/d186186e1af74c3e4568e4775d55e0f24f5c2071",
+      },
+      {
+        sha: "3955aef",
+        message: "fix(install): use `--extra all` not `--all-extras`; drop lazy-covered extras from [all] (#24515)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3955aefced81b1adf3557b2a64ea30c62fc51f99",
       },
       {
         sha: "dd0923b",
@@ -99,7 +162,7 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-12",
-    title: "Model / Provider / Deps: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅, Voice & TTS 프로바이더 테이블 문서 수정, aux 추론 요청 클라이언트 마커, MiniMax OAuth 강화, mistralai 의존성 격리 조치",
+    title: "Model / Provider / Deps: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, Portal Qwen 캐시 라우팅, aux 추론 요청 클라이언트 마커, MiniMax OAuth 강화, mistralai 의존성 격리 조치",
     category: "Model / Provider / Deps",
     summary:
       "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a). Voice & TTS 프로바이더 테이블 문서가 수정됩니다 (#407683b). aux 추론 요청에 클라이언트 마커 태그가 추가됩니다 (#94d9db7). MiniMax OAuth 대시보드 및 런타임이 강화됩니다 (#58e2109). PyPI에서 mistralai가 격리(quarantined)된 동안 [all] 설치가 실패하지 않도록 해당 의존성을 임시 제거합니다 (#99ad2d1) (main branch 기준).",
@@ -153,134 +216,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "99ad2d1",
         message: "fix(deps): unbreak [all] install — drop mistralai while PyPI quarantined (#24205)",
         href: "https://github.com/NousResearch/hermes-agent/commit/99ad2d1372d3b5ff9134e9d8930fed6de4fc7b62",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "CLI / TUI / Agent Tools: HERMES_SESSION_ID 노출, Claude 세션 간 프리픽스 캐시, CJK 마크다운 테이블 정렬 + 세로 폴백, docker_extra_args + display.timestamps, Nous Portal 모델 카탈로그, TUI 슬래시 확인 모달, 마크다운 링크 페이지 제목 해석, TUI 빌드 로직 단순화",
-    category: "CLI / TUI / Agent Tools",
-    summary:
-      "에이전트 도구에서 HERMES_SESSION_ID를 ContextVar와 환경 변수로 노출합니다 (#2718834). Anthropic·OpenRouter·Nous Portal에서 Claude에 대한 세션 간(cross-session) 1시간 프리픽스 캐시가 추가됩니다 (#7b76366). CLI/TUI에서 CJK 및 와이드 문자 마크다운 테이블 정렬이 수정됩니다 (#1d00716). 터미널 너비보다 넓은 마크다운 테이블에 세로(vertical) 폴백이 추가됩니다 (#ea1d046). 터미널/CLI에 docker_extra_args 및 display.timestamps 옵션이 추가됩니다 (#ebf2ea5). /model 명령에서 Nous Portal 원격 카탈로그 매니페스트의 모델을 표시합니다 (#8e2eb4b). 슬래시 명령 확인(confirm)에 TUI 모달을 사용합니다 (#054f568). 마크다운 링크를 읽기 쉬운 페이지 제목으로 해석합니다 (#75b428c). TUI 빌드 로직을 단순화하고 오래된(stale) 상태 확인을 제거합니다 (#c6ca116) (main branch 기준).",
-    commits: [
-      {
-        sha: "2718834",
-        message: "feat: expose HERMES_SESSION_ID to agent tools via ContextVar + env (#23847)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/271883447e7b8a5b9bd95879aca71afadc87616f",
-      },
-      {
-        sha: "7b76366",
-        message: "feat(prompt-cache): cross-session 1h prefix cache for Claude on Anthropic / OpenRouter / Nous Portal (#23828)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7b76366552eb0e2fbdf156c261403202ac064737",
-      },
-      {
-        sha: "1d00716",
-        message: "fix(cli,tui): align CJK / wide-char markdown tables (#23863)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1d007167541ef5405fde620fdcce6dfcd79c0628",
-      },
-      {
-        sha: "ea1d046",
-        message: "fix(cli): vertical fallback for markdown tables wider than terminal (#23948)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ea1d0462cf5ec3799fb0c4b8e39685302e53039b",
-      },
-      {
-        sha: "ebf2ea5",
-        message: "feat(terminal,cli): docker_extra_args + display.timestamps",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ebf2ea584ab2ca37cd70b80b4d8c3bc23604cf47",
-      },
-      {
-        sha: "8e2eb4b",
-        message: "fix(/model): surface Nous Portal models from remote catalog manifest (#23912)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8e2eb4b511967a0ad776c0c667f6914072e1b7ec",
-      },
-      {
-        sha: "054f568",
-        message: "fix: use TUI modal for slash confirmations",
-        href: "https://github.com/NousResearch/hermes-agent/commit/054f56857842a25b8ef5f627c7c951de28eee52a",
-      },
-      {
-        sha: "75b428c",
-        message: "feat(ui-tui): resolve markdown links to readable page titles (#24013)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/75b428c8521d7676991c93b9ecd66eb12c6469b6",
-      },
-      {
-        sha: "c6ca116",
-        message: "refactor(tui): simplify TUI build logic, remove stale staleness checks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c6ca11618a87c6b12e9a4025d339eb905a03ac8c",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Provider / Gateway / Agent 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, sudo 권한 승인·비밀번호 추측 차단, MiniMax OAuth 버그, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근, Dashboard 빌드·dist 검증, Windows 디코딩, Codex data-URL, /goal 롤백",
-    category: "Provider / Gateway / Agent 안정성",
-    summary:
-      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). stdin/askpass/shell 권한 플래그와 함께 사용되는 sudo를 승인(approval)에서 catch합니다 (#976d8e2). SUDO_PASSWORD가 설정되지 않은 경우 sudo -S 비밀번호 추측을 차단합니다 (#9520a1c). MiniMax 'Login' 버튼이 Claude OAuth를 실행하는 버그가 수정됩니다 (#05bad7b). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788). Dashboard 빌드에서 --skip-build 설정 시 dist 존재 여부를 검증합니다 (#283381b). 빌드 실패 시 오래된(stale) dist로 폴백하고 재시도하며 --skip-build 플래그를 추가합니다 (#7085f4e). Windows에서 웹 UI 빌드 출력 디코딩을 견고하게 만듭니다 (#a479ec0). ChatGPT 계정의 Codex에서 data-URL이 거부되는 경우 이미지를 압축 대신 제거(strip)하도록 catch합니다 (#7026af4). /goal 체크리스트 및 /subgoal 기능 스택이 롤백(revert)됩니다 (#3e7145e) (main branch 기준).",
-    commits: [
-      {
-        sha: "976d8e2",
-        message: "fix(approval): catch sudo with stdin/askpass/shell privilege flags",
-        href: "https://github.com/NousResearch/hermes-agent/commit/976d8e27ad4f2ba59ba5fc14a0c1e811267712d5",
-      },
-      {
-        sha: "9520a1c",
-        message: "fix(terminal): block sudo -S password guessing when SUDO_PASSWORD is not set",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9520a1ccdfd4d735b9450fe8624c44ff7f54d5fd",
-      },
-      {
-        sha: "111b859",
-        message: "fix(auxiliary): evict async wrappers on poisoned client (follow-up to #23482)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/111b859e49fd7b2abe30c1426ebd74101bb59477",
-      },
-      {
-        sha: "228b7d2",
-        message: "fix(auxiliary): cache 402'd providers as unhealthy with TTL to stop per-call retry storms (#23597)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/228b7d27bdb9b8461b9650137dd3aa2b739879eb",
-      },
-      {
-        sha: "05bad7b",
-        message: "fix(dashboard): MiniMax 'Login' button launched Claude OAuth (#22832)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/05bad7b1e78adef8da4dcbe91ab95c3e810a96b0",
-      },
-      {
-        sha: "ace1c4e",
-        message: "fix(discord): typing indicator task not cleaned up after API error",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ace1c4ea8ccefd8019e7a6a8378f6197c47636fc",
-      },
-      {
-        sha: "5712483",
-        message: "fix: guard resolve_profile_env against missing profile dirs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/571248348725b840acf0bcde43ffbecbba56fe2d",
-      },
-      {
-        sha: "cc9e788",
-        message: "fix(cli): defensive _slash_confirm_state access + AUTHOR_MAP",
-        href: "https://github.com/NousResearch/hermes-agent/commit/cc9e788c14188bb9691237472d1c8c5bcf929eeb",
-      },
-      {
-        sha: "283381b",
-        message: "fix(dashboard): validate dist exists when --skip-build is set",
-        href: "https://github.com/NousResearch/hermes-agent/commit/283381b1ce9dd8d69aaba88639d50d1f825c2121",
-      },
-      {
-        sha: "7085f4e",
-        message: "fix(dashboard): fallback to stale dist, retry build, add --skip-build flag",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7085f4e238508b94c9bf034c3d9bc268a49d8228",
-      },
-      {
-        sha: "a479ec0",
-        message: "fix: make web UI build output decoding robust on Windows",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a479ec01ed73ed43d8649f88781e433aedd980a0",
-      },
-      {
-        sha: "7026af4",
-        message: "fix(agent): catch ChatGPT-account Codex data-URL rejection so images are stripped instead of cascading to compression (#23602)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7026af4e23030a1c01a388ac60575bbf3b011187",
-      },
-      {
-        sha: "3e7145e",
-        message: "revert: roll back /goal checklist + /subgoal feature stack (#23813)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3e7145e0bbcded852a5324ceb549fe5ca94ac924",
       },
     ],
   },
