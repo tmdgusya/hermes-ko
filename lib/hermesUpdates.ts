@@ -17,15 +17,20 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-12",
-    title: "Computer Use / CUA Driver: hermes update 시 cua-driver 갱신 + install --upgrade 옵션 추가",
-    category: "Computer Use",
+    title: "Computer Use / TUI Clipboard: hermes update 시 cua-driver 갱신 + OSC52 터미널 클립보드 안전망 스킵",
+    category: "Computer Use / TUI",
     summary:
-      "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990) (main branch 기준).",
+      "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990). OSC52 기능을 지원하는 터미널에서 불필요한 네이티브 클립보드 안전망(native safety net)을 건너뛰도록 수정됩니다 (#3c23b15) (main branch 기준).",
     commits: [
       {
         sha: "ced1990",
         message: "feat(computer-use): refresh cua-driver on `hermes update` + add `install --upgrade` (#24063)",
         href: "https://github.com/NousResearch/hermes-agent/commit/ced1990c1cab2413e6778d0eb35f526b6b9c1359",
+      },
+      {
+        sha: "3c23b15",
+        message: "fix(tui-clipboard): skip native safety net on OSC52-capable terminals (#20954)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3c23b15f815ece74bfadbe2bd38e38512f42d2ad",
       },
     ],
   },
