@@ -183,11 +183,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-11",
-    title: "Provider / Gateway / Agent 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, MiniMax OAuth 버그, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근, Dashboard 빌드·dist 검증, Windows 디코딩, Codex data-URL, /goal 롤백",
+    title: "Provider / Gateway / Agent 안정성: 오염된 클라이언트 비동기 래퍼 제거, 402 프로바이더 TTL 캐시, sudo 권한 승인·비밀번호 추측 차단, MiniMax OAuth 버그, Discord 타이핑 인디케이터 정리, 프로파일 디렉토리 가드, 슬래시 확인 상태 방어적 접근, Dashboard 빌드·dist 검증, Windows 디코딩, Codex data-URL, /goal 롤백",
     category: "Provider / Gateway / Agent 안정성",
     summary:
-      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). MiniMax 'Login' 버튼이 Claude OAuth를 실행하는 버그가 수정됩니다 (#05bad7b). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788). Dashboard 빌드에서 --skip-build 설정 시 dist 존재 여부를 검증합니다 (#283381b). 빌드 실패 시 오래된(stale) dist로 폴백하고 재시도하며 --skip-build 플래그를 추가합니다 (#7085f4e). Windows에서 웹 UI 빌드 출력 디코딩을 견고하게 만듭니다 (#a479ec0). ChatGPT 계정의 Codex에서 data-URL이 거부되는 경우 이미지를 압축 대신 제거(strip)하도록 catch합니다 (#7026af4). /goal 체크리스트 및 /subgoal 기능 스택이 롤백(revert)됩니다 (#3e7145e) (main branch 기준).",
+      "오염된(poisoned) 클라이언트에서 비동기 래퍼를 제거(evict)합니다 (#111b859). 402 응답을 받은 프로바이더를 TTL 기반으로 비정상(unhealthy) 상태로 캐시하여 호출별 재시도 폭풍(retry storm)을 방지합니다 (#228b7d2). stdin/askpass/shell 권한 플래그와 함께 사용되는 sudo를 승인(approval)에서 catch합니다 (#976d8e2). SUDO_PASSWORD가 설정되지 않은 경우 sudo -S 비밀번호 추측을 차단합니다 (#9520a1c). MiniMax 'Login' 버튼이 Claude OAuth를 실행하는 버그가 수정됩니다 (#05bad7b). Discord에서 API 오류 후 타이핑 인디케이터 태스크가 정리되지 않는 문제를 수정합니다 (#ace1c4e). 프로파일 디렉토리가 없는 경우 resolve_profile_env를 보호합니다 (#5712483). CLI 슬래시 확인 상태에 대한 방어적(defensive) 접근을 추가합니다 (#cc9e788). Dashboard 빌드에서 --skip-build 설정 시 dist 존재 여부를 검증합니다 (#283381b). 빌드 실패 시 오래된(stale) dist로 폴백하고 재시도하며 --skip-build 플래그를 추가합니다 (#7085f4e). Windows에서 웹 UI 빌드 출력 디코딩을 견고하게 만듭니다 (#a479ec0). ChatGPT 계정의 Codex에서 data-URL이 거부되는 경우 이미지를 압축 대신 제거(strip)하도록 catch합니다 (#7026af4). /goal 체크리스트 및 /subgoal 기능 스택이 롤백(revert)됩니다 (#3e7145e) (main branch 기준).",
     commits: [
+      {
+        sha: "976d8e2",
+        message: "fix(approval): catch sudo with stdin/askpass/shell privilege flags",
+        href: "https://github.com/NousResearch/hermes-agent/commit/976d8e27ad4f2ba59ba5fc14a0c1e811267712d5",
+      },
+      {
+        sha: "9520a1c",
+        message: "fix(terminal): block sudo -S password guessing when SUDO_PASSWORD is not set",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9520a1ccdfd4d735b9450fe8624c44ff7f54d5fd",
+      },
       {
         sha: "111b859",
         message: "fix(auxiliary): evict async wrappers on poisoned client (follow-up to #23482)",
