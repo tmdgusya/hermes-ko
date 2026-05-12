@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-12",
-    title: "Computer Use / TUI Clipboard: hermes update 시 cua-driver 갱신 + OSC52 터미널 클립보드 안전망 스킵",
+    title: "Computer Use / TUI Clipboard: hermes update 시 cua-driver 갱신 + OSC52 터미널 클립보드 안전망 스킵 + guard·comment 정리",
     category: "Computer Use / TUI",
     summary:
-      "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990). OSC52 기능을 지원하는 터미널에서 불필요한 네이티브 클립보드 안전망(native safety net)을 건너뛰도록 수정됩니다 (#3c23b15) (main branch 기준).",
+      "hermes update 실행 시 cua-driver를 갱신(refresh)하고, install --upgrade 옵션이 추가됩니다 (#ced1990). OSC52 기능을 지원하는 터미널에서 불필요한 네이티브 클립보드 안전망(native safety net)을 건너뛰도록 수정됩니다 (#3c23b15). guard 조건 수정(#057fc7b), 주석 정리(#32abe74, #f0c2964)가 포함됩니다 (main branch 기준).",
     commits: [
       {
         sha: "ced1990",
@@ -32,14 +32,29 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(tui-clipboard): skip native safety net on OSC52-capable terminals (#20954)",
         href: "https://github.com/NousResearch/hermes-agent/commit/3c23b15f815ece74bfadbe2bd38e38512f42d2ad",
       },
+      {
+        sha: "057fc7b",
+        message: "fix guard",
+        href: "https://github.com/NousResearch/hermes-agent/commit/057fc7b073731934e56850f913dbc85aa5d6ac26",
+      },
+      {
+        sha: "32abe74",
+        message: "fix comment",
+        href: "https://github.com/NousResearch/hermes-agent/commit/32abe742fa81bee3acb42a274b2501afe1657c08",
+      },
+      {
+        sha: "f0c2964",
+        message: "remove comments",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f0c2964f0b5a0e84e06d07ae6de7432ad792c23a",
+      },
     ],
   },
   {
     date: "2026-05-12",
-    title: "Model / Provider: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드",
+    title: "Model / Provider: Portal 무료 모델 피커 노출, kimi·moonshot 프로바이더 매핑, kimi-k2.6 context-length 수정, 모델 카탈로그 리빌드, Portal Qwen 캐시 라우팅",
     category: "Model / Provider",
     summary:
-      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). 모델 카탈로그가 리빌드됩니다 (#e155f2a) (main branch 기준).",
+      "curated list가 오래된 경우에도 Portal 플래그가 지정된 무료 모델을 피커에 표시합니다 (#e855925). OpenRouter를 이미 알려진 프로바이더에 대해서는 스킵하고 kimi/moonshot을 PROVIDER_TO_MODELS_DEV에 추가합니다 (#e2b713c). Ollama Cloud 및 Kimi Coding에서 kimi-k2.6의 context-length 해석이 수정됩니다 (#91eef62). Nous Portal Qwen 모델을 Portal-Claude 캐시 경로로 라우팅합니다 (#7993e03). kimi 관련 수정사항이 추가로 반영됩니다 (#528bba6). 모델 카탈로그가 리빌드됩니다 (#e155f2a) (main branch 기준).",
     commits: [
       {
         sha: "e855925",
@@ -55,6 +70,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "91eef62",
         message: "fix: correct context-length resolution for kimi-k2.6 on Ollama Cloud and Kimi Coding",
         href: "https://github.com/NousResearch/hermes-agent/commit/91eef6255e39e0be7b0730aabf6ad2ea49eefe77",
+      },
+      {
+        sha: "7993e03",
+        message: "fix(cache): route Nous Portal Qwen through Portal-Claude cache pathway (#24151)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7993e03c06145baece40427801161918b4a9130e",
+      },
+      {
+        sha: "528bba6",
+        message: "fix kimi",
+        href: "https://github.com/NousResearch/hermes-agent/commit/528bba67340f6efaac8e99f13b6d52eda9f8a5e3",
       },
       {
         sha: "e155f2a",
