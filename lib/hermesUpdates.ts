@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "보안 / Gateway — 승인 DELETE 줄바꿈 우회 수정, hook_ctx 채팅 추적, WhatsApp 타임아웃 설정화, WeCom 재연결, systemd 재시작 지연 단축",
+    title: "보안 / Gateway — 승인 DELETE 줄바꿈 우회 수정, hook_ctx 채팅 추적, WhatsApp 타임아웃 설정화, WeCom 재연결, systemd 재시작 지연 단축, 어댑터 lazy_deps 보장",
     category: "보안 / Gateway",
     summary:
-      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75). systemd 재시작 지연이 감소합니다 (#0bc5f7b) (main branch 기준).",
+      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75). systemd 재시작 지연이 감소합니다 (#0bc5f7b). Slack, Matrix, DingTalk, Feishu 어댑터에 lazy_deps.ensure()가 추가되어 런타임 의존성이 사전 확인됩니다 (#5d90386) (main branch 기준).",
     commits: [
       {
         sha: "80374d4",
@@ -75,6 +75,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "0bc5f7b",
         message: "fix(gateway): reduce systemd restart delay",
         href: "https://github.com/NousResearch/hermes-agent/commit/0bc5f7b235117ccf791aab83b92164c0041d34af",
+      },
+      {
+        sha: "5d90386",
+        message: "fix(gateway): add lazy_deps.ensure() to slack, matrix, dingtalk, feishu adapters (#25014)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5d90386baab5cc6355d7e73e30571466c9223a6d",
       },
     ],
   },
@@ -173,10 +178,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "CI / Tools / Install / Docker — e2e 타임아웃 연장, ripgrep 설치, 테스트 i18n 수정, Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한",
+    title: "CI / Tools / Install / Docker — e2e 타임아웃 연장, ripgrep 설치, 테스트 i18n 수정, Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한, Docker 태그 분리",
     category: "CI / Tools / Install / Docker",
     summary:
-      "e2e CI 잡 타임아웃이 15분으로 연장됩니다 (#8d55305). e2e 잡에 ripgrep이 설치됩니다 (#1beb578). restart drain 테스트에서 i18n t()가 사용됩니다 (#a4289d7). Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6) (main branch 기준).",
+      "e2e CI 잡 타임아웃이 15분으로 연장됩니다 (#8d55305). e2e 잡에 ripgrep이 설치됩니다 (#1beb578). restart drain 테스트에서 i18n t()가 사용됩니다 (#a4289d7). Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6). Docker :latest 태그가 릴리즈 전용으로 분리되고 :main 태그가 main HEAD를 가리킵니다 (#1149e75) (main branch 기준).",
     commits: [
       {
         sha: "8d55305",
@@ -227,6 +232,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "942adf6",
         message: "fix(docker): chown .venv to hermes so lazy_deps can install platform packages (#24841)",
         href: "https://github.com/NousResearch/hermes-agent/commit/942adf617910f50a39f41bd200d8083bf4cb2bed",
+      },
+      {
+        sha: "1149e75",
+        message: "ci(docker): split :latest (releases only) from :main (main HEAD)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1149e75db20f4f3afe7b0ead23e115abcc4b9b11",
       },
     ],
   },
