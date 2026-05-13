@@ -16,6 +16,69 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-13",
+    title: "Gateway / Messaging: systemd 재시작 지연 단축, Weixin 문서화, Telegram reaction 정리, XMPP JID 인식, WhatsApp 환경변수 추가",
+    category: "Gateway / Messaging",
+    summary:
+      "Gateway의 systemd 재시작 지연이 단축됩니다 (#0bc5f7b). Gateway 도움말과 docstring에 Weixin이 명시됩니다 (#a694a26). Telegram에서 처리 취소 시 진행 중인 reaction이 정리됩니다 (#6f285ef). send_message가 XMPP JID를 명시적 타겟으로 인식합니다 (#a54d4b0). cron의 홈 타겟 환경변수에 whatsapp이 포함됩니다 (#d8c4460) (main branch 기준).",
+    commits: [
+      {
+        sha: "0bc5f7b",
+        message: "fix(gateway): reduce systemd restart delay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0bc5f7b235117ccf791aab83b92164c0041d34af",
+      },
+      {
+        sha: "a694a26",
+        message: "docs(gateway): mention Weixin in gateway help and docstrings",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a694a263309d1f2ae98fb938b76b013c2808cf35",
+      },
+      {
+        sha: "6f285ef",
+        message: "fix(telegram): clear in-progress reaction on cancelled processing (#24628)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f285efb8058ee5bd1b91e4e0ba9187ec8b183e8",
+      },
+      {
+        sha: "a54d4b0",
+        message: "fix(send_message): recognize XMPP JIDs as explicit targets",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a54d4b0e46429eb2d13bd41145c74c5e863d1e49",
+      },
+      {
+        sha: "d8c4460",
+        message: "fix(cron): include whatsapp in _HOME_TARGET_ENV_VARS",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d8c4460fe35e9a471b8b115b73c39527e5492477",
+      },
+    ],
+  },
+  {
+    date: "2026-05-13",
+    title: "Cache / Web / LSP: Portal Qwen TTL 5분 단축, Tavily Bearer 인증, Doctor /models 스킵, LSP TypeScript SDK 설치",
+    category: "Cache / Web / LSP",
+    summary:
+      "Portal Qwen의 캐시 TTL이 1시간에서 5분으로 단축됩니다 — Alibaba upstream이 5분만 지원하기 때문입니다 (#2a18b62). Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). doctor에서 /models를 지원하지 않는 프로바이더에 대해 헬스체크를 건너뜁니다 (#0c233e7). LSP에서 TypeScript SDK 설치, tsc 누락 스킵, shellcheck 경고 처리가 개선됩니다 (#29c9ff9) (main branch 기준).",
+    commits: [
+      {
+        sha: "2a18b62",
+        message: "fix(cache): drop ttl=1h on Portal Qwen — Alibaba upstream is 5m-only (#24702)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2a18b6283b528817e87354b1c524501b570a7d62",
+      },
+      {
+        sha: "6f92a21",
+        message: "fix(web): add Bearer auth header for Tavily /crawl endpoint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f92a21926f04f2235d5ecd06aa4ae38a327ccbc",
+      },
+      {
+        sha: "0c233e7",
+        message: "fix(doctor): skip /models health check for providers that don't support it",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0c233e70f84a7598f874d6a9b31898408717eabe",
+      },
+      {
+        sha: "29c9ff9",
+        message: "fix(lsp): typescript SDK install + tsc-missing skip + shellcheck warning (#24630)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/29c9ff9ba5d63bc81d53935c3f84f066673a06b2",
+      },
+    ],
+  },
+  {
     date: "2026-05-12",
     title: "CLI / Docs / Kanban: insights 파싱 수정, 내부 문서 링크 보수, Kanban 태스크 게이팅 명확화",
     category: "CLI / Docs / Kanban",
@@ -84,83 +147,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c23a87b",
         message: "union paid recs from nous portal with static list (#24509)",
         href: "https://github.com/NousResearch/hermes-agent/commit/c23a87bc163b188abc7e40fbdccf07a9739231c3",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Prompt Cache / Session: 크로스 세션 1시간 프리픽스 캐시, HERMES_SESSION_ID 노출",
-    category: "Cache / Session",
-    summary:
-      "Claude 모델에 대해 Anthropic / OpenRouter / Nous Portal에서 1시간 단위 크로스 세션 프리픽스 캐시가 도입됩니다 (#7b76366). HERMES_SESSION_ID가 ContextVar 및 환경변수를 통해 에이전트 도구에 노출됩니다 (#2718834). auxiliary 클라이언트가 poisoned 상태일 때 async wrapper를 제거(evict)합니다 (#111b859) (main branch 기준).",
-    commits: [
-      {
-        sha: "7b76366",
-        message: "feat(prompt-cache): cross-session 1h prefix cache for Claude on Anthropic / OpenRouter / Nous Portal (#23828)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7b76366552eb0e2fbdf156c261403202ac064737",
-      },
-      {
-        sha: "2718834",
-        message: "feat: expose HERMES_SESSION_ID to agent tools via ContextVar + env (#23847)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/271883447e7b8a5b9bd95879aca71afadc87616f",
-      },
-      {
-        sha: "111b859",
-        message: "fix(auxiliary): evict async wrappers on poisoned client (follow-up to #23482)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/111b859e49fd7b2abe30c1426ebd74101bb59477",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "CLI / TUI: CJK 와이드문자 마크다운 테이블 정렬, 터미널 너비 초과 시 수직 폴백, 링크 제목 해석, TUI 빌드 단순화",
-    category: "CLI / TUI",
-    summary:
-      "CJK 및 와이드 문자가 포함된 마크다운 테이블의 정렬이 수정됩니다 (#1d00716). 터미널 너비를 초과하는 마크다운 테이블에 수직 폴백이 적용됩니다 (#ea1d046). 마크다운 링크를 읽기 가능한 페이지 제목으로 해석합니다 (#75b428c). TUI 빌드 로직이 단순화되고 오래된 staleness 검사가 제거됩니다 (#c6ca116) (main branch 기준).",
-    commits: [
-      {
-        sha: "1d00716",
-        message: "fix(cli,tui): align CJK / wide-char markdown tables (#23863)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1d007167541ef5405fde620fdcce6dfcd79c0628",
-      },
-      {
-        sha: "ea1d046",
-        message: "fix(cli): vertical fallback for markdown tables wider than terminal (#23948)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ea1d0462cf5ec3799fb0c4b8e39685302e53039b",
-      },
-      {
-        sha: "75b428c",
-        message: "feat(ui-tui): resolve markdown links to readable page titles (#24013)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/75b428c8521d7676991c93b9ecd66eb12c6469b6",
-      },
-      {
-        sha: "c6ca116",
-        message: "refactor(tui): simplify TUI build logic, remove stale staleness checks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c6ca11618a87c6b12e9a4025d339eb905a03ac8c",
-      },
-    ],
-  },
-  {
-    date: "2026-05-11",
-    title: "Dashboard / Model / Bundle: MiniMax 로그인 버튼 수정, kimi/moonshot 프로바이더 매핑, bundle-size 수정",
-    category: "Dashboard / Model",
-    summary:
-      "Dashboard에서 MiniMax 'Login' 버튼이 Claude OAuth를 실행하던 문제가 수정됩니다 (#05bad7b). kimi/moonshot이 PROVIDER_TO_MODELS_DEV에 추가되고, 이미 알려진 프로바이더에 대해서는 OpenRouter를 스킵합니다 (#e2b713c). bundle-size 수정 PR이 머지됩니다 (#825bd50) (main branch 기준).",
-    commits: [
-      {
-        sha: "05bad7b",
-        message: "fix(dashboard): MiniMax 'Login' button launched Claude OAuth (#22832)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/05bad7b1e78adef8da4dcbe91ab95c3e810a96b0",
-      },
-      {
-        sha: "e2b713c",
-        message: "fix(model-metadata): skip OpenRouter for known providers, add kimi/moonshot to PROVIDER_TO_MODELS_DEV",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e2b713cced07076ccb751e28b30d235fede1fa59",
-      },
-      {
-        sha: "825bd50",
-        message: "Merge pull request #18036 from NousResearch/fix/bundle-size",
-        href: "https://github.com/NousResearch/hermes-agent/commit/825bd50e6be1bfbde38d8337c599952da32b9a92",
       },
     ],
   },
