@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-14"; // last new commit: 2026-05-13
+export const hermesUpdatesLastChecked = "2026-05-14"; // last new commit: 2026-05-14
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -154,6 +154,20 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
+    title: "Tools / Video — 통합 video_generate 도구 및 플러거블 프로바이더 백엔드 도입",
+    category: "Tools / Video",
+    summary:
+      "video_generate 도구가 통합되어 플러거블 프로바이더 백엔드 구조로 도입됩니다. 여러 비디오 생성 프로바이더를 동일한 인터페이스로 사용할 수 있도록 백엔드가 추상화됩니다 (#9d42c2c) (main branch 기준).",
+    commits: [
+      {
+        sha: "9d42c2c",
+        message: "feat(video_gen): unified video_generate tool with pluggable provider backends (#25126)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9d42c2c2869e5be531b6302bdc8ea6c6269a9604",
+      },
+    ],
+  },
+  {
+    date: "2026-05-13",
     title: "Messaging / TUI / LSP / CLI — TUI URL 클릭 가능 및 hover-highlight, CLI 시작 배너 리사이즈 보존, LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, zsh 자동완성 생성 수정 및 dead code 정리, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
     category: "Messaging / TUI / LSP / CLI",
     summary:
@@ -292,70 +306,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "1149e75",
         message: "ci(docker): split :latest (releases only) from :main (main HEAD)",
         href: "https://github.com/NousResearch/hermes-agent/commit/1149e75db20f4f3afe7b0ead23e115abcc4b9b11",
-      },
-    ],
-  },
-  {
-    date: "2026-05-12",
-    title: "Dashboard / CLI / Gateway — 플러그인 재스캔, 설정 경로 표시, 헤드리스 브라우저 열기 방지, Windows 경로 인코딩, CJK 표시 폭, TUI 스크롤백 초기화, Telegram 메뉴 명령, Clarify 도구 인라인 키보드, Auxiliary 작업 프로바이더 수정, DeepSeek-V4-Pro 가격 추가",
-    category: "Dashboard / CLI / Gateway",
-    summary:
-      "Dashboard에서 캐시된 플러그인 디렉토리가 제거되면 재스캔됩니다 (#2a3140a). Config 페이지에 실제 설정 파일 경로가 표시됩니다 (#80375cb). 헤드리스 Linux에서 브라우저 자동 열기가 방지됩니다 (#e385877). CLI에서 Windows cp1252 경로 디코딩 문제가 수정됩니다 (#a33ec10). 응답 박스 헤더 레이블에 CJK 문자 표시 폭이 반영됩니다 (#7a4ad5c). TUI 시작 시 스크롤백 버퍼가 초기화되어 tmux 누출이 방지됩니다 (#d33deb7). 인자가 있는 명령이 Telegram 메뉴에 포함됩니다 (#9b2488a). scoped-lock stale 체크에서 lock record argv가 참조됩니다 (#f9559c3). Telegram에서 clarify 도구가 인라인 키보드 버튼과 연결됩니다 (#29d7c24). auxiliary 작업 프로바이더 해결 시 cfg_base_url과 cfg_api_key가 전달됩니다 (#d68a0ec). deepseek-v4-pro가 공식 가격표에 추가됩니다 (#88ede80) (main branch 기준).",
-    commits: [
-      {
-        sha: "2a3140a",
-        message: "fix(dashboard): rescan plugins when cached directory is removed",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2a3140a814ed5a55af49672ba355783c948f0179",
-      },
-      {
-        sha: "80375cb",
-        message: "fix(dashboard): display real config path on Config page",
-        href: "https://github.com/NousResearch/hermes-agent/commit/80375cbe2c2d1da3d98558018fe357cfb9b85faa",
-      },
-      {
-        sha: "e385877",
-        message: "fix(dashboard): skip browser-open on headless Linux to prevent process exit",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e3858772d0465d2c5c386cb788642276138b5253",
-      },
-      {
-        sha: "a33ec10",
-        message: "fix(cli): @-file completion crash on Windows when paths aren't cp1252-decodable",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a33ec10874667469e037c5b0e4dbb1a9c2d3d794",
-      },
-      {
-        sha: "7a4ad5c",
-        message: "fix(cli): use display-width for response box header label to support CJK",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7a4ad5ccb472eed67b4287a4df9d2abb12a2255c",
-      },
-      {
-        sha: "d33deb7",
-        message: "fix(tui): clear scrollback buffer on startup to prevent tmux scrollback leakage",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d33deb7cbea17fbf5377c1e3f46f1016358fe88d",
-      },
-      {
-        sha: "9b2488a",
-        message: "fix: include arg-taking commands in Telegram menu",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9b2488af2af975329fa08a3c5d9893651215b4e2",
-      },
-      {
-        sha: "f9559c3",
-        message: "fix(gateway): consult lock record argv when cmdline unreadable in scoped-lock stale check",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f9559c39c4ee7cc7c40f79efb37a6530b2bf0e0e",
-      },
-      {
-        sha: "29d7c24",
-        message: "feat(gateway): wire clarify tool with inline keyboard buttons on Telegram (#24199)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/29d7c244c5d55230e838c049afb13d307168679c",
-      },
-      {
-        sha: "d68a0ec",
-        message: "fix(auxiliary): pass cfg_base_url and cfg_api_key when resolving task provider",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d68a0ec3839fbe82d04a76bbba0a3f835f72ee15",
-      },
-      {
-        sha: "88ede80",
-        message: "fix(pricing): add deepseek-v4-pro to official docs pricing table",
-        href: "https://github.com/NousResearch/hermes-agent/commit/88ede807c4cab7c2235b4e205cb7ba3521ac1117",
       },
     ],
   },
