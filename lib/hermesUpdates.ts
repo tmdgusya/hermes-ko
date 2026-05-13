@@ -158,11 +158,26 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Tools / Install / Docker — Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한",
-    category: "Tools / Install / Docker",
+    title: "CI / Tools / Install / Docker — e2e 타임아웃 연장, ripgrep 설치, 테스트 i18n 수정, Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한",
+    category: "CI / Tools / Install / Docker",
     summary:
-      "Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6) (main branch 기준).",
+      "e2e CI 잡 타임아웃이 15분으로 연장됩니다 (#8d55305). e2e 잡에 ripgrep이 설치됩니다 (#1beb578). restart drain 테스트에서 i18n t()가 사용됩니다 (#a4289d7). Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6) (main branch 기준).",
     commits: [
+      {
+        sha: "8d55305",
+        message: "fix(ci): bump e2e job timeout to 15 minutes",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8d553056c0017a230228b4f43a66a254f27b3ff3",
+      },
+      {
+        sha: "1beb578",
+        message: "fix(ci): install ripgrep in e2e job",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1beb578fdeff23fbfade93cebae4c921473fe4ec",
+      },
+      {
+        sha: "a4289d7",
+        message: "fix(test): use i18n t() for restart drain assertion",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a4289d74ac99694350497fb01b15aba63ce9ffde",
+      },
       {
         sha: "6f92a21",
         message: "fix(web): add Bearer auth header for Tavily /crawl endpoint",
