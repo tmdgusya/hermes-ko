@@ -17,10 +17,34 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-13",
-    title: "보안 / Gateway — 승인 DELETE 패턴 줄바꿈 우회 수정, hook_ctx 채팅 추적, WhatsApp npm 타임아웃 설정화, WeCom WebSocket 재연결",
+    title: "Cache / Portal — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일",
+    category: "Cache / Portal",
+    summary:
+      "시스템 프롬프트가 세션 내에서 바이트 정적이 되도록 장수명(long-lived) 프리픽스 레이아웃이 제거됩니다 (#b06e999). Alibaba 업스트림이 5분 캐시만 허용하므로 Portal Qwen의 TTL=1h가 삭제됩니다 (#2a18b62). 모든 Portal 요청에 hermes-client-v<version> 태그가 통일 적용됩니다 (#486b692) (main branch 기준).",
+    commits: [
+      {
+        sha: "b06e999",
+        message: "fix(cache): kill long-lived prefix layout — system prompt is now byte-static within a session (#24778)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b06e9993021a8eebd891fc60d52372446315b2f0",
+      },
+      {
+        sha: "2a18b62",
+        message: "fix(cache): drop ttl=1h on Portal Qwen — Alibaba upstream is 5m-only (#24702)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2a18b6283b528817e87354b1c524501b570a7d62",
+      },
+      {
+        sha: "486b692",
+        message: "feat(nous): unified client=hermes-client-v<version> tag on every Portal request (#24779)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/486b692ddd801f8f665d3fff023149fb1cb6509e",
+      },
+    ],
+  },
+  {
+    date: "2026-05-13",
+    title: "보안 / Gateway — 승인 DELETE 줄바꿈 우회 수정, hook_ctx 채팅 추적, WhatsApp 타임아웃 설정화, WeCom 재연결, systemd 재시작 지연 단축",
     category: "보안 / Gateway",
     summary:
-      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75) (main branch 기준).",
+      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75). systemd 재시작 지연이 감소합니다 (#0bc5f7b) (main branch 기준).",
     commits: [
       {
         sha: "80374d4",
@@ -42,11 +66,16 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(wecom): update connection status after WebSocket reconnection",
         href: "https://github.com/NousResearch/hermes-agent/commit/e77fd75c442cc3ec6cfbc91964a6dfe2dc3f777d",
       },
+      {
+        sha: "0bc5f7b",
+        message: "fix(gateway): reduce systemd restart delay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0bc5f7b235117ccf791aab83b92164c0041d34af",
+      },
     ],
   },
   {
     date: "2026-05-13",
-    title: "Agent / Model — GLM 모델 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리",
+    title: "Agent / Model — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리",
     category: "Agent / Model",
     summary:
       "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555) (main branch 기준).",
@@ -75,10 +104,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Messaging / TUI — LINE 소스 생성 수정, Telegram 스레드 폴백, Signal 연결 기기 그룹 메시지, TUI 작업 경로 정확화",
-    category: "Messaging / TUI",
+    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정",
+    category: "Messaging / TUI / LSP",
     summary:
-      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec) (main branch 기준).",
+      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9) (main branch 기준).",
     commits: [
       {
         sha: "7c67097",
@@ -91,6 +120,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/e474130c487c5e4c3d58f309ec2fdb19474cc4dc",
       },
       {
+        sha: "6f285ef",
+        message: "fix(telegram): clear in-progress reaction on cancelled processing (#24628)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f285efb8058ee5bd1b91e4e0ba9187ec8b183e8",
+      },
+      {
         sha: "e713932",
         message: "fix(signal): handle group messages from linked devices in syncMessage path",
         href: "https://github.com/NousResearch/hermes-agent/commit/e71393237efd41af688569c3100baf3a89226b47",
@@ -100,14 +134,58 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(tui): use TERMINAL_CWD in _session_info for accurate status line path",
         href: "https://github.com/NousResearch/hermes-agent/commit/557deece6f0f6081c7fb8bcf30e8abf952165170",
       },
+      {
+        sha: "29c9ff9",
+        message: "fix(lsp): typescript SDK install + tsc-missing skip + shellcheck warning (#24630)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/29c9ff9ba5d63bc81d53935c3f84f066673a06b2",
+      },
+    ],
+  },
+  {
+    date: "2026-05-13",
+    title: "Tools / Install — Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정",
+    category: "Tools / Install",
+    summary:
+      "Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460) (main branch 기준).",
+    commits: [
+      {
+        sha: "6f92a21",
+        message: "fix(web): add Bearer auth header for Tavily /crawl endpoint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f92a21926f04f2235d5ecd06aa4ae38a327ccbc",
+      },
+      {
+        sha: "0c233e7",
+        message: "fix(doctor): skip /models health check for providers that don't support it",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0c233e70f84a7598f874d6a9b31898408717eabe",
+      },
+      {
+        sha: "a54d4b0",
+        message: "fix(send_message): recognize XMPP JIDs as explicit targets",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a54d4b0e46429eb2d13bd41145c74c5e863d1e49",
+      },
+      {
+        sha: "081f936",
+        message: "fix(voice_mode): detect audio in WSL when sd.query_devices() returns empty list but PULSE_SERVER is set",
+        href: "https://github.com/NousResearch/hermes-agent/commit/081f9368bcf341dced07bc515ce26a3b25f2eaa2",
+      },
+      {
+        sha: "327b8ce",
+        message: "fix(install): use stash@{0} instead of git rev-parse refs/stash for autostash recovery",
+        href: "https://github.com/NousResearch/hermes-agent/commit/327b8cee9eaeb17724c7b5daa686e736f7d3b5e4",
+      },
+      {
+        sha: "d8c4460",
+        message: "fix(cron): include whatsapp in _HOME_TARGET_ENV_VARS",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d8c4460fe35e9a471b8b115b73c39527e5492477",
+      },
     ],
   },
   {
     date: "2026-05-12",
-    title: "Dashboard / CLI — 플러그인 재스캔, 설정 경로 표시, 헤드리스 브라우저 열기 방지, Windows 경로 인코딩, CJK 표시 폭",
-    category: "Dashboard / CLI",
+    title: "Dashboard / CLI / Gateway — 플러그인 재스캔, 설정 경로 표시, 헤드리스 브라우저 열기 방지, Windows 경로 인코딩, CJK 표시 폭, TUI 스크롤백 초기화, Telegram 메뉴 명령, LSP 시맨틱 진단",
+    category: "Dashboard / CLI / Gateway",
     summary:
-      "Dashboard에서 캐시된 플러그인 디렉토리가 제거되면 재스캔됩니다 (#2a3140a). Config 페이지에 실제 설정 파일 경로가 표시됩니다 (#80375cb). 헤드리스 Linux에서 브라우저 자동 열기가 방지됩니다 (#e385877). CLI에서 Windows cp1252 경로 디코딩 문제가 수정됩니다 (#a33ec10). 응답 박스 헤더 레이블에 CJK 문자 표시 폭이 반영됩니다 (#7a4ad5c) (main branch 기준).",
+      "Dashboard에서 캐시된 플러그인 디렉토리가 제거되면 재스캔됩니다 (#2a3140a). Config 페이지에 실제 설정 파일 경로가 표시됩니다 (#80375cb). 헤드리스 Linux에서 브라우저 자동 열기가 방지됩니다 (#e385877). CLI에서 Windows cp1252 경로 디코딩 문제가 수정됩니다 (#a33ec10). 응답 박스 헤더 레이블에 CJK 문자 표시 폭이 반영됩니다 (#7a4ad5c). TUI 시작 시 스크롤백 버퍼가 초기화되어 tmux 누출이 방지됩니다 (#d33deb7). 인자가 있는 명령이 Telegram 메뉴에 포함됩니다 (#9b2488a). scoped-lock stale 체크에서 lock record argv가 참조됩니다 (#f9559c3) (main branch 기준).",
     commits: [
       {
         sha: "2a3140a",
@@ -134,34 +212,20 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(cli): use display-width for response box header label to support CJK",
         href: "https://github.com/NousResearch/hermes-agent/commit/7a4ad5ccb472eed67b4287a4df9d2abb12a2255c",
       },
-    ],
-  },
-  {
-    date: "2026-05-12",
-    title: "Gateway / LSP — Telegram clarify 도구 인라인 키보드, LSP 시맨틱 진단, Daytona 샌드박스 마이그레이션, 보조 태스크 프로바이더 설정",
-    category: "Gateway / LSP",
-    summary:
-      "Telegram에서 clarify 도구가 인라인 키보드 버튼과 연동됩니다 (#29d7c24). write_file/patch에서 실제 언어 서버의 시맨틱 진단이 지원됩니다 (#83b9389). Daytona 샌드박스 조회가 cursor-based list()로 마이그레이션됩니다 (#d89553c). 보조(auxiliary) 태스크에서 프로바이더 확인 시 cfg_base_url과 cfg_api_key가 전달됩니다 (#d68a0ec) (main branch 기준).",
-    commits: [
       {
-        sha: "29d7c24",
-        message: "feat(gateway): wire clarify tool with inline keyboard buttons on Telegram (#24199)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/29d7c244c5d55230e838c049afb13d307168679c",
+        sha: "d33deb7",
+        message: "fix(tui): clear scrollback buffer on startup to prevent tmux scrollback leakage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d33deb7cbea17fbf5377c1e3f46f1016358fe88d",
       },
       {
-        sha: "83b9389",
-        message: "feat(lsp): semantic diagnostics from real language servers in write_file/patch (#24168)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/83b93898c2673b29622b76e21e264f055ad7809d",
+        sha: "9b2488a",
+        message: "fix: include arg-taking commands in Telegram menu",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9b2488af2af975329fa08a3c5d9893651215b4e2",
       },
       {
-        sha: "d89553c",
-        message: "fix(daytona): migrate legacy-sandbox lookup to cursor-based list() (#24587)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d89553c2d6e97e5ec40421613b02d25eca730d9b",
-      },
-      {
-        sha: "d68a0ec",
-        message: "fix(auxiliary): pass cfg_base_url and cfg_api_key when resolving task provider",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d68a0ec3839fbe82d04a76bbba0a3f835f72ee15",
+        sha: "f9559c3",
+        message: "fix(gateway): consult lock record argv when cmdline unreadable in scoped-lock stale check",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f9559c39c4ee7cc7c40f79efb37a6530b2bf0e0e",
       },
     ],
   },
