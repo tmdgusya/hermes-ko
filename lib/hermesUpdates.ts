@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-13",
-    title: "Cache / Portal / Provider — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일, Alibaba Cloud→Qwen Cloud 이름 변경",
+    title: "Cache / Portal / Provider — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일, Alibaba Cloud→Qwen Cloud 이름 변경, 커스텀 프로바이더 api_mode 명시적 유지",
     category: "Cache / Portal / Provider",
     summary:
-      "시스템 프롬프트가 세션 내에서 바이트 정적이 되도록 장수명(long-lived) 프리픽스 레이아웃이 제거됩니다 (#b06e999). Alibaba 업스트림이 5분 캐시만 허용하므로 Portal Qwen의 TTL=1h가 삭제됩니다 (#2a18b62). 모든 Portal 요청에 hermes-client-v<version> 태그가 통일 적용됩니다 (#486b692). 프로바이더 선택 UI에서 Alibaba Cloud가 Qwen Cloud로 이름 변경되고 정렬 순서가 조정됩니다 (#1e01b25) (main branch 기준).",
+      "시스템 프롬프트가 세션 내에서 바이트 정적이 되도록 장수명(long-lived) 프리픽스 레이아웃이 제거됩니다 (#b06e999). Alibaba 업스트림이 5분 캐시만 허용하므로 Portal Qwen의 TTL=1h가 삭제됩니다 (#2a18b62). 모든 Portal 요청에 hermes-client-v<version> 태그가 통일 적용됩니다 (#486b692). 프로바이더 선택 UI에서 Alibaba Cloud가 Qwen Cloud로 이름 변경되고 정렬 순서가 조정됩니다 (#1e01b25). 커스텀 프로바이더에서 사용자에게 api_mode를 명시적으로 선택하도록 프롬프트하고 세션 간 유지됩니다 (#6f2d1c8) (main branch 기준).",
     commits: [
       {
         sha: "b06e999",
@@ -41,6 +41,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "1e01b25",
         message: "feat(providers): rename Alibaba Cloud to Qwen Cloud, reorder picker (#24835)",
         href: "https://github.com/NousResearch/hermes-agent/commit/1e01b25e76a9258095930c7428c169835fd03059",
+      },
+      {
+        sha: "6f2d1c8",
+        message: "feat(custom): prompt and persist explicit api_mode for custom providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f2d1c88b76fd85bda3460128fc21819a211ad1e",
       },
     ],
   },
@@ -90,10 +95,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Agent / Model / Tools — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리, 파일 변경 도구 이름 공유 모듈화, 파일 변경 분류 진단 추가",
+    title: "Agent / Model / Tools — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리, 파일 변경 도구 이름 공유 모듈화, 파일 변경 분류 진단 추가, skill_view 이름 충돌 시 거부, 설치 후 채팅 인계 제거",
     category: "Agent / Model / Tools",
     summary:
-      "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555). FILE_MUTATING_TOOL_NAMES이 공유 모듈에서 import되도록 리팩터링됩니다 (#c3094b4). 파일 변경(mutation) 분류 시 진단 정보가 함께 제공됩니다 (#da0ddbf) (main branch 기준).",
+      "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555). FILE_MUTATING_TOOL_NAMES이 공유 모듈에서 import되도록 리팩터링됩니다 (#c3094b4). 파일 변경(mutation) 분류 시 진단 정보가 함께 제공됩니다 (#da0ddbf). skill_view에서 이름 충돌 시 추측 대신 거부하도록 변경됩니다 (#59da8ec). 설치(setup) 완료 후 채팅 인계(handoff)가 제거됩니다 (#256bedb) (main branch 기준).",
     commits: [
       {
         sha: "afa5b81",
@@ -124,6 +129,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "da0ddbf",
         message: "fix: classify landed file mutations with diagnostics",
         href: "https://github.com/NousResearch/hermes-agent/commit/da0ddbf88af3c5aef75caca63eee2d5e01b89895",
+      },
+      {
+        sha: "59da8ec",
+        message: "fix(tools): refuse skill_view name collisions instead of guessing",
+        href: "https://github.com/NousResearch/hermes-agent/commit/59da8ec4ecd1e9527c30312cf150bbe7f5850973",
+      },
+      {
+        sha: "256bedb",
+        message: "fix(setup): drop post-setup chat handoff (#25067)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/256bedb632ece7b9142a20f4e830f5a5fe48ad5f",
       },
     ],
   },
