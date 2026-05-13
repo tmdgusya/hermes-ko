@@ -36,6 +36,7 @@ export const docsSections: DocSection[] = [
       { title: "도구 개요", slug: "overview", description: "68개 내장 도구" },
       { title: "주요 도구", slug: "essential-tools", description: "자주 쓰는 도구들" },
       { title: "도구셋 설정", slug: "toolsets", description: "도구 활성화/비활성화" },
+      { title: "X/Twitter 자동화", slug: "x-twitter-automation", description: "Hermes Tweet으로 X 작업 연결" },
     ],
   },
   {
