@@ -144,11 +144,21 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Messaging / TUI / LSP / CLI — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, zsh 자동완성 생성 수정 및 dead code 정리, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
+    title: "Messaging / TUI / LSP / CLI — TUI URL 클릭 가능 및 hover-highlight, CLI 시작 배너 리사이즈 보존, LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, zsh 자동완성 생성 수정 및 dead code 정리, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
     category: "Messaging / TUI / LSP / CLI",
     summary:
-      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). 손상된 zsh 자동완성 생성이 복구되고 (#8c4bec6), 관련 dead code인 generate_bash_completion / generate_zsh_completion이 제거되며 (#a43d7e6), zsh 자동완성 회귀 테스트가 강화됩니다 (#6d30b4a). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
+      "TUI에서 모든 터미널에서 URL이 클릭 가능하고 hover-highlight가 적용됩니다 (#08671d8). 터미널 리사이즈 시 시작 배너가 보존됩니다 (#e2b2d48). LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). 손상된 zsh 자동완성 생성이 복구되고 (#8c4bec6), 관련 dead code인 generate_bash_completion / generate_zsh_completion이 제거되며 (#a43d7e6), zsh 자동완성 회귀 테스트가 강화됩니다 (#6d30b4a). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
     commits: [
+      {
+        sha: "08671d8",
+        message: "tui: make URLs clickable + hover-highlight in any terminal (#25071)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/08671d877108769e99ce649bd9ea93a861a0b19b",
+      },
+      {
+        sha: "e2b2d48",
+        message: "fix(cli): preserve startup banner on terminal resize",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e2b2d48610263bfc695eaa250e9a71007f1b48cb",
+      },
       {
         sha: "7c67097",
         message: "fix(line): use build_source instead of nonexistent create_source",
