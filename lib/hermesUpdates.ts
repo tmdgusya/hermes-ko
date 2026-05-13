@@ -158,10 +158,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Tools / Install — Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정",
-    category: "Tools / Install",
+    title: "Tools / Install / Docker — Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한",
+    category: "Tools / Install / Docker",
     summary:
-      "Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460) (main branch 기준).",
+      "Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6) (main branch 기준).",
     commits: [
       {
         sha: "6f92a21",
@@ -192,6 +192,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d8c4460",
         message: "fix(cron): include whatsapp in _HOME_TARGET_ENV_VARS",
         href: "https://github.com/NousResearch/hermes-agent/commit/d8c4460fe35e9a471b8b115b73c39527e5492477",
+      },
+      {
+        sha: "942adf6",
+        message: "fix(docker): chown .venv to hermes so lazy_deps can install platform packages (#24841)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/942adf617910f50a39f41bd200d8083bf4cb2bed",
       },
     ],
   },
