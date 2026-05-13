@@ -46,15 +46,20 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "보안 / Gateway — 승인 DELETE 줄바꿈 우회 수정, hook_ctx 채팅 추적, WhatsApp 타임아웃 설정화, WeCom 재연결, systemd 재시작 지연 단축, 어댑터 lazy_deps 보장",
+    title: "보안 / Gateway — 승인 DELETE 줄바꿈 우회 수정, 불필요한 shell=True 감소, hook_ctx 채팅 추적, WhatsApp 타임아웃 설정화, WeCom 재연결, systemd 재시작 지연 단축, 어댑터 lazy_deps 보장",
     category: "보안 / Gateway",
     summary:
-      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75). systemd 재시작 지연이 감소합니다 (#0bc5f7b). Slack, Matrix, DingTalk, Feishu 어댑터에 lazy_deps.ensure()가 추가되어 런타임 의존성이 사전 확인됩니다 (#5d90386) (main branch 기준).",
+      "승인(approval) DELETE 패턴에서 DOTALL 플래그로 인한 줄바꿈 우회가 수정됩니다 (#80374d4). subprocess 호출에서 불필요한 shell=True 사용이 감소합니다 (#d6c9711). Gateway hook_ctx에 chat_id가 추가되어 메시지 출처 추적이 개선됩니다 (#dd1d4e9). WhatsApp npm 설치 타임아웃이 환경변수로 설정 가능해집니다 (#1a4e8f7). WeCom에서 WebSocket 재연결 후 연결 상태가 갱신됩니다 (#e77fd75). systemd 재시작 지연이 감소합니다 (#0bc5f7b). Slack, Matrix, DingTalk, Feishu 어댑터에 lazy_deps.ensure()가 추가되어 런타임 의존성이 사전 확인됩니다 (#5d90386) (main branch 기준).",
     commits: [
       {
         sha: "80374d4",
         message: "fix: approval DELETE pattern DOTALL flag allows newline bypass",
         href: "https://github.com/NousResearch/hermes-agent/commit/80374d4dd97368d00f55c551bdbfc0fab0f011a8",
+      },
+      {
+        sha: "d6c9711",
+        message: "fix(security): reduce unnecessary shell=True in subprocess calls",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d6c9711ba865a8675f14367ac6211d1ae14222bc",
       },
       {
         sha: "dd1d4e9",
