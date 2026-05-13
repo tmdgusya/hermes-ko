@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-13",
-    title: "Cache / Portal — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일",
-    category: "Cache / Portal",
+    title: "Cache / Portal / Provider — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일, Alibaba Cloud→Qwen Cloud 이름 변경",
+    category: "Cache / Portal / Provider",
     summary:
-      "시스템 프롬프트가 세션 내에서 바이트 정적이 되도록 장수명(long-lived) 프리픽스 레이아웃이 제거됩니다 (#b06e999). Alibaba 업스트림이 5분 캐시만 허용하므로 Portal Qwen의 TTL=1h가 삭제됩니다 (#2a18b62). 모든 Portal 요청에 hermes-client-v<version> 태그가 통일 적용됩니다 (#486b692) (main branch 기준).",
+      "시스템 프롬프트가 세션 내에서 바이트 정적이 되도록 장수명(long-lived) 프리픽스 레이아웃이 제거됩니다 (#b06e999). Alibaba 업스트림이 5분 캐시만 허용하므로 Portal Qwen의 TTL=1h가 삭제됩니다 (#2a18b62). 모든 Portal 요청에 hermes-client-v<version> 태그가 통일 적용됩니다 (#486b692). 프로바이더 선택 UI에서 Alibaba Cloud가 Qwen Cloud로 이름 변경되고 정렬 순서가 조정됩니다 (#1e01b25) (main branch 기준).",
     commits: [
       {
         sha: "b06e999",
@@ -36,6 +36,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "486b692",
         message: "feat(nous): unified client=hermes-client-v<version> tag on every Portal request (#24779)",
         href: "https://github.com/NousResearch/hermes-agent/commit/486b692ddd801f8f665d3fff023149fb1cb6509e",
+      },
+      {
+        sha: "1e01b25",
+        message: "feat(providers): rename Alibaba Cloud to Qwen Cloud, reorder picker (#24835)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1e01b25e76a9258095930c7428c169835fd03059",
       },
     ],
   },
@@ -104,10 +109,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정",
+    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정, Weixin gateway 문서화",
     category: "Messaging / TUI / LSP",
     summary:
-      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27) (main branch 기준).",
+      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
     commits: [
       {
         sha: "7c67097",
@@ -143,6 +148,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "80c4b27",
         message: "docs(lsp): document follow-up fixes from #24630 (#24709)",
         href: "https://github.com/NousResearch/hermes-agent/commit/80c4b27437122a605ffc187123a4375b300280f6",
+      },
+      {
+        sha: "a694a26",
+        message: "docs(gateway): mention Weixin in gateway help and docstrings",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a694a263309d1f2ae98fb938b76b013c2808cf35",
       },
     ],
   },
@@ -187,7 +197,7 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-12",
-    title: "Dashboard / CLI / Gateway — 플러그인 재스캔, 설정 경로 표시, 헤드리스 브라우저 열기 방지, Windows 경로 인코딩, CJK 표시 폭, TUI 스크롤백 초기화, Telegram 메뉴 명령, LSP 시맨틱 진단, Clarify 도구 인라인 키보드, Auxiliary 작업 프로바이더 수정, DeepSeek-V4-Pro 가격 추가",
+    title: "Dashboard / CLI / Gateway — 플러그인 재스캔, 설정 경로 표시, 헤드리스 브라우저 열기 방지, Windows 경로 인코딩, CJK 표시 폭, TUI 스크롤백 초기화, Telegram 메뉴 명령, Clarify 도구 인라인 키보드, Auxiliary 작업 프로바이더 수정, DeepSeek-V4-Pro 가격 추가",
     category: "Dashboard / CLI / Gateway",
     summary:
       "Dashboard에서 캐시된 플러그인 디렉토리가 제거되면 재스캔됩니다 (#2a3140a). Config 페이지에 실제 설정 파일 경로가 표시됩니다 (#80375cb). 헤드리스 Linux에서 브라우저 자동 열기가 방지됩니다 (#e385877). CLI에서 Windows cp1252 경로 디코딩 문제가 수정됩니다 (#a33ec10). 응답 박스 헤더 레이블에 CJK 문자 표시 폭이 반영됩니다 (#7a4ad5c). TUI 시작 시 스크롤백 버퍼가 초기화되어 tmux 누출이 방지됩니다 (#d33deb7). 인자가 있는 명령이 Telegram 메뉴에 포함됩니다 (#9b2488a). scoped-lock stale 체크에서 lock record argv가 참조됩니다 (#f9559c3). Telegram에서 clarify 도구가 인라인 키보드 버튼과 연결됩니다 (#29d7c24). auxiliary 작업 프로바이더 해결 시 cfg_base_url과 cfg_api_key가 전달됩니다 (#d68a0ec). deepseek-v4-pro가 공식 가격표에 추가됩니다 (#88ede80) (main branch 기준).",
