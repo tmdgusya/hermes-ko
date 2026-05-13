@@ -124,10 +124,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
-    category: "Messaging / TUI / LSP",
+    title: "Messaging / TUI / LSP / CLI — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, zsh 자동완성 생성 수정 및 dead code 정리, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
+    category: "Messaging / TUI / LSP / CLI",
     summary:
-      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
+      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). 손상된 zsh 자동완성 생성이 복구되고 (#8c4bec6), 관련 dead code인 generate_bash_completion / generate_zsh_completion이 제거되며 (#a43d7e6), zsh 자동완성 회귀 테스트가 강화됩니다 (#6d30b4a). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
     commits: [
       {
         sha: "7c67097",
@@ -153,6 +153,21 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "557deec",
         message: "fix(tui): use TERMINAL_CWD in _session_info for accurate status line path",
         href: "https://github.com/NousResearch/hermes-agent/commit/557deece6f0f6081c7fb8bcf30e8abf952165170",
+      },
+      {
+        sha: "8c4bec6",
+        message: "fix(cli): repair broken zsh completion generation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8c4bec61557a5a02d25956c316c33f7527cbf4b6",
+      },
+      {
+        sha: "a43d7e6",
+        message: "refactor(profiles): remove dead generate_bash_completion / generate_zsh_completion",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a43d7e67b4e7234b94320963ca1811fcc3a9b5d2",
+      },
+      {
+        sha: "6d30b4a",
+        message: "test(cli): strengthen zsh completion regression coverage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6d30b4a7e32561483619145fb083bafe88aa4460",
       },
       {
         sha: "71c6dd0",
