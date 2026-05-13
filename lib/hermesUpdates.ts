@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-13";
+export const hermesUpdatesLastChecked = "2026-05-14";
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -80,10 +80,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-13",
-    title: "Agent / Model — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리",
-    category: "Agent / Model",
+    title: "Agent / Model / Tools — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리, 파일 변경 도구 이름 공유 모듈화, 파일 변경 분류 진단 추가",
+    category: "Agent / Model / Tools",
     summary:
-      "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555) (main branch 기준).",
+      "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555). FILE_MUTATING_TOOL_NAMES이 공유 모듈에서 import되도록 리팩터링됩니다 (#c3094b4). 파일 변경(mutation) 분류 시 진단 정보가 함께 제공됩니다 (#da0ddbf) (main branch 기준).",
     commits: [
       {
         sha: "afa5b81",
@@ -105,14 +105,24 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(retry): use float() for Retry-After header to handle sub-second values",
         href: "https://github.com/NousResearch/hermes-agent/commit/4c825554c185ddb8961e68a7b146c75636c7acfe",
       },
+      {
+        sha: "c3094b4",
+        message: "refactor: import FILE_MUTATING_TOOL_NAMES from shared module",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c3094b46e9a12a8fa19dd0fe4db4bae2f9ff5ef2",
+      },
+      {
+        sha: "da0ddbf",
+        message: "fix: classify landed file mutations with diagnostics",
+        href: "https://github.com/NousResearch/hermes-agent/commit/da0ddbf88af3c5aef75caca63eee2d5e01b89895",
+      },
     ],
   },
   {
     date: "2026-05-13",
-    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정, Weixin gateway 문서화",
+    title: "Messaging / TUI / LSP — LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
     category: "Messaging / TUI / LSP",
     summary:
-      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
+      "LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
     commits: [
       {
         sha: "7c67097",
@@ -138,6 +148,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "557deec",
         message: "fix(tui): use TERMINAL_CWD in _session_info for accurate status line path",
         href: "https://github.com/NousResearch/hermes-agent/commit/557deece6f0f6081c7fb8bcf30e8abf952165170",
+      },
+      {
+        sha: "71c6dd0",
+        message: "fix(cli): add 'lsp' to _BUILTIN_SUBCOMMANDS so plugin discovery is skipped",
+        href: "https://github.com/NousResearch/hermes-agent/commit/71c6dd0dcf97721656056e5d5b99f4a0b62b8846",
       },
       {
         sha: "29c9ff9",
