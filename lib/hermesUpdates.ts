@@ -16,6 +16,63 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 
 export const hermesUpdates: HermesUpdate[] = [
   {
+    date: "2026-05-14",
+    title: "Skills / EVM — EVM 멀티체인 스킬 도입, blockchain/base를 blockchain/evm으로 통합, SKILL.md 최신화",
+    category: "Skills / EVM",
+    summary:
+      "8개 체인과 14개 명령어를 지원하는 EVM 멀티체인 스킬이 추가됩니다 (#aa1e2ed). 기존 blockchain/base가 blockchain/evm으로 병합되며 PR #2010이 복구(salvage)됩니다 (#e3fc081). EVM 스킬의 SKILL.md가 최신 포맷으로 정리됩니다 (#66c7096) (main branch 기준).",
+    commits: [
+      {
+        sha: "aa1e2ed",
+        message: "feat: add EVM multi-chain skill (8 chains, 14 commands)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/aa1e2edd35a8e14fc02ad13b0fc4e8cecd10bbfc",
+      },
+      {
+        sha: "e3fc081",
+        message: "feat(skills): merge blockchain/base into blockchain/evm; salvage PR #2010",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e3fc0814996d043fa9badce7da241ef02d5f905b",
+      },
+      {
+        sha: "66c7096",
+        message: "chore(skills/evm): tighten SKILL.md to modern format",
+        href: "https://github.com/NousResearch/hermes-agent/commit/66c70966cd2ae3c13bacf4d57522cf86f469b9d3",
+      },
+    ],
+  },
+  {
+    date: "2026-05-14",
+    title: "Runtime — OpenAI/Codex 모델용 선택적 codex app-server 런타임 도입",
+    category: "Runtime / Codex",
+    summary:
+      "OpenAI/Codex 모델을 위한 선택적(optional) codex app-server 런타임이 도입됩니다 (#091d8e1) (main branch 기준).",
+    commits: [
+      {
+        sha: "091d8e1",
+        message: "feat(codex-runtime): optional codex app-server runtime for OpenAI/Codex models (#24182)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/091d8e10306613819c6cf3a64dda5b166c3048cd",
+      },
+    ],
+  },
+  {
+    date: "2026-05-14",
+    title: "Tools Config / Docs — Reconfigure 경로 video_gen.provider 기록 수정, 인메모리 플러그인 PR 종료 및 스킬 표준 문서화",
+    category: "Tools Config / Docs",
+    summary:
+      "Reconfigure 도구 경로에서 video_gen.provider 설정이 올바르게 기록됩니다 (#dd5a950). 인메모리(in-tree) 메모리 플러그인에 대한 신규 PR이 종료되고 스킬 표준이 문서화됩니다 (#ef98e3f) (main branch 기준).",
+    commits: [
+      {
+        sha: "dd5a950",
+        message: "fix(tools-config): write video_gen.provider on Reconfigure tool path (#25307)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dd5a9502e389781275a1649716f6d3ca4ae98c51",
+      },
+      {
+        sha: "ef98e3f",
+        message: "docs: close in-tree memory plugins to new PRs and codify skill standards (#25302)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ef98e3f9e60b6e4066050bd8c6d13409f9fedf5d",
+      },
+    ],
+  },
+  {
     date: "2026-05-13",
     title: "Cache / Portal / Provider — 프리픽스 레이아웃 수명 단축, Portal Qwen TTL 조정, 클라이언트 버전 태그 통일, Alibaba Cloud→Qwen Cloud 이름 변경, 커스텀 프로바이더 api_mode 명시적 유지",
     category: "Cache / Portal / Provider",
@@ -100,212 +157,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "cc64a04",
         message: "test(gateway): make queued follow-up regression generic",
         href: "https://github.com/NousResearch/hermes-agent/commit/cc64a04f61ff27ba7940884006a7632bf09e1ecb",
-      },
-    ],
-  },
-  {
-    date: "2026-05-13",
-    title: "Agent / Model / Tools — GLM 도구 사용 강제, 모델 전환 시 context_length 초기화, thread_id 메타데이터 전달, Retry-After 소수점 처리, 파일 변경 도구 이름 공유 모듈화, 파일 변경 분류 진단 추가, skill_view 이름 충돌 시 거부, 설치 후 채팅 인계 제거",
-    category: "Agent / Model / Tools",
-    summary:
-      "GLM 모델에 대해 도구 사용(tool-use) 강제(enforcement)가 prompt_builder에 주입됩니다 (#afa5b81). 모델 전환 시 기존 context_length 설정이 초기화됩니다 (#8ac3514). _send_via_adapter 라이브 경로에서 thread_id가 메타데이터로 전달됩니다 (#420762f). Retry-After 헤더에서 소수점(sub-second) 값이 float로 처리됩니다 (#4c82555). FILE_MUTATING_TOOL_NAMES이 공유 모듈에서 import되도록 리팩터링됩니다 (#c3094b4). 파일 변경(mutation) 분류 시 진단 정보가 함께 제공됩니다 (#da0ddbf). skill_view에서 이름 충돌 시 추측 대신 거부하도록 변경됩니다 (#59da8ec). 설치(setup) 완료 후 채팅 인계(handoff)가 제거됩니다 (#256bedb) (main branch 기준).",
-    commits: [
-      {
-        sha: "afa5b81",
-        message: "fix(prompt_builder): inject tool-use enforcement for GLM models",
-        href: "https://github.com/NousResearch/hermes-agent/commit/afa5b81918617126a489f21874cb39b1af7a7e93",
-      },
-      {
-        sha: "8ac3514",
-        message: "fix(agent): clear stale config context_length on model switch",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ac351407ef8c00b3ab8f0be3a944ba921052a39",
-      },
-      {
-        sha: "420762f",
-        message: "fix(tools): forward thread_id via metadata in _send_via_adapter live path",
-        href: "https://github.com/NousResearch/hermes-agent/commit/420762f867460bc603d7aab0f6e9684f63fad5a2",
-      },
-      {
-        sha: "4c82555",
-        message: "fix(retry): use float() for Retry-After header to handle sub-second values",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4c825554c185ddb8961e68a7b146c75636c7acfe",
-      },
-      {
-        sha: "c3094b4",
-        message: "refactor: import FILE_MUTATING_TOOL_NAMES from shared module",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c3094b46e9a12a8fa19dd0fe4db4bae2f9ff5ef2",
-      },
-      {
-        sha: "da0ddbf",
-        message: "fix: classify landed file mutations with diagnostics",
-        href: "https://github.com/NousResearch/hermes-agent/commit/da0ddbf88af3c5aef75caca63eee2d5e01b89895",
-      },
-      {
-        sha: "59da8ec",
-        message: "fix(tools): refuse skill_view name collisions instead of guessing",
-        href: "https://github.com/NousResearch/hermes-agent/commit/59da8ec4ecd1e9527c30312cf150bbe7f5850973",
-      },
-      {
-        sha: "256bedb",
-        message: "fix(setup): drop post-setup chat handoff (#25067)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/256bedb632ece7b9142a20f4e830f5a5fe48ad5f",
-      },
-    ],
-  },
-  {
-    date: "2026-05-13",
-    title: "Tools / Video — 통합 video_generate 도구 및 플러거블 프로바이더 백엔드 도입",
-    category: "Tools / Video",
-    summary:
-      "video_generate 도구가 통합되어 플러거블 프로바이더 백엔드 구조로 도입됩니다. 여러 비디오 생성 프로바이더를 동일한 인터페이스로 사용할 수 있도록 백엔드가 추상화됩니다 (#9d42c2c) (main branch 기준).",
-    commits: [
-      {
-        sha: "9d42c2c",
-        message: "feat(video_gen): unified video_generate tool with pluggable provider backends (#25126)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9d42c2c2869e5be531b6302bdc8ea6c6269a9604",
-      },
-    ],
-  },
-  {
-    date: "2026-05-13",
-    title: "Messaging / TUI / LSP / CLI — TUI URL 클릭 가능 및 hover-highlight, CLI 시작 배너 리사이즈 보존, LINE 소스 생성 수정, Telegram 스레드 폴백 및 리액션 정리, Signal 연결 기기 그룹 메시지, TUI 경로 정확화, zsh 자동완성 생성 수정 및 dead code 정리, LSP TypeScript SDK 설치 수정, LSP 서브커맨드 플러그인 탐색 스킵, Weixin gateway 문서화",
-    category: "Messaging / TUI / LSP / CLI",
-    summary:
-      "TUI에서 모든 터미널에서 URL이 클릭 가능하고 hover-highlight가 적용됩니다 (#08671d8). 터미널 리사이즈 시 시작 배너가 보존됩니다 (#e2b2d48). LINE에서 존재하지 않는 create_source 대신 build_source가 사용됩니다 (#7c67097). Telegram에서 slash-confirm 결과 전송 시 스레드 폴백 헬퍼가 사용됩니다 (#e474130). 처리 취소 시 진행 중인 리액션이 정리됩니다 (#6f285ef). Signal에서 연결된(linked) 기기에서 온 그룹 메시지가 syncMessage 경로에서 처리됩니다 (#e713932). TUI 상태 표시줄에 TERMINAL_CWD가 사용되어 경로가 정확해집니다 (#557deec). 손상된 zsh 자동완성 생성이 복구되고 (#8c4bec6), 관련 dead code인 generate_bash_completion / generate_zsh_completion이 제거되며 (#a43d7e6), zsh 자동완성 회귀 테스트가 강화됩니다 (#6d30b4a). CLI 내장 서브커맨드 목록에 'lsp'가 추가되어 플러그인 탐색이 스킵됩니다 (#71c6dd0). LSP TypeScript SDK 설치 및 tsc-missing 스킵이 수정됩니다 (#29c9ff9). LSP 후속 수정 사항이 문서화됩니다 (#80c4b27). Gateway 도움말과 독스트링에 Weixin이 추가됩니다 (#a694a26) (main branch 기준).",
-    commits: [
-      {
-        sha: "08671d8",
-        message: "tui: make URLs clickable + hover-highlight in any terminal (#25071)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/08671d877108769e99ce649bd9ea93a861a0b19b",
-      },
-      {
-        sha: "e2b2d48",
-        message: "fix(cli): preserve startup banner on terminal resize",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e2b2d48610263bfc695eaa250e9a71007f1b48cb",
-      },
-      {
-        sha: "7c67097",
-        message: "fix(line): use build_source instead of nonexistent create_source",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7c67097325f5fe4b4b703fed16ebafca7ca686dd",
-      },
-      {
-        sha: "e474130",
-        message: "fix(telegram): use thread fallback helper in slash-confirm result send",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e474130c487c5e4c3d58f309ec2fdb19474cc4dc",
-      },
-      {
-        sha: "6f285ef",
-        message: "fix(telegram): clear in-progress reaction on cancelled processing (#24628)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6f285efb8058ee5bd1b91e4e0ba9187ec8b183e8",
-      },
-      {
-        sha: "e713932",
-        message: "fix(signal): handle group messages from linked devices in syncMessage path",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e71393237efd41af688569c3100baf3a89226b47",
-      },
-      {
-        sha: "557deec",
-        message: "fix(tui): use TERMINAL_CWD in _session_info for accurate status line path",
-        href: "https://github.com/NousResearch/hermes-agent/commit/557deece6f0f6081c7fb8bcf30e8abf952165170",
-      },
-      {
-        sha: "8c4bec6",
-        message: "fix(cli): repair broken zsh completion generation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8c4bec61557a5a02d25956c316c33f7527cbf4b6",
-      },
-      {
-        sha: "a43d7e6",
-        message: "refactor(profiles): remove dead generate_bash_completion / generate_zsh_completion",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a43d7e67b4e7234b94320963ca1811fcc3a9b5d2",
-      },
-      {
-        sha: "6d30b4a",
-        message: "test(cli): strengthen zsh completion regression coverage",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6d30b4a7e32561483619145fb083bafe88aa4460",
-      },
-      {
-        sha: "71c6dd0",
-        message: "fix(cli): add 'lsp' to _BUILTIN_SUBCOMMANDS so plugin discovery is skipped",
-        href: "https://github.com/NousResearch/hermes-agent/commit/71c6dd0dcf97721656056e5d5b99f4a0b62b8846",
-      },
-      {
-        sha: "29c9ff9",
-        message: "fix(lsp): typescript SDK install + tsc-missing skip + shellcheck warning (#24630)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/29c9ff9ba5d63bc81d53935c3f84f066673a06b2",
-      },
-      {
-        sha: "80c4b27",
-        message: "docs(lsp): document follow-up fixes from #24630 (#24709)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/80c4b27437122a605ffc187123a4375b300280f6",
-      },
-      {
-        sha: "a694a26",
-        message: "docs(gateway): mention Weixin in gateway help and docstrings",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a694a263309d1f2ae98fb938b76b013c2808cf35",
-      },
-    ],
-  },
-  {
-    date: "2026-05-13",
-    title: "CI / Tools / Install / Docker — e2e 타임아웃 연장, ripgrep 설치, 테스트 i18n 수정, Tavily Bearer 인증, doctor /models 스킵, XMPP JID 대상 인식, WSL 오디오 감지, autostash 복구 수정, Docker .venv 권한, Docker 태그 분리",
-    category: "CI / Tools / Install / Docker",
-    summary:
-      "e2e CI 잡 타임아웃이 15분으로 연장됩니다 (#8d55305). e2e 잡에 ripgrep이 설치됩니다 (#1beb578). restart drain 테스트에서 i18n t()가 사용됩니다 (#a4289d7). Tavily /crawl 엔드포인트에 Bearer 인증 헤더가 추가됩니다 (#6f92a21). /models 미지원 프로바이더에서 doctor 체크가 스킵됩니다 (#0c233e7). XMPP JID가 명시적 전송 대상으로 인식됩니다 (#a54d4b0). WSL 환경에서 PULSE_SERVER 설정 시 오디오 장치가 감지됩니다 (#081f936). git autostash 복구 시 stash@{0}가 refs/stash 대신 사용됩니다 (#327b8ce). cron에 whatsapp 홈 타겟 환경변수가 포함됩니다 (#d8c4460). Docker 이미지에서 .venv 디렉토리가 hermes 사용자 소유로 변경되어 lazy_deps가 플랫폼 패키지를 설치할 수 있습니다 (#942adf6). Docker :latest 태그가 릴리즈 전용으로 분리되고 :main 태그가 main HEAD를 가리킵니다 (#1149e75) (main branch 기준).",
-    commits: [
-      {
-        sha: "8d55305",
-        message: "fix(ci): bump e2e job timeout to 15 minutes",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8d553056c0017a230228b4f43a66a254f27b3ff3",
-      },
-      {
-        sha: "1beb578",
-        message: "fix(ci): install ripgrep in e2e job",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1beb578fdeff23fbfade93cebae4c921473fe4ec",
-      },
-      {
-        sha: "a4289d7",
-        message: "fix(test): use i18n t() for restart drain assertion",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a4289d74ac99694350497fb01b15aba63ce9ffde",
-      },
-      {
-        sha: "6f92a21",
-        message: "fix(web): add Bearer auth header for Tavily /crawl endpoint",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6f92a21926f04f2235d5ecd06aa4ae38a327ccbc",
-      },
-      {
-        sha: "0c233e7",
-        message: "fix(doctor): skip /models health check for providers that don't support it",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0c233e70f84a7598f874d6a9b31898408717eabe",
-      },
-      {
-        sha: "a54d4b0",
-        message: "fix(send_message): recognize XMPP JIDs as explicit targets",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a54d4b0e46429eb2d13bd41145c74c5e863d1e49",
-      },
-      {
-        sha: "081f936",
-        message: "fix(voice_mode): detect audio in WSL when sd.query_devices() returns empty list but PULSE_SERVER is set",
-        href: "https://github.com/NousResearch/hermes-agent/commit/081f9368bcf341dced07bc515ce26a3b25f2eaa2",
-      },
-      {
-        sha: "327b8ce",
-        message: "fix(install): use stash@{0} instead of git rev-parse refs/stash for autostash recovery",
-        href: "https://github.com/NousResearch/hermes-agent/commit/327b8cee9eaeb17724c7b5daa686e736f7d3b5e4",
-      },
-      {
-        sha: "d8c4460",
-        message: "fix(cron): include whatsapp in _HOME_TARGET_ENV_VARS",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d8c4460fe35e9a471b8b115b73c39527e5492477",
-      },
-      {
-        sha: "942adf6",
-        message: "fix(docker): chown .venv to hermes so lazy_deps can install platform packages (#24841)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/942adf617910f50a39f41bd200d8083bf4cb2bed",
-      },
-      {
-        sha: "1149e75",
-        message: "ci(docker): split :latest (releases only) from :main (main HEAD)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1149e75db20f4f3afe7b0ead23e115abcc4b9b11",
       },
     ],
   },
