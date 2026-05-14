@@ -17,41 +17,41 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-14",
-    title: "Tools / MCP / Plugins — 웹 검색 플러그인 아키텍처 도입 및 7-provider 마이그레이션·레거시 완전 제거",
-    category: "Tools / MCP / Plugins",
+    title: "채널 통합 — WhatsApp 상태·채널 방송 필터링, Discord clarify 버튼·메시지 전달, Telegram 마크다운·모델 전환",
+    category: "채널 통합",
     summary:
-      "image_gen 패턴을 따르는 WebSearchProvider ABC가 도입되고 레지스트리가 추가됩니다. ctx.register_web_search_provider() 파사드가 추가되고, ABC에 supports_crawl 및 async-extract 시맨틱이 확장됩니다. brave_free·ddgs·searxng·exa·parallel·firecrawl·tavily 7개 프로바이더가 플러그인으로 마이그레이션됩니다. 레거시 tools/web_providers/ 디렉토리와 인라인 벤더 헬퍼가 완전 삭제되어 플러그인이 유일한 소스가 됩니다. 마이그레이션 후 firecrawl crawl·website-policy gate·error envelope가 보존되고, 7-plugin 테스트 커버리지가 추가됩니다 (main branch 기준).",
+      "WhatsApp에서 status broadcasts와 channel newsletters가 에이전트 디스패치 전에 삭제됩니다. WhatsApp에서 인용된 답글 메타데이터가 노출됩니다. Discord에서 clarify 선택지가 버튼으로 렌더링되고, message_snapshots를 통해 전달된 메시지가 처리됩니다. Telegram에서 동적 마크다운이 callback flow에서 이스케이프되고, 모델 전환 성공 경로가 복원됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "2cea98e",
-        message: "feat(web): add WebSearchProvider ABC mirroring image_gen template",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2cea98e143b4016b277fb3221728e3efbb4c0cc4",
+        sha: "9ed751b",
+        message: "fix(whatsapp): drop status broadcasts and channel newsletters before agent dispatch (#25845)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9ed751b96706ffd343ae26531cd0e2152a1c7036",
       },
       {
-        sha: "f29f02a",
-        message: "feat(plugins): add ctx.register_web_search_provider() facade",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f29f02a73fd021bc8a9ee14f0aaf176e46ce1a5f",
+        sha: "bd33a48",
+        message: "feat(whatsapp): surface quoted reply metadata",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bd33a48a5839f235f17ffa1cc2542852ce55067f",
       },
       {
-        sha: "d403cf0",
-        message: "feat(web): brave_free plugin (first migration from tools/web_providers/)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d403cf018c8e6a887e5b867bf6de76cc4aadacd9",
+        sha: "1dca6a6",
+        message: "feat(discord): render clarify choices as buttons",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1dca6a6960f87b07a7d270893ac35211c97913c8",
       },
       {
-        sha: "31fcde8",
-        message: "feat(web): tavily plugin — first three-capability plugin (search + extract + crawl)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/31fcde876c3730c33a53541931ad073e705cdfef",
+        sha: "b59ed9c",
+        message: "fix(discord): handle forwarded messages via message_snapshots",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b59ed9c6bc564e1158875dc795141405c4ed927d",
       },
       {
-        sha: "39b4ebf",
-        message: "refactor(web): delete legacy tools/web_providers/ directory + migrate ABC tests",
-        href: "https://github.com/NousResearch/hermes-agent/commit/39b4ebfceaeeb56d1c197dd22028053e5c2c1190",
+        sha: "26deeea",
+        message: "fix(telegram): restore model-switch success path + author map",
+        href: "https://github.com/NousResearch/hermes-agent/commit/26deeea830eb4a4aa39651fd7b2fbb523eb2a78d",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Gateway / State — QQBot·Feishu·이미지 첨부 전달·multi-choice clarify·MCP 인증·ACP 승인·PID",
+    title: "Gateway / State — QQBot·Feishu·이미지 첨부·multi-choice clarify·MCP 인증·ACP 승인·PID·api_mode",
     category: "Gateway / State",
     summary:
       "QQBot 재연결 루프가 유지되도록 수정됩니다. Feishu WebSocket connect 오버라이드가 동기화되어 컨텍스트 매니저가 보존됩니다. 백그라운드 에이전트 태스크에 이미지 첨부가 전달됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. 초기 MCP 인증 실패 시 재시도가 중지됩니다. 프로바이더 간 위임 시 api_mode가 상승되지 않도록 수정됩니다. ACP approval bridging이 간소화됩니다. Windows에서 gateway PID 탐지 실패가 수정됩니다 (main branch 기준).",
@@ -67,19 +67,19 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/71191b7e8e075037a814f77d37d4609e97f12029",
       },
       {
-        sha: "3adde24",
-        message: "fix(gateway): forward image attachments to background agent tasks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3adde245b72cd19061d413993c4a56138a023295",
+        sha: "f26098e",
+        message: "fix(gateway): enable text-intercept for multi-choice clarify fallback (#25567)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f26098e22f17025b9d57b176898c7d60d5b5ce8b",
       },
       {
-        sha: "1247ff2",
-        message: "fix: stop retrying initial MCP auth failures",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1247ff2dca0dbc68957ee4ad153aa34f165a184d",
+        sha: "f0e46c5",
+        message: "fix: do not inherit api_mode when delegating across providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f0e46c5e9e8d4f780561554684e33810fc4f2f8f",
       },
       {
-        sha: "fd9c150",
-        message: "fix: gateway PID detection fails on Windows (two issues)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fd9c1504da51f204506d0b37ec592d5bed059504",
+        sha: "31b4721",
+        message: "fix: simplify ACP approval bridging",
+        href: "https://github.com/NousResearch/hermes-agent/commit/31b4721791aa163c80b5f78a7fb2f1fb3530d434",
       },
     ],
   },
@@ -96,58 +96,24 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/8f19078c6ad72300676376f5824fcf50cd9b693b",
       },
       {
+        sha: "efa97af",
+        message: "fix(agent): add Xiaomi MiMo to reasoning_content echo-back providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/efa97af7e25f0cbef92ed15bbcb47e4788c83058",
+      },
+      {
         sha: "12f755c",
         message: "fix(codex-runtime): retire wedged sessions + post-tool watchdog + OAuth refresh classify (#25769)",
         href: "https://github.com/NousResearch/hermes-agent/commit/12f755c9eb56a7927065c305699fc983bc1d998a",
       },
       {
-        sha: "26933c2",
-        message: "fix(agent/gemini-cloudcode): seed delta defaults for reasoning-only stream chunks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/26933c2f592bda25df735c555620a2a978cfefb6",
-      },
-      {
-        sha: "c03acca",
-        message: "fix: use AUTOINCREMENT id for message ordering instead of timestamp",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c03acca508bd06c78761af2653ebef1a1448b307",
+        sha: "d110ce4",
+        message: "fix(clipboard): only read PNG signature bytes, not entire file",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d110ce44933446eff800e6100fc54ccae821c4ad",
       },
       {
         sha: "72b5dd8",
         message: "fix(update): refresh lazy-installed backends on hermes update (#25766)",
         href: "https://github.com/NousResearch/hermes-agent/commit/72b5dd865865f2d2c9f5b492bcac9dcdaf045d34",
-      },
-    ],
-  },
-  {
-    date: "2026-05-14",
-    title: "채널 통합 — Discord clarify 버튼·메시지 전달, WhatsApp 인용 메타데이터, Telegram 마크다운·모델 전환",
-    category: "채널 통합",
-    summary:
-      "Discord에서 clarify 선택지가 버튼으로 렌더링됩니다. Discord에서 message_snapshots를 통해 전달된 메시지가 처리됩니다. WhatsApp에서 인용된 답글 메타데이터가 노출됩니다. Telegram에서 동적 마크다운이 callback flow에서 이스케이프됩니다. Telegram에서 모델 전환 성공 경로가 복원됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "1dca6a6",
-        message: "feat(discord): render clarify choices as buttons",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1dca6a6960f87b07a7d270893ac35211c97913c8",
-      },
-      {
-        sha: "b59ed9c",
-        message: "fix(discord): handle forwarded messages via message_snapshots",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b59ed9c6bc564e1158875dc795141405c4ed927d",
-      },
-      {
-        sha: "bd33a48",
-        message: "feat(whatsapp): surface quoted reply metadata",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bd33a48a5839f235f17ffa1cc2542852ce55067f",
-      },
-      {
-        sha: "a694040",
-        message: "fix(telegram): escape dynamic markdown in callback flows",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a6940405201e9642df24ceb7a799347ca002c9b2",
-      },
-      {
-        sha: "26deeea",
-        message: "fix(telegram): restore model-switch success path + author map",
-        href: "https://github.com/NousResearch/hermes-agent/commit/26deeea830eb4a4aa39651fd7b2fbb523eb2a78d",
       },
     ],
   },
@@ -169,28 +135,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/17e0e9d174b22c55d02db42c8ada5a035b220a57",
       },
       {
-        sha: "d18618f",
-        message: "fix(honcho): respect HOME-anchored default profile fallback",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d18618f48f18c0af5c4bba889a087557ab53a6df",
-      },
-      {
         sha: "1dd3398",
         message: "docs: clarify media impact on session context",
         href: "https://github.com/NousResearch/hermes-agent/commit/1dd33988e26d8f16fb752b3c014a8509b2db569e",
       },
       {
-        sha: "d8fdec1",
-        message: "chore(release): add AUTHOR_MAP entries for second new-contributor batch",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d8fdec16d5a2a50e5463351af073e4401b6ed0ed",
+        sha: "2ff744a",
+        message: "chore(release): add AUTHOR_MAP entries for 25-PR new-contributor batch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2ff744ae2c4e9f54058c0b1ec42e0511586be574",
+      },
+      {
+        sha: "8de26e2",
+        message: "docs(lsp): replace \"git worktree\" with \"git repository\" in LSP docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8de26e280ed8126194dbbccaf9969ae5979c0aed",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "설치 / 보안 — .env 권한 제한, Windows install.ps1, pip 엔트리 포인트 보존, 터미널 safety filter",
+    title: "설치 / 보안 — .env 권한 제한, Windows install.ps1, non-sudo 서비스 사용자, pip 엔트리 포인트, 터미널 safety filter",
     category: "설치 / 보안",
     summary:
-      ".env 파일 권한이 0600으로 제한됩니다. Windows install.ps1에서 uv sync가 venv에 고정되고 기본 import가 검증됩니다. symlinked install 재실행 시 pip entry point가 보존됩니다. 터미널 safety filter에서 따옴표 안의 키워드에 대한 오탐이 방지됩니다. OpenViking 업로드에서 심볼릭 링크가 스킵됩니다 (main branch 기준).",
+      ".env 파일 권한이 0600으로 제한됩니다. Windows install.ps1에서 uv sync가 venv에 고정되고 기본 import가 검증됩니다. apt 배포판에서 non-sudo 서비스 사용자 설치가 지원됩니다. symlinked install 재실행 시 pip entry point가 보존됩니다. 터미널 safety filter에서 따옴표 안의 키워드에 대한 오탐이 방지됩니다. OpenViking 업로드에서 심볼릭 링크가 스킵됩니다 (main branch 기준).",
     commits: [
       {
         sha: "a952ca3",
@@ -198,14 +164,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/a952ca3ff6af24f867737094d2d13ab2a3ba3bbe",
       },
       {
+        sha: "78b842c",
+        message: "fix(install): support non-sudo service-user installs on apt distros (#25814)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/78b842c995d70fccb7fd1113f85e766c1483e562",
+      },
+      {
         sha: "524490a",
         message: "fix(install.ps1): pin uv sync to venv\\, verify baseline imports on Windows (#25755)",
         href: "https://github.com/NousResearch/hermes-agent/commit/524490a40937c2a74d7969842a31acaba8d11124",
-      },
-      {
-        sha: "c75e1a0",
-        message: "fix(install): preserve pip entry point when re-running on symlinked install",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c75e1a03f9dacd96f5b822ef2102789c926059e7",
       },
       {
         sha: "364ddd4",
