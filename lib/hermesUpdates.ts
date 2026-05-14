@@ -17,6 +17,25 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-14",
+    title: "Slack / Tools — 스레드에서 !cmd 대체 접두어 지원, tools 메뉴 로딩 성능 개선",
+    category: "Slack / Tools",
+    summary:
+      "Slack 스레드에서 !cmd를 / 명령어의 대체 접두어로 사용할 수 있습니다 (#6122a79). get_nous_auth_status()와 load_env() 결과가 캐싱되어 hermes tools 메뉴 응답 속도가 개선됩니다 (#3f13d78) (main branch 기준).",
+    commits: [
+      {
+        sha: "6122a79",
+        message: "feat(slack): support !cmd as alternate prefix for slash commands in threads (#25355)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6122a79aab45041d8b7c8d775f95be3ac6ce579f",
+      },
+      {
+        sha: "3f13d78",
+        message: "perf(tools): cache get_nous_auth_status() and load_env() to fix slow `hermes tools` menus (#25341)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3f13d78088d1a9a35eb542f29b16d11d534066e7",
+      },
+    ],
+  },
+  {
+    date: "2026-05-14",
     title: "Skills / EVM — EVM 멀티체인 스킬 도입, blockchain/base를 blockchain/evm으로 통합, SKILL.md 최신화",
     category: "Skills / EVM",
     summary:
