@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-14"; // last new commit: 2026-05-14
+export const hermesUpdatesLastChecked = "2026-05-15"; // last new commit: 2026-05-14
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -260,7 +260,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Config / Docs — NovitaAI LLM 프로바이더, WhatsApp 인용 메타데이터, honcho 프로파일, LSP 문서",
     category: "Config / Docs",
     summary:
-      "NovitaAI가 새로운 LLM 프로바이더로 추가됩니다 (#c76e879). NovitaAI 설명이 '90+ models, pay-per-use'로 업데이트됩니다 (#1551ce4). NovitaAI 프로바이더 포지셔닝이 업데이트됩니다 (#ddb8d8f). NovitaAI 캐시 가격 및 테스트 커버리지가 추가됩니다 (#0f0e20e). WhatsApp에서 인용된 답글 메타데이터가 노출됩니다 (#bd33a48). Discord에서 message_snapshots를 통해 전달된 메시지가 처리됩니다 (#b59ed9c). honcho의 HOME-기반 기본 프로파일 폴백이 존중됩니다 (#d18618f). honcho profile-mode 테스트가 추가됩니다 (#c872f07). tirith 링크가 올바른 repo를 가리키도록 수정됩니다 (#796c8a2). LSP 문서에서 'git worktree'가 'git repository'로 수정됩니다 (#8de26e2) (main branch 기준).",
+      "NovitaAI가 새로운 LLM 프로바이더로 추가됩니다 (#c76e879). NovitaAI 설명이 '90+ models, pay-per-use'로 업데이트됩니다 (#1551ce4). NovitaAI 프로바이더 포지셔닝이 업데이트됩니다 (#ddb8d8f). NovitaAI 캐시 가격 및 테스트 커버리지가 추가됩니다 (#0f0e20e). WhatsApp에서 인용된 답글 메타데이터가 노출됩니다 (#bd33a48). Discord에서 message_snapshots를 통해 전달된 메시지가 처리됩니다 (#b59ed9c). honcho의 HOME-기반 기본 프로파일 폴백이 존중됩니다 (#d18618f). honcho profile-mode 테스트가 추가됩니다 (#c872f07). tirith 링크가 올바른 repo를 가리키도록 수정됩니다 (#796c8a2). LSP 문서에서 'git worktree'가 'git repository'로 수정됩니다 (#8de26e2). 25-PR 신규 기여자 배치에 대한 AUTHOR_MAP 항목이 추가됩니다 (#2ff744a). mrshu에 대한 AUTHOR_MAP 항목이 추가됩니다 (#16796ac) (main branch 기준).",
     commits: [
       {
         sha: "c76e879",
@@ -311,6 +311,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "8de26e2",
         message: 'docs(lsp): replace "git worktree" with "git repository" in LSP docs',
         href: "https://github.com/NousResearch/hermes-agent/commit/8de26e280ed8126194dbbccaf9969ae5979c0aed",
+      },
+      {
+        sha: "2ff744a",
+        message: "chore(release): add AUTHOR_MAP entries for 25-PR new-contributor batch",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2ff744ae2c4e9f54058c0b1ec42e0511586be574",
+      },
+      {
+        sha: "16796ac",
+        message: "chore(release): add AUTHOR_MAP entry for mrshu",
+        href: "https://github.com/NousResearch/hermes-agent/commit/16796acc84c6a92392be937737149d5266ef86a8",
       },
     ],
   },
