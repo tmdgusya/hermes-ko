@@ -17,11 +17,21 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-14",
-    title: "채널 통합 — WhatsApp 상태·채널 방송 필터링, Discord clarify 버튼·메시지 전달, Telegram 마크다운·모델 전환",
+    title: "채널 통합 — Discord 백필·버튼, WhatsApp 필터·인용, Telegram 파이널라이즈",
     category: "채널 통합",
     summary:
-      "WhatsApp에서 status broadcasts와 channel newsletters가 에이전트 디스패치 전에 삭제됩니다. WhatsApp에서 인용된 답글 메타데이터가 노출됩니다. Discord에서 clarify 선택지가 버튼으로 렌더링되고, message_snapshots를 통해 전달된 메시지가 처리됩니다. Telegram에서 동적 마크다운이 callback flow에서 이스케이프되고, 모델 전환 성공 경로가 복원됩니다 (main branch 기준).",
+      "Discord 채널에 멀티유저 세션 히스토리 백필이 도입되고 per-user·thread 단위로 확장됩니다. WhatsApp에서 status broadcasts와 channel newsletters가 에이전트 디스패치 전에 삭제되고, 인용된 답글 메타데이터가 노출됩니다. Telegram에서 최종 MarkdownV2 edit이 생략되지 않도록 REQUIRES_EDIT_FINALIZE가 설정됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "e84fe48",
+        message: "feat(discord): channel history backfill for multi-user sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e84fe483bc958ef2ce11463d10ee57bdc2ccc5fb",
+      },
+      {
+        sha: "4abfb6b",
+        message: "feat(discord): default history backfill on, expand to per-user + threads",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4abfb6bc24308653e13b24dd42ea210bf0c7dd64",
+      },
       {
         sha: "9ed751b",
         message: "fix(whatsapp): drop status broadcasts and channel newsletters before agent dispatch (#25845)",
@@ -33,38 +43,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/bd33a48a5839f235f17ffa1cc2542852ce55067f",
       },
       {
-        sha: "1dca6a6",
-        message: "feat(discord): render clarify choices as buttons",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1dca6a6960f87b07a7d270893ac35211c97913c8",
-      },
-      {
-        sha: "b59ed9c",
-        message: "fix(discord): handle forwarded messages via message_snapshots",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b59ed9c6bc564e1158875dc795141405c4ed927d",
-      },
-      {
-        sha: "26deeea",
-        message: "fix(telegram): restore model-switch success path + author map",
-        href: "https://github.com/NousResearch/hermes-agent/commit/26deeea830eb4a4aa39651fd7b2fbb523eb2a78d",
+        sha: "d44dafd",
+        message: "fix(telegram): set REQUIRES_EDIT_FINALIZE so final MarkdownV2 edit is not skipped",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d44dafdb4e2ea8874fd309b0b3d0780ba966cada",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Gateway / State — QQBot·Feishu·이미지 첨부·multi-choice clarify·MCP 인증·ACP 승인·PID·api_mode",
+    title: "Gateway / State — 스트리밍 설정, 중복 전송 방지, clarify fallback, MCP 인증, 메시지 정렬",
     category: "Gateway / State",
     summary:
-      "QQBot 재연결 루프가 유지되도록 수정됩니다. Feishu WebSocket connect 오버라이드가 동기화되어 컨텍스트 매니저가 보존됩니다. 백그라운드 에이전트 태스크에 이미지 첨부가 전달됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. 초기 MCP 인증 실패 시 재시도가 중지됩니다. 프로바이더 간 위임 시 api_mode가 상승되지 않도록 수정됩니다. ACP approval bridging이 간소화됩니다. Windows에서 gateway PID 탐지 실패가 수정됩니다 (main branch 기준).",
+      "cosmetic edit 실패 시 중복 final send가 방지됩니다. 스트리밍 설정이 gateway.streaming 중첩 키에서 로드됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. 초기 MCP 인증 실패 시 재시도가 중지됩니다. 메시지 정렬에 AUTOINCREMENT id가 사용됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "8199ec3",
-        message: "fix(gateway): keep QQBot reconnect loop alive",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8199ec38034a675a20278261b76cf0fe42316a7d",
+        sha: "bc42e62",
+        message: "fix(gateway): prevent duplicate final send when only cosmetic edit failed",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bc42e62b171c622eab9dc9c2d9860e24feb1fe9f",
       },
       {
-        sha: "71191b7",
-        message: "fix(gateway): make Feishu ws connect override sync to preserve context manager",
-        href: "https://github.com/NousResearch/hermes-agent/commit/71191b7e8e075037a814f77d37d4609e97f12029",
+        sha: "b4b8509",
+        message: "fix(gateway): load streaming config from nested gateway.streaming key",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b4b8509fe81acf36bc1d32b8f586dc5e09e46e72",
       },
       {
         sha: "f26098e",
@@ -72,23 +72,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/f26098e22f17025b9d57b176898c7d60d5b5ce8b",
       },
       {
-        sha: "f0e46c5",
-        message: "fix: do not inherit api_mode when delegating across providers",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f0e46c5e9e8d4f780561554684e33810fc4f2f8f",
+        sha: "1247ff2",
+        message: "fix: stop retrying initial MCP auth failures",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1247ff2dca0dbc68957ee4ad153aa34f165a184d",
       },
       {
-        sha: "31b4721",
-        message: "fix: simplify ACP approval bridging",
-        href: "https://github.com/NousResearch/hermes-agent/commit/31b4721791aa163c80b5f78a7fb2f1fb3530d434",
+        sha: "c03acca",
+        message: "fix: use AUTOINCREMENT id for message ordering instead of timestamp",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c03acca508bd06c78761af2653ebef1a1448b307",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Agent 안정성 — /subgoal·MiMo·컨텍스트 압축·codex-runtime watchdog·클립보드 PNG·auxiliary·Gemini 스트림",
+    title: "Agent 안정성 — /subgoal, 이미지 세션 분리, codex-runtime watchdog, codex-app-server, Gemini 스트림",
     category: "Agent 안정성",
     summary:
-      "활성 /goal에 사용자 추가 기준을 덧붙이는 /subgoal 명령어가 도입됩니다. Xiaomi MiMo가 reasoning_content echo-back 프로바이더에 추가됩니다. 컨텍스트 압축 상태가 표시됩니다. Gemini CloudCode reasoning-only 스트림 청크에 seed delta 기본값이 설정됩니다. codex-runtime에서 wedged session이 retired되고 post-tool watchdog과 OAuth refresh classify가 추가됩니다. 클립보드 PNG 시그니처 읽기와 non-PNG 거부가 수정됩니다. 자격 증명 없는 프로바이더가 즉시 스킵되고, auxiliary compression model에 custom_providers가 전달됩니다. AUTOINCREMENT id로 메시지 정렬이 보장됩니다. CLI approval callback에서 approvals.timeout이 config에서 읽힙니다. 스킨 YAML 파싱이 강화되고 background-review teardown 누수가 방지됩니다. hermes update 시 lazy-installed backend가 새로고침됩니다 (main branch 기준).",
+      "활성 /goal에 사용자 추가 기준을 덧붙이는 /subgoal 명령어가 도입됩니다. 이미지 tool 결과가 text-only 세션을 오염시키지 않도록 분리됩니다. codex-runtime에서 wedged session이 retired되고 post-tool watchdog이 추가됩니다. codex-app-server에서 generic failure에 redacted stderr tail이 첨부됩니다. Gemini CloudCode reasoning-only 스트림 청크에 seed delta 기본값이 설정됩니다 (main branch 기준).",
     commits: [
       {
         sha: "8f19078",
@@ -96,9 +96,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/8f19078c6ad72300676376f5824fcf50cd9b693b",
       },
       {
-        sha: "efa97af",
-        message: "fix(agent): add Xiaomi MiMo to reasoning_content echo-back providers",
-        href: "https://github.com/NousResearch/hermes-agent/commit/efa97af7e25f0cbef92ed15bbcb47e4788c83058",
+        sha: "a28add1",
+        message: "fix(agent): keep image tool results from poisoning text-only sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a28add199d3d4bb29482723256f9e6c00f93d213",
       },
       {
         sha: "12f755c",
@@ -106,58 +106,97 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/12f755c9eb56a7927065c305699fc983bc1d998a",
       },
       {
-        sha: "d110ce4",
-        message: "fix(clipboard): only read PNG signature bytes, not entire file",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d110ce44933446eff800e6100fc54ccae821c4ad",
+        sha: "fe83c40",
+        message: "fix(codex-app-server): attach redacted stderr tail to generic failures (#25929)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fe83c4001bb77cdda5c0922805455e2ec9c9ffd5",
       },
       {
-        sha: "72b5dd8",
-        message: "fix(update): refresh lazy-installed backends on hermes update (#25766)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/72b5dd865865f2d2c9f5b492bcac9dcdaf045d34",
+        sha: "26933c2",
+        message: "fix(agent/gemini-cloudcode): seed delta defaults for reasoning-only stream chunks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/26933c2f592bda25df735c555620a2a978cfefb6",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Config / Docs — NovitaAI LLM 프로바이더, honcho 프로파일, model 키 교체, 미디어 컨텍스트 문서, AUTHOR_MAP",
-    category: "Config / Docs",
+    title: "CLI / TUI — /sessions 명령, 리사이즈 재생, 스크롤백, 음성 모드, 키 교체",
+    category: "CLI / TUI",
     summary:
-      "NovitaAI가 새로운 LLM 프로바이더로 추가되고, '90+ models, pay-per-use' 설명과 캐시 가격·테스트 커버리지가 추가됩니다. hermes model flow에서 고장난 OpenRouter/AI Gateway 키 교체가 허용됩니다. honcho의 HOME-기반 기본 프로파일 폴백이 존중됩니다. 미디어가 세션 컨텍스트에 미치는 영향에 대한 문서가 추가됩니다. LSP 문서와 tirith 링크가 수정됩니다. 25-PR 신규 기여자와 oswaldb22, mrshu에 대한 AUTHOR_MAP 항목이 추가됩니다 (main branch 기준).",
+      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 스크롤백 박스 너비가 제한됩니다. CLI 음성 모드에서 per-tool-call beep가 제거됩니다. hermes model flow에서 고장난 OpenRouter/AI Gateway 키 교체가 허용됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "c76e879",
-        message: "feat: add NovitaAI as LLM provider",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c76e8795744a00208c683b2c6319902416bce1a8",
+        sha: "d6c488f",
+        message: "fix(cli): wire /sessions slash command in the classic CLI",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d6c488f2dce96a1d1375c8e7e089b54a1e7ae6f4",
+      },
+      {
+        sha: "ac64d0c",
+        message: "fix: preserve ansi output history on resize replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ac64d0c2caa1c7d83c2e5022a1b7612f0148021a",
+      },
+      {
+        sha: "2844c88",
+        message: "fix(cli): clamp scrollback box widths + suppress status bar after resize (#25975)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2844c888f1bb890a154cd3c25725581ca9d3e62e",
+      },
+      {
+        sha: "6244535",
+        message: "fix(voice): remove per-tool-call beep in CLI voice mode (#25967)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/62445356822cd449c4235dc8e2f543c88c106a4d",
       },
       {
         sha: "17e0e9d",
         message: "fix(cli): allow rotating broken OpenRouter / AI Gateway key in `hermes model` flow (#25750)",
         href: "https://github.com/NousResearch/hermes-agent/commit/17e0e9d174b22c55d02db42c8ada5a035b220a57",
       },
+    ],
+  },
+  {
+    date: "2026-05-14",
+    title: "Proxy / Web / LSP — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Windows 인코딩, LSP 진단",
+    category: "Proxy / Web / LSP",
+    summary:
+      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Windows에서 non-UTF8 콘솔 인코딩이 처리됩니다. LSP baseline diagnostics가 post-edit 좌표로 이동됩니다. TUI에서 same-dimension alt-screen resize drift가 복구됩니다 (main branch 기준).",
+    commits: [
       {
-        sha: "1dd3398",
-        message: "docs: clarify media impact on session context",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1dd33988e26d8f16fb752b3c014a8509b2db569e",
+        sha: "ccb5aae",
+        message: "feat(proxy): local OpenAI-compatible proxy for OAuth providers (#25969)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ccb5aae0d2b70206556fb57b72f38157cbbdaaa0",
       },
       {
-        sha: "2ff744a",
-        message: "chore(release): add AUTHOR_MAP entries for 25-PR new-contributor batch",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2ff744ae2c4e9f54058c0b1ec42e0511586be574",
+        sha: "0854640",
+        message: "fix(web): cross-platform sync-assets + surface build errors on failure",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0854640537ea1a33b785b142d41e71c6e726cf2a",
       },
       {
-        sha: "8de26e2",
-        message: "docs(lsp): replace \"git worktree\" with \"git repository\" in LSP docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8de26e280ed8126194dbbccaf9969ae5979c0aed",
+        sha: "38ea2a5",
+        message: "fix(web): handle non-UTF8 Windows console encodings in _build_web_ui",
+        href: "https://github.com/NousResearch/hermes-agent/commit/38ea2a57a522860c19296531c5aa475236747d2d",
+      },
+      {
+        sha: "1907152",
+        message: "fix(lsp): shift baseline diagnostics into post-edit coordinates (#25978)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/19071529f65f026f29646c221dcf61274e9a0213",
+      },
+      {
+        sha: "4813aaf",
+        message: "fix(ui-tui): heal same-dimension alt-screen resize drift",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4813aaf0ba5902ea185b1927d30a59647b4c769a",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "설치 / 보안 — .env 권한 제한, Windows install.ps1, non-sudo 서비스 사용자, pip 엔트리 포인트, 터미널 safety filter",
-    category: "설치 / 보안",
+    title: "Config / 설치 / 보안 — NovitaAI, .env 권한, non-sudo 설치, pip 엔트리, 터미널 필터",
+    category: "Config / 설치",
     summary:
-      ".env 파일 권한이 0600으로 제한됩니다. Windows install.ps1에서 uv sync가 venv에 고정되고 기본 import가 검증됩니다. apt 배포판에서 non-sudo 서비스 사용자 설치가 지원됩니다. symlinked install 재실행 시 pip entry point가 보존됩니다. 터미널 safety filter에서 따옴표 안의 키워드에 대한 오탐이 방지됩니다. OpenViking 업로드에서 심볼릭 링크가 스킵됩니다 (main branch 기준).",
+      "NovitaAI가 새로운 LLM 프로바이더로 추가됩니다. .env 파일 권한이 0600으로 제한됩니다. apt 배포판에서 non-sudo 서비스 사용자 설치가 지원됩니다. symlinked install 재실행 시 pip entry point가 보존됩니다. 터미널 safety filter에서 따옴표 안의 키워드에 대한 오탐이 방지됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "c76e879",
+        message: "feat: add NovitaAI as LLM provider",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c76e8795744a00208c683b2c6319902416bce1a8",
+      },
       {
         sha: "a952ca3",
         message: "fix: restrict .env file permissions to 0600",
@@ -169,19 +208,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/78b842c995d70fccb7fd1113f85e766c1483e562",
       },
       {
-        sha: "524490a",
-        message: "fix(install.ps1): pin uv sync to venv\\, verify baseline imports on Windows (#25755)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/524490a40937c2a74d7969842a31acaba8d11124",
+        sha: "c75e1a0",
+        message: "fix(install): preserve pip entry point when re-running on symlinked install",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c75e1a03f9dacd96f5b822ef2102789c926059e7",
       },
       {
         sha: "364ddd4",
         message: "fix(terminal): prevent safety filter false positives on keywords inside quoted strings",
         href: "https://github.com/NousResearch/hermes-agent/commit/364ddd45e8dbfbcdf365794e7ca8e3a3e49de100",
-      },
-      {
-        sha: "63991bb",
-        message: "fix(memory): skip OpenViking upload symlinks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/63991bbd9751015f459dbb27e0440b14c1c77e3a",
       },
     ],
   },
