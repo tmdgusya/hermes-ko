@@ -17,11 +17,16 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "ACP / Auth — Zed 에디터용 ACP Registry 메타데이터, 인증 불가 경고 표시",
+    title: "ACP / Auth — Zed 에디터용 ACP Registry 메타데이터, 인증 경고, Atropos RL 제거",
     category: "ACP / Auth",
     summary:
-      "Zed 에디터 지원을 위한 ACP Registry 메타데이터가 추가되고, pyproject와 lockstep으로 에셋이 관리됩니다. auxiliary client에서 Nous 인증 불가 시 경고가 표시됩니다 (main branch 기준).",
+      "Zed 에디터 지원을 위한 ACP Registry 메타데이터가 추가되고, pyproject와 lockstep으로 에셋이 관리됩니다. auxiliary client에서 Nous 인증 불가 시 경고가 표시됩니다. Atropos RL 환경과 tinker-atropos 통합이 제거됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "5af672c",
+        message: "chore: remove Atropos RL environments and tinker-atropos integration (#26106)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5af672c7530263544a9f5e2479f3853d83b3b798",
+      },
       {
         sha: "4c94396",
         message: "feat: add ACP registry metadata for Zed",
@@ -41,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "Browser — 사전 설정 인자 유지, --no-sandbox 바이패스 환경변수 수정",
-    category: "Browser",
+    title: "Browser / Install — 브라우저 인자 유지, 비-sudo 설치, 업데이트 시 백엔드 갱신, .env 권한 제한",
+    category: "Browser / Install",
     summary:
-      "사전 설정된 AGENT_BROWSER_ARGS 환경변수가 존중되고 바이패스 방법이 문서화됩니다. --no-sandbox 바이패스에 올바른 환경변수가 사용됩니다 (main branch 기준).",
+      "사전 설정된 브라우저 인자가 존중되고 --no-sandbox 바이패스 환경변수가 수정됩니다. apt 배포판에서 비-sudo 서비스 사용자 설치가 지원됩니다. hermes update 시 lazy-installed 백엔드가 갱신됩니다. .env 파일 권한이 0600으로 제한됩니다 (main branch 기준).",
     commits: [
       {
         sha: "4695d27",
@@ -56,14 +61,29 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(browser): use correct env var for --no-sandbox bypass",
         href: "https://github.com/NousResearch/hermes-agent/commit/8ed2ef6f46e9642acfba57b4b8da893a574ecfd0",
       },
+      {
+        sha: "78b842c",
+        message: "fix(install): support non-sudo service-user installs on apt distros (#25814)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/78b842c995d70fccb7fd1113f85e766c1483e562",
+      },
+      {
+        sha: "72b5dd8",
+        message: "fix(update): refresh lazy-installed backends on hermes update (#25766)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/72b5dd865865f2d2c9f5b492bcac9dcdaf045d34",
+      },
+      {
+        sha: "a952ca3",
+        message: "fix: restrict .env file permissions to 0600",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a952ca3ff6af24f867737094d2d13ab2a3ba3bbe",
+      },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Gateway / State — 스트리밍 설정, 중복 전송 방지, clarify fallback, MCP 인증, 메시지 정렬",
+    title: "Gateway / State — 중복 전송 방지, 스트리밍 설정, clarify fallback, 이미지 첨부 포워딩, 메시지 정렬",
     category: "Gateway / State",
     summary:
-      "cosmetic edit 실패 시 중복 final send가 방지됩니다. 스트리밍 설정이 gateway.streaming 중첩 키에서 로드됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. 초기 MCP 인증 실패 시 재시도가 중지됩니다. 메시지 정렬에 AUTOINCREMENT id가 사용됩니다 (main branch 기준).",
+      "cosmetic edit 실패 시 중복 final send가 방지됩니다. 스트리밍 설정이 gateway.streaming 중첩 키에서 로드됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. background agent tasks에 이미지 첨부가 포워딩됩니다. 메시지 정렬에 AUTOINCREMENT id가 사용됩니다 (main branch 기준).",
     commits: [
       {
         sha: "bc42e62",
@@ -81,9 +101,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/f26098e22f17025b9d57b176898c7d60d5b5ce8b",
       },
       {
-        sha: "1247ff2",
-        message: "fix: stop retrying initial MCP auth failures",
-        href: "https://github.com/NousResearch/hermes-agent/commit/1247ff2dca0dbc68957ee4ad153aa34f165a184d",
+        sha: "3adde24",
+        message: "fix(gateway): forward image attachments to background agent tasks",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3adde245b72cd19061d413993c4a56138a023295",
       },
       {
         sha: "c03acca",
@@ -128,10 +148,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-14",
-    title: "CLI / TUI — /sessions 명령, 리사이즈 재생, 스크롤백, 음성 모드, SelectSelector 폴백",
+    title: "CLI / TUI — /sessions 명령, 리사이즈 배치 재생, 스크롤백, SelectSelector 폴백",
     category: "CLI / TUI",
     summary:
-      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 스크롤백 박스 너비가 제한됩니다. CLI 음성 모드에서 per-tool-call beep가 제거됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
+      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 배치로 재생됩니다. 스크롤백 박스 너비가 제한됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
     commits: [
       {
         sha: "eabd8c1",
@@ -149,23 +169,23 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/ac64d0c2caa1c7d83c2e5022a1b7612f0148021a",
       },
       {
+        sha: "06c6c1f",
+        message: "fix(cli): batch resize history replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/06c6c1f0f2d9872b02f86c6cd8279354aaf4dd9f",
+      },
+      {
         sha: "2844c88",
         message: "fix(cli): clamp scrollback box widths + suppress status bar after resize (#25975)",
         href: "https://github.com/NousResearch/hermes-agent/commit/2844c888f1bb890a154cd3c25725581ca9d3e62e",
-      },
-      {
-        sha: "6244535",
-        message: "fix(voice): remove per-tool-call beep in CLI voice mode (#25967)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/62445356822cd449c4235dc8e2f543c88c106a4d",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Proxy / Web / LSP — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Windows 인코딩, LSP 진단",
-    category: "Proxy / Web / LSP",
+    title: "Proxy / Web / Discord — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Discord 히스토리 백필",
+    category: "Proxy / Web / Discord",
     summary:
-      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Windows에서 non-UTF8 콘솔 인코딩이 처리됩니다. LSP baseline diagnostics가 post-edit 좌표로 이동됩니다. TUI에서 same-dimension alt-screen resize drift가 복구됩니다 (main branch 기준).",
+      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. Windows 환경에서 guarded add_signal_handler의 false-positive 경고가 억제됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Discord 채널 히스토리 백필이 도입되어 기본 활성화되며 per-user + threads로 확장됩니다 (main branch 기준).",
     commits: [
       {
         sha: "ccb5aae",
@@ -173,24 +193,24 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/ccb5aae0d2b70206556fb57b72f38157cbbdaaa0",
       },
       {
+        sha: "09d9701",
+        message: "fix(proxy): suppress false-positive windows-footgun on guarded add_signal_handler",
+        href: "https://github.com/NousResearch/hermes-agent/commit/09d970160bb22748fc9ff3e0759d151e4ea3a907",
+      },
+      {
         sha: "0854640",
         message: "fix(web): cross-platform sync-assets + surface build errors on failure",
         href: "https://github.com/NousResearch/hermes-agent/commit/0854640537ea1a33b785b142d41e71c6e726cf2a",
       },
       {
-        sha: "38ea2a5",
-        message: "fix(web): handle non-UTF8 Windows console encodings in _build_web_ui",
-        href: "https://github.com/NousResearch/hermes-agent/commit/38ea2a57a522860c19296531c5aa475236747d2d",
+        sha: "e84fe48",
+        message: "feat(discord): channel history backfill for multi-user sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e84fe483bc958ef2ce11463d10ee57bdc2ccc5fb",
       },
       {
-        sha: "1907152",
-        message: "fix(lsp): shift baseline diagnostics into post-edit coordinates (#25978)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/19071529f65f026f29646c221dcf61274e9a0213",
-      },
-      {
-        sha: "4813aaf",
-        message: "fix(ui-tui): heal same-dimension alt-screen resize drift",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4813aaf0ba5902ea185b1927d30a59647b4c769a",
+        sha: "4abfb6b",
+        message: "feat(discord): default history backfill on, expand to per-user + threads",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4abfb6bc24308653e13b24dd42ea210bf0c7dd64",
       },
     ],
   },
