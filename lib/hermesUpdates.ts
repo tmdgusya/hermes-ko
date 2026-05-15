@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "Tools / MCP / Browser — 브라우저 도구 부트스트랩, 에러 핸들링, MCP 보간, 브라우저 환경변수 수정",
+    title: "Tools / MCP / Browser — 브라우저 부트스트랩, 웹 도구 에러 핸들링, MCP 보간, 브라우저 환경변수 수정",
     category: "Tools / MCP / Plugins",
     summary:
-      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가됩니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. AGENT_BROWSER_ARGS 사전 설정이 존중되고 --no-sandbox 바이패스에 올바른 환경변수가 사용됩니다 (main branch 기준).",
+      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가됩니다. web_tools의 asyncio.gather에 return_exceptions가 적용되어 한 작업 실패가 전체를 중단시키지 않습니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. AGENT_BROWSER_ARGS 사전 설정이 존중됩니다 (main branch 기준).",
     commits: [
       {
         sha: "85782a4",
@@ -33,6 +33,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/13c72fb486e6bfc047bfde93e54116ea7ef7adf4",
       },
       {
+        sha: "eacb398",
+        message: "fix(tools): add return_exceptions to asyncio.gather in web_tools",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eacb398f755b6ee102e75c6d62aed5a9b253e29d",
+      },
+      {
         sha: "55f3262",
         message: "fix(mcp): pre-compile env-var regex and unify interpolation",
         href: "https://github.com/NousResearch/hermes-agent/commit/55f3262e788bdd7dd6adcab1d515d476b6cb9321",
@@ -41,11 +46,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "4695d27",
         message: "fix(browser): honor pre-set AGENT_BROWSER_ARGS and document the bypass",
         href: "https://github.com/NousResearch/hermes-agent/commit/4695d2716f60da89152bdc9dfa7d96e54ea7c22e",
-      },
-      {
-        sha: "8ed2ef6",
-        message: "fix(browser): use correct env var for --no-sandbox bypass",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ed2ef6f46e9642acfba57b4b8da893a574ecfd0",
       },
     ],
   },
@@ -85,10 +85,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "Gateway / State — SimpleX Chat 플랫폼, 429 에러 가드, 세션 auto-reset 영속화, 대화 매핑 정리",
+    title: "Gateway / State — SimpleX Chat 플랫폼, 429 에러 가드, 세션 auto-reset 영속화, 대화 매핑 정리, SimpleX 문서 연결",
     category: "Gateway / State",
     summary:
-      "SimpleX Chat 플랫폼 플러그인이 추가됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다 (main branch 기준).",
+      "SimpleX Chat 플랫폼 플러그인이 추가되고 사이드바에 문서가 연결됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다 (main branch 기준).",
     commits: [
       {
         sha: "09d9724",
@@ -110,14 +110,19 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix: clean stale conversation mappings on response eviction/deletion",
         href: "https://github.com/NousResearch/hermes-agent/commit/814c60092b08df3e4f7ccfcc0bab4e1fbaa39414",
       },
+      {
+        sha: "47614db",
+        message: "chore: wire simplex docs into sidebar + AUTHOR_MAP",
+        href: "https://github.com/NousResearch/hermes-agent/commit/47614dbfca86afd9e6cf29dbd8aa4effda0932c9",
+      },
     ],
   },
   {
     date: "2026-05-15",
-    title: "Config / Security — URL 스킴 제한, 공급망 정책, plugins 설정 중복 제거, Brotli 의존성 핀",
+    title: "Config / Security / Auth — URL 스킴 제한, 공급망 정책, plugins 설정 중복 제거, 보조 클라이언트 인증 경고",
     category: "Config / Security",
     summary:
-      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. Discord Brotli 첨부파일 디코딩을 위해 brotlicffi가 핀됩니다 (main branch 기준).",
+      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. 보조(auxiliary) 클라이언트에서 Nous 인증 불가 경고가 표시됩니다 (main branch 기준).",
     commits: [
       {
         sha: "6af9942",
@@ -140,18 +145,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/274217316e65bd7d4030b105548de30747526ec9",
       },
       {
-        sha: "bcca5ed",
-        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
+        sha: "e8b9f5f",
+        message: "fix(aux): surface Nous auth-unavailable warning in auxiliary client",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e8b9f5ff9a19f399229856e9fd5d0823a1275927",
       },
     ],
   },
   {
     date: "2026-05-15",
-    title: "Messaging / Cron / Goals — Slack 명령어 가드, WhatsApp 타임아웃, Cron 이름 조회, Goals 판정 토큰 확장",
+    title: "Messaging / Cron / Goals — Slack 명령어 가드, WhatsApp 타임아웃, Cron 이름 조회, Goals 판정 토큰 확장, Cron 문서",
     category: "Messaging / Cron",
     summary:
-      "Slack에서 공백만 있는 명령어 텍스트에 대해 split()[0]이 가드됩니다. WhatsApp에서 Baileys sendMessage가 멈출 때 빠른 실패가 추가됩니다. Cron 작업 이름 기반 조회가 지원됩니다. Goals 판정(judge)의 max_tokens가 200에서 4096으로 확장되고 설정 가능해집니다 (main branch 기준).",
+      "Slack에서 공백만 있는 명령어 텍스트에 대해 split()[0]이 가드됩니다. WhatsApp에서 Baileys sendMessage가 멈출 때 빠른 실패가 추가됩니다. Cron 작업 이름 기반 조회가 지원됩니다. Goals 판정(judge)의 max_tokens가 200에서 4096으로 확장되고 설정 가능해집니다. wakeAgent pre-run gate에 대한 Cron 문서 레시피가 추가됩니다 (main branch 기준).",
     commits: [
       {
         sha: "8373956",
@@ -172,6 +177,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "f9ad740",
         message: "fix(goals): raise judge max_tokens 200 → 4096, make configurable",
         href: "https://github.com/NousResearch/hermes-agent/commit/f9ad7400e30517159712a77e6a4bc2f3a390b2db",
+      },
+      {
+        sha: "05d9f64",
+        message: "docs(cron): worked recipes for the wakeAgent pre-run gate (#26229)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/05d9f641c06043a538ba03e3ed008a97403fcc3b",
       },
     ],
   },
