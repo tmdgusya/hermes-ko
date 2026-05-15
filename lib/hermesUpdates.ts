@@ -17,15 +17,15 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "ACP / Auth — Zed 에디터용 ACP Registry 메타데이터, 인증 경고, Atropos RL 제거",
+    title: "ACP — uvx 배포 전환, Zed용 Registry 메타데이터, 인증 경고, Atropos RL 제거",
     category: "ACP / Auth",
     summary:
-      "Zed 에디터 지원을 위한 ACP Registry 메타데이터가 추가되고, pyproject와 lockstep으로 에셋이 관리됩니다. auxiliary client에서 Nous 인증 불가 시 경고가 표시됩니다. Atropos RL 환경과 tinker-atropos 통합이 제거됩니다 (main branch 기준).",
+      "ACP Registry가 npm launcher 대신 uvx 배포 방식으로 전환됩니다. Zed 에디터 지원을 위한 ACP Registry 메타데이터가 추가되고, pyproject와 lockstep으로 에셋이 관리됩니다. auxiliary client에서 Nous 인증 불가 시 경고가 표시됩니다. Atropos RL 환경과 tinker-atropos 통합이 제거됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "5af672c",
-        message: "chore: remove Atropos RL environments and tinker-atropos integration (#26106)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5af672c7530263544a9f5e2479f3853d83b3b798",
+        sha: "c8c6ce1",
+        message: "feat(acp-registry): switch to uvx distribution, drop npm launcher",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c8c6ce17315c0f8512cec6f0bc8120141acdf830",
       },
       {
         sha: "4c94396",
@@ -41,6 +41,45 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "e8b9f5f",
         message: "fix(aux): surface Nous auth-unavailable warning in auxiliary client",
         href: "https://github.com/NousResearch/hermes-agent/commit/e8b9f5ff9a19f399229856e9fd5d0823a1275927",
+      },
+      {
+        sha: "5af672c",
+        message: "chore: remove Atropos RL environments and tinker-atropos integration (#26106)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5af672c7530263544a9f5e2479f3853d83b3b798",
+      },
+    ],
+  },
+  {
+    date: "2026-05-15",
+    title: "CLI / TUI — 리사이즈 중복 해결, 라이트모드 가시성, /sessions 명령, SelectSelector 폴백",
+    category: "CLI / TUI",
+    summary:
+      "리사이즈 시 스크롤백 복제가 해결되고 라이트모드 가시성이 개선됩니다. 기존 스크롤백 박스 너비 제한이 revert되어 전체 너비 경계가 복원됩니다. 클래식 CLI에 /sessions 슬래시 명령어가 연결되고, ansi 출력 히스토리가 보존됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "f8745f5",
+        message: "fix(cli): kill resize scrollback duplication + light-mode visibility",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f8745f59c2738025a02ca161307f4dcbfd0eb34a",
+      },
+      {
+        sha: "965ae7f",
+        message: "revert(cli): drop scrollback box width clamp (#25975), restore full-width borders (#26163)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/965ae7fa97e62e0f318eaf9a132f083e87cadf59",
+      },
+      {
+        sha: "ac64d0c",
+        message: "fix: preserve ansi output history on resize replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ac64d0c2caa1c7d83c2e5022a1b7612f0148021a",
+      },
+      {
+        sha: "d6c488f",
+        message: "fix(cli): wire /sessions slash command in the classic CLI",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d6c488f2dce96a1d1375c8e7e089b54a1e7ae6f4",
+      },
+      {
+        sha: "eabd8c1",
+        message: "fix(cli): fall back to SelectSelector when kqueue can't watch stdin",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eabd8c1fd12d6e386d636e564444ef661ce99e81",
       },
     ],
   },
@@ -148,44 +187,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-14",
-    title: "CLI / TUI — /sessions 명령, 리사이즈 배치 재생, 스크롤백, SelectSelector 폴백",
-    category: "CLI / TUI",
-    summary:
-      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 배치로 재생됩니다. 스크롤백 박스 너비가 제한됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "eabd8c1",
-        message: "fix(cli): fall back to SelectSelector when kqueue can't watch stdin",
-        href: "https://github.com/NousResearch/hermes-agent/commit/eabd8c1fd12d6e386d636e564444ef661ce99e81",
-      },
-      {
-        sha: "d6c488f",
-        message: "fix(cli): wire /sessions slash command in the classic CLI",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d6c488f2dce96a1d1375c8e7e089b54a1e7ae6f4",
-      },
-      {
-        sha: "ac64d0c",
-        message: "fix: preserve ansi output history on resize replay",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ac64d0c2caa1c7d83c2e5022a1b7612f0148021a",
-      },
-      {
-        sha: "06c6c1f",
-        message: "fix(cli): batch resize history replay",
-        href: "https://github.com/NousResearch/hermes-agent/commit/06c6c1f0f2d9872b02f86c6cd8279354aaf4dd9f",
-      },
-      {
-        sha: "2844c88",
-        message: "fix(cli): clamp scrollback box widths + suppress status bar after resize (#25975)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2844c888f1bb890a154cd3c25725581ca9d3e62e",
-      },
-    ],
-  },
-  {
-    date: "2026-05-14",
-    title: "Proxy / Web / Discord — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Discord 히스토리 백필",
+    title: "Proxy / Web / Discord — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Discord 히스토리 백필, Brotli 의존성",
     category: "Proxy / Web / Discord",
     summary:
-      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. Windows 환경에서 guarded add_signal_handler의 false-positive 경고가 억제됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Discord 채널 히스토리 백필이 도입되어 기본 활성화되며 per-user + threads로 확장됩니다 (main branch 기준).",
+      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Discord 첨부 디코딩을 위해 brotlicffi 의존성이 고정됩니다. Discord 채널 히스토리 백필이 도입되어 기본 활성화되며 per-user + threads로 확장됩니다 (main branch 기준).",
     commits: [
       {
         sha: "ccb5aae",
@@ -193,14 +198,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/ccb5aae0d2b70206556fb57b72f38157cbbdaaa0",
       },
       {
-        sha: "09d9701",
-        message: "fix(proxy): suppress false-positive windows-footgun on guarded add_signal_handler",
-        href: "https://github.com/NousResearch/hermes-agent/commit/09d970160bb22748fc9ff3e0759d151e4ea3a907",
-      },
-      {
         sha: "0854640",
         message: "fix(web): cross-platform sync-assets + surface build errors on failure",
         href: "https://github.com/NousResearch/hermes-agent/commit/0854640537ea1a33b785b142d41e71c6e726cf2a",
+      },
+      {
+        sha: "bcca5ed",
+        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
       },
       {
         sha: "e84fe48",
