@@ -51,10 +51,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "CLI / TUI — 리사이즈 중복 해결, 라이트모드 가시성, /sessions 명령, SelectSelector 폴백",
+    title: "CLI / TUI — 리사이즈 안정화, 라이트모드 가시성, alt-screen drift 수정, 배치 리플레이",
     category: "CLI / TUI",
     summary:
-      "리사이즈 시 스크롤백 복제가 해결되고 라이트모드 가시성이 개선됩니다. 기존 스크롤백 박스 너비 제한이 revert되어 전체 너비 경계가 복원됩니다. 클래식 CLI에 /sessions 슬래시 명령어가 연결되고, ansi 출력 히스토리가 보존됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
+      "리사이즈 시 스크롤백 복제가 해결되고 라이트모드 가시성이 개선됩니다. 기존 스크롤백 박스 너비 제한이 revert되어 전체 너비 경계가 복원됩니다. 리사이즈 시 ansi 출력 히스토리가 보존됩니다. same-dimension alt-screen resize drift가 수정되고, 리사이즈 히스토리 리플레이가 배치로 처리됩니다 (main branch 기준).",
     commits: [
       {
         sha: "f8745f5",
@@ -72,14 +72,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/ac64d0c2caa1c7d83c2e5022a1b7612f0148021a",
       },
       {
-        sha: "d6c488f",
-        message: "fix(cli): wire /sessions slash command in the classic CLI",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d6c488f2dce96a1d1375c8e7e089b54a1e7ae6f4",
+        sha: "4813aaf",
+        message: "fix(ui-tui): heal same-dimension alt-screen resize drift",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4813aaf0ba5902ea185b1927d30a59647b4c769a",
       },
       {
-        sha: "eabd8c1",
-        message: "fix(cli): fall back to SelectSelector when kqueue can't watch stdin",
-        href: "https://github.com/NousResearch/hermes-agent/commit/eabd8c1fd12d6e386d636e564444ef661ce99e81",
+        sha: "06c6c1f",
+        message: "fix(cli): batch resize history replay",
+        href: "https://github.com/NousResearch/hermes-agent/commit/06c6c1f0f2d9872b02f86c6cd8279354aaf4dd9f",
       },
     ],
   },
@@ -118,46 +118,17 @@ export const hermesUpdates: HermesUpdate[] = [
     ],
   },
   {
-    date: "2026-05-14",
-    title: "Gateway / State — 중복 전송 방지, 스트리밍 설정, clarify fallback, 이미지 첨부 포워딩, 메시지 정렬",
-    category: "Gateway / State",
-    summary:
-      "cosmetic edit 실패 시 중복 final send가 방지됩니다. 스트리밍 설정이 gateway.streaming 중첩 키에서 로드됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. background agent tasks에 이미지 첨부가 포워딩됩니다. 메시지 정렬에 AUTOINCREMENT id가 사용됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "bc42e62",
-        message: "fix(gateway): prevent duplicate final send when only cosmetic edit failed",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bc42e62b171c622eab9dc9c2d9860e24feb1fe9f",
-      },
-      {
-        sha: "b4b8509",
-        message: "fix(gateway): load streaming config from nested gateway.streaming key",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b4b8509fe81acf36bc1d32b8f586dc5e09e46e72",
-      },
-      {
-        sha: "f26098e",
-        message: "fix(gateway): enable text-intercept for multi-choice clarify fallback (#25567)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f26098e22f17025b9d57b176898c7d60d5b5ce8b",
-      },
-      {
-        sha: "3adde24",
-        message: "fix(gateway): forward image attachments to background agent tasks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3adde245b72cd19061d413993c4a56138a023295",
-      },
-      {
-        sha: "c03acca",
-        message: "fix: use AUTOINCREMENT id for message ordering instead of timestamp",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c03acca508bd06c78761af2653ebef1a1448b307",
-      },
-    ],
-  },
-  {
-    date: "2026-05-14",
-    title: "Agent 안정성 — /subgoal, 이미지 세션 분리, codex-runtime watchdog, codex-app-server, Gemini 스트림",
+    date: "2026-05-15",
+    title: "Agent 안정성 — /subgoal, goals judge 확장, 이미지 세션 분리, codex watchdog, codex-app-server",
     category: "Agent 안정성",
     summary:
-      "활성 /goal에 사용자 추가 기준을 덧붙이는 /subgoal 명령어가 도입됩니다. 이미지 tool 결과가 text-only 세션을 오염시키지 않도록 분리됩니다. codex-runtime에서 wedged session이 retired되고 post-tool watchdog이 추가됩니다. codex-app-server에서 generic failure에 redacted stderr tail이 첨부됩니다. Gemini CloudCode reasoning-only 스트림 청크에 seed delta 기본값이 설정됩니다 (main branch 기준).",
+      "활성 /goal에 사용자 추가 기준을 덧붙이는 /subgoal 명령어가 도입됩니다. goals judge의 max_tokens가 200→4096으로 확장되고 설정 가능해집니다. 이미지 tool 결과가 text-only 세션을 오염시키지 않도록 분리됩니다. codex-runtime에서 wedged session이 retired되고 post-tool watchdog이 추가됩니다. codex-app-server에서 generic failure에 redacted stderr tail이 첨부됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "f9ad740",
+        message: "fix(goals): raise judge max_tokens 200 → 4096, make configurable",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f9ad7400e30517159712a77e6a4bc2f3a390b2db",
+      },
       {
         sha: "8f19078",
         message: "feat(goals): /subgoal — user-added criteria appended to active /goal (#25449)",
@@ -178,19 +149,48 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(codex-app-server): attach redacted stderr tail to generic failures (#25929)",
         href: "https://github.com/NousResearch/hermes-agent/commit/fe83c4001bb77cdda5c0922805455e2ec9c9ffd5",
       },
+    ],
+  },
+  {
+    date: "2026-05-14",
+    title: "Gateway / State / LSP — 중복 전송 방지, 스트리밍 설정, clarify fallback, LSP diagnostic, 메시지 정렬",
+    category: "Gateway / State / LSP",
+    summary:
+      "cosmetic edit 실패 시 중복 final send가 방지됩니다. 스트리밍 설정이 gateway.streaming 중첩 키에서 로드됩니다. multi-choice clarify fallback에 text-intercept가 활성화됩니다. LSP baseline diagnostics가 post-edit 좌표로 보정됩니다. 메시지 정렬에 AUTOINCREMENT id가 사용됩니다 (main branch 기준).",
+    commits: [
       {
-        sha: "26933c2",
-        message: "fix(agent/gemini-cloudcode): seed delta defaults for reasoning-only stream chunks",
-        href: "https://github.com/NousResearch/hermes-agent/commit/26933c2f592bda25df735c555620a2a978cfefb6",
+        sha: "bc42e62",
+        message: "fix(gateway): prevent duplicate final send when only cosmetic edit failed",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bc42e62b171c622eab9dc9c2d9860e24feb1fe9f",
+      },
+      {
+        sha: "b4b8509",
+        message: "fix(gateway): load streaming config from nested gateway.streaming key",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b4b8509fe81acf36bc1d32b8f586dc5e09e46e72",
+      },
+      {
+        sha: "f26098e",
+        message: "fix(gateway): enable text-intercept for multi-choice clarify fallback (#25567)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f26098e22f17025b9d57b176898c7d60d5b5ce8b",
+      },
+      {
+        sha: "1907152",
+        message: "fix(lsp): shift baseline diagnostics into post-edit coordinates (#25978)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/19071529f65f026f29646c221dcf61274e9a0213",
+      },
+      {
+        sha: "c03acca",
+        message: "fix: use AUTOINCREMENT id for message ordering instead of timestamp",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c03acca508bd06c78761af2653ebef1a1448b307",
       },
     ],
   },
   {
     date: "2026-05-14",
-    title: "Proxy / Web / Discord — OAuth 로컬 프록시, 크로스 플랫폼 에셋, Discord 히스토리 백필, Brotli 의존성",
-    category: "Proxy / Web / Discord",
+    title: "Proxy / Messaging — OAuth 로컬 프록시, Windows 시그널, Discord 백필, Telegram 포맷, WhatsApp 필터",
+    category: "Proxy / Messaging",
     summary:
-      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. sync-assets 스크립트가 크로스 플랫폼으로 동작하고 빌드 실패 시 에러가 표시됩니다. Discord 첨부 디코딩을 위해 brotlicffi 의존성이 고정됩니다. Discord 채널 히스토리 백필이 도입되어 기본 활성화되며 per-user + threads로 확장됩니다 (main branch 기준).",
+      "OAuth 프로바이더를 위한 로컬 OpenAI 호환 프록시가 도입됩니다. Windows 환경에서 add_signal_handler의 false-positive 경고가 억제됩니다. Discord 채널 히스토리 백필이 도입됩니다. Telegram에서 최종 MarkdownV2 편집이 생략되지 않도록 REQUIRES_EDIT_FINALIZE가 설정됩니다. WhatsApp에서 상태 브로드캐스트와 채널 뉴스레터가 agent dispatch 전에 제거됩니다 (main branch 기준).",
     commits: [
       {
         sha: "ccb5aae",
@@ -198,14 +198,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/ccb5aae0d2b70206556fb57b72f38157cbbdaaa0",
       },
       {
-        sha: "0854640",
-        message: "fix(web): cross-platform sync-assets + surface build errors on failure",
-        href: "https://github.com/NousResearch/hermes-agent/commit/0854640537ea1a33b785b142d41e71c6e726cf2a",
-      },
-      {
-        sha: "bcca5ed",
-        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
+        sha: "09d9701",
+        message: "fix(proxy): suppress false-positive windows-footgun on guarded add_signal_handler",
+        href: "https://github.com/NousResearch/hermes-agent/commit/09d970160bb22748fc9ff3e0759d151e4ea3a907",
       },
       {
         sha: "e84fe48",
@@ -213,9 +208,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/e84fe483bc958ef2ce11463d10ee57bdc2ccc5fb",
       },
       {
-        sha: "4abfb6b",
-        message: "feat(discord): default history backfill on, expand to per-user + threads",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4abfb6bc24308653e13b24dd42ea210bf0c7dd64",
+        sha: "d44dafd",
+        message: "fix(telegram): set REQUIRES_EDIT_FINALIZE so final MarkdownV2 edit is not skipped",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d44dafdb4e2ea8874fd309b0b3d0780ba966cada",
+      },
+      {
+        sha: "9ed751b",
+        message: "fix(whatsapp): drop status broadcasts and channel newsletters before agent dispatch (#25845)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9ed751b96706ffd343ae26531cd0e2152a1c7036",
       },
     ],
   },
