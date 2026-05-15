@@ -17,10 +17,49 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "Tools / MCP / Browser — 브라우저 부트스트랩, 웹 도구 에러 핸들링, MCP 보간, 브라우저 환경변수 수정, 에이전트 성능",
+    title: "xAI OAuth / Auth — xAI Grok OAuth 제공자, CORS 허용 목록 정리, ~/.hermes/.env 폴백 보존",
+    category: "Config / Auth",
+    summary:
+      "xAI Grok OAuth(SuperGrok Subscription) 제공자가 추가됩니다. xAI OAuth CORS 허용 목록이 xAI 인증 오리진으로 정리됩니다. ~/.hermes/.env 폴백과 XAI_STT_BASE_URL 우선순위가 보존됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "b62c997",
+        message: "feat(xai-oauth): add xAI Grok OAuth (SuperGrok Subscription) provider",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b62c9979732c732480491c63a4399034f668a44f",
+      },
+      {
+        sha: "aac6d97",
+        message: "chore(xai-oauth): trim CORS allowlist to xAI auth origins",
+        href: "https://github.com/NousResearch/hermes-agent/commit/aac6d97a143759731431ade9a098b4baa55fc53d",
+      },
+      {
+        sha: "e13c1b8",
+        message: "fix(xai-http): preserve ~/.hermes/.env fallback and XAI_STT_BASE_URL precedence",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e13c1b806018427aaf5fbe4b0ff2c6ca6821d6db",
+      },
+      {
+        sha: "6af9942",
+        message: "fix(url-safety): allow only http and https schemes",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6af99423272ed67dd1f8d88bfdf762d4e5b77a2f",
+      },
+      {
+        sha: "04b1fda",
+        message: "security(deps): add upper bounds to 5 loose deps + document supply chain policy (#24226)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/04b1fdaecfda15ff4c8f5c9f0041516efd01ba30",
+      },
+      {
+        sha: "e8b9f5f",
+        message: "fix(aux): surface Nous auth-unavailable warning in auxiliary client",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e8b9f5ff9a19f399229856e9fd5d0823a1275927",
+      },
+    ],
+  },
+  {
+    date: "2026-05-15",
+    title: "Tools / MCP / Browser — 브라우저 부트스트랩, 웹 도구 에러 핸들링, MCP 보간, video_gen xAI 선택 반영, 에이전트 성능",
     category: "Tools / MCP / Plugins",
     summary:
-      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가됩니다. web_tools의 asyncio.gather에 return_exceptions가 적용되어 한 작업 실패가 전체를 중단시키지 않습니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. AGENT_BROWSER_ARGS 사전 설정이 존중됩니다. run_agent의 길이-연속 접두사 누적이 list+join으로 최적화됩니다 (main branch 기준).",
+      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가됩니다. web_tools의 asyncio.gather에 return_exceptions가 적용되어 한 작업 실패가 전체를 중단시키지 않습니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. AGENT_BROWSER_ARGS 사전 설정이 존중됩니다. video_gen 피커가 활성 xAI 선택을 반영하고 xai_grok post_setup이 실행됩니다. run_agent의 길이-연속 접두사 누적이 list+join으로 최적화됩니다 (main branch 기준).",
     commits: [
       {
         sha: "85782a4",
@@ -48,6 +87,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/4695d2716f60da89152bdc9dfa7d96e54ea7c22e",
       },
       {
+        sha: "e4d7a5d",
+        message: "fix(tools): video_gen picker reflects active xAI selection and runs xai_grok post_setup",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e4d7a5dffaa18676b8567469825c2082658d8557",
+      },
+      {
         sha: "4f8aaf1",
         message: "perf(run_agent): accumulate length-continuation prefix via list+join",
         href: "https://github.com/NousResearch/hermes-agent/commit/4f8aaf10465566008499e65937f659a29f1ba6ab",
@@ -56,10 +100,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "CLI / TUI — YOLO 모드 경고, CJK/IME 렌더링, 백그라운드 알림, 스크롤백/라이트모드 수정",
+    title: "CLI / TUI — YOLO 모드 경고, CJK/IME 렌더링, 백그라운드 알림, 스크롤백/라이트모드 수정, 모델 자동 감지 로깅",
     category: "CLI / TUI",
     summary:
-      "YOLO 모드 시 배너와 상태 표시줄에 경고가 표시됩니다. fast-echo 바이패스가 ASCII로 제한되어 베트남어/CJK/IME 입력이 올바르게 렌더링됩니다. 자율 백그라운드 프로세스 완료 알림이 지원됩니다. 리사이즈 시 스크롤백 중복 및 라이트 모드 가시성 문제가 수정되고 스크롤백 너비 클램프가 되돌려집니다 (main branch 기준).",
+      "YOLO 모드 시 배너와 상태 표시줄에 경고가 표시됩니다. fast-echo 바이패스가 ASCII로 제한되어 베트남어/CJK/IME 입력이 올바르게 렌더링됩니다. 자율 백그라운드 프로세스 완료 알림이 지원됩니다. 리사이즈 시 스크롤백 중복 및 라이트 모드 가시성 문제가 수정되고 스크롤백 너비 클램프가 되돌려집니다. 런타임 모델 자동 감정에서 삼켜진 예외가 로깅됩니다 (main branch 기준).",
     commits: [
       {
         sha: "9fb40e6",
@@ -85,6 +129,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "f8745f5",
         message: "fix(cli): kill resize scrollback duplication + light-mode visibility",
         href: "https://github.com/NousResearch/hermes-agent/commit/f8745f59c2738025a02ca161307f4dcbfd0eb34a",
+      },
+      {
+        sha: "c4a21d7",
+        message: "fix(cli): log swallowed exception in runtime model auto-detection",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c4a21d783131b04da443be6b624e20bb3b5b87b7",
       },
     ],
   },
@@ -124,45 +173,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "db84a78",
         message: "fix(langfuse): complete observability fix — trace I/O, tool outputs, placeholder credentials",
         href: "https://github.com/NousResearch/hermes-agent/commit/db84a78e618bf973ffc403ed2e1f8162f2591daa",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Config / Security / Deps — URL 스킴 제한, 공급망 정책, plugins 중복 제거, root keys 보존, Brotli 핀, 보조 클라이언트 인증 경고",
-    category: "Config / Security",
-    summary:
-      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. Discord Brotli 첨부파일 디코딩을 위해 brotlicffi가 핀됩니다. 보조(auxiliary) 클라이언트에서 Nous 인증 불가 경고가 표시됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "6af9942",
-        message: "fix(url-safety): allow only http and https schemes",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6af99423272ed67dd1f8d88bfdf762d4e5b77a2f",
-      },
-      {
-        sha: "04b1fda",
-        message: "security(deps): add upper bounds to 5 loose deps + document supply chain policy (#24226)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/04b1fdaecfda15ff4c8f5c9f0041516efd01ba30",
-      },
-      {
-        sha: "bcca5ed",
-        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
-      },
-      {
-        sha: "7727607",
-        message: "fix(codex-runtime): de-dup [plugins.X] tables and stop leaking HERMES_HOME into config.toml",
-        href: "https://github.com/NousResearch/hermes-agent/commit/77276070f5a1302908456734f2a5bdfe790260de",
-      },
-      {
-        sha: "2742173",
-        message: "fix(codex-runtime): keep migrated root keys top-level",
-        href: "https://github.com/NousResearch/hermes-agent/commit/274217316e65bd7d4030b105548de30747526ec9",
-      },
-      {
-        sha: "e8b9f5f",
-        message: "fix(aux): surface Nous auth-unavailable warning in auxiliary client",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e8b9f5ff9a19f399229856e9fd5d0823a1275927",
       },
     ],
   },
