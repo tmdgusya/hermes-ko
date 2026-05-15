@@ -10,17 +10,17 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-15
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "xAI OAuth / Auth — xAI Grok OAuth 제공자, CORS 허용 목록 정리, ~/.hermes/.env 폴백 보존",
+    title: "Config / Auth / Codex — xAI Grok OAuth, CORS 정리, env 플래그 가드, cronjob 세션 환경변수, codex-runtime 플러그인/설정 수정",
     category: "Config / Auth",
     summary:
-      "xAI Grok OAuth(SuperGrok Subscription) 제공자가 추가됩니다. xAI OAuth CORS 허용 목록이 xAI 인증 오리진으로 정리됩니다. ~/.hermes/.env 폴백과 XAI_STT_BASE_URL 우선순위가 보존됩니다 (main branch 기준).",
+      "xAI Grok OAuth(SuperGrok Subscription) 제공자가 추가됩니다. xAI OAuth CORS 허용 목록이 정리되고 xai-oauth 문서에 제공자 열거와 올바른 로그아웃 명령이 추가됩니다. ~/.hermes/.env 폴백과 XAI_STT_BASE_URL 우선순위가 보존됩니다. truthy-only 세션 env 검사가 형제 사이트로 확장되고 cronjob이 명시적 truthy 세션 환경변수를 요구합니다. codex-runtime에서 [plugins.X] 테이블 중복 제거, HERMES_HOME config.toml 유출 방지, 마이그레이션된 루트 키 최상위 유지, 캐시 키 주석 정리가 이루어집니다 (main branch 기준).",
     commits: [
       {
         sha: "b62c997",
@@ -36,6 +36,41 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "e13c1b8",
         message: "fix(xai-http): preserve ~/.hermes/.env fallback and XAI_STT_BASE_URL precedence",
         href: "https://github.com/NousResearch/hermes-agent/commit/e13c1b806018427aaf5fbe4b0ff2c6ca6821d6db",
+      },
+      {
+        sha: "4ad5fa7",
+        message: "docs(xai-oauth): add xai-oauth to provider enumeration pages (#26542)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4ad5fa702f6c04a2032be876a8d4d0b37a88459d",
+      },
+      {
+        sha: "1e4801b",
+        message: "docs(xai-oauth): correct logout command (was hermes auth remove)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/1e4801b8d0c27c1d6f6f8ed14ace0d3045a0d695",
+      },
+      {
+        sha: "931caf2",
+        message: "fix(env-flags): widen truthy-only session env checks to sibling sites",
+        href: "https://github.com/NousResearch/hermes-agent/commit/931caf2b2d42d6e76b8c470e5d44ca20704c41dc",
+      },
+      {
+        sha: "734aa0f",
+        message: "fix(cronjob): require explicit truthy session env values",
+        href: "https://github.com/NousResearch/hermes-agent/commit/734aa0f367a5ace259e4c35d7b002b634a3149ae",
+      },
+      {
+        sha: "7727607",
+        message: "fix(codex-runtime): de-dup [plugins.X] tables and stop leaking HERMES_HOME into config.toml",
+        href: "https://github.com/NousResearch/hermes-agent/commit/77276070f5a1302908456734f2a5bdfe790260de",
+      },
+      {
+        sha: "2742173",
+        message: "fix(codex-runtime): keep migrated root keys top-level",
+        href: "https://github.com/NousResearch/hermes-agent/commit/274217316e65bd7d4030b105548de30747526ec9",
+      },
+      {
+        sha: "7fdc16d",
+        message: "refactor(transports/codex): trim duplicated cache-key comments",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7fdc16dd4a281dad84a245ab9eed3be2f4a94264",
       },
       {
         sha: "6af9942",
@@ -142,12 +177,17 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Gateway / State / Observability — SimpleX Chat, User-Agent, 429 에러 가드, 세션 영속화, 대화 매핑 정리, Langfuse 관측성",
     category: "Gateway / State",
     summary:
-      "SimpleX Chat 플랫폼 플러그인이 추가됩니다. ProviderProfile.fetch_models에 User-Agent가 설정됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다. Langfuse에 I/O 트레이스, 도구 출력, 플레이스홀더 자격 증명이 완전히 연결되어 관측성이 보완됩니다 (main branch 기준).",
+      "SimpleX Chat 플랫폼 플러그인이 추가되고 사이드바 문서에 연결됩니다. ProviderProfile.fetch_models에 User-Agent가 설정됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다. Langfuse에 I/O 트레이스, 도구 출력, 플레이스홀더 자격 증명이 완전히 연결되어 관측성이 보완됩니다 (main branch 기준).",
     commits: [
       {
         sha: "09d9724",
         message: "feat(gateway): add SimpleX Chat platform plugin",
         href: "https://github.com/NousResearch/hermes-agent/commit/09d9724a09197b1981c318f3c51c55bc52fdfe29",
+      },
+      {
+        sha: "47614db",
+        message: "chore: wire simplex docs into sidebar + AUTHOR_MAP",
+        href: "https://github.com/NousResearch/hermes-agent/commit/47614dbfca86afd9e6cf29dbd8aa4effda0932c9",
       },
       {
         sha: "5360b54",
