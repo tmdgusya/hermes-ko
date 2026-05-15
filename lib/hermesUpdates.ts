@@ -17,10 +17,10 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
-    title: "Tools / MCP — 브라우저 도구 부트스트랩, 네트워크 에러 핸들링, MCP 환경변수 보간",
+    title: "Tools / MCP / Browser — 브라우저 도구 부트스트랩, 에러 핸들링, MCP 보간, 브라우저 환경변수 수정",
     category: "Tools / MCP / Plugins",
     summary:
-      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가되고, web_tools의 asyncio.gather에 return_exceptions가 적용됩니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다 (main branch 기준).",
+      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩할 수 있습니다. 브라우저 프로바이더 네트워크 호출에 에러 핸들링이 추가됩니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. AGENT_BROWSER_ARGS 사전 설정이 존중되고 --no-sandbox 바이패스에 올바른 환경변수가 사용됩니다 (main branch 기준).",
     commits: [
       {
         sha: "85782a4",
@@ -33,23 +33,28 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/13c72fb486e6bfc047bfde93e54116ea7ef7adf4",
       },
       {
-        sha: "eacb398",
-        message: "fix(tools): add return_exceptions to asyncio.gather in web_tools",
-        href: "https://github.com/NousResearch/hermes-agent/commit/eacb398f755b6ee102e75c6d62aed5a9b253e29d",
-      },
-      {
         sha: "55f3262",
         message: "fix(mcp): pre-compile env-var regex and unify interpolation",
         href: "https://github.com/NousResearch/hermes-agent/commit/55f3262e788bdd7dd6adcab1d515d476b6cb9321",
+      },
+      {
+        sha: "4695d27",
+        message: "fix(browser): honor pre-set AGENT_BROWSER_ARGS and document the bypass",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4695d2716f60da89152bdc9dfa7d96e54ea7c22e",
+      },
+      {
+        sha: "8ed2ef6",
+        message: "fix(browser): use correct env var for --no-sandbox bypass",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ed2ef6f46e9642acfba57b4b8da893a574ecfd0",
       },
     ],
   },
   {
     date: "2026-05-15",
-    title: "CLI / TUI — YOLO 모드 경고, 런타임 모델 감지 로깅, kqueue 대체, 성능 개선",
+    title: "CLI / TUI — YOLO 모드 경고, 모델 감지 로깅, kqueue 대체, 스크롤백/라이트모드 수정",
     category: "CLI / TUI",
     summary:
-      "YOLO 모드 시 배너와 상태 표시줄에 경고가 표시됩니다. 런타임 모델 자동 감지 시 삼킨 예외가 로깅됩니다. kqueue가 stdin을 감시할 수 없을 때 SelectSelector로 대체됩니다. run_agent의 길이 연속 접두사 누적이 list+join 방식으로 성능이 개선됩니다 (main branch 기준).",
+      "YOLO 모드 시 배너와 상태 표시줄에 경고가 표시됩니다. 런타임 모델 자동 감지 시 삼킨 예외가 로깅됩니다. kqueue가 stdin을 감시할 수 없을 때 SelectSelector로 대체됩니다. 스크롤백 너비 클램프가 되돌려지고 전체 너비 테두리가 복원됩니다. 리사이즈 시 스크롤백 중복 및 라이트 모드 가시성 문제가 수정됩니다 (main branch 기준).",
     commits: [
       {
         sha: "b6e0741",
@@ -67,9 +72,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/eabd8c1fd12d6e386d636e564444ef661ce99e81",
       },
       {
-        sha: "4f8aaf1",
-        message: "perf(run_agent): accumulate length-continuation prefix via list+join",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4f8aaf10465566008499e65937f659a29f1ba6ab",
+        sha: "965ae7f",
+        message: "revert(cli): drop scrollback box width clamp (#25975), restore full-width borders (#26163)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/965ae7fa97e62e0f318eaf9a132f083e87cadf59",
+      },
+      {
+        sha: "f8745f5",
+        message: "fix(cli): kill resize scrollback duplication + light-mode visibility",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f8745f59c2738025a02ca161307f4dcbfd0eb34a",
       },
     ],
   },
@@ -104,10 +114,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "Security / Config — URL 스킴 제한, 공급망 정책, plugins 설정 중복 제거, root keys 마이그레이션",
+    title: "Config / Security — URL 스킴 제한, 공급망 정책, plugins 설정 중복 제거, Brotli 의존성 핀",
     category: "Config / Security",
     summary:
-      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 HERMES_HOME이 config.toml에 누출되지 않습니다. 마이그레이션된 root keys가 최상위에 유지됩니다 (main branch 기준).",
+      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. Discord Brotli 첨부파일 디코딩을 위해 brotlicffi가 핀됩니다 (main branch 기준).",
     commits: [
       {
         sha: "6af9942",
@@ -129,14 +139,19 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(codex-runtime): keep migrated root keys top-level",
         href: "https://github.com/NousResearch/hermes-agent/commit/274217316e65bd7d4030b105548de30747526ec9",
       },
+      {
+        sha: "bcca5ed",
+        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
+      },
     ],
   },
   {
     date: "2026-05-15",
-    title: "Messaging / Cron / Skills-hub — Slack 명령어 가드, WhatsApp 타임아웃, Cron 이름 조회, HuggingFace Skills",
+    title: "Messaging / Cron / Goals — Slack 명령어 가드, WhatsApp 타임아웃, Cron 이름 조회, Goals 판정 토큰 확장",
     category: "Messaging / Cron",
     summary:
-      "Slack에서 공백만 있는 명령어 텍스트에 대해 split()[0]이 가드됩니다. WhatsApp에서 Baileys sendMessage가 멈출 때 빠른 실패가 추가됩니다. Cron 작업 이름 기반 조회가 지원됩니다. Skills-hub에 huggingface/skills가 신뢰할 수 있는 기본 tap으로 추가됩니다 (main branch 기준).",
+      "Slack에서 공백만 있는 명령어 텍스트에 대해 split()[0]이 가드됩니다. WhatsApp에서 Baileys sendMessage가 멈출 때 빠른 실패가 추가됩니다. Cron 작업 이름 기반 조회가 지원됩니다. Goals 판정(judge)의 max_tokens가 200에서 4096으로 확장되고 설정 가능해집니다 (main branch 기준).",
     commits: [
       {
         sha: "8373956",
@@ -154,18 +169,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/6682f91b80bab57c65435ae6b5cdc791334ed620",
       },
       {
-        sha: "e0e4856",
-        message: "feat(skills-hub): add huggingface/skills as trusted default tap (#2549)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e0e4856d466491ee8a31378c606e65ddfe061ab9",
+        sha: "f9ad740",
+        message: "fix(goals): raise judge max_tokens 200 → 4096, make configurable",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f9ad7400e30517159712a77e6a4bc2f3a390b2db",
       },
     ],
   },
   {
     date: "2026-05-15",
-    title: "이미지 생성 / Yuanbao / Docs — FAL 설정 메시지, 인용 미디어 참조, Cron 레시피 문서",
+    title: "이미지 생성 / Yuanbao / ACP Registry — FAL 설정 메시지, 인용 미디어 참조, 리소스 파싱, uvx 배포 전환",
     category: "Image-gen / Platform",
     summary:
-      "FAL 백엔드에 연결할 수 없을 때 실행 가능한 설정 메시지가 표시됩니다. Yuanbao에서 인용 미디어 참조 추출이 추가되고, 기록 백필보다 인용 미디어 참조가 우선됩니다. Cron의 wakeAgent 사전 실행 게이트에 대한 레시피 문서가 작성됩니다 (main branch 기준).",
+      "FAL 백엔드에 연결할 수 없을 때 실행 가능한 설정 메시지가 표시됩니다. Yuanbao에서 인용 미디어 참조가 기록 백필보다 우선되고 ybres 앵커용 _parse_resource_id가 추가됩니다. 인용 설명에 ybres가 없을 때 트랜스크립트 조회로 파일/이미지가 해결됩니다. ACP Registry가 npm 런처를 제거하고 uvx 배포로 전환됩니다 (main branch 기준).",
     commits: [
       {
         sha: "9329e06",
@@ -178,14 +193,19 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/3df26b925cae7761763e43f03978600d175417c5",
       },
       {
-        sha: "80efe66",
-        message: "feat(yuanbao): add quote_media_refs extraction to QuoteContextMiddleware",
-        href: "https://github.com/NousResearch/hermes-agent/commit/80efe664ce5d822b31ca6c76162c6e1f7500796a",
+        sha: "d57a4b3",
+        message: "feat(yuanbao): add _parse_resource_id and update _extract_text for ybres anchors",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d57a4b3eb51e5c445923d33a5c3da9266e62790b",
       },
       {
-        sha: "05d9f64",
-        message: "docs(cron): worked recipes for the wakeAgent pre-run gate (#26229)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/05d9f641c06043a538ba03e3ed008a97403fcc3b",
+        sha: "fc2754d",
+        message: "fix(yuanbao): resolve quoted file/image via transcript lookup when quote desc lacks ybres",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc2754dbdff860cdeb8fe4ed5fe0464bb6295cbb",
+      },
+      {
+        sha: "c8c6ce1",
+        message: "feat(acp-registry): switch to uvx distribution, drop npm launcher",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c8c6ce17315c0f8512cec6f0bc8120141acdf830",
       },
     ],
   },
