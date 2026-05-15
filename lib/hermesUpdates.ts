@@ -17,6 +17,30 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-15",
+    title: "ACP / Auth — Zed 에디터용 ACP Registry 메타데이터, 인증 불가 경고 표시",
+    category: "ACP / Auth",
+    summary:
+      "Zed 에디터 지원을 위한 ACP Registry 메타데이터가 추가되고, pyproject와 lockstep으로 에셋이 관리됩니다. auxiliary client에서 Nous 인증 불가 시 경고가 표시됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "4c94396",
+        message: "feat: add ACP registry metadata for Zed",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4c94396206965580e808ceb39ae1fe007511a898",
+      },
+      {
+        sha: "d364132",
+        message: "chore(release): bump ACP Registry assets in lockstep with pyproject",
+        href: "https://github.com/NousResearch/hermes-agent/commit/d36413211449057c28aaaab52a2be5133bc59ef7",
+      },
+      {
+        sha: "e8b9f5f",
+        message: "fix(aux): surface Nous auth-unavailable warning in auxiliary client",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e8b9f5ff9a19f399229856e9fd5d0823a1275927",
+      },
+    ],
+  },
+  {
+    date: "2026-05-15",
     title: "Browser — 사전 설정 인자 유지, --no-sandbox 바이패스 환경변수 수정",
     category: "Browser",
     summary:
@@ -31,40 +55,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "8ed2ef6",
         message: "fix(browser): use correct env var for --no-sandbox bypass",
         href: "https://github.com/NousResearch/hermes-agent/commit/8ed2ef6f46e9642acfba57b4b8da893a574ecfd0",
-      },
-    ],
-  },
-  {
-    date: "2026-05-14",
-    title: "채널 통합 — Discord 백필·버튼, WhatsApp 필터·인용, Telegram 파이널라이즈",
-    category: "채널 통합",
-    summary:
-      "Discord 채널에 멀티유저 세션 히스토리 백필이 도입되고 per-user·thread 단위로 확장됩니다. WhatsApp에서 status broadcasts와 channel newsletters가 에이전트 디스패치 전에 삭제되고, 인용된 답글 메타데이터가 노출됩니다. Telegram에서 최종 MarkdownV2 edit이 생략되지 않도록 REQUIRES_EDIT_FINALIZE가 설정됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "e84fe48",
-        message: "feat(discord): channel history backfill for multi-user sessions",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e84fe483bc958ef2ce11463d10ee57bdc2ccc5fb",
-      },
-      {
-        sha: "4abfb6b",
-        message: "feat(discord): default history backfill on, expand to per-user + threads",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4abfb6bc24308653e13b24dd42ea210bf0c7dd64",
-      },
-      {
-        sha: "9ed751b",
-        message: "fix(whatsapp): drop status broadcasts and channel newsletters before agent dispatch (#25845)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9ed751b96706ffd343ae26531cd0e2152a1c7036",
-      },
-      {
-        sha: "bd33a48",
-        message: "feat(whatsapp): surface quoted reply metadata",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bd33a48a5839f235f17ffa1cc2542852ce55067f",
-      },
-      {
-        sha: "d44dafd",
-        message: "fix(telegram): set REQUIRES_EDIT_FINALIZE so final MarkdownV2 edit is not skipped",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d44dafdb4e2ea8874fd309b0b3d0780ba966cada",
       },
     ],
   },
@@ -138,11 +128,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-14",
-    title: "CLI / TUI — /sessions 명령, 리사이즈 재생, 스크롤백, 음성 모드, 키 교체",
+    title: "CLI / TUI — /sessions 명령, 리사이즈 재생, 스크롤백, 음성 모드, SelectSelector 폴백",
     category: "CLI / TUI",
     summary:
-      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 스크롤백 박스 너비가 제한됩니다. CLI 음성 모드에서 per-tool-call beep가 제거됩니다. hermes model flow에서 고장난 OpenRouter/AI Gateway 키 교체가 허용됩니다 (main branch 기준).",
+      "클래식 CLI에 /sessions 슬래시 명령어가 연결됩니다. 리사이즈 시 ansi 출력 히스토리가 보존되고 스크롤백 박스 너비가 제한됩니다. CLI 음성 모드에서 per-tool-call beep가 제거됩니다. kqueue로 stdin을 감시할 수 없는 환경에서 SelectSelector로 폴백됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "eabd8c1",
+        message: "fix(cli): fall back to SelectSelector when kqueue can't watch stdin",
+        href: "https://github.com/NousResearch/hermes-agent/commit/eabd8c1fd12d6e386d636e564444ef661ce99e81",
+      },
       {
         sha: "d6c488f",
         message: "fix(cli): wire /sessions slash command in the classic CLI",
@@ -162,11 +157,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "6244535",
         message: "fix(voice): remove per-tool-call beep in CLI voice mode (#25967)",
         href: "https://github.com/NousResearch/hermes-agent/commit/62445356822cd449c4235dc8e2f543c88c106a4d",
-      },
-      {
-        sha: "17e0e9d",
-        message: "fix(cli): allow rotating broken OpenRouter / AI Gateway key in `hermes model` flow (#25750)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/17e0e9d174b22c55d02db42c8ada5a035b220a57",
       },
     ],
   },
