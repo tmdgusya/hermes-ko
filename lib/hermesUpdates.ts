@@ -85,10 +85,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "Gateway / State — SimpleX Chat 플랫폼, 429 에러 가드, 세션 auto-reset 영속화, 대화 매핑 정리, SimpleX 문서 연결",
+    title: "Gateway / State / Observability — SimpleX Chat, 429 에러 가드, 세션 영속화, 대화 매핑 정리, Langfuse 관측성",
     category: "Gateway / State",
     summary:
-      "SimpleX Chat 플랫폼 플러그인이 추가되고 사이드바에 문서가 연결됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다 (main branch 기준).",
+      "SimpleX Chat 플랫폼 플러그인이 추가됩니다. 429 에러 바디가 문자열 형식인 경우 isinstance 가드가 추가됩니다. gateway 재시작 간 auto-reset 상태가 영속화됩니다. 응답 퇴거/삭제 시 오래된 대화 매핑이 정리됩니다. Langfuse에 I/O 트레이스, 도구 출력, 플레이스홀더 자격 증명이 완전히 연결되어 관측성이 보완됩니다 (main branch 기준).",
     commits: [
       {
         sha: "09d9724",
@@ -111,18 +111,18 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/814c60092b08df3e4f7ccfcc0bab4e1fbaa39414",
       },
       {
-        sha: "47614db",
-        message: "chore: wire simplex docs into sidebar + AUTHOR_MAP",
-        href: "https://github.com/NousResearch/hermes-agent/commit/47614dbfca86afd9e6cf29dbd8aa4effda0932c9",
+        sha: "db84a78",
+        message: "fix(langfuse): complete observability fix — trace I/O, tool outputs, placeholder credentials",
+        href: "https://github.com/NousResearch/hermes-agent/commit/db84a78e618bf973ffc403ed2e1f8162f2591daa",
       },
     ],
   },
   {
     date: "2026-05-15",
-    title: "Config / Security / Auth — URL 스킴 제한, 공급망 정책, plugins 설정 중복 제거, 보조 클라이언트 인증 경고",
+    title: "Config / Security / Deps — URL 스킴 제한, 공급망 정책, plugins 중복 제거, Brotli 핀, 보조 클라이언트 인증 경고",
     category: "Config / Security",
     summary:
-      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. 보조(auxiliary) 클라이언트에서 Nous 인증 불가 경고가 표시됩니다 (main branch 기준).",
+      "URL 스킴이 http와 https만 허용되도록 제한됩니다. 5개 의존성에 상한선이 추가되고 공급망 정책이 문서화됩니다. codex-runtime에서 [plugins.X] 테이블 중복이 제거되고 마이그레이션된 root keys가 최상위에 유지됩니다. Discord Brotli 첨부파일 디코딩을 위해 brotlicffi가 핀됩니다. 보조(auxiliary) 클라이언트에서 Nous 인증 불가 경고가 표시됩니다 (main branch 기준).",
     commits: [
       {
         sha: "6af9942",
@@ -135,14 +135,14 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/04b1fdaecfda15ff4c8f5c9f0041516efd01ba30",
       },
       {
+        sha: "bcca5ed",
+        message: "fix(deps): pin brotlicffi so aiohttp can decode Discord's Brotli attachments",
+        href: "https://github.com/NousResearch/hermes-agent/commit/bcca5ed34d31abfd469d139e14bd962c916ff64f",
+      },
+      {
         sha: "7727607",
         message: "fix(codex-runtime): de-dup [plugins.X] tables and stop leaking HERMES_HOME into config.toml",
         href: "https://github.com/NousResearch/hermes-agent/commit/77276070f5a1302908456734f2a5bdfe790260de",
-      },
-      {
-        sha: "2742173",
-        message: "fix(codex-runtime): keep migrated root keys top-level",
-        href: "https://github.com/NousResearch/hermes-agent/commit/274217316e65bd7d4030b105548de30747526ec9",
       },
       {
         sha: "e8b9f5f",
@@ -187,10 +187,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "이미지 생성 / Yuanbao / ACP Registry — FAL 설정 메시지, 인용 미디어 참조, 리소스 파싱, uvx 배포 전환",
+    title: "Platform / Yuanbao / Skills Hub — FAL 설정 메시지, Yuanbao 인용 미디어 추출·폴백 개선, uvx 전환, HuggingFace Skills 탭",
     category: "Image-gen / Platform",
     summary:
-      "FAL 백엔드에 연결할 수 없을 때 실행 가능한 설정 메시지가 표시됩니다. Yuanbao에서 인용 미디어 참조가 기록 백필보다 우선되고 ybres 앵커용 _parse_resource_id가 추가됩니다. 인용 설명에 ybres가 없을 때 트랜스크립트 조회로 파일/이미지가 해결됩니다. ACP Registry가 npm 런처를 제거하고 uvx 배포로 전환됩니다 (main branch 기준).",
+      "FAL 백엔드에 연결할 수 없을 때 실행 가능한 설정 메시지가 표시됩니다. Yuanbao에서 인용 미디어 참조 추출이 QuoteContextMiddleware에 추가되고, DispatchMiddleware로 폴백이 개선되며 조건이 정제됩니다. ACP Registry가 npm 런처를 제거하고 uvx 배포로 전환됩니다. HuggingFace Skills가 신뢰할 수 있는 기본 탭으로 Skills Hub에 추가됩니다 (main branch 기준).",
     commits: [
       {
         sha: "9329e06",
@@ -198,24 +198,24 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/9329e06696c968b7a960541d0ee0167df6742f21",
       },
       {
-        sha: "3df26b9",
-        message: "feat(yuanbao): prioritize quote media refs over history backfill in DispatchMiddleware",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3df26b925cae7761763e43f03978600d175417c5",
+        sha: "80efe66",
+        message: "feat(yuanbao): add quote_media_refs extraction to QuoteContextMiddleware",
+        href: "https://github.com/NousResearch/hermes-agent/commit/80efe664ce5d822b31ca6c76162c6e1f7500796a",
       },
       {
-        sha: "d57a4b3",
-        message: "feat(yuanbao): add _parse_resource_id and update _extract_text for ybres anchors",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d57a4b3eb51e5c445923d33a5c3da9266e62790b",
-      },
-      {
-        sha: "fc2754d",
-        message: "fix(yuanbao): resolve quoted file/image via transcript lookup when quote desc lacks ybres",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fc2754dbdff860cdeb8fe4ed5fe0464bb6295cbb",
+        sha: "0086cda",
+        message: "refactor(yuanbao): improve quote media fallback — move to DispatchMiddleware, tighten conditions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0086cdaf93b2a85abe787fc9b130e45c0b8b8388",
       },
       {
         sha: "c8c6ce1",
         message: "feat(acp-registry): switch to uvx distribution, drop npm launcher",
         href: "https://github.com/NousResearch/hermes-agent/commit/c8c6ce17315c0f8512cec6f0bc8120141acdf830",
+      },
+      {
+        sha: "e0e4856",
+        message: "feat(skills-hub): add huggingface/skills as trusted default tap (#2549)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e0e4856d466491ee8a31378c606e65ddfe061ab9",
       },
     ],
   },
