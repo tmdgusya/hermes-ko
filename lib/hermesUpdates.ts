@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (v0.14.0, 3 new skills, ACP deprecation, TUI fixes, Docs overhaul, Windows tirith silence)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (ACP reasoning replay, delegate heartbeat fixes, Windows TOCTOU + cwd spam fix)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -95,10 +95,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Gateway / Agent — TEXT follow-ups 병합, DeepSeek thinking 모드·reasoning_effort 매핑, 위임 API 모드 수정",
+    title: "Gateway / Agent — TEXT follow-ups 병합, DeepSeek thinking 모드·reasoning_effort 매핑, 위임 API 모드 수정, delegate heartbeat 스레드 안정화",
     category: "Gateway / Agent",
     summary:
-      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다 (main branch 기준).",
+      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다. delegate heartbeat 스레드가 시작되지 않은 상태에서 join을 가드하고, 스레드 시작이 try 블록 안으로 이동하여 orphan 스레드가 방지됩니다 (main branch 기준).",
     commits: [
       {
         sha: "068c24f",
@@ -124,6 +124,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "9c304a7",
         message: "fix(agent): retry malformed anthropic stream parser errors",
         href: "https://github.com/NousResearch/hermes-agent/commit/9c304a7f569ebf17efe120d5b61a3a745c6dc532",
+      },
+      {
+        sha: "6068363",
+        message: "fix(delegate): guard heartbeat join against unstarted thread",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6068363311b861ad0bb411bfffe5958bf8b6d142",
+      },
+      {
+        sha: "2d7182f",
+        message: "fix(delegate): move heartbeat thread start inside try block to prevent orphan",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
       },
     ],
   },
@@ -192,10 +202,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP 감지 강화, TUI 전반 수정, Windows tirith 경고 수정, pip 설치 문서 제거",
+    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거",
     category: "Docs / Dashboard / TUI / Windows",
     summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다 (main branch 기준).",
+      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다 (main branch 기준).",
     commits: [
       {
         sha: "dc4cde2",
@@ -261,6 +271,21 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "c5dc970",
         message: "fix(windows): silence tirith-unavailable banner + skip install/spawn attempts on unsupported platforms (#26718)",
         href: "https://github.com/NousResearch/hermes-agent/commit/c5dc9700ebc8b890e349c0cc3e978d133395909b",
+      },
+      {
+        sha: "f3a4af9",
+        message: "fix(acp): replay assistant reasoning as agent_thought_chunk on session/load (#12285) (#26943)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f3a4af9cf2a626cb3e055766cb1cff60168d295d",
+      },
+      {
+        sha: "4aec25b",
+        message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
+      },
+      {
+        sha: "7fee1f6",
+        message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
       },
     ],
   },
