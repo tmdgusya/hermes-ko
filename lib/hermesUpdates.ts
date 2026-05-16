@@ -10,17 +10,89 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (updated with c5dc970, a31191c)
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (updated with 016c772, 9c304a7, c9b32a6, 559c6ad, ca413c6, afb97db)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-16",
-    title: "TUI / Platform — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, DECSTBM 스크롤 영역 수정, 승인 프롬프트 중 스크롤·Esc 허용, 미지원 플랫폼 tirith 설치·실행 건너뜀",
+    title: "Plugins / Agent — 내장 도구 대체 플래그, Anthropic 스트림 파서 재시도",
+    category: "Plugins / Agent",
+    summary:
+      "플러그인에 tool override 플래그가 추가되어 내장 도구를 커스텀 구현으로 교체할 수 있습니다. Anthropic 스트림 파서에서 잘못된 형식의 응답이 올 경우 재시도하도록 수정됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "016c772",
+        message: "feat(plugins): tool override flag for replacing built-in tools (closes #11049) (#26759)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/016c772e7fcf3acca54e7c87e7c5a22541adb5d0",
+      },
+      {
+        sha: "9c304a7",
+        message: "fix(agent): retry malformed anthropic stream parser errors",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9c304a7f569ebf17efe120d5b61a3a745c6dc532",
+      },
+    ],
+  },
+  {
+    date: "2026-05-16",
+    title: "Skills — pinggy-tunnel 옵셔널 스킬, darwinian-evolver 옵셔널 스킬 추가",
+    category: "Skills",
+    summary:
+      "pinggy-tunnel 옵셔널 스킬이 추가되어 SSH 터널링을 쉽게 설정할 수 있습니다. darwinian-evolver 옵셔널 스킬이 새로 추가되고 AUTHOR_MAP 및 문서가 재생성됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "559c6ad",
+        message: "feat(skills): add optional pinggy-tunnel skill",
+        href: "https://github.com/NousResearch/hermes-agent/commit/559c6ad94aee03ddbd28b9480b9dabac292213a2",
+      },
+      {
+        sha: "c9b32a6",
+        message: "feat(skill): darwinian-evolver optional skill",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c9b32a654cd1f3480920431bd4e32a035a61a29d",
+      },
+      {
+        sha: "53637fb",
+        message: "chore(skills/darwinian-evolver): AUTHOR_MAP + docs regen",
+        href: "https://github.com/NousResearch/hermes-agent/commit/53637fb17d92b03ca3708f6df104136028459439",
+      },
+    ],
+  },
+  {
+    date: "2026-05-16",
+    title: "Dashboard / Docs — Kanban Ready 컬럼 할당 명확화, Ukrainian 도움말 정렬, Programmatic Integration 문서 추가, systemd PATH revert",
+    category: "Dashboard / Docs",
+    summary:
+      "Kanban Ready 컬럼과 에이전트 할당의 구분이 명확해지고, Ukrainian UI에서 Kanban Ready 컬럼 도움말이 올바르게 정렬됩니다. Programmatic Integration 개요 문서가 새로 추가됩니다. systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하던 변경이 revert됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "63503eb",
+        message: "fix(dashboard): clarify Kanban Ready vs assignment",
+        href: "https://github.com/NousResearch/hermes-agent/commit/63503ebb14069e8ba0bea91955e7ce4e01670a4e",
+      },
+      {
+        sha: "ca413c6",
+        message: "fix(dashboard): align Ukrainian Kanban Ready column help",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ca413c6164e7957d33841353feb9cdbf838dead7",
+      },
+      {
+        sha: "afb97db",
+        message: "docs: add Programmatic Integration overview (closes #360)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/afb97dbc539d1b6cc812d5af2bb8e9b3ebfc4719",
+      },
+      {
+        sha: "16ff946",
+        message: 'Revert "fix(cli): tolerate unreadable dirs when building systemd PATH"',
+        href: "https://github.com/NousResearch/hermes-agent/commit/16ff9464a5daae9b82bf2ce2c7de5ba8f80cfd40",
+      },
+    ],
+  },
+  {
+    date: "2026-05-16",
+    title: "TUI / Platform — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, 승인 프롬프트 중 스크롤·Esc 허용, 미지원 플랫폼 tirith 건너뜀",
     category: "CLI / TUI",
     summary:
-      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. 미지원 플랫폼에서 tirith-unavailable 배너가 숨겨지고 install/spawn 시도가 건너뜁니다 (main branch 기준).",
+      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. 미지원 플랫폼에서 tirith-unavailable 배너가 숨겨지고 install/spawn 시도가 건너뛰어집니다 (main branch 기준).",
     commits: [
       {
         sha: "c5dc970",
@@ -80,7 +152,7 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바 중복 키 수정, pip 설치 문서 제거",
+    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바, pip 설치 문서 제거",
     category: "DeepSeek / Docs",
     summary:
       "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시되며, 중복 skill category 키 충돌이 해결됩니다. pip 설치 방법이 공식 문서에서 제거됩니다 (main branch 기준).",
@@ -109,108 +181,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "068c24f",
         message: "feat(deepseek): add thinking.type + reasoning_effort mapping for DeepSeek API",
         href: "https://github.com/NousResearch/hermes-agent/commit/068c24f8a4203e86de32b0d84ccaf047e8cd6ef7",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Agent 안정성 — Delegate 하트비트, 비동기 코루틴 정리, Windows 파일 잠금 TOCTOU, 플랫폼 서킷 브레이커",
-    category: "Agent 안정성",
-    summary:
-      "delegate 하트비트 스레드 join 가드와 try 블록 이동으로 고아 스레드가 방지됩니다. 모든 threadsafe bridge에서 스케줄되지 않은 코루틴이 정리됩니다. Windows 파일 잠금 TOCTOU 경쟁이 제거되고 cwd-missing·tirith-spawn 경고 스팸이 중단됩니다. gateway가 플랫폼 장애 시 서킷 브레이커로 계속 실행됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "2d7182f",
-        message: "fix(delegate): move heartbeat thread start inside try block to prevent orphan",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
-      },
-      {
-        sha: "6068363",
-        message: "fix(delegate): guard heartbeat join against unstarted thread",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6068363311b861ad0bb411bfffe5958bf8b6d142",
-      },
-      {
-        sha: "4e89c53",
-        message: "fix(async): close unscheduled coroutines in all threadsafe bridges",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4e89c53082b13b71d0c7f2f662cd65ea80d9f17c",
-      },
-      {
-        sha: "7fee1f6",
-        message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
-      },
-      {
-        sha: "4aec25b",
-        message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Pip / Wheel 배포 — postinstall, pip 업그레이드, ensure_dependency, wheel 번들 TUI, PyPI 업데이트 확인",
-    category: "Install / Distribution",
-    summary:
-      "pip 설치 사용자를 위한 `hermes postinstall` 명령이 추가되고 PyPI 설치 시 pip install --upgrade 업데이트가 지원됩니다. config가 설치 방식을 감지해 올바른 업데이트 명령을 안내하고, ensure_dependency() 래퍼로 TUI·브라우저 도구 의존성이 부트스트랩됩니다. wheel 내에 install.sh가 포함되고 entry.js를 npm 빌드 대신 wheel에서 먼저 탐색하며, CI에서 웹 대시보드와 TUI 번들이 사전 빌드됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "99b81cd",
-        message: "feat: add `hermes postinstall` command for pip users",
-        href: "https://github.com/NousResearch/hermes-agent/commit/99b81cd54b99d4c66812b1d076e593f566432065",
-      },
-      {
-        sha: "79afa50",
-        message: "feat(update): support pip install --upgrade for PyPI installs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/79afa50703d18f91fb7878a7b7a31b425ab40382",
-      },
-      {
-        sha: "624ce11",
-        message: "feat(config): detect pip install method and recommend correct update command",
-        href: "https://github.com/NousResearch/hermes-agent/commit/624ce11ee846b57b59ca2e031f34e25813137c4d",
-      },
-      {
-        sha: "259ae84",
-        message: "feat: add ensure_dependency() wrapper + ship install.sh in wheel",
-        href: "https://github.com/NousResearch/hermes-agent/commit/259ae846c8ae1b84d4cbd2cb1d62c6eefd81957f",
-      },
-      {
-        sha: "b2bf658",
-        message: "feat(tui): find bundled entry.js from wheel before falling back to npm build",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b2bf658442f413a9a1d24b011589e5e38544947e",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Tools / MCP / Platform — 브라우저 부트스트랩, MCP 보간, Notion 스킬, Yuanbao 인용 미디어, SimpleX Chat",
-    category: "Tools / MCP / Plugins",
-    summary:
-      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩합니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. Yuanbao에서 인용 미디어 참조 추출·폴백이 개선됩니다. Notion 스킬이 Notion Developer Platform(May 2026)에 맞게 개편됩니다. SimpleX Chat 플랫폼 플러그인이 추가됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "85782a4",
-        message: "feat(acp): hermes acp --setup-browser bootstraps browser tools for registry installs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/85782a4ed7f2329957c4af9a4243acb51c3cf921",
-      },
-      {
-        sha: "55f3262",
-        message: "fix(mcp): pre-compile env-var regex and unify interpolation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/55f3262e788bdd7dd6adcab1d515d476b6cb9321",
-      },
-      {
-        sha: "42070ec",
-        message: "feat(skills/notion): overhaul for Notion Developer Platform (May 2026)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/42070ecefb9e9da3adec6d536d130d9dc3b82560",
-      },
-      {
-        sha: "3df26b9",
-        message: "feat(yuanbao): prioritize quote media refs over history backfill in DispatchMiddleware",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3df26b925cae7761763e43f03978600d175417c5",
-      },
-      {
-        sha: "09d9724",
-        message: "feat(gateway): add SimpleX Chat platform plugin",
-        href: "https://github.com/NousResearch/hermes-agent/commit/09d9724a09197b1981c318f3c51c55bc52fdfe29",
       },
     ],
   },
