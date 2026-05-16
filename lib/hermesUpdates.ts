@@ -10,11 +10,98 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-15
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-16",
+    title: "ACP / Auth — xAI OAuth entitlement-403 자격 증명 갱신 루프 수정, grok-4.3 컨텍스트 1M 확장",
+    category: "ACP / Auth",
+    summary:
+      "xAI OAuth에서 entitlement-403 오류 시 자격 증명 갱신이 무한 루프에 빠지던 문제가 해결됩니다. grok-4.3 컨텍스트가 1M 토큰으로 확장됩니다. entitlement-403 힌트가 X Premium+ 구독 필요 사항을 정확히 안내하고, 기존 구독자를 탓하지 않도록 재작성됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "ce0e189",
+        message: "fix(xai-oauth): break entitlement-403 credential-refresh loop, bump grok-4.3 context to 1M",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ce0e189d3e7185d6c8c6af924a1df23e17c6f85c",
+      },
+      {
+        sha: "9818b9a",
+        message: "fix(xai-oauth): rewrite entitlement-403 hint to not accuse subscribers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9818b9a1acb915971d835d1faa85949e9f7a87a5",
+      },
+      {
+        sha: "6784c80",
+        message: "fix(xai-oauth): lead entitlement-403 hint with X Premium+ gotcha",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6784c80794bfd3cc40aae7f7d9f1a59876de7799",
+      },
+    ],
+  },
+  {
+    date: "2026-05-16",
+    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바",
+    category: "DeepSeek / Docs",
+    summary:
+      "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "068c24f",
+        message: "feat(deepseek): add thinking.type + reasoning_effort mapping for DeepSeek API",
+        href: "https://github.com/NousResearch/hermes-agent/commit/068c24f8a4203e86de32b0d84ccaf047e8cd6ef7",
+      },
+      {
+        sha: "cd9470f",
+        message: "fix(deepseek): wire thinking-mode via DeepSeekProfile, not legacy fallback",
+        href: "https://github.com/NousResearch/hermes-agent/commit/cd9470f41638bd515db096cd934c463205790110",
+      },
+      {
+        sha: "dc4cde2",
+        message: "feat(docs): show per-skill pages in the left sidebar",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
+      },
+    ],
+  },
+  {
+    date: "2026-05-15",
+    title: "Agent 안정성 — Delegate 하트비트, 비동기 코루틴 정리, Windows 파일 잠금 TOCTOU, 플랫폼 서킷 브레이커",
+    category: "Agent 안정성",
+    summary:
+      "delegate 하트비트 스레드 join 가드와 try 블록 이동으로 고아 스레드가 방지됩니다. 모든 threadsafe bridge에서 스케줄되지 않은 코루틴이 정리됩니다. Windows 파일 잠금 TOCTOU 경쟁이 제거되고 cwd-missing·tirith-spawn 경고 스팸이 중단됩니다. gateway가 플랫폼 장애 시 서킷 브레이커로 계속 실행됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "2d7182f",
+        message: "fix(delegate): move heartbeat thread start inside try block to prevent orphan",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
+      },
+      {
+        sha: "6068363",
+        message: "fix(delegate): guard heartbeat join against unstarted thread",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6068363311b861ad0bb411bfffe5958bf8b6d142",
+      },
+      {
+        sha: "4e89c53",
+        message: "fix(async): close unscheduled coroutines in all threadsafe bridges",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4e89c53082b13b71d0c7f2f662cd65ea80d9f17c",
+      },
+      {
+        sha: "7fee1f6",
+        message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
+      },
+      {
+        sha: "4aec25b",
+        message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
+      },
+      {
+        sha: "518f395",
+        message: "fix(gateway): keep running when platforms fail; add per-platform circuit breaker + /platform",
+        href: "https://github.com/NousResearch/hermes-agent/commit/518f39557b6753a5dc766a05dd14dd5cf2b9edeb",
+      },
+    ],
+  },
   {
     date: "2026-05-15",
     title: "Pip / Wheel 배포 — postinstall, pip 업그레이드, ensure_dependency, wheel 번들 TUI, PyPI 업데이트 확인",
@@ -51,78 +138,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-15",
-    title: "Agent 안정성 — Delegate 하트비트, 비동기 코루틴 정리, Windows 파일 잠금 TOCTOU, 플랫폼 서킷 브레이커, 세션 영속화",
-    category: "Agent 안정성",
-    summary:
-      "delegate 하트비트 스레드 join 가드와 try 블록 이동으로 고아 스레드가 방지됩니다. 모든 threadsafe bridge에서 스케줄되지 않은 코루틴이 정리됩니다. Windows 파일 잠금 TOCTOU 경쟁이 제거됩니다. gateway가 플랫폼 장애 시 서킷 브레이커로 계속 실행되고 auto-reset 상태가 재시작 간 영속화됩니다. doctor가 템플릿 누락 시 기본 설정을 생성합니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "2d7182f",
-        message: "fix(delegate): move heartbeat thread start inside try block to prevent orphan",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
-      },
-      {
-        sha: "4e89c53",
-        message: "fix(async): close unscheduled coroutines in all threadsafe bridges",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4e89c53082b13b71d0c7f2f662cd65ea80d9f17c",
-      },
-      {
-        sha: "7fee1f6",
-        message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
-      },
-      {
-        sha: "518f395",
-        message: "fix(gateway): keep running when platforms fail; add per-platform circuit breaker + /platform",
-        href: "https://github.com/NousResearch/hermes-agent/commit/518f39557b6753a5dc766a05dd14dd5cf2b9edeb",
-      },
-      {
-        sha: "e0e7397",
-        message: "fix(session): persist auto-reset state across gateway restarts",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e0e7397c32fa06e4c93ce07bc276ea5c1dca7a84",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "ACP / Auth / xAI — todo 플랜 리플레이·이밋, Grok OAuth, SSH OAuth 터널 안내, NIM 빌링, env 플래그",
-    category: "ACP / Auth",
-    summary:
-      "ACP에서 네이티브 todo 플랜 업데이트가 이밋되고 리플레이됩니다. xAI Grok OAuth(SuperGrok Subscription) 제공자가 추가되고 CORS 허용 목록이 정리됩니다. SSH OAuth 사용자가 필요한 터널을 정확히 안내받고 NVIDIA NIM 빌링 origin 헤더가 추가됩니다. env 플래그 검사가 확장되고 cronjob이 명시적 세션 환경변수를 요구합니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "bd3a587",
-        message: "fix(acp): replay native todo plans",
-        href: "https://github.com/NousResearch/hermes-agent/commit/bd3a5873e11f084d74be876a505a406224a6ef3e",
-      },
-      {
-        sha: "b62c997",
-        message: "feat(xai-oauth): add xAI Grok OAuth (SuperGrok Subscription) provider",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b62c9979732c732480491c63a4399034f668a44f",
-      },
-      {
-        sha: "3b9368a",
-        message: "fix(auth): point SSH OAuth users at the tunnel they actually need",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3b9368a0c47176b449ea0254cdac31ec4d5ae925",
-      },
-      {
-        sha: "13c3d4b",
-        message: "feat(nvidia): add NIM billing origin header",
-        href: "https://github.com/NousResearch/hermes-agent/commit/13c3d4b4efa2f39d7bc3178cf3eca77167ff7699",
-      },
-      {
-        sha: "734aa0f",
-        message: "fix(cronjob): require explicit truthy session env values",
-        href: "https://github.com/NousResearch/hermes-agent/commit/734aa0f367a5ace259e4c35d7b002b634a3149ae",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Tools / MCP / Platform — 브라우저 부트스트랩, MCP 보간, Yuanbao 인용 미디어, Notion 스킬, uvx 전환, SimpleX Chat",
+    title: "Tools / MCP / Platform — 브라우저 부트스트랩, MCP 보간, Notion 스킬, Yuanbao 인용 미디어, SimpleX Chat",
     category: "Tools / MCP / Plugins",
     summary:
-      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩합니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. Yuanbao에서 인용 미디어 참조 추출·폴백이 개선됩니다. Notion 스킬이 Notion Developer Platform(May 2026)에 맞게 개편됩니다. ACP Registry가 uvx 배포로 전환되고 SimpleX Chat 플랫폼 플러그인이 추가됩니다 (main branch 기준).",
+      "ACP에서 --setup-browser로 브라우저 도구를 부트스트랩합니다. MCP 환경변수 정규식이 사전 컴파일되고 보간이 통일됩니다. Yuanbao에서 인용 미디어 참조 추출·폴백이 개선됩니다. Notion 스킬이 Notion Developer Platform(May 2026)에 맞게 개편됩니다. SimpleX Chat 플랫폼 플러그인이 추가됩니다 (main branch 기준).",
     commits: [
       {
         sha: "85782a4",
@@ -177,40 +196,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "f8745f5",
         message: "fix(cli): kill resize scrollback duplication + light-mode visibility",
         href: "https://github.com/NousResearch/hermes-agent/commit/f8745f59c2738025a02ca161307f4dcbfd0eb34a",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "Messaging / Docs — Slack 명령어 가드, WhatsApp 빠른 실패, Cron 이름 조회, Goals 판정 확장, Langfuse, 문서 업데이트",
-    category: "Messaging / Docs",
-    summary:
-      "Slack에서 공백만 있는 명령어 텍스트에 가드가 추가됩니다. WhatsApp Baileys sendMessage 멈춤에 빠른 실패가 추가됩니다. Cron 작업 이름 기반 조회가 지원됩니다. Goals 판정 max_tokens가 200→4096으로 확장됩니다. Langfuse 관측성이 완전히 연결되고 pip 설치·postinstall·OAuth-over-SSH 관련 문서가 업데이트됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "8373956",
-        message: "fix(slack): guard split()[0] against whitespace-only command text",
-        href: "https://github.com/NousResearch/hermes-agent/commit/837395685099b130a502db3ec25551475fe3c7cc",
-      },
-      {
-        sha: "681778a",
-        message: "fix(whatsapp): fail fast when Baileys sendMessage hangs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/681778a0b753bac894bd30b1d257bcb3eface63d",
-      },
-      {
-        sha: "6682f91",
-        message: "feat(cron): support name-based lookup for job operations",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6682f91b80bab57c65435ae6b5cdc791334ed620",
-      },
-      {
-        sha: "f9ad740",
-        message: "fix(goals): raise judge max_tokens 200 → 4096, make configurable",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f9ad7400e30517159712a77e6a4bc2f3a390b2db",
-      },
-      {
-        sha: "db84a78",
-        message: "fix(langfuse): complete observability fix — trace I/O, tool outputs, placeholder credentials",
-        href: "https://github.com/NousResearch/hermes-agent/commit/db84a78e618bf973ffc403ed2e1f8162f2591daa",
       },
     ],
   },
