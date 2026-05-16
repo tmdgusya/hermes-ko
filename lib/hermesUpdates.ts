@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (updated with 016c772, 9c304a7, c9b32a6, 559c6ad, ca413c6, afb97db)
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (updated with 70b6635, 965610f)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -63,7 +63,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "Dashboard / Docs — Kanban Ready 컬럼 할당 명확화, Ukrainian 도움말 정렬, Programmatic Integration 문서 추가, systemd PATH revert",
     category: "Dashboard / Docs",
     summary:
-      "Kanban Ready 컬럼과 에이전트 할당의 구분이 명확해지고, Ukrainian UI에서 Kanban Ready 컬럼 도움말이 올바르게 정렬됩니다. Programmatic Integration 개요 문서가 새로 추가됩니다. systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하던 변경이 revert됩니다 (main branch 기준).",
+      "Kanban Ready 컬럼과 에이전트 할당의 구분이 명확해지고, Ukrainian UI에서 Kanban Ready 컬럼 도움말이 올바르게 정렬됩니다. Programmatic Integration 개요 문서가 새로 추가됩니다. systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하던 변경이 추가되었다가 곧바로 revert됩니다 (main branch 기준).",
     commits: [
       {
         sha: "63503eb",
@@ -81,6 +81,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/afb97dbc539d1b6cc812d5af2bb8e9b3ebfc4719",
       },
       {
+        sha: "965610f",
+        message: "fix(cli): tolerate unreadable dirs when building systemd PATH",
+        href: "https://github.com/NousResearch/hermes-agent/commit/965610f922be5b2afb6fa412205077486734a433",
+      },
+      {
         sha: "16ff946",
         message: 'Revert "fix(cli): tolerate unreadable dirs when building systemd PATH"',
         href: "https://github.com/NousResearch/hermes-agent/commit/16ff9464a5daae9b82bf2ce2c7de5ba8f80cfd40",
@@ -89,10 +94,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "TUI / Platform — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, 승인 프롬프트 중 스크롤·Esc 허용, 미지원 플랫폼 tirith 건너뜀",
+    title: "TUI / Platform — 마크다운 테이블 렌더링, 서브에이전트 상태, 승인 프롬프트 UX, 커서 동기화, 미지원 플랫폼 대응",
     category: "CLI / TUI",
     summary:
-      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. 미지원 플랫폼에서 tirith-unavailable 배너가 숨겨지고 install/spawn 시도가 건너뛰어집니다 (main branch 기준).",
+      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. Ink displayCursor가 fast-echo 기록과 동기화되어 커서 이탈이 방지됩니다. 미지원 플랫폼에서 tirith-unavailable 배너가 숨겨지고 install/spawn 시도가 건너뛰어집니다 (main branch 기준).",
     commits: [
       {
         sha: "c5dc970",
@@ -118,6 +123,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "566d8f0",
         message: "fix(tui): keep DECSTBM scroll region off bottom row (#26683)",
         href: "https://github.com/NousResearch/hermes-agent/commit/566d8f0d75049e5e4e4e3e3fde7f8c766ae235d6",
+      },
+      {
+        sha: "70b6635",
+        message: "fix(tui): keep Ink displayCursor in sync with fast-echo writes so cursor stops drifting (#26717)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/70b663504fee1d58a6763e862df478cf101fe51e",
       },
     ],
   },
