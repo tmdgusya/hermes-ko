@@ -17,11 +17,16 @@ export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-ag
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-16",
-    title: "TUI — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 타임아웃·에러 상태 처리, DECSTBM 스크롤 영역 수정",
+    title: "TUI — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, DECSTBM 스크롤 영역 수정, 승인 프롬프트 중 스크롤·Esc 허용",
     category: "CLI / TUI",
     summary:
-      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다 (main branch 기준).",
+      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다 (main branch 기준).",
     commits: [
+      {
+        sha: "44b63fc",
+        message: "fix(tui): allow transcript scroll + Esc during approval/clarify/confirm prompts (#26414)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/44b63fc6de3fe2b53eac3109b4a20db41c663195",
+      },
       {
         sha: "55c9f32",
         message: "fix(tui): width-aware markdown table rendering with vertical fallback (#26195)",
@@ -41,11 +46,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "ACP / Auth — xAI OAuth entitlement-403 자격 증명 갱신 루프 수정, grok-4.3 컨텍스트 1M 확장",
+    title: "ACP / Auth — xAI OAuth entitlement-403 자격 증명 갱신 루프 수정, compression pool 해결, grok-4.3 컨텍스트 1M 확장",
     category: "ACP / Auth",
     summary:
-      "xAI OAuth에서 entitlement-403 오류 시 자격 증명 갱신이 무한 루프에 빠지던 문제가 해결됩니다. grok-4.3 컨텍스트가 1M 토큰으로 확장됩니다. entitlement-403 힌트가 X Premium+ 구독 필요 사항을 정확히 안내하고, 기존 구독자를 탓하지 않도록 재작성됩니다 (main branch 기준).",
+      "xAI OAuth에서 entitlement-403 오류 시 자격 증명 갱신이 무한 루프에 빠지던 문제가 해결됩니다. auxiliary 프로세스 풀에서 xAI OAuth compression이 올바르게 해결됩니다. grok-4.3 컨텍스트가 1M 토큰으로 확장됩니다. entitlement-403 힌트가 X Premium+ 구독 필요 사항을 정확히 안내하고, 기존 구독자를 탓하지 않도록 재작성됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "97a32af",
+        message: "fix(auxiliary): resolve xai oauth compression from pool",
+        href: "https://github.com/NousResearch/hermes-agent/commit/97a32afdc490e3d40b291dac0e67f291502052a0",
+      },
       {
         sha: "ce0e189",
         message: "fix(xai-oauth): break entitlement-403 credential-refresh loop, bump grok-4.3 context to 1M",
@@ -65,15 +75,20 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바",
+    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바, pip 설치 문서 제거",
     category: "DeepSeek / Docs",
     summary:
-      "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시됩니다 (main branch 기준).",
+      "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시됩니다. pip 설치 방법이 공식 문서에서 제거됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "068c24f",
-        message: "feat(deepseek): add thinking.type + reasoning_effort mapping for DeepSeek API",
-        href: "https://github.com/NousResearch/hermes-agent/commit/068c24f8a4203e86de32b0d84ccaf047e8cd6ef7",
+        sha: "86a368d",
+        message: "remove pip installation method from docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/86a368d8322b3977bf89b9043818eebc6adf470b",
+      },
+      {
+        sha: "dc4cde2",
+        message: "feat(docs): show per-skill pages in the left sidebar",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
       },
       {
         sha: "cd9470f",
@@ -81,9 +96,9 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/cd9470f41638bd515db096cd934c463205790110",
       },
       {
-        sha: "dc4cde2",
-        message: "feat(docs): show per-skill pages in the left sidebar",
-        href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
+        sha: "068c24f",
+        message: "feat(deepseek): add thinking.type + reasoning_effort mapping for DeepSeek API",
+        href: "https://github.com/NousResearch/hermes-agent/commit/068c24f8a4203e86de32b0d84ccaf047e8cd6ef7",
       },
     ],
   },
