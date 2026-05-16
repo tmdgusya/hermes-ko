@@ -10,11 +10,35 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-16",
+    title: "TUI — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 타임아웃·에러 상태 처리, DECSTBM 스크롤 영역 수정",
+    category: "CLI / TUI",
+    summary:
+      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "55c9f32",
+        message: "fix(tui): width-aware markdown table rendering with vertical fallback (#26195)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/55c9f32060bbe7eb48bee2b702c157408b468eb2",
+      },
+      {
+        sha: "006937f",
+        message: "fix(tui): handle timeout/error subagent statuses in /agents (#26687)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/006937f7d062f7f1dd830aa16476ce962bd30445",
+      },
+      {
+        sha: "566d8f0",
+        message: "fix(tui): keep DECSTBM scroll region off bottom row (#26683)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/566d8f0d75049e5e4e4e3e3fde7f8c766ae235d6",
+      },
+    ],
+  },
   {
     date: "2026-05-16",
     title: "ACP / Auth — xAI OAuth entitlement-403 자격 증명 갱신 루프 수정, grok-4.3 컨텍스트 1M 확장",
@@ -95,11 +119,6 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
         href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
       },
-      {
-        sha: "518f395",
-        message: "fix(gateway): keep running when platforms fail; add per-platform circuit breaker + /platform",
-        href: "https://github.com/NousResearch/hermes-agent/commit/518f39557b6753a5dc766a05dd14dd5cf2b9edeb",
-      },
     ],
   },
   {
@@ -167,35 +186,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "09d9724",
         message: "feat(gateway): add SimpleX Chat platform plugin",
         href: "https://github.com/NousResearch/hermes-agent/commit/09d9724a09197b1981c318f3c51c55bc52fdfe29",
-      },
-    ],
-  },
-  {
-    date: "2026-05-15",
-    title: "CLI / TUI — YOLO 모드 경고, CJK/IME 렌더링, 백그라운드 알림, 스크롤백·라이트모드 수정",
-    category: "CLI / TUI",
-    summary:
-      "YOLO 모드 시 배너와 상태 표시줄에 경고가 표시됩니다. fast-echo 바이패스가 ASCII로 제한되어 베트남어/CJK/IME 입력이 올바르게 렌더링됩니다. 자율 백그라운드 프로세스 완료 알림이 지원됩니다. 리사이즈 시 스크롤백 중복 및 라이트 모드 가시성이 수정됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "b6e0741",
-        message: "feat(cli): show YOLO mode warning in banner and status bar",
-        href: "https://github.com/NousResearch/hermes-agent/commit/b6e07417c5242f7a3d6af1c8d8f0173248b4253f",
-      },
-      {
-        sha: "9fb40e6",
-        message: "fix(tui): restrict fast-echo bypass to ASCII so Vietnamese/CJK/IME input renders correctly",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9fb40e6a3d6338b6a6a616010de7a16672148924",
-      },
-      {
-        sha: "d541628",
-        message: "fix(tui): autonomous background process completion notifications",
-        href: "https://github.com/NousResearch/hermes-agent/commit/d5416284f11ccbc735c8357f0ab35ce5f683ccc3",
-      },
-      {
-        sha: "f8745f5",
-        message: "fix(cli): kill resize scrollback duplication + light-mode visibility",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f8745f59c2738025a02ca161307f4dcbfd0eb34a",
       },
     ],
   },
