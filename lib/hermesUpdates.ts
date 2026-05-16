@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (v0.14.0, 3 new skills, ACP deprecation, TUI cursor sync, Windows tirith silence)
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (v0.14.0, 3 new skills, ACP deprecation, TUI fixes, Docs overhaul, Windows tirith silence)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Security / Auth — OAuth PKCE state/code_verifier 분리, 의존성 CVE 패치, 도구 오류 살균, 위험 명령 감지 강화",
+    title: "Security / Auth — OAuth PKCE state/code_verifier 분리, 의존성 CVE 패치, 도구 오류 살균, 위험 명령 감지 강화, ACP deprecation 감지",
     category: "Security / Auth",
     summary:
-      "OAuth PKCE에서 state와 code_verifier가 분리되어 보안이 강화됩니다. aiohttp, anthropic, cryptography 등 의존성의 CVE 패치 버전으로 업그레이드됩니다. 도구 오류 문자열이 모델 컨텍스트에 주입되기 전에 살균 처리됩니다. Claude Code에서 영감받아 위험 명령 감지가 강화됩니다. doctor 명령에서 OAuth가 정상일 때 오래된 direct-key 경고가 숨겨집니다 (main branch 기준).",
+      "OAuth PKCE에서 state와 code_verifier가 분리되어 보안이 강화됩니다. aiohttp, anthropic, cryptography 등 의존성의 CVE 패치 버전으로 업그레이드됩니다. 도구 오류 문자열이 모델 컨텍스트에 주입되기 전에 살균 처리됩니다. Claude Code에서 영감받아 위험 명령 감지가 강화됩니다. doctor 명령에서 OAuth가 정상일 때 오래된 direct-key 경고가 숨겨집니다. GitHub Copilot ACP deprecation 감지 및 GitHub Models 413 오류 개선이 추가됩니다 (main branch 기준).",
     commits: [
       {
         sha: "fcd9011",
@@ -80,6 +80,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "d0a183c",
         message: "fix(doctor): suppress stale direct-key issues when oauth is healthy",
         href: "https://github.com/NousResearch/hermes-agent/commit/d0a183cadd877fe21a92fdc9114509729444594e",
+      },
+      {
+        sha: "4ded3ed",
+        message: "fix: detect gh-copilot deprecation and improve GitHub Models 413 errors (#10648)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4ded3ede334a7d5f8baa20f730bc8c5d3cdc399e",
+      },
+      {
+        sha: "b85b938",
+        message: "test: add tests for copilot ACP deprecation detection and Azure URL mapping",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b85b938b1fe74ecf16dc22e4448ecbab49660727",
       },
     ],
   },
@@ -182,10 +192,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP 감지 강화, 커서 동기화, Windows tirith 경고 수정",
+    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP 감지 강화, TUI 전반 수정, Windows tirith 경고 수정, pip 설치 문서 제거",
     category: "Docs / Dashboard / TUI / Windows",
     summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다 (main branch 기준).",
+      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다 (main branch 기준).",
     commits: [
       {
         sha: "dc4cde2",
@@ -193,9 +203,29 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
       },
       {
+        sha: "a31191c",
+        message: "fix(docs): unique sidebar keys for duplicate skill categories (#26726)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a31191c3f57e2463ce4253cb1d95f93c52f3df14",
+      },
+      {
+        sha: "afb97db",
+        message: "docs: add Programmatic integration overview (closes #360)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/afb97dbc539d1b6cc812d5af2bb8e9b3ebfc4719",
+      },
+      {
+        sha: "86a368d",
+        message: "remove pip installation method from docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/86a368d8322b3977bf89b9043818eebc6adf470b",
+      },
+      {
         sha: "63503eb",
         message: "fix(dashboard): clarify Kanban Ready vs assignment",
         href: "https://github.com/NousResearch/hermes-agent/commit/63503ebb14069e8ba0bea91955e7ce4e01670a4e",
+      },
+      {
+        sha: "ca413c6",
+        message: "fix(dashboard): align Ukrainian Kanban Ready column help",
+        href: "https://github.com/NousResearch/hermes-agent/commit/ca413c6164e7957d33841353feb9cdbf838dead7",
       },
       {
         sha: "374dc81",
@@ -206,6 +236,26 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "70b6635",
         message: "fix(tui): keep Ink displayCursor in sync with fast-echo writes so cursor stops drifting (#26717)",
         href: "https://github.com/NousResearch/hermes-agent/commit/70b663504fee1d58a6763e862df478cf101fe51e",
+      },
+      {
+        sha: "55c9f32",
+        message: "fix(tui): width-aware markdown table rendering with vertical fallback (#26195)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/55c9f32060bbe7eb48bee2b702c157408b468eb2",
+      },
+      {
+        sha: "006937f",
+        message: "fix(tui): handle timeout/error subagent statuses in /agents (#26687)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/006937f7d062f7f1dd830aa16476ce962bd30445",
+      },
+      {
+        sha: "566d8f0",
+        message: "fix(tui): keep DECSTBM scroll region off bottom row (#26683)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/566d8f0d75049e5e4e4e3e3fde7f8c766ae235d6",
+      },
+      {
+        sha: "44b63fc",
+        message: "fix(tui): allow transcript scroll + Esc during approval/clarify/confirm prompts (#26414)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/44b63fc6de3fe2b53eac3109b4a20db41c663195",
       },
       {
         sha: "c5dc970",
