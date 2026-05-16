@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (mcp remote URL validation, moonshot tool schema fix, gateway memory logging, /exit --delete flag added)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (xai stale X Premium+ hint dropped, mcp remote URL validation, moonshot tool schema fix, gateway memory logging, /exit --delete flag added)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -182,7 +182,7 @@ export const hermesUpdates: HermesUpdate[] = [
     title: "xAI OAuth — entitlement 403 자격 증명 갱신 루프 수정, SSE 오류 복구, Grok-4.3 컨텍스트 1M 확장",
     category: "xAI OAuth / Grok",
     summary:
-      "xAI OAuth에서 entitlement 403 오류 시 자격 증명 갱신 루프가 발생하던 문제가 수정됩니다. entitlement 403 힌트가 구독자를 비난하지 않도록 재작성되고 X Premium+ 제약 안내가 추가됩니다. prelude SSE 오류에서 복구되고 reasoning replay가 게이트됩니다. 압축 풀에서 xai OAuth가 올바르게 해결됩니다. Grok-4.3 컨텍스트가 1M으로 확장됩니다 (main branch 기준).",
+      "xAI OAuth에서 entitlement 403 오류 시 자격 증명 갱신 루프가 발생하던 문제가 수정됩니다. entitlement 403 힌트에서 오래된 X Premium+ 안내가 제거됩니다. entitlement 403 힌트가 구독자를 비난하지 않도록 재작성되고 X Premium+ 제약 안내가 추가됩니다. prelude SSE 오류에서 복구되고 reasoning replay가 게이트됩니다. 압축 풀에서 xai OAuth가 올바르게 해결됩니다. Grok-4.3 컨텍스트가 1M으로 확장됩니다 (main branch 기준).",
     commits: [
       {
         sha: "ce0e189",
@@ -208,6 +208,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "31ba2b0",
         message: "fix(xai-oauth): recover from prelude SSE errors, gate reasoning replay, surface entitlement 403s (#26644)",
         href: "https://github.com/NousResearch/hermes-agent/commit/31ba2b0cbcac310f7aa2db3c8885e37f2e2e37fb",
+      },
+      {
+        sha: "dffb602",
+        message: "fix(xai): drop stale X Premium+ hint from entitlement 403 surfacing (#27110)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dffb602f37b3c1b9c9fd7f0417aab3af56cffa38",
       },
     ],
   },
