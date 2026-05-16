@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (updater npm streaming + Camofox lazy-install, signal groupV2, docs release highlights + video_generate toolset added)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (mcp remote URL validation, moonshot tool schema fix, gateway memory logging, /exit --delete flag added)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -110,10 +110,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Gateway / Agent / Updater — TEXT follow-ups 병합, DeepSeek thinking, 위임 API 모드, heartbeat 안정화, npm 설치 진행 표시, Camofox 지연 설치, Signal 그룹V2 봉투 처리",
+    title: "Gateway / Agent / Updater — TEXT follow-ups 병합, DeepSeek thinking, 위임 API 모드, heartbeat 안정화, npm 설치 진행 표시, Camofox 지연 설치, Signal 그룹V2 봉투 처리, Moonshot 스키마 수정, 주기적 게이트웨이 메모리 로깅",
     category: "Gateway / Agent / Updater",
     summary:
-      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다. delegate heartbeat 스레드가 시작되지 않은 상태에서 join을 가드하고, 스레드 시작이 try 블록 안으로 이동하여 orphan 스레드가 방지됩니다. npm install 시 postinstall 진행 상황이 스트리밍되어 터미널에서 확인 가능합니다. Camofox가 지연 설치(lazy-install) 방식으로 변경되어 초기 설치 시간이 단축됩니다. Signal 메시지에서 groupV2.id를 envelope에서 읽고 legacy groupInfo로 폴백합니다 (main branch 기준).",
+      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다. delegate heartbeat 스레드가 시작되지 않은 상태에서 join을 가드하고, 스레드 시작이 try 블록 안으로 이동하여 orphan 스레드가 방지됩니다. npm install 시 postinstall 진행 상황이 스트리밍되어 터미널에서 확인 가능합니다. Camofox가 지연 설치(lazy-install) 방식으로 변경되어 초기 설치 시간이 단축됩니다. Signal 메시지에서 groupV2.id를 envelope에서 읽고 legacy groupInfo로 폴백합니다. Moonshot(Kimi) 모델에서 $ref siblings 제거 및 tuple items 축소로 tool schema 호환성이 수정됩니다. Cline에서 포팅한 주기적 gateway 메모리 사용량 로깅이 추가됩니다 (main branch 기준).",
     commits: [
       {
         sha: "c844d15",
@@ -165,6 +165,16 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(delegate): move heartbeat thread start inside try block to prevent orphan",
         href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
       },
+      {
+        sha: "93e109a",
+        message: "fix(moonshot): strip $ref siblings and collapse tuple items in tool schemas (#27104)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/93e109a1d552b03c847b96077428048cceb012cd",
+      },
+      {
+        sha: "dc3d0fe",
+        message: "Port from cline/cline#10343: periodic gateway memory logging (#27102)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/dc3d0fe1489aebd5747fa620d9b2eec751a92a55",
+      },
     ],
   },
   {
@@ -203,10 +213,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Tools / MCP / Plugins — 병렬 도구 호출 지원, X 검색 도구, 내장 도구 대체 플래그, Notion 스킬 오버홀",
+    title: "Tools / MCP / Plugins — 병렬 도구 호출 지원, X 검색 도구, 내장 도구 대체 플래그, Notion 스킬 오버홀, MCP remote URL 사전 검증",
     category: "Tools / MCP / Plugins",
     summary:
-      "MCP 서버에 supports_parallel_tool_calls 속성이 추가되어 병렬 도구 호출 지원 여부를 선언할 수 있습니다. X(Twitter) 검색 도구가 OAuth 또는 API 키 인증으로 게이트되어 추가됩니다. 플러그인에 tool override 플래그가 추가되어 내장 도구를 커스텀 구현으로 교체할 수 있습니다. Notion 스킬이 2026년 5월 Notion Developer Platform에 맞게 전면 오버홀됩니다 (main branch 기준).",
+      "MCP 서버에 supports_parallel_tool_calls 속성이 추가되어 병렬 도구 호출 지원 여부를 선언할 수 있습니다. X(Twitter) 검색 도구가 OAuth 또는 API 키 인증으로 게이트되어 추가됩니다. 플러그인에 tool override 플래그가 추가되어 내장 도구를 커스텀 구현으로 교체할 수 있습니다. Notion 스킬이 2026년 5월 Notion Developer Platform에 맞게 전면 오버홀됩니다. MCP remote URL이 연결 전에 사전 검증되어 명확한 오류 메시지가 제공됩니다 (main branch 기준).",
     commits: [
       {
         sha: "395e9dd",
@@ -228,14 +238,19 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "feat(skills/notion): overhaul for Notion Developer Platform (May 2026) (#26612)",
         href: "https://github.com/NousResearch/hermes-agent/commit/42070ecefb9e9da3adec6d536d130d9dc3b82560",
       },
+      {
+        sha: "fb05f5d",
+        message: "fix(mcp): validate remote URLs up-front with a clear error (#27105)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fb05f5d4b58d4fb20c3a4a98c2c150de3f729f3c",
+      },
     ],
   },
   {
     date: "2026-05-16",
-    title: "Docs / Release 노트 / Dashboard / ACP / TUI / Windows / CLI — 스킬별 사이드바, v0.14.0 하이라이트 확장·재작성, video_generate 도구 문서 추가, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거, CLI systemd PATH revert",
+    title: "Docs / Release 노트 / Dashboard / ACP / TUI / Windows / CLI — 스킬별 사이드바, v0.14.0 하이라이트 확장·재작성, video_generate 도구 문서 추가, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거, CLI /exit --delete 세션 삭제, systemd PATH revert",
     category: "Docs / Dashboard / TUI / Windows",
     summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. v0.14.0 릴리즈 하이라이트가 newcomer-friendly 컨텍스트로 확장되고 excitement framing으로 재작성됩니다. video_generate / video_gen toolset이 사용자 대면 도구 문서에 추가됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)되고, 응답 전에 session history도 함께 재생됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다. CLI에서 systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하는 수정이 추가 후 revert 되었습니다 (main branch 기준).",
+      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. v0.14.0 릴리즈 하이라이트가 newcomer-friendly 컨텍스트로 확장되고 excitement framing으로 재작성됩니다. video_generate / video_gen toolset이 사용자 대면 도구 문서에 추가됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)되고, 응답 전에 session history도 함께 재생됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. CLI /exit 명령에 --delete 플래그가 추가되어 종료 시 세션을 삭제할 수 있습니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다. CLI에서 systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하는 수정이 추가 후 revert 되었습니다 (main branch 기준).",
     commits: [
       {
         sha: "8a2b2b9",
@@ -356,6 +371,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "16ff946",
         message: "Revert \"fix(cli): tolerate unreadable dirs when building systemd PATH\"",
         href: "https://github.com/NousResearch/hermes-agent/commit/16ff9464a5daae9b82bf2ce2c7de5ba8f80cfd40",
+      },
+      {
+        sha: "fc03c95",
+        message: "feat(cli): add /exit --delete flag to remove session on quit (#27101)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc03c95da13105807cb3b3f42a311e4916b456ce",
       },
     ],
   },
