@@ -10,11 +10,40 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (v0.14.0, DeepSeek thinking, xAI OAuth fixes, docs sidebar, Kanban, Windows)
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (v0.14.0, 3 new skills, ACP deprecation, TUI cursor sync, Windows tirith silence)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-16",
+    title: "v0.14.0 릴리즈 — 새 옵셔널 스킬 3종 (osint-investigation, pinggy-tunnel, darwinian-evolver)",
+    category: "Release / Skills",
+    summary:
+      "v0.14.0이 릴리즈되었습니다. 옵셔널 스킬 3종이 새로 추가됩니다: OSINT 조사 스킬(osint-investigation), Pinggy 터널 스킬(pinggy-tunnel), 진화 알고리즘 스킬(darwinian-evolver) (main branch 기준).",
+    commits: [
+      {
+        sha: "a91a57f",
+        message: "chore: release v0.14.0 (2026.5.16) (#26862)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a91a57fa5a13d516c38b07a141a9ce8a3daabeb0",
+      },
+      {
+        sha: "5f91b1a",
+        message: "feat(skills): add osint-investigation optional skill (closes #355) (#26729)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5f91b1a48b06c8260dc539614abda27cf4e831cb",
+      },
+      {
+        sha: "c9b32a6",
+        message: "feat(skill): darwinian-evolver optional skill",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c9b32a654cd1f3480920431bd4e32a035a61a29d",
+      },
+      {
+        sha: "559c6ad",
+        message: "feat(skills): add optional pinggy-tunnel skill",
+        href: "https://github.com/NousResearch/hermes-agent/commit/559c6ad94aee03ddbd28b9480b9dabac292213a2",
+      },
+    ],
+  },
   {
     date: "2026-05-16",
     title: "Security / Auth — OAuth PKCE state/code_verifier 분리, 의존성 CVE 패치, 도구 오류 살균, 위험 명령 감지 강화",
@@ -153,10 +182,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Docs / Dashboard / ACP — 스킬별 사이드바 페이지, pip 설치 문서 제거, Kanban Ready 명확화, gh-copilot 미사용 감지",
-    category: "Docs / Dashboard / ACP",
+    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP 감지 강화, 커서 동기화, Windows tirith 경고 수정",
+    category: "Docs / Dashboard / TUI / Windows",
     summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. Programmatic integration 개요 문서가 새로 추가됩니다. pip 설치 방법 문서가 제거됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. gh-copilot 미사용(deprecation) 감지가 강화되고 GitHub Models 413 오류 힌트가 개선됩니다 (main branch 기준).",
+      "문서 사이드바에 스킬별 페이지가 표시됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다 (main branch 기준).",
     commits: [
       {
         sha: "dc4cde2",
@@ -164,53 +193,24 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
       },
       {
-        sha: "afb97db",
-        message: "docs: add Programmatic integration overview (closes #360)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/afb97dbc539d1b6cc812d5af2bb8e9b3ebfc4719",
-      },
-      {
-        sha: "86a368d",
-        message: "remove pip installation method from docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/86a368d8322b3977bf89b9043818eebc6adf470b",
-      },
-      {
         sha: "63503eb",
         message: "fix(dashboard): clarify Kanban Ready vs assignment",
         href: "https://github.com/NousResearch/hermes-agent/commit/63503ebb14069e8ba0bea91955e7ce4e01670a4e",
       },
       {
-        sha: "4ded3ed",
-        message: "fix: detect gh-copilot deprecation and improve GitHub Models 413 errors (#10648)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4ded3ede334a7d5f8baa20f730bc8c5d3cdc399e",
-      },
-    ],
-  },
-  {
-    date: "2026-05-16",
-    title: "TUI / CLI / Windows — 마크다운 테이블 렌더링, DECSTBM 스크롤 영역, 승인 프롬프트 UX, Windows 경고 수정",
-    category: "CLI / TUI / Windows",
-    summary:
-      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. DECSTBM 스크롤 영역이 하단 행을 벗어나지 않도록 수정됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. Windows에서 cwd-missing 및 tirith-spawn 경고가 반복 출력되지 않도록 수정됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "55c9f32",
-        message: "fix(tui): width-aware markdown table rendering with vertical fallback (#26195)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/55c9f32060bbe7eb48bee2b702c157408b468eb2",
+        sha: "374dc81",
+        message: "fix(copilot-acp): tighten deprecation detection + sharpen GitHub Models 413 hint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/374dc81c2359a6f61e8d1efc49de29d61d7b9a88",
       },
       {
-        sha: "566d8f0",
-        message: "fix(tui): keep DECSTBM scroll region off bottom row (#26683)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/566d8f0d75049e5e4e4e3e3fde7f8c766ae235d6",
+        sha: "70b6635",
+        message: "fix(tui): keep Ink displayCursor in sync with fast-echo writes so cursor stops drifting (#26717)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/70b663504fee1d58a6763e862df478cf101fe51e",
       },
       {
-        sha: "44b63fc",
-        message: "fix(tui): allow transcript scroll + Esc during approval/clarify/confirm prompts (#26414)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/44b63fc6de3fe2b53eac3109b4a20db41c663195",
-      },
-      {
-        sha: "4aec25b",
-        message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
+        sha: "c5dc970",
+        message: "fix(windows): silence tirith-unavailable banner + skip install/spawn attempts on unsupported platforms (#26718)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c5dc9700ebc8b890e349c0cc3e978d133395909b",
       },
     ],
   },
