@@ -10,18 +10,23 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16
+export const hermesUpdatesLastChecked = "2026-05-16"; // last new commit: 2026-05-16 (updated with c5dc970, a31191c)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-16",
-    title: "TUI — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, DECSTBM 스크롤 영역 수정, 승인 프롬프트 중 스크롤·Esc 허용",
+    title: "TUI / Platform — 마크다운 테이블 너비 인식 렌더링, /agents 서브에이전트 상태 처리, DECSTBM 스크롤 영역 수정, 승인 프롬프트 중 스크롤·Esc 허용, 미지원 플랫폼 tirith 설치·실행 건너뜀",
     category: "CLI / TUI",
     summary:
-      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다 (main branch 기준).",
+      "TUI에서 마크다운 테이블이 터미널 너비에 맞게 렌더링되고 좁은 환경에서는 세로 폴백으로 전환됩니다. /agents 페이지에서 서브에이전트의 타임아웃·에러 상태가 올바르게 처리됩니다. DECSTBM 스크롤 영역이 마지막 행을 포함하지 않도록 수정되어 화면 깨짐이 방지됩니다. approval/clarify/confirm 프롬프트 중에도 트랜스크립트 스크롤과 Esc 키가 동작합니다. 미지원 플랫폼에서 tirith-unavailable 배너가 숨겨지고 install/spawn 시도가 건너뜁니다 (main branch 기준).",
     commits: [
+      {
+        sha: "c5dc970",
+        message: "fix(windows): silence tirith-unavailable banner + skip install/spawn attempts on unsupported platforms (#26718)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c5dc9700ebc8b890e349c0cc3e978d133395909b",
+      },
       {
         sha: "44b63fc",
         message: "fix(tui): allow transcript scroll + Esc during approval/clarify/confirm prompts (#26414)",
@@ -75,11 +80,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바, pip 설치 문서 제거",
+    title: "DeepSeek / Docs — thinking 모드 매핑, DeepSeekProfile 연결, 스킬별 문서 사이드바 중복 키 수정, pip 설치 문서 제거",
     category: "DeepSeek / Docs",
     summary:
-      "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시됩니다. pip 설치 방법이 공식 문서에서 제거됩니다 (main branch 기준).",
+      "DeepSeek API에 thinking.type과 reasoning_effort 매핑이 추가되어 thinking 모드가 지원됩니다. 기존 legacy fallback 대신 DeepSeekProfile을 통해 올바르게 연결되도록 수정됩니다. Docs에 스킬별 문서 페이지가 왼쪽 사이드바에 표시되며, 중복 skill category 키 충돌이 해결됩니다. pip 설치 방법이 공식 문서에서 제거됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "a31191c",
+        message: "fix(docs): unique sidebar keys for duplicate skill categories (#26726)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/a31191c3f57e2463ce4253cb1d95f93c52f3df14",
+      },
       {
         sha: "86a368d",
         message: "remove pip installation method from docs",
