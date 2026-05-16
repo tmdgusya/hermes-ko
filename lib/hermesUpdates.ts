@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (ACP session history replay follow-up)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (ACP session history replay follow-up, style/chore/merge commits added)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -41,6 +41,11 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "559c6ad",
         message: "feat(skills): add optional pinggy-tunnel skill",
         href: "https://github.com/NousResearch/hermes-agent/commit/559c6ad94aee03ddbd28b9480b9dabac292213a2",
+      },
+      {
+        sha: "53637fb",
+        message: "chore(skills/darwinian-evolver): AUTHOR_MAP + docs regen",
+        href: "https://github.com/NousResearch/hermes-agent/commit/53637fb17d92b03ca3708f6df104136028459439",
       },
     ],
   },
@@ -90,6 +95,16 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "b85b938",
         message: "test: add tests for copilot ACP deprecation detection and Azure URL mapping",
         href: "https://github.com/NousResearch/hermes-agent/commit/b85b938b1fe74ecf16dc22e4448ecbab49660727",
+      },
+      {
+        sha: "345821b",
+        message: "style: move secrets import alongside other function-level imports",
+        href: "https://github.com/NousResearch/hermes-agent/commit/345821b4a1d612bc56cabb548b91b35a76bc3692",
+      },
+      {
+        sha: "7bb97b9",
+        message: "chore: add worlldz to AUTHOR_MAP for #26704 salvage",
+        href: "https://github.com/NousResearch/hermes-agent/commit/7bb97b952f7edd51ce29ba9f3db4e255d6792c22",
       },
     ],
   },
@@ -202,10 +217,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Docs / Dashboard / ACP / TUI / Windows — 스킬별 사이드바, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거",
+    title: "Docs / Dashboard / ACP / TUI / Windows / CLI — 스킬별 사이드바, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거, CLI systemd PATH revert",
     category: "Docs / Dashboard / TUI / Windows",
     summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)되고, 응답 전에 session history도 함께 재생됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다 (main branch 기준).",
+      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)되고, 응답 전에 session history도 함께 재생됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다. CLI에서 systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하는 수정이 추가 후 revert 되었습니다 (main branch 기준).",
     commits: [
       {
         sha: "dc4cde2",
@@ -291,6 +306,26 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "7fee1f6",
         message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
         href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
+      },
+      {
+        sha: "e377833",
+        message: "Merge pull request #26711 from NousResearch/austin/fix/dashboard-kanban",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e377833fa629909a6c1ced6216e42bef79da497e",
+      },
+      {
+        sha: "c7db6a5",
+        message: "Merge pull request #26702 from NousResearch/remove-pip-docs",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c7db6a58000c89b18717eef80e4842f114761fe9",
+      },
+      {
+        sha: "965610f",
+        message: "fix(cli): tolerate unreadable dirs when building systemd PATH",
+        href: "https://github.com/NousResearch/hermes-agent/commit/965610f922be5b2afb6fa412205077486734a433",
+      },
+      {
+        sha: "16ff946",
+        message: "Revert \"fix(cli): tolerate unreadable dirs when building systemd PATH\"",
+        href: "https://github.com/NousResearch/hermes-agent/commit/16ff9464a5daae9b82bf2ce2c7de5ba8f80cfd40",
       },
     ],
   },
