@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (TUI render fixes, gemma 4 reasoning, fallback custom_providers, background review isolation, docs updates)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (gateway logger fix, plugin refactor, docs updates, test coverage)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -46,10 +46,10 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-17",
-    title: "Agent 안정성 / Fallback — Gemma 4 reasoning 허용, custom_providers fallback 전달, background review 메모리 격리, fallback 인덱스 리셋, Discord 첨부, xAI 에러 노출",
-    category: "Agent 안정성 / Fallback / xAI",
+    title: "Agent 안정성 / Gateway — Gemma 4 reasoning 허용, custom_providers fallback 전달, background review 메모리 격리, fallback 인덱스 리셋, Discord 첨부, xAI 에러 노출, gateway logger 수정, 미사용 import 정리",
+    category: "Agent 안정성 / Gateway",
     summary:
-      "Gemma 4가 reasoning 허용 목록에 추가됩니다. fallback 시 custom_providers가 올바르게 전달되어 context-length 탐지가 정확해집니다. background review fork가 외부 메모리 플러그인으로부터 격리됩니다. 에이전트 턴 시작 시 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋됩니다. Discord에 allow_any_attachment 설정이 추가되어 임의의 파일 유형을 첨부로 받을 수 있습니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다 (main branch 기준).",
+      "Gemma 4가 reasoning 허용 목록에 추가됩니다. fallback 시 custom_providers가 올바르게 전달되어 context-length 탐지가 정확해집니다. background review fork가 외부 메모리 플러그인으로부터 격리됩니다. 에이전트 턴 시작 시 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋됩니다. Discord에 allow_any_attachment 설정이 추가되어 임의의 파일 유형을 첨부로 받을 수 있습니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다. _all_platforms에서 logger 정의가 누락되어 NameError가 발생하던 문제가 수정되고, 회귀 방지 스모크 테스트가 추가됩니다. 사용되지 않는 import와 모듈 수준 상수도 정리됩니다 (main branch 기준).",
     commits: [
       {
         sha: "7244116",
@@ -81,15 +81,45 @@ export const hermesUpdates: HermesUpdate[] = [
         message: "fix(xai): surface provider 'error' SSE frame in Codex fallback stream (#27184)",
         href: "https://github.com/NousResearch/hermes-agent/commit/2b193907d668af0c45f108d885db53a7ce8b8919",
       },
+      {
+        sha: "4e9cedc",
+        message: "fix(gateway): add missing logger definition to prevent NameError in _all_platforms",
+        href: "https://github.com/NousResearch/hermes-agent/commit/4e9cedcd4c6de05a0603a3969b6991fb0836761e",
+      },
+      {
+        sha: "57feef3",
+        message: "test(gateway): add smoke test for logger init (regression guard for #27154)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/57feef320178ce79070dc7ac9a399d3cf587eca4",
+      },
+      {
+        sha: "6053188",
+        message: "fix: remove unused import and hoist module-level constant",
+        href: "https://github.com/NousResearch/hermes-agent/commit/60531889d56a9a9d2b3f0b9ee04aea4145ede392",
+      },
     ],
   },
   {
     date: "2026-05-17",
-    title: "Plugins / CLI — 플러그인 발견 로직 정리, hermes send 명령, 압축 미디어 스트리핑, send_cmd 인코딩 수정",
+    title: "Plugins / CLI — 플러그인 발견 로직 정리·테스트, hermes send 명령, 압축 미디어 스트리핑",
     category: "Plugins / CLI",
     summary:
-      "플러그인 목록에서 카테고리 네임스페이스가 올바르게 노출되고, 사용되지 않는 bundled-source 가드와 unreachable Langfuse 경로가 제거되며 발견 로직이 정리됩니다. `hermes send` 명령이 추가되어 스크립트 출력을 임의의 메시징 플랫폼으로 파이프할 수 있으며, ruff 인코딩 요구사항도 만족됩니다. Kilo-Org/kilocode에서 포팅된 압축 후 히스토리 미디어 스트리핑이 추가됩니다 (main branch 기준).",
+      "플러그인 발견 로직에서 사용되지 않는 bundled-source 가드가 제거되고, unreachable Langfuse 경로가 정리됩니다. 카테고리 네임스페이스 플러그인이 올바르게 노출됩니다. `hermes send` 명령이 추가되어 스크립트 출력을 임의의 메시징 플랫폼으로 파이프할 수 있으며, ruff 인코딩 요구사항도 만족됩니다. Kilo-Org/kilocode에서 포팅된 압축 후 히스토리 미디어 스트리핑이 추가됩니다. 플러그인 발견 재귀 및 cross-link loader 테스트 커버리지도 추가됩니다 (main branch 기준).",
     commits: [
+      {
+        sha: "21be702",
+        message: "refactor(plugins): drop dead bundled-source guard in _discover_all_plugins",
+        href: "https://github.com/NousResearch/hermes-agent/commit/21be7025c584ea9b1d829e088b6049e259c6859a",
+      },
+      {
+        sha: "8ab8bc2",
+        message: "fix(plugins): remove unreachable hermes tools → Langfuse path",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ab8bc2f035ac4ed8b3b43ed2940ba3dc4589cc9",
+      },
+      {
+        sha: "5cbe0b1",
+        message: "test(plugins): cover _discover_all_plugins recursion + cross-link loader",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5cbe0b1c4ffabf6aeca31827ba9a76ec35e4d4fb",
+      },
       {
         sha: "9b82586",
         message: "fix(plugins): surface category-namespaced plugins in hermes plugins list",
