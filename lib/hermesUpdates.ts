@@ -10,7 +10,7 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (plugins discovery refactor, hermes send CLI, compression media strip)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (discord allow_any_attachment, plugins discovery refactor, hermes send CLI, compression media strip)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
@@ -56,11 +56,16 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-17",
-    title: "Agent 안정성 / xAI — 턴 시작 시 fallback 인덱스 리셋, Codex fallback 스트림 오류 노출",
-    category: "Agent 안정성 / xAI",
+    title: "Agent 안정성 / Discord / xAI — fallback 인덱스 리셋, Discord 임의 첨부 허용, Codex fallback 스트림 오류 노출",
+    category: "Agent 안정성 / Discord / xAI",
     summary:
-      "에이전트 턴이 시작될 때 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋되어 이후 턴에서 잘못된 인덱스 참조가 방지됩니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다 (main branch 기준).",
+      "에이전트 턴이 시작될 때 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋되어 이후 턴에서 잘못된 인덱스 참조가 방지됩니다. Discord에 allow_any_attachment 설정이 추가되어 임의의 파일 유형을 첨부로 받을 수 있습니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다 (main branch 기준).",
     commits: [
+      {
+        sha: "407a11b",
+        message: "feat(discord): allow_any_attachment config to accept arbitrary file types",
+        href: "https://github.com/NousResearch/hermes-agent/commit/407a11b4190d7a6ebbc6429d0481545abd86aadc",
+      },
       {
         sha: "33528b4",
         message: "fix(agent): reset _fallback_index at turn start even when no fallback activated",
