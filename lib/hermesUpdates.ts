@@ -10,11 +10,50 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (agent fallback index reset, xai Codex fallback SSE error surfacing)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (plugins discovery refactor, hermes send CLI, compression media strip)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-17",
+    title: "Plugins / CLI / Context — 플러그인 발견 로직 정리, `hermes send` 명령, 압축 후 미디어 스트리핑",
+    category: "Plugins / CLI / Context",
+    summary:
+      "플러그인 목록에서 카테고리 네임스페이스가 올바르게 노출되고, 사용되지 않는 bundled-source 가드와 unreachable Langfuse 경로가 제거되며 발견 로직이 정리됩니다. `hermes send` 명령이 추가되어 스크립트 출력을 임의의 메시징 플랫폼으로 파이프할 수 있습니다. Kilo-Org/kilocode에서 포팅된 압축 후 히스토리 미디어 스트리핑이 추가됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "9b82586",
+        message: "fix(plugins): surface category-namespaced plugins in hermes plugins list",
+        href: "https://github.com/NousResearch/hermes-agent/commit/9b82586c6b6dd628af273b3c6875e0142f798089",
+      },
+      {
+        sha: "8ab8bc2",
+        message: "fix(plugins): remove unreachable hermes tools → Langfuse path",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8ab8bc2f035ac4ed8b3b43ed2940ba3dc4589cc9",
+      },
+      {
+        sha: "21be702",
+        message: "refactor(plugins): drop dead bundled-source guard in _discover_all_plugins",
+        href: "https://github.com/NousResearch/hermes-agent/commit/21be7025c584ea9b1d829e088b6049e259c6859a",
+      },
+      {
+        sha: "5cbe0b1",
+        message: "test(plugins): cover _discover_all_plugins recursion + cross-link loader",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5cbe0b1c4ffabf6aeca31827ba9a76ec35e4d4fb",
+      },
+      {
+        sha: "29b1bd0",
+        message: "feat(cli): add `hermes send` to pipe script output to any messaging platform (#27188)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/29b1bd0e20e5848e2be8de431a225174ab6a7fed",
+      },
+      {
+        sha: "3b39096",
+        message: "Port from Kilo-Org/kilocode#9434: strip historical media after compression (#27189)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3b39096904ae63a9e784b2403ad6ad27160bb2ef",
+      },
+    ],
+  },
   {
     date: "2026-05-17",
     title: "Agent 안정성 / xAI — 턴 시작 시 fallback 인덱스 리셋, Codex fallback 스트림 오류 노출",
@@ -111,6 +150,11 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/4ded3ede334a7d5f8baa20f730bc8c5d3cdc399e",
       },
       {
+        sha: "374dc81",
+        message: "fix(copilot-acp): tighten deprecation detection + sharpen GitHub Models 413 hint",
+        href: "https://github.com/NousResearch/hermes-agent/commit/374dc81c2359a6f61e8d1efc49de29d61d7b9a88",
+      },
+      {
         sha: "b85b938",
         message: "test: add tests for copilot ACP deprecation detection and Azure URL mapping",
         href: "https://github.com/NousResearch/hermes-agent/commit/b85b938b1fe74ecf16dc22e4448ecbab49660727",
@@ -129,25 +173,15 @@ export const hermesUpdates: HermesUpdate[] = [
   },
   {
     date: "2026-05-16",
-    title: "Gateway / Agent / Updater — TEXT follow-ups 병합, DeepSeek thinking, 위임 API 모드, heartbeat 안정화, npm 설치 진행 표시, Camofox 지연 설치, Signal 그룹V2 봉투 처리, Moonshot 스키마 수정, 주기적 게이트웨이 메모리 로깅",
-    category: "Gateway / Agent / Updater",
+    title: "Gateway / Agent / ACP — TEXT follow-ups 병합, DeepSeek thinking, 위임 API 모드, heartbeat 안정화, ACP 세션 리플레이, CLI 개선, npm 설치 진행 표시, Camofox 지연 설치, Signal/Moonshot 수정, 주기적 게이트웨이 메모리 로깅",
+    category: "Gateway / Agent / ACP",
     summary:
-      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다. delegate heartbeat 스레드가 시작되지 않은 상태에서 join을 가드하고, 스레드 시작이 try 블록 안으로 이동하여 orphan 스레드가 방지됩니다. npm install 시 postinstall 진행 상황이 스트리밍되어 터미널에서 확인 가능합니다. Camofox가 지연 설치(lazy-install) 방식으로 변경되어 초기 설치 시간이 단축됩니다. Signal 메시지에서 groupV2.id를 envelope에서 읽고 legacy groupInfo로 폴백합니다. Moonshot(Kimi) 모델에서 $ref siblings 제거 및 tuple items 축소로 tool schema 호환성이 수정됩니다. Cline에서 포팅한 주기적 gateway 메모리 사용량 로깅이 추가됩니다 (main branch 기준).",
+      "활성 세션 중 rapid TEXT follow-up 메시지가 올바르게 병합됩니다. DeepSeek API에 thinking.type 및 reasoning_effort 매핑이 추가되고, DeepSeekProfile을 통해 thinking 모드가 올바르게 적용됩니다. 위임 시 api_mode가 올바르게 적용되고 anthropic_messages URL이 자동 감지됩니다. Anthropic 스트림 파서에서 잘못된 형식의 응답 시 재시도하도록 수정됩니다. delegate heartbeat 스레드가 시작되지 않은 상태에서 join을 가드하고, orphan 스레드가 방지됩니다. ACP session/load 시 세션 히스토리 리플레이와 assistant reasoning의 agent_thought_chunk 재생이 추가됩니다. /exit --delete 플래그로 종료 시 세션 삭제, /status에 세션 리캡 추가, 백그라운드 작업 시 ▶ N 표시기가 추가됩니다. Codex 429 오류 시 풀 회전, Telegram DM 타이핑 인디케이터 복원, TUI 커서 동기화 수정이 포함됩니다. npm install 진행 상황 스트리밍, Camofox 지연 설치, Signal groupV2 봉투 처리, Moonshot 스키마 수정, 주기적 gateway 메모리 로깅이 추가됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "c844d15",
-        message: "fix(update): stream npm install output so postinstall progress is visible (#18840)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c844d15c3d27991a35bbc4ec56558d85122412c9",
-      },
-      {
-        sha: "05af78c",
-        message: "fix(update): make Camofox lazy-installed instead of eager (#27055)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/05af78c53d553f6dd20012ce18eb0c2c02d346c9",
-      },
-      {
-        sha: "6c2406c",
-        message: "fix(signal): read groupV2.id in envelope, fall back to legacy groupInfo (#27051)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6c2406c5e131dbbcabb69319c73c02594f63caea",
+        sha: "585d6b6",
+        message: "fix(gateway): merge rapid TEXT follow-ups during active sessions (#4469) (#26822)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/585d6b64305ab94773a129880450d2ee3d362bbc",
       },
       {
         sha: "068c24f",
@@ -158,11 +192,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "cd9470f",
         message: "fix(deepseek): wire thinking-mode via DeepSeekProfile, not legacy fallback",
         href: "https://github.com/NousResearch/hermes-agent/commit/cd9470f41638bd515db096cd934c463205790110",
-      },
-      {
-        sha: "585d6b6",
-        message: "fix(gateway): merge rapid TEXT follow-ups during active sessions (#4469) (#26822)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/585d6b64305ab94773a129880450d2ee3d362bbc",
       },
       {
         sha: "c445f48",
@@ -185,6 +214,61 @@ export const hermesUpdates: HermesUpdate[] = [
         href: "https://github.com/NousResearch/hermes-agent/commit/2d7182f72c398496db60de5c18f8554d7ecc6d82",
       },
       {
+        sha: "f3a4af9",
+        message: "fix(acp): replay assistant reasoning as agent_thought_chunk on session/load (#12285) (#26943)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/f3a4af9cf2a626cb3e055766cb1cff60168d295d",
+      },
+      {
+        sha: "3034eee",
+        message: "fix(acp): replay session history before responding to session/load (#12285 follow-up) (#26957)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/3034eee38ec516109566c00975be4d0276747c34",
+      },
+      {
+        sha: "fc03c95",
+        message: "feat(cli): add /exit --delete flag to remove session on quit (#27101)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/fc03c95da13105807cb3b3f42a311e4916b456ce",
+      },
+      {
+        sha: "e21cb8d",
+        message: "feat(status): append session recap to /status output (#27176)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e21cb8d1457f603cda1dc8413efc400721d256e7",
+      },
+      {
+        sha: "226cee4",
+        message: "feat(cli): show ▶ N indicator in status bar when /background tasks are running (#27175)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/226cee43d97997525e4e26a20075aec98e641418",
+      },
+      {
+        sha: "e51d74a",
+        message: "fix(codex): rotate pool on usage limit 429",
+        href: "https://github.com/NousResearch/hermes-agent/commit/e51d74ab917675a67e6a964d6c2c2ea2b150ac2c",
+      },
+      {
+        sha: "6f817e1",
+        message: "fix(telegram): restore DM topic typing indicator",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6f817e1447499cf51d8c966b3f3a600ba3412f85",
+      },
+      {
+        sha: "70b6635",
+        message: "fix(tui): keep Ink displayCursor in sync with fast-echo writes so cursor stops drifting (#26717)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/70b663504fee1d58a6763e862df478cf101fe51e",
+      },
+      {
+        sha: "c844d15",
+        message: "fix(update): stream npm install output so postinstall progress is visible (#18840)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c844d15c3d27991a35bbc4ec56558d85122412c9",
+      },
+      {
+        sha: "05af78c",
+        message: "fix(update): make Camofox lazy-installed instead of eager (#27055)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/05af78c53d553f6dd20012ce18eb0c2c02d346c9",
+      },
+      {
+        sha: "6c2406c",
+        message: "fix(signal): read groupV2.id in envelope, fall back to legacy groupInfo (#27051)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6c2406c5e131dbbcabb69319c73c02594f63caea",
+      },
+      {
         sha: "93e109a",
         message: "fix(moonshot): strip $ref siblings and collapse tuple items in tool schemas (#27104)",
         href: "https://github.com/NousResearch/hermes-agent/commit/93e109a1d552b03c847b96077428048cceb012cd",
@@ -193,45 +277,6 @@ export const hermesUpdates: HermesUpdate[] = [
         sha: "dc3d0fe",
         message: "Port from cline/cline#10343: periodic gateway memory logging (#27102)",
         href: "https://github.com/NousResearch/hermes-agent/commit/dc3d0fe1489aebd5747fa620d9b2eec751a92a55",
-      },
-    ],
-  },
-  {
-    date: "2026-05-16",
-    title: "xAI OAuth — entitlement 403 자격 증명 갱신 루프 수정, SSE 오류 복구, Grok-4.3 컨텍스트 1M 확장",
-    category: "xAI OAuth / Grok",
-    summary:
-      "xAI OAuth에서 entitlement 403 오류 시 자격 증명 갱신 루프가 발생하던 문제가 수정됩니다. entitlement 403 힌트에서 오래된 X Premium+ 안내가 제거됩니다. entitlement 403 힌트가 구독자를 비난하지 않도록 재작성되고 X Premium+ 제약 안내가 추가됩니다. prelude SSE 오류에서 복구되고 reasoning replay가 게이트됩니다. 압축 풀에서 xai OAuth가 올바르게 해결됩니다. Grok-4.3 컨텍스트가 1M으로 확장됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "ce0e189",
-        message: "fix(xai-oauth): break entitlement-403 credential-refresh loop, bump grok-4.3 context to 1M (#26664)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ce0e189d3e7185d6c8c6af924a1df23e17c6f85c",
-      },
-      {
-        sha: "9818b9a",
-        message: "fix(xai-oauth): rewrite entitlement-403 hint to not accuse subscribers (#26666)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9818b9a1acb915971d835d1faa85949e9f7a87a5",
-      },
-      {
-        sha: "6784c80",
-        message: "fix(xai-oauth): lead entitlement-403 hint with X Premium+ gotcha (#26672)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/6784c80794bfd3cc40aae7f7d9f1a59876de7799",
-      },
-      {
-        sha: "97a32af",
-        message: "fix(auxiliary): resolve xai oauth compression from pool",
-        href: "https://github.com/NousResearch/hermes-agent/commit/97a32afdc490e3d40b291dac0e67f291502052a0",
-      },
-      {
-        sha: "31ba2b0",
-        message: "fix(xai-oauth): recover from prelude SSE errors, gate reasoning replay, surface entitlement 403s (#26644)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/31ba2b0cbcac310f7aa2db3c8885e37f2e2e37fb",
-      },
-      {
-        sha: "dffb602",
-        message: "fix(xai): drop stale X Premium+ hint from entitlement 403 surfacing (#27110)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/dffb602f37b3c1b9c9fd7f0417aab3af56cffa38",
       },
     ],
   },
