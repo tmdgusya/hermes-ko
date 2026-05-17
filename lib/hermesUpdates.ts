@@ -10,135 +10,110 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (gateway logger fix, plugin refactor, docs updates, test coverage)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (PR #27248 merge — xAI OAuth provider, agent model handling, gateway trust_env, system hardening)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
   {
     date: "2026-05-17",
-    title: "TUI / 렌더링 — ANSI 살균 강화, Terminal.app 렌더 안정화, 마젠타 블리드 수정",
-    category: "TUI / 렌더링",
+    title: "Agent 핵심 — 비전 모델 이미지 스트리핑, Gemma 4·Kimi 추론 지원, custom_providers 안정화, OpenRouter 비전 존중",
+    category: "Agent 안정성",
     summary:
-      "ANSI 이스케이프 시퀀스 처리 시 dangling CSI가 남지 않도록 살균기가 강화되고, Terminal.app에서 마젠타 색상 블리드 렌더 현상이 수정됩니다. Copilot 리뷰에서 지적된 sanitizer 및 파일 디코딩 오류도 함께 해결됩니다 (main branch 기준).",
+      "비전 미지원 모델에 이미지 파트가 전달되지 않도록 스트리핑되고, _custom_providers에 대한 getattr 가드가 추가됩니다. Gemma 4가 reasoning 허용 목록에 추가되고, Kimi 모델이 이름 기반으로 감지되어 reasoning pad가 적용됩니다. fallback 시 custom_providers가 올바르게 전달되어 context-length 탐지가 정확해집니다. OpenRouter에서 사용자가 구성한 비전 모델 설정이 존중됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "9f182bd",
-        message: "fix(tui): resolve magenta bleed in skin render (#27251)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9f182bd7b04f73e4508999017e20740272b036a8",
+        sha: "563b4d9",
+        message: "fix: strip image parts for non-vision models with provider profiles + getattr-safe _custom_providers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/563b4d9e51a46cc421e327b351cb7efe1ccb151b",
       },
       {
-        sha: "a65f723",
-        message: "fix(review): address Copilot follow-up on sanitizer and file decode errors",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a65f723e6847f8d326947011b0d6d345d240ce25",
-      },
-      {
-        sha: "7e1788d",
-        message: "fix(tui): harden ansi sanitizers for dangling CSI",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7e1788db5d569f61d3aed32f74963208b03835ec",
-      },
-      {
-        sha: "290bf93",
-        message: "fix(tui): harden Terminal.app render behavior",
-        href: "https://github.com/NousResearch/hermes-agent/commit/290bf93104652bf6acaf50151f0ddac54cb69fde",
-      },
-    ],
-  },
-  {
-    date: "2026-05-17",
-    title: "Agent 안정성 / Gateway — Gemma 4 reasoning 허용, custom_providers fallback 전달, background review 메모리 격리, fallback 인덱스 리셋, Discord 첨부, xAI 에러 노출, gateway logger 수정, 미사용 import 정리",
-    category: "Agent 안정성 / Gateway",
-    summary:
-      "Gemma 4가 reasoning 허용 목록에 추가됩니다. fallback 시 custom_providers가 올바르게 전달되어 context-length 탐지가 정확해집니다. background review fork가 외부 메모리 플러그인으로부터 격리됩니다. 에이전트 턴 시작 시 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋됩니다. Discord에 allow_any_attachment 설정이 추가되어 임의의 파일 유형을 첨부로 받을 수 있습니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다. _all_platforms에서 logger 정의가 누락되어 NameError가 발생하던 문제가 수정되고, 회귀 방지 스모크 테스트가 추가됩니다. 사용되지 않는 import와 모듈 수준 상수도 정리됩니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "7244116",
+        sha: "8f3bc17",
         message: "feat(agent): Added gemma 4 to reasoning allowlist",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7244116b687f6e5ff5e869c99cdbb1b09c822799",
+        href: "https://github.com/NousResearch/hermes-agent/commit/8f3bc17db9ebe1d9108ae69b14fcc3f06734554b",
       },
       {
-        sha: "21078eb",
+        sha: "94b3131",
+        message: "fix(run_agent): detect kimi models via model name for reasoning pad",
+        href: "https://github.com/NousResearch/hermes-agent/commit/94b3131be7115709c516a79be7c3d01dd71761a8",
+      },
+      {
+        sha: "b5bcffe",
         message: "fix(fallback): forward custom_providers to fallback model context-length detection",
-        href: "https://github.com/NousResearch/hermes-agent/commit/21078ebcea6dd870835080fdc76a40284418c921",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b5bcffe1674fa9ab3ba7a754c07ab77bedde83a8",
       },
       {
-        sha: "973f27e",
-        message: "fix(run_agent): isolate background review fork from external memory plugins (#27190)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/973f27e95631aaecbda5e32e3fa9e5d7f6a2e1d3",
-      },
-      {
-        sha: "407a11b",
-        message: "feat(discord): allow_any_attachment config to accept arbitrary file types",
-        href: "https://github.com/NousResearch/hermes-agent/commit/407a11b4190d7a6ebbc6429d0481545abd86aadc",
-      },
-      {
-        sha: "33528b4",
-        message: "fix(agent): reset _fallback_index at turn start even when no fallback activated",
-        href: "https://github.com/NousResearch/hermes-agent/commit/33528b428d196443f788f43fec3139bd6e2c4997",
-      },
-      {
-        sha: "2b19390",
-        message: "fix(xai): surface provider 'error' SSE frame in Codex fallback stream (#27184)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/2b193907d668af0c45f108d885db53a7ce8b8919",
-      },
-      {
-        sha: "4e9cedc",
-        message: "fix(gateway): add missing logger definition to prevent NameError in _all_platforms",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4e9cedcd4c6de05a0603a3969b6991fb0836761e",
-      },
-      {
-        sha: "57feef3",
-        message: "test(gateway): add smoke test for logger init (regression guard for #27154)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/57feef320178ce79070dc7ac9a399d3cf587eca4",
-      },
-      {
-        sha: "6053188",
-        message: "fix: remove unused import and hoist module-level constant",
-        href: "https://github.com/NousResearch/hermes-agent/commit/60531889d56a9a9d2b3f0b9ee04aea4145ede392",
+        sha: "52c8971",
+        message: "fix: respect user-configured vision model for OpenRouter",
+        href: "https://github.com/NousResearch/hermes-agent/commit/52c89715a29198d838dac54e229aba9cf328e408",
       },
     ],
   },
   {
     date: "2026-05-17",
-    title: "Plugins / CLI — 플러그인 발견 로직 정리·테스트, hermes send 명령, 압축 미디어 스트리핑",
-    category: "Plugins / CLI",
+    title: "Provider / OAuth — xAI Grok OAuth 프로바이더, SSE prelude 에러 복구, entitlement 403 체인, NIM billing header",
+    category: "Provider / OAuth",
     summary:
-      "플러그인 발견 로직에서 사용되지 않는 bundled-source 가드가 제거되고, unreachable Langfuse 경로가 정리됩니다. 카테고리 네임스페이스 플러그인이 올바르게 노출됩니다. `hermes send` 명령이 추가되어 스크립트 출력을 임의의 메시징 플랫폼으로 파이프할 수 있으며, ruff 인코딩 요구사항도 만족됩니다. Kilo-Org/kilocode에서 포팅된 압축 후 히스토리 미디어 스트리핑이 추가됩니다. 플러그인 발견 재귀 및 cross-link loader 테스트 커버리지도 추가됩니다 (main branch 기준).",
+      "xAI Grok OAuth(SuperGrok Subscription) 프로바이더가 새로 추가되어 xAI API에 OAuth 인증으로 접근할 수 있습니다. SSE 스트림에서 prelude 에러 복구, reasoning replay 게이팅, entitlement 403 노출이 개선됩니다. entitlement-403 처리 체인이 최종 정리되고, Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출됩니다. NVIDIA NIM에 billing origin header가 추가됩니다 (main branch 기준).",
     commits: [
       {
-        sha: "21be702",
-        message: "refactor(plugins): drop dead bundled-source guard in _discover_all_plugins",
-        href: "https://github.com/NousResearch/hermes-agent/commit/21be7025c584ea9b1d829e088b6049e259c6859a",
+        sha: "b07524e",
+        message: "feat(xai-oauth): add xAI Grok OAuth (SuperGrok Subscription) provider — port to extracted modules",
+        href: "https://github.com/NousResearch/hermes-agent/commit/b07524e53aed5e8629b98ce3bbf3a54a27d596f4",
       },
       {
-        sha: "8ab8bc2",
-        message: "fix(plugins): remove unreachable hermes tools → Langfuse path",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8ab8bc2f035ac4ed8b3b43ed2940ba3dc4589cc9",
+        sha: "6362e71",
+        message: "fix(xai-oauth): recover from prelude SSE errors, gate reasoning replay, surface entitlement 403s",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6362e71973c18b407651157f818e279122ce41f6",
       },
       {
-        sha: "5cbe0b1",
-        message: "test(plugins): cover _discover_all_plugins recursion + cross-link loader",
-        href: "https://github.com/NousResearch/hermes-agent/commit/5cbe0b1c4ffabf6aeca31827ba9a76ec35e4d4fb",
+        sha: "6975a2d",
+        message: "fix(xai-oauth): entitlement-403 chain — final state (ce0e189d3 + 9818b9a1a + 6784c8079 + dffb602f3)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/6975a2d9ae20c5131c4fd3b3758dc9eade8cc6a0",
       },
       {
-        sha: "9b82586",
-        message: "fix(plugins): surface category-namespaced plugins in hermes plugins list",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9b82586c6b6dd628af273b3c6875e0142f798089",
+        sha: "aa05ffb",
+        message: "fix(xai): surface provider 'error' SSE frame in Codex fallback stream (#27184)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/aa05ffba530fde599b6515120578364cce682ac7",
       },
       {
-        sha: "29b1bd0",
-        message: "feat(cli): add `hermes send` to pipe script output to any messaging platform (#27188)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/29b1bd0e20e5848e2be8de431a225174ab6a7fed",
+        sha: "27df249",
+        message: "feat(nvidia): add NIM billing origin header — port to extracted modules",
+        href: "https://github.com/NousResearch/hermes-agent/commit/27df249564b3ce6fa4d1db883df0329bfda01593",
+      },
+    ],
+  },
+  {
+    date: "2026-05-17",
+    title: "Gateway / 시스템 — trust_env 일괄 적용, TTS 텍스트 준비 훅, API 서버 헤더 강화, Telegram DM topic, bool 변환",
+    category: "Gateway / 시스템",
+    summary:
+      "SMS, Slack, Teams, Google Chat 어댑터와 _LineClient의 aiohttp 세션에 trust_env=True가 일괄 적용되어 프록시 환경에서 연결이 안정화됩니다. 자동 TTS 마크다운 스트리핑이 prepare_tts_text() 훅으로 분리됩니다. API 서버 응답 헤더가 강화되고, 문자열로 변환된 boolean 값이 요청 페이로드에서 올바르게 처리됩니다. Telegram 합성 DM 이벤트에 direct_messages_topic_id가 추가됩니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "c1ae18e",
+        message: "fix(gateway): add trust_env=True to aiohttp sessions in SMS, Slack, Teams, Google Chat adapters",
+        href: "https://github.com/NousResearch/hermes-agent/commit/c1ae18ee815eba605c1b021e1b0b2a9c765b2d71",
       },
       {
-        sha: "3b39096",
-        message: "Port from Kilo-Org/kilocode#9434: strip historical media after compression (#27189)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3b39096904ae63a9e784b2403ad6ad27160bb2ef",
+        sha: "35b7bef",
+        message: "fix(line): add trust_env=True to all _LineClient aiohttp sessions",
+        href: "https://github.com/NousResearch/hermes-agent/commit/35b7befc67315da5d4ce6b6a3daa4d9ba2f57c1c",
       },
       {
-        sha: "9b2d581",
-        message: "fix(cli): satisfy ruff encoding requirement in send_cmd",
-        href: "https://github.com/NousResearch/hermes-agent/commit/9b2d58159c70b46214d0ef961168bbc826651663",
+        sha: "0afab4a",
+        message: "feat(gateway): extract auto-TTS markdown strip into prepare_tts_text() hook",
+        href: "https://github.com/NousResearch/hermes-agent/commit/0afab4a32b3b371ac3b5ab17d745aab823444ae3",
+      },
+      {
+        sha: "5631345",
+        message: "[agent] fix: harden api server response headers",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5631345b12aa5fa7ead11203624e646b42c8936f",
+      },
+      {
+        sha: "5338250",
+        message: "fix(gateway): add direct_messages_topic_id for synthetic Telegram DM events",
+        href: "https://github.com/NousResearch/hermes-agent/commit/5338250dab14b3e4f9dfb306446e8c55835adfad",
       },
     ],
   },
