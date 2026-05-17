@@ -10,11 +10,30 @@ export type HermesUpdate = {
   }>;
 };
 
-export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-16 (xai stale X Premium+ hint dropped, mcp remote URL validation, moonshot tool schema fix, gateway memory logging, /exit --delete flag added)
+export const hermesUpdatesLastChecked = "2026-05-17"; // last new commit: 2026-05-17 (agent fallback index reset, xai Codex fallback SSE error surfacing)
 
 export const hermesUpdatesSourceUrl = "https://github.com/NousResearch/hermes-agent/commits/main";
 
 export const hermesUpdates: HermesUpdate[] = [
+  {
+    date: "2026-05-17",
+    title: "Agent 안정성 / xAI — 턴 시작 시 fallback 인덱스 리셋, Codex fallback 스트림 오류 노출",
+    category: "Agent 안정성 / xAI",
+    summary:
+      "에이전트 턴이 시작될 때 fallback이 활성화되지 않은 경우에도 _fallback_index가 리셋되어 이후 턴에서 잘못된 인덱스 참조가 방지됩니다. xAI Codex fallback 스트림에서 provider 'error' SSE 프레임이 노출되어 오류 원인을 파악하기 쉬워집니다 (main branch 기준).",
+    commits: [
+      {
+        sha: "33528b4",
+        message: "fix(agent): reset _fallback_index at turn start even when no fallback activated",
+        href: "https://github.com/NousResearch/hermes-agent/commit/33528b428d196443f788f43fec3139bd6e2c4997",
+      },
+      {
+        sha: "2b19390",
+        message: "fix(xai): surface provider 'error' SSE frame in Codex fallback stream (#27184)",
+        href: "https://github.com/NousResearch/hermes-agent/commit/2b193907d668af0c45f108d885db53a7ce8b8919",
+      },
+    ],
+  },
   {
     date: "2026-05-16",
     title: "v0.14.0 릴리즈 — 새 옵셔널 스킬 3종 (osint-investigation, pinggy-tunnel, darwinian-evolver)",
@@ -250,138 +269,5 @@ export const hermesUpdates: HermesUpdate[] = [
       },
     ],
   },
-  {
-    date: "2026-05-16",
-    title: "Docs / Release 노트 / Dashboard / ACP / TUI / Windows / CLI — 스킬별 사이드바, v0.14.0 하이라이트 확장·재작성, video_generate 도구 문서 추가, Kanban Ready 명확화, ACP reasoning replay, TUI 전반 수정, Windows tirith·cwd 경고 수정, pip 설치 문서 제거, CLI /exit --delete 세션 삭제, systemd PATH revert",
-    category: "Docs / Dashboard / TUI / Windows",
-    summary:
-      "문서 사이드바에 스킬별 페이지가 표시됩니다. 중복 스킬 카테고리의 사이드바 키가 고유하게 수정됩니다. v0.14.0 릴리즈 하이라이트가 newcomer-friendly 컨텍스트로 확장되고 excitement framing으로 재작성됩니다. video_generate / video_gen toolset이 사용자 대면 도구 문서에 추가됩니다. Dashboard Kanban에서 Ready 컬럼의 의미가 명확해집니다. Copilot ACP 미사용(deprecation) 감지가 추가로 강화되고 GitHub Models 413 힌트가 개선됩니다. ACP 세션 로드 시 assistant reasoning이 agent_thought_chunk로 재생(replay)되고, 응답 전에 session history도 함께 재생됩니다. TUI에서 Ink displayCursor가 fast-echo writes와 동기화되어 커서 표류가 수정되고, 마크다운 테이블 렌더링이 너비 인식 개선, /agents에서 timeout/error 서브에이전트 상태 처리, DECSTBM 스크롤 영역이 하단 행을 침범하지 않게 수정되며, approval/clarify/confirm 프롬프트 중에도 transcript 스크롤과 Esc가 허용됩니다. Programmatic integration 개요 문서가 추가됩니다. pip 설치 방법이 문서에서 제거됩니다. CLI /exit 명령에 --delete 플래그가 추가되어 종료 시 세션을 삭제할 수 있습니다. Windows 등 미지원 플랫폼에서 tirith-unavailable 배너가 표시되지 않고 설치·실행 시도가 건너뜁니다. Windows에서 매 터미널 호출 시 cwd-missing·tirith-spawn 경고가 반복 출력되지 않게 수정됩니다. Windows 파일 락 생성 시 TOCTOU 레이스가 제거됩니다. CLI에서 systemd PATH 구성 시 읽을 수 없는 디렉토리를 허용하는 수정이 추가 후 revert 되었습니다 (main branch 기준).",
-    commits: [
-      {
-        sha: "8a2b2b9",
-        message: "docs(release): expand v0.14.0 highlights with newcomer-friendly context (#27053)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/8a2b2b9f6f9c419fdef48f542bf4b1991c655810",
-      },
-      {
-        sha: "6836987",
-        message: "docs(release): rewrite v0.14.0 highlights for excitement framing (#27035)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/683698742852ce0455f3a07b12c772c786d5a2ae",
-      },
-      {
-        sha: "35f2552",
-        message: "docs(tools): add video_generate / video_gen toolset to user-facing tool docs (#27050)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/35f25523c60d9b1174c9a5d901e34f2300d81986",
-      },
-      {
-        sha: "dc4cde2",
-        message: "feat(docs): show per-skill pages in the left sidebar (#26646)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/dc4cde278ba0523c01c2c29988e59a567a19ef22",
-      },
-      {
-        sha: "a31191c",
-        message: "fix(docs): unique sidebar keys for duplicate skill categories (#26726)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/a31191c3f57e2463ce4253cb1d95f93c52f3df14",
-      },
-      {
-        sha: "afb97db",
-        message: "docs: add Programmatic integration overview (closes #360)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/afb97dbc539d1b6cc812d5af2bb8e9b3ebfc4719",
-      },
-      {
-        sha: "86a368d",
-        message: "remove pip installation method from docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/86a368d8322b3977bf89b9043818eebc6adf470b",
-      },
-      {
-        sha: "63503eb",
-        message: "fix(dashboard): clarify Kanban Ready vs assignment",
-        href: "https://github.com/NousResearch/hermes-agent/commit/63503ebb14069e8ba0bea91955e7ce4e01670a4e",
-      },
-      {
-        sha: "ca413c6",
-        message: "fix(dashboard): align Ukrainian Kanban Ready column help",
-        href: "https://github.com/NousResearch/hermes-agent/commit/ca413c6164e7957d33841353feb9cdbf838dead7",
-      },
-      {
-        sha: "374dc81",
-        message: "fix(copilot-acp): tighten deprecation detection + sharpen GitHub Models 413 hint",
-        href: "https://github.com/NousResearch/hermes-agent/commit/374dc81c2359a6f61e8d1efc49de29d61d7b9a88",
-      },
-      {
-        sha: "70b6635",
-        message: "fix(tui): keep Ink displayCursor in sync with fast-echo writes so cursor stops drifting (#26717)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/70b663504fee1d58a6763e862df478cf101fe51e",
-      },
-      {
-        sha: "55c9f32",
-        message: "fix(tui): width-aware markdown table rendering with vertical fallback (#26195)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/55c9f32060bbe7eb48bee2b702c157408b468eb2",
-      },
-      {
-        sha: "006937f",
-        message: "fix(tui): handle timeout/error subagent statuses in /agents (#26687)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/006937f7d062f7f1dd830aa16476ce962bd30445",
-      },
-      {
-        sha: "566d8f0",
-        message: "fix(tui): keep DECSTBM scroll region off bottom row (#26683)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/566d8f0d75049e5e4e4e3e3fde7f8c766ae235d6",
-      },
-      {
-        sha: "44b63fc",
-        message: "fix(tui): allow transcript scroll + Esc during approval/clarify/confirm prompts (#26414)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/44b63fc6de3fe2b53eac3109b4a20db41c663195",
-      },
-      {
-        sha: "c5dc970",
-        message: "fix(windows): silence tirith-unavailable banner + skip install/spawn attempts on unsupported platforms (#26718)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c5dc9700ebc8b890e349c0cc3e978d133395909b",
-      },
-      {
-        sha: "3034eee",
-        message: "fix(acp): replay session history before responding to session/load (#12285 follow-up) (#26957)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/3034eee38ec516109566c00975be4d0276747c34",
-      },
-      {
-        sha: "f3a4af9",
-        message: "fix(acp): replay assistant reasoning as agent_thought_chunk on session/load (#12285) (#26943)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/f3a4af9cf2a626cb3e055766cb1cff60168d295d",
-      },
-      {
-        sha: "4aec25b",
-        message: "fix(windows): stop spamming cwd-missing + tirith-spawn warnings on every terminal call",
-        href: "https://github.com/NousResearch/hermes-agent/commit/4aec25bc4411edb4563292cadbd02c365c846286",
-      },
-      {
-        sha: "7fee1f6",
-        message: "fix(memory): eliminate TOCTOU race in Windows file lock creation",
-        href: "https://github.com/NousResearch/hermes-agent/commit/7fee1f61eb52d1706af04c9606ee1a2e7ef3afc3",
-      },
-      {
-        sha: "e377833",
-        message: "Merge pull request #26711 from NousResearch/austin/fix/dashboard-kanban",
-        href: "https://github.com/NousResearch/hermes-agent/commit/e377833fa629909a6c1ced6216e42bef79da497e",
-      },
-      {
-        sha: "c7db6a5",
-        message: "Merge pull request #26702 from NousResearch/remove-pip-docs",
-        href: "https://github.com/NousResearch/hermes-agent/commit/c7db6a58000c89b18717eef80e4842f114761fe9",
-      },
-      {
-        sha: "965610f",
-        message: "fix(cli): tolerate unreadable dirs when building systemd PATH",
-        href: "https://github.com/NousResearch/hermes-agent/commit/965610f922be5b2afb6fa412205077486734a433",
-      },
-      {
-        sha: "16ff946",
-        message: "Revert \"fix(cli): tolerate unreadable dirs when building systemd PATH\"",
-        href: "https://github.com/NousResearch/hermes-agent/commit/16ff9464a5daae9b82bf2ce2c7de5ba8f80cfd40",
-      },
-      {
-        sha: "fc03c95",
-        message: "feat(cli): add /exit --delete flag to remove session on quit (#27101)",
-        href: "https://github.com/NousResearch/hermes-agent/commit/fc03c95da13105807cb3b3f42a311e4916b456ce",
-      },
-    ],
-  },
+
 ];
